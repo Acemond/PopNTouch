@@ -8,13 +8,21 @@ namespace PopnTouchi2
 {
     public class Stave
     {
-        private int _maxNote;
-        private int _nbNoteChord;
-        private Instrument _currentInstrument;
 
         public Stave(List<Instrument> list, int max, int nbNoteChord)
         {
             throw new System.NotImplementedException();
+        }
+
+        public List<Instrument> Instruments
+        {
+            get
+            {
+                throw new System.NotImplementedException();
+            }
+            set
+            {
+            }
         }
 
         public ObservableCollection<Note> Notes
@@ -28,7 +36,29 @@ namespace PopnTouchi2
             }
         }
 
-        public List<Instrument> Instruments
+        public Instrument CurrentInstrument
+        {
+            get
+            {
+                throw new System.NotImplementedException();
+            }
+            set
+            {
+            }
+        }
+
+        public int MaxNote
+        {
+            get
+            {
+                throw new System.NotImplementedException();
+            }
+            set
+            {
+            }
+        }
+
+        public int NbNoteChord
         {
             get
             {

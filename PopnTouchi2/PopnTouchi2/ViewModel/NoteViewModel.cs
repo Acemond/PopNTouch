@@ -18,7 +18,7 @@ namespace PopnTouchi2
             set
             {
                 _note = value;
-                NotifyPropertyChanged("Note");
+                NotifyPropertyChanged("Notes");
             }
         }
 

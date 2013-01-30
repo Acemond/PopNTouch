@@ -7,14 +7,24 @@ namespace PopnTouchi2
 {
     public class MelodyBubble
     {
-        private int _id;
 
         public MelodyBubble()
         {
             throw new System.NotImplementedException();
         }
 
-        public Melody _melody
+        public Melody Melody
+        {
+            get
+            {
+                throw new System.NotImplementedException();
+            }
+            set
+            {
+            }
+        }
+
+        public int Id
         {
             get
             {

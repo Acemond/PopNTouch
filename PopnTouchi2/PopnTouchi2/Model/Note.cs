@@ -7,42 +7,50 @@ namespace PopnTouchi2
 {
     public class Note
     {
-        private int _octave;
-        private NoteValue _duration;
-        private Pitch _pitch;
+        public int Octave { get; set; }
+        public NoteValue Duration { get; set; }
+        public Pitch Pitch { get; set; }
 
-        //Attributs pour dièse et bémol
-        private bool _sharp;
-        private bool _flat;
+        // Attributs pour dièse et bémol
+        public bool Flat { get; set; }
+        public bool Sharp { get; set; }
         
         /// <summary>
-        /// Generates a new object of class Note with a given octave, duration and pitch.
+        /// Generates a new object of class Notes with a given octave, duration and pitch.
         /// </summary>
-        /// <param name="octave"></param>
-        /// <param name="d"></param>
-        /// <param name="p"></param>
-        public Note(int octave, NoteValue d, Pitch p)
+        /// <param name="oct">Octave</param>
+        /// <param name="d">NoteValue</param>
+        /// <param name="p">Pitch</param>
+        public Note(int oct, NoteValue d, Pitch p)
         {
-            _octave = octave;
-            _duration = d;
-            _pitch = p;
-            _sharp = false;
-            _flat = false;
+            Octave = oct;
+            Duration = d;
+            Pitch = p;
+            Sharp = false;
+            Flat = false;
         }
 
+        /// <summary>
+        /// Returns a string describing the note
+        /// </summary>
+        /// <returns></returns>
         public String getClue()
         {
             String alteration = "";
-            if (_sharp)
+            if (Sharp)
                 alteration = "d";
-            if (_flat)
+            if (Flat)
                 alteration = "b";
-            return _pitch.ToString() + _octave.ToString() + alteration;
+            return Pitch.ToString() + Octave.ToString() + alteration;
         }
 
+        /// <summary>
+        /// Getter of duration's enum number
+        /// </summary>
+        /// <returns></returns>
         public int getDuration()
         {
-            return _duration.GetHashCode();
+            return Duration.GetHashCode();
         }
     }
 }

@@ -13,7 +13,7 @@ namespace PopnTouchi2
             throw new System.NotImplementedException();
         }
 
-        public Note _note
+        public Note Note
         {
             get
             {
@@ -24,7 +24,7 @@ namespace PopnTouchi2
             }
         }
 
-        public int _id
+        public int Id
         {
             get
             {

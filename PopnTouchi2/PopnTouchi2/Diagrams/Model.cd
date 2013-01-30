@@ -3,72 +3,75 @@
   <Class Name="PopnTouchi2.MelodyBubbleGenerator">
     <Position X="2" Y="0.5" Width="2" />
     <TypeIdentifier>
-      <HashCode>AAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQEAA=</HashCode>
+      <HashCode>AAEAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAQAAA=</HashCode>
       <FileName>Model\MelodyBubbleGenerator.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
-      <Property Name="_melodyBubbles" />
+      <Property Name="MelodyBubbles" />
     </ShowAsAssociation>
   </Class>
   <Class Name="PopnTouchi2.MelodyBubble">
     <Position X="2.25" Y="2.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAQAAABAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAA=</HashCode>
       <FileName>Model\MelodyBubble.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
-      <Property Name="_melody" />
+      <Property Name="Melody" />
     </ShowAsAssociation>
   </Class>
   <Class Name="PopnTouchi2.Melody">
     <Position X="2.25" Y="4.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Model\Melody.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="PopnTouchi2.MelodyFactory">
     <Position X="2.25" Y="6.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAgAAAAAAAAAAAAAAAAAAAAAAAgAIAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAgAAAAAAACAAAAAAAAAAAAAAAAAIAAAAAAAAAAA=</HashCode>
       <FileName>Model\MelodyFactory.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="PopnTouchi2.NoteBubbleGenerator">
-    <Position X="5" Y="0.75" Width="2" />
+    <Position X="5" Y="0.5" Width="2" />
     <TypeIdentifier>
-      <HashCode>AAEAAgAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAEAAgAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAA=</HashCode>
       <FileName>Model\NoteBubbleGenerator.cs</FileName>
     </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="NoteBubbles" />
+    </ShowAsAssociation>
   </Class>
   <Class Name="PopnTouchi2.NoteBubble">
-    <Position X="5" Y="3" Width="1.5" />
+    <Position X="5" Y="2.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAQAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAA=</HashCode>
       <FileName>Model\NoteBubble.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
-      <Property Name="_note" />
+      <Property Name="Note" />
     </ShowAsAssociation>
   </Class>
   <Class Name="PopnTouchi2.Note">
     <Position X="7.75" Y="3" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAEAAAAAoABAABAAAAAAAAAAQAAAAAAAAAAAABA=</HashCode>
+      <HashCode>AAAAAAEAIAACIAAAAAAAEAAAAAAAAAAAAABAAAAAAAg=</HashCode>
       <FileName>Model\Note.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="PopnTouchi2.NoteFactory">
-    <Position X="7.75" Y="6" Width="1.5" />
+    <Position X="7.75" Y="6.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAA=</HashCode>
       <FileName>Model\NoteFactory.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="PopnTouchi2.Stave">
-    <Position X="5" Y="5" Width="1.75" />
+    <Position X="5" Y="4.5" Width="1.75" />
     <TypeIdentifier>
-      <HashCode>AAAgAMAAAAAAABAAAAAAAggAAAAAAAAAIAgAAAAAAAA=</HashCode>
+      <HashCode>AAAgAEgAAAAAABEAAAAAAAgAAAAAAAAAAAgAAAAAAAQ=</HashCode>
       <FileName>Model\Stave.cs</FileName>
     </TypeIdentifier>
   </Class>

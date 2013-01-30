@@ -7,21 +7,21 @@ namespace PopnTouchi2
 {
     public class MelodyFactory
     {
-        private Dictionary<Gesture, Melody> _melodies;
+        public Dictionary<Gesture, Melody> Melodies { get; set; }
         private List<Note> list;
 
         public MelodyFactory()
         {
-            _melodies = new Dictionary<Gesture, Melody>();
+            Melodies = new Dictionary<Gesture, Melody>();
             Note n = new Note(1,NoteValue.crotchet,Pitch.A);
             Note n2 = new Note(1,NoteValue.crotchet,Pitch.B);
             list = new List<Note>() { n , n2 };
-            _melodies.Add(Gesture.circle, new Melody(list));
+            Melodies.Add(Gesture.circle, new Melody(new List<Note>() { n, n2 }));
         }
 
         public Melody getMelody(Gesture gesture)
         {
-            return _melodies[gesture];
+            return Melodies[gesture];
         }
     }
 }

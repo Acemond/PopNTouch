@@ -7,7 +7,6 @@ namespace PopnTouchi2
 {
     public class Melody
     {
-        private List<Note> _notes;
 
         /// <summary>
         /// Generates a object of class Melody with a given List of notes.
@@ -15,7 +14,18 @@ namespace PopnTouchi2
         /// <param name="listnote"></param>
         public Melody(List<Note> listnote)
         {
-            _notes = listnote;
+            Notes = listnote;
+        }
+
+        public List<Note> Notes
+        {
+            get
+            {
+                throw new System.NotImplementedException();
+            }
+            set
+            {
+            }
         }
     }
 }

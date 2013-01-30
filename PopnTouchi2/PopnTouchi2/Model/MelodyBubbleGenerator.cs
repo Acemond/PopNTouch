@@ -12,7 +12,7 @@ namespace PopnTouchi2
             throw new System.NotImplementedException();
         }
     
-        public MelodyBubble _melodyBubbles
+        public MelodyBubble MelodyBubbles
         {
             get
             {

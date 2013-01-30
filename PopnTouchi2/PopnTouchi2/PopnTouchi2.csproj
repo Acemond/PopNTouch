@@ -59,7 +59,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Infrastructure\RelayCommand.cs" />
-    <Compile Include="StaveViewModel.cs" />
+    <Compile Include="ViewModel\StaveViewModel.cs" />
     <Compile Include="Infrastructure\ViewModelBase.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="Model\AudioController.cs" />
@@ -78,7 +78,7 @@
     <Compile Include="Model\Enums\Pitch.cs" />
     <Compile Include="Model\Stave.cs" />
     <Compile Include="ViewModel\NoteViewModel.cs" />
-    <Compile Include="TreeViewModel.cs" />
+    <Compile Include="ViewModel\TreeViewModel.cs" />
     <Page Include="SurfaceWindow1.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
