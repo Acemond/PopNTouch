@@ -5,14 +5,15 @@ using System.Text;
 
 namespace PopnTouchi2
 {
-    public class MelodyBubbleGenerator
+    public class NoteBubble
     {
-        public MelodyBubbleGenerator()
+
+        public NoteBubble()
         {
             throw new System.NotImplementedException();
         }
-    
-        public MelodyBubble _melodyBubbles
+
+        public Note _note
         {
             get
             {
@@ -22,15 +23,16 @@ namespace PopnTouchi2
             {
             }
         }
-    
-        public void createMelodyBubble()
-        {
-            throw new System.NotImplementedException();
-        }
 
-        public void removeFromGenerator(PopnTouchi2.MelodyBubble melody)
+        public int _id
         {
-            throw new System.NotImplementedException();
+            get
+            {
+                throw new System.NotImplementedException();
+            }
+            set
+            {
+            }
         }
     }
 }
