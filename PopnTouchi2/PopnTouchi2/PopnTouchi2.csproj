@@ -60,6 +60,7 @@
     </ApplicationDefinition>
     <Compile Include="Infrastructure\RelayCommand.cs" />
     <Compile Include="InstrumentViewModel.cs" />
+    <Compile Include="NoteBubbleViewModel.cs" />
     <Compile Include="ViewModel\StaveViewModel.cs" />
     <Compile Include="Infrastructure\ViewModelBase.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
