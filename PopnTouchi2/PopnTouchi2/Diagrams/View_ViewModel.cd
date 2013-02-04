@@ -41,5 +41,12 @@
     </TypeIdentifier>
     <Lollipop Position="0.2" />
   </Class>
+  <Class Name="PopnTouchi2.InstrumentViewModel">
+    <Position X="0.5" Y="2.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>InstrumentViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
   <Font Name="Segoe UI" Size="9" />
 </ClassDiagram>
