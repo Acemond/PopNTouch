@@ -3,26 +3,52 @@
   <Class Name="PopnTouchi2.NoteViewModel">
     <Position X="3" Y="2.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAYAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAEAAAA=</HashCode>
+      <HashCode>AAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAA=</HashCode>
       <FileName>ViewModel\NoteViewModel.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="PopnTouchi2.MainViewModel">
     <Position X="6.75" Y="2.25" Width="1.5" />
+    <InheritanceLine Type="PopnTouchi2.Infrastructure.ViewModelBase" FixedToPoint="true">
+      <Path>
+        <Point X="5.75" Y="1.562" />
+        <Point X="5.75" Y="1.875" />
+        <Point X="7.25" Y="1.875" />
+        <Point X="7.25" Y="2.25" />
+      </Path>
+    </InheritanceLine>
+    <AssociationLine Name="Play" Type="System.Windows.Input.ICommand" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="7.562" Y="2.25" />
+        <Point X="7.562" Y="1" />
+        <Point X="9.25" Y="1" />
+      </Path>
+    </AssociationLine>
+    <AssociationLine Name="Stop" Type="System.Windows.Input.ICommand" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="8.188" Y="2.25" />
+        <Point X="8.188" Y="1.563" />
+        <Point X="9.25" Y="1.563" />
+      </Path>
+    </AssociationLine>
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAgAAAAAgAAAAAAAAAAAAAACgAAAQoAAAAAAAAAA=</HashCode>
       <FileName>ViewModel\MainViewModel.cs</FileName>
     </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Play" />
+      <Property Name="Stop" />
+    </ShowAsAssociation>
   </Class>
   <Class Name="PopnTouchi2.StaveViewModel">
     <Position X="4.75" Y="2.25" Width="1.75" />
     <TypeIdentifier>
-      <HashCode>AAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAgCAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>ViewModel\StaveViewModel.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="PopnTouchi2.Infrastructure.RelayCommand">
-    <Position X="9.25" Y="1.25" Width="1.5" />
+    <Position X="9.25" Y="2.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAACAAQAAEAEAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Infrastructure\RelayCommand.cs</FileName>
@@ -41,19 +67,16 @@
     </TypeIdentifier>
     <Lollipop Position="0.2" />
   </Class>
-  <Class Name="PopnTouchi2.InstrumentViewModel">
-    <Position X="0.5" Y="1.25" Width="2" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>InstrumentViewModel.cs</FileName>
-    </TypeIdentifier>
-  </Class>
   <Class Name="PopnTouchi2.NoteBubbleViewModel">
-    <Position X="0.5" Y="2.25" Width="2" />
+    <Position X="0.75" Y="2.25" Width="2" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAA=</HashCode>
-      <FileName>NoteBubbleViewModel.cs</FileName>
+      <HashCode>AAAIAAAAgBAAAAAAAAAAAAAAAAAEAAAAAAAAAAEAAAA=</HashCode>
+      <FileName>ViewModel\NoteBubbleViewModel.cs</FileName>
     </TypeIdentifier>
   </Class>
+  <Interface Name="System.Windows.Input.ICommand">
+    <Position X="9.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier />
+  </Interface>
   <Font Name="Segoe UI" Size="9" />
 </ClassDiagram>

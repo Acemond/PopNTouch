@@ -12,6 +12,8 @@ namespace PopnTouchi2
     {
         public StaveViewModel stave1;
         public StaveViewModel stave2;
+        private ICommand play;
+        private ICommand stop;
 
         /// <summary>
         /// Constructeur de la VueModele pricipale
@@ -20,9 +22,41 @@ namespace PopnTouchi2
         {
           
         }
+
+        public System.Windows.Input.ICommand Play
+        {
+            get
+            {
+                throw new System.NotImplementedException();
+            }
+            set
+            {
+            }
+        }
+
+        public System.Windows.Input.ICommand Stop
+        {
+            get
+            {
+                throw new System.NotImplementedException();
+            }
+            set
+            {
+            }
+        }
+
+        public void playAction()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public void stopAction()
+        {
+            throw new System.NotImplementedException();
+        }
 /*
-        private ICommand _play;
-        public ICommand Play
+        private Play _play;
+        public Play Play
         {
             get
             {

@@ -7,6 +7,7 @@ namespace PopnTouchi2
 {
     public class StaveViewModel : PopnTouchi2.Infrastructure.ViewModelBase
     {
+        private int _instrument;
 
         public int CurrentInstrument
         {

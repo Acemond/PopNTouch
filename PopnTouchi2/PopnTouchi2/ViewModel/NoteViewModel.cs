@@ -21,19 +21,5 @@ namespace PopnTouchi2
                 NotifyPropertyChanged("Notes");
             }
         }
-
-        bool _isOnStave;
-        public bool IsOnStave
-        {
-            get
-            {
-                return _isOnStave;
-            }
-            set
-            {
-                _isOnStave = value;
-                NotifyPropertyChanged("IsOnStave");
-            }
-        }
     }
 }
