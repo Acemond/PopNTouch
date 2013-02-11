@@ -61,9 +61,9 @@
     <Compile Include="Model\Builder.cs" />
     <Compile Include="Model\Game.cs" />
     <Compile Include="Infrastructure\RelayCommand.cs" />
+    <Compile Include="ViewModel\SessionViewModel.cs" />
     <Compile Include="ViewModel\NoteBubbleViewModel.cs" />
     <Compile Include="Model\InstrumentViewModel.cs" />
-    <Compile Include="Model\NoteBubbleViewModel.cs" />
     <Compile Include="Model\Session.cs" />
     <Compile Include="Model\Theme1.cs" />
     <Compile Include="Model\Theme2.cs" />
@@ -89,7 +89,6 @@
     <Compile Include="Model\Enums\Pitch.cs" />
     <Compile Include="Model\Stave.cs" />
     <Compile Include="ViewModel\NoteViewModel.cs" />
-    <Compile Include="ViewModel\TreeViewModel.cs" />
     <Page Include="SurfaceWindow1.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

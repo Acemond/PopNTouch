@@ -8,6 +8,7 @@ namespace PopnTouchi2
 {
     public class NoteBubbleGenerator
     {
+        private ObservableCollection<NoteBubble> _noteBubbles;
 
         public NoteBubbleGenerator()
         {

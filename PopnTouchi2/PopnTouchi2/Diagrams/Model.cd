@@ -40,7 +40,7 @@
   <Class Name="PopnTouchi2.NoteBubbleGenerator">
     <Position X="5" Y="4" Width="2" />
     <TypeIdentifier>
-      <HashCode>AAEAAgAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAA=</HashCode>
+      <HashCode>AAEAAgAAABAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAA=</HashCode>
       <FileName>Model\NoteBubbleGenerator.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
@@ -92,7 +92,7 @@
       <FileName>Model\AudioController.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="PopnTouchi2.Themes">
+  <Class Name="PopnTouchi2.Theme">
     <Position X="12.25" Y="1.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
@@ -135,40 +135,48 @@
     </TypeIdentifier>
   </Class>
   <Class Name="PopnTouchi2.Session">
-    <Position X="5.25" Y="1.5" Width="1.5" />
+    <Position X="5.75" Y="1" Width="1.5" />
     <AssociationLine Name="MelodyBubbleGenerator" Type="PopnTouchi2.MelodyBubbleGenerator" ManuallyRouted="true" FixedFromPoint="true" FixedToPoint="true">
       <Path>
-        <Point X="6" Y="2.796" />
-        <Point X="6" Y="3.344" />
+        <Point X="6.5" Y="2.758" />
+        <Point X="6.5" Y="3.344" />
         <Point X="3" Y="3.344" />
         <Point X="3" Y="4" />
       </Path>
     </AssociationLine>
     <AssociationLine Name="NoteBubbleGenerator" Type="PopnTouchi2.NoteBubbleGenerator" ManuallyRouted="true" FixedFromPoint="true" FixedToPoint="true">
       <Path>
-        <Point X="6" Y="2.796" />
-        <Point X="6" Y="3.811" />
-        <Point X="6" Y="3.811" />
+        <Point X="6.5" Y="2.758" />
+        <Point X="6.5" Y="3.344" />
+        <Point X="6" Y="3.344" />
         <Point X="6" Y="4" />
       </Path>
     </AssociationLine>
-    <AssociationLine Name="Stave" Type="PopnTouchi2.Stave" ManuallyRouted="true" FixedFromPoint="true" FixedToPoint="true">
+    <AssociationLine Name="StaveTop" Type="PopnTouchi2.Stave" ManuallyRouted="true" FixedFromPoint="true" FixedToPoint="true">
       <Path>
-        <Point X="6" Y="2.796" />
-        <Point X="6" Y="3.295" />
-        <Point X="8.375" Y="3.295" />
-        <Point X="8.375" Y="4" />
+        <Point X="6.5" Y="2.757" />
+        <Point X="6.5" Y="3.344" />
+        <Point X="7.812" Y="3.344" />
+        <Point X="7.812" Y="4" />
+      </Path>
+    </AssociationLine>
+    <AssociationLine Name="StaveBottom" Type="PopnTouchi2.Stave" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="7.25" Y="2.188" />
+        <Point X="8.875" Y="2.188" />
+        <Point X="8.875" Y="4" />
       </Path>
     </AssociationLine>
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAEAQAAAAAAAAAAAAAAAAAgAAEAGAAAA=</HashCode>
+      <HashCode>AAAAAAgAAAAAAEAQAAAAAAAAAAAAAAAAAgAABAGAAIA=</HashCode>
       <FileName>Model\Session.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
-      <Property Name="Themes" />
       <Property Name="MelodyBubbleGenerator" />
       <Property Name="NoteBubbleGenerator" />
-      <Property Name="Stave" />
+      <Property Name="StaveTop" />
+      <Property Name="StaveBottom" />
+      <Property Name="Theme" />
     </ShowAsAssociation>
   </Class>
   <Enum Name="PopnTouchi2.Gesture">

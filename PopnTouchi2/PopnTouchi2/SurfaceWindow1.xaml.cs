@@ -99,5 +99,10 @@ namespace PopnTouchi2
         {
             //TODO: disable audio, animations here
         }
+
+        private void touch(object sender, TouchEventArgs e)
+        {
+            button1.Content = "yo";
+        }
     }
 }

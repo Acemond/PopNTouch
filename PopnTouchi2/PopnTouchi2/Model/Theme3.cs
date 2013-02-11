@@ -5,7 +5,7 @@ using System.Text;
 
 namespace PopnTouchi2
 {
-    public class Theme3 : Themes
+    public class Theme3 : Theme
     {
         public void generateObjects()
         {

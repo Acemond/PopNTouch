@@ -5,13 +5,16 @@ using System.Text;
 
 namespace PopnTouchi2
 {
-    public class NoteBubbleViewModel
+    public class SessionViewModel : PopnTouchi2.Infrastructure.ViewModelBase
     {
-        private NoteBubble _noteBubble;
+        private Session _session;
 
-        public event ContainerManipulationCompletedEventArgs dropBubble;
-    
-        public NoteBubble Note
+        public SessionViewModel(Session session)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public Session Session
         {
             get
             {
