@@ -74,7 +74,7 @@ namespace PopnTouchi2
             throw new System.NotImplementedException();
         }
 
-        public void addNote(NoteBubble nb)
+        public void addNote(PopnTouchi2.Note note)
         {
             throw new System.NotImplementedException();
         }
