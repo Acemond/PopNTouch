@@ -58,8 +58,18 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Model\Builder.cs" />
+    <Compile Include="Model\Game.cs" />
     <Compile Include="Infrastructure\RelayCommand.cs" />
     <Compile Include="ViewModel\NoteBubbleViewModel.cs" />
+    <Compile Include="Model\InstrumentViewModel.cs" />
+    <Compile Include="Model\NoteBubbleViewModel.cs" />
+    <Compile Include="Model\Session.cs" />
+    <Compile Include="Model\Theme1.cs" />
+    <Compile Include="Model\Theme2.cs" />
+    <Compile Include="Model\Theme3.cs" />
+    <Compile Include="Model\Theme4.cs" />
+    <Compile Include="Model\Themes.cs" />
     <Compile Include="ViewModel\StaveViewModel.cs" />
     <Compile Include="Infrastructure\ViewModelBase.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
