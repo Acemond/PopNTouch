@@ -21,12 +21,12 @@ namespace PopnTouchi2
     /// <summary>
     /// Interaction logic for SurfaceWindow1.xaml
     /// </summary>
-    public partial class SurfaceWindow1 : SurfaceWindow
+    public partial class MultiPlayersWindow : SurfaceWindow
     {
         /// <summary>
         /// Default constructor.
         /// </summary>
-        public SurfaceWindow1()
+        public MultiPlayersWindow()
         {
             InitializeComponent();
 

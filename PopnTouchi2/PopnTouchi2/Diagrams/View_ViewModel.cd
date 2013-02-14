@@ -77,6 +77,27 @@
       <FileName>ViewModel\SessionViewModel.cs</FileName>
     </TypeIdentifier>
   </Class>
+  <Class Name="PopnTouchi2.MultiPlayersWindow" Collapsed="true">
+    <Position X="13.25" Y="0.75" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AEAAAAAAAAAAAACACQAAAIgAAAAAAAAAEAAAAAAAAAA=</HashCode>
+      <FileName>MultiPlayersWindow.xaml.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PopnTouchi2.SinglePlayerWindow" Collapsed="true">
+    <Position X="13.25" Y="1.75" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>SinglePlayerWindow.xaml.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PopnTouchi2.DesktopWindow" Collapsed="true">
+    <Position X="13.25" Y="2.75" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>DesktopWindow.xaml.cs</FileName>
+    </TypeIdentifier>
+  </Class>
   <Interface Name="System.Windows.Input.ICommand">
     <Position X="8.25" Y="0.5" Width="1.5" />
     <TypeIdentifier />
