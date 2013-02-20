@@ -62,6 +62,7 @@
       <DependentUpon>DesktopWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Model\Builder.cs" />
+    <Compile Include="Model\Enums\GlobalVariables.cs" />
     <Compile Include="Model\Game.cs" />
     <Compile Include="Infrastructure\RelayCommand.cs" />
     <Compile Include="SinglePlayerWindow.xaml.cs">
@@ -149,6 +150,9 @@
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
     <AppDesigner Include="Properties\" />
+    <None Include="Resources\Sound Bank.xsb" />
+    <None Include="Resources\sound.xgs" />
+    <None Include="Resources\Wave Bank.xwb" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Image\bulleblanche.png" />

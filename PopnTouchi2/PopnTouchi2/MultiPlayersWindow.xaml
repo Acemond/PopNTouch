@@ -5,7 +5,7 @@
 
     Title="PopnTouchi2" mc:Ignorable="d" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" d:DesignHeight="177" d:DesignWidth="252" SizeToContent="WidthAndHeight">
     <Grid>
-        <s:SurfaceButton Content="Button" Height="23" HorizontalAlignment="Left" Margin="48,31,0,0" Name="button1" VerticalAlignment="Top" Width="75" TouchDown="touch" />
+        
     </Grid>
 
 

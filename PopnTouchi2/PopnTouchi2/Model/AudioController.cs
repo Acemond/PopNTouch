@@ -10,7 +10,7 @@ namespace PopnTouchi2
     {
         public static AudioController INSTANCE = new AudioController();
         private AudioEngine _audioEngine;
-        private SoundBank _soundBank;
+        public SoundBank _soundBank;
         private WaveBank _waveBank;
 
         private AudioController()
@@ -23,14 +23,13 @@ namespace PopnTouchi2
             _soundBank = new SoundBank(_audioEngine, path + @"\Sound Bank.xsb");
         }
 
-        public static void playSound(string sound)
+        public static void playSound(Cue cue)
         {
-            AudioController.INSTANCE._soundBank.PlayCue(sound);
+            cue.Play();
         }
 
-        public static void stopSound(string sound)
+        public static void stopSound(Cue cue)
         {
-            Cue cue = AudioController.INSTANCE._soundBank.GetCue(sound);
             cue.Stop(AudioStopOptions.Immediate);
         }
     }

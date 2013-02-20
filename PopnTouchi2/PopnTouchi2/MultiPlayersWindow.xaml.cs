@@ -28,8 +28,6 @@ namespace PopnTouchi2
         /// </summary>
         public MultiPlayersWindow()
         {
-            InitializeComponent();
-
             // Add handlers for window availability events
             AddWindowAvailabilityHandlers();
         }
@@ -98,11 +96,6 @@ namespace PopnTouchi2
         private void OnWindowUnavailable(object sender, EventArgs e)
         {
             //TODO: disable audio, animations here
-        }
-
-        private void touch(object sender, TouchEventArgs e)
-        {
-            button1.Content = "yo";
         }
     }
 }

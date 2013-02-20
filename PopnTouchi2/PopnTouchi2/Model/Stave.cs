@@ -3,85 +3,97 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Collections.ObjectModel;
+using System.Timers;
+using PopnTouchi2.Model.Enums;
 
 namespace PopnTouchi2
 {
     public class Stave
     {
 
-        public Stave(List<Instrument> list, int max, int nbNoteChord)
+        public Stave(List<Instrument> list)
         {
-            throw new System.NotImplementedException();
+            Instruments = list;
+            MaxPosition = 0;
+            Notes = new ObservableCollection<Note>();
+            CurrentInstrument = Instruments[0];
         }
 
         public List<Instrument> Instruments
         {
-            get
-            {
-                throw new System.NotImplementedException();
-            }
-            set
-            {
-            }
+            get;
+            set;
         }
 
         public ObservableCollection<Note> Notes
         {
-            get
-            {
-                throw new System.NotImplementedException();
-            }
-            set
-            {
-            }
+            get;
+            set;
         }
 
         public Instrument CurrentInstrument
         {
-            get
-            {
-                throw new System.NotImplementedException();
-            }
-            set
-            {
-            }
+            get;
+            set;
         }
 
-        public int MaxNote
+        public int MaxPosition
         {
-            get
-            {
-                throw new System.NotImplementedException();
-            }
-            set
-            {
-            }
+            get;
+            set;
         }
 
-        public int NbNoteChord
-        {
-            get
-            {
-                throw new System.NotImplementedException();
-            }
-            set
-            {
-            }
-        }
+        private Timer timer;
+
 
         public void addMelody(MelodyBubble mb)
         {
             throw new System.NotImplementedException();
         }
 
-        public void addNote(PopnTouchi2.Note note)
+        public void addNote(Note note)
         {
-            throw new System.NotImplementedException();
+            Notes.Add(note);
+            MaxPosition = Math.Max(MaxPosition, note.Position);
         }
 
         public void playAllNotes()
         {
-            throw new System.NotImplementedException();
+            timer = new Timer();
+            timer.Interval = 30000 / GlobalVariables.bpm;
+            timer.Start();
+            timer.Elapsed += new ElapsedEventHandler(Play_List);
         }
+
+        private void Play_List(object source, ElapsedEventArgs e)
+        {
+            if (GlobalVariables.position_Note <= MaxPosition+4)
+            {
+                for (int i = 0; i < Notes.Count; i++)
+                {
+                    if (Notes[i].Position == GlobalVariables.position_Note)
+                    {
+                        CurrentInstrument.playNote(Notes[i]);
+                    }
+                }
+                GlobalVariables.position_Note++;
+            }
+            else
+            {
+                timer.Stop();
+                timer.EndInit();
+                timer.Elapsed -= new ElapsedEventHandler(Play_List);
+                GlobalVariables.position_Note = 0;
+            }
+        }
+
+        public void stopMusic()
+        {
+            timer.Stop();
+            timer.EndInit();
+            timer.Elapsed -= new ElapsedEventHandler(Play_List);
+            GlobalVariables.position_Note = 0;
+        }
+
     }
 }

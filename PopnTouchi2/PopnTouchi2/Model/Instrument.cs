@@ -2,13 +2,17 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Microsoft.Xna.Framework.Audio;
+using System.Threading;
+using System.Timers;
+using PopnTouchi2.Model.Enums;
 
 namespace PopnTouchi2
 {
     public class Instrument
     {
         private InstrumentType _name;
-        private Dictionary<Pitch, String> _sounds; // à quoi ça sert?
+ //       private Dictionary<Pitch, String> _sounds; // à quoi ça sert?
 
         #region constructors
         /// <summary>
@@ -28,16 +32,20 @@ namespace PopnTouchi2
         /// <param name="n"></param>
         public void playNote(Note n)
         {
-            AudioController.playSound(_name + n.getClue());
-        }
+            Instrument tmp = new Instrument(_name);
+            Thread t = new Thread(tmp.Action_Play);
+            t.Start(n);
+         }
 
-        /// <summary>
-        /// Stops current sound from instrument.
-        /// </summary>
-        /// <param name="n"></param>
-        public void stopNote(Note n)
+ 
+        public void Action_Play(object n)
         {
-            AudioController.stopSound(_name + n.getClue());
+            Note note = n as Note;
+            TimeSpan t = new TimeSpan(0, 0, 0, 0, (note.Duration.GetHashCode() * 30000) / GlobalVariables.bpm);
+            Cue cue = AudioController.INSTANCE._soundBank.GetCue(_name.ToString() + "_" + note.getCue());
+            AudioController.playSound(cue);
+            Thread.Sleep(t);
+            AudioController.stopSound(cue);
         }
         #endregion
     }

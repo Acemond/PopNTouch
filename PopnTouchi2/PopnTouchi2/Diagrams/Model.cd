@@ -60,7 +60,7 @@
   <Class Name="PopnTouchi2.Note">
     <Position X="5" Y="8" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAEAIAACIAAAAAAAEAAAAAAAAAAAAABAAAAAAAg=</HashCode>
+      <HashCode>AAAAAAAAIAACIAAgAAAAEAAAAAAABAAAAABAAAAAAAg=</HashCode>
       <FileName>Model\Note.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -72,16 +72,16 @@
     </TypeIdentifier>
   </Class>
   <Class Name="PopnTouchi2.Stave">
-    <Position X="7.5" Y="4" Width="1.75" />
+    <Position X="7.5" Y="3.5" Width="1.75" />
     <TypeIdentifier>
-      <HashCode>AAAgAEgAAAAAABEAAAAAAAgAAAAAAAAAAAgAAAAAAAQ=</HashCode>
+      <HashCode>BAQgAEgAAAAAABAAAAAIAAgAAAAEAAAAAAgAAAAAAAA=</HashCode>
       <FileName>Model\Stave.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="PopnTouchi2.Instrument">
     <Position X="7" Y="9.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAIAQAAAAAAAAAAAAAAAAQAAAAAAAAABAAAAAAAAA=</HashCode>
+      <HashCode>AAAAIAQAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAA=</HashCode>
       <FileName>Model\Instrument.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -136,35 +136,11 @@
   </Class>
   <Class Name="PopnTouchi2.Session">
     <Position X="5.75" Y="1" Width="1.5" />
-    <AssociationLine Name="MelodyBubbleGenerator" Type="PopnTouchi2.MelodyBubbleGenerator" ManuallyRouted="true" FixedFromPoint="true" FixedToPoint="true">
-      <Path>
-        <Point X="6.5" Y="2.758" />
-        <Point X="6.5" Y="3.344" />
-        <Point X="3" Y="3.344" />
-        <Point X="3" Y="4" />
-      </Path>
-    </AssociationLine>
-    <AssociationLine Name="NoteBubbleGenerator" Type="PopnTouchi2.NoteBubbleGenerator" ManuallyRouted="true" FixedFromPoint="true" FixedToPoint="true">
-      <Path>
-        <Point X="6.5" Y="2.758" />
-        <Point X="6.5" Y="3.344" />
-        <Point X="6" Y="3.344" />
-        <Point X="6" Y="4" />
-      </Path>
-    </AssociationLine>
-    <AssociationLine Name="StaveTop" Type="PopnTouchi2.Stave" ManuallyRouted="true" FixedFromPoint="true" FixedToPoint="true">
-      <Path>
-        <Point X="6.5" Y="2.757" />
-        <Point X="6.5" Y="3.344" />
-        <Point X="7.812" Y="3.344" />
-        <Point X="7.812" Y="4" />
-      </Path>
-    </AssociationLine>
     <AssociationLine Name="StaveBottom" Type="PopnTouchi2.Stave" FixedFromPoint="true" FixedToPoint="true">
       <Path>
         <Point X="7.25" Y="2.188" />
         <Point X="8.875" Y="2.188" />
-        <Point X="8.875" Y="4" />
+        <Point X="8.875" Y="3.5" />
       </Path>
     </AssociationLine>
     <TypeIdentifier>
