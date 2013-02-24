@@ -37,16 +37,16 @@ using System.Runtime.InteropServices;
     // Specifies the location of system theme-specific resource dictionaries for this project.
     // The default setting in this project is "None" since this default project does not
     // include these user-defined theme files:
-    //     Themes\Aero.NormalColor.xaml
-    //     Themes\Classic.xaml
-    //     Themes\Luna.Homestead.xaml
-    //     Themes\Luna.Metallic.xaml
-    //     Themes\Luna.NormalColor.xaml
-    //     Themes\Royale.NormalColor.xaml
+    //     Theme\Aero.NormalColor.xaml
+    //     Theme\Classic.xaml
+    //     Theme\Luna.Homestead.xaml
+    //     Theme\Luna.Metallic.xaml
+    //     Theme\Luna.NormalColor.xaml
+    //     Theme\Royale.NormalColor.xaml
     ResourceDictionaryLocation.None,
 
     // Specifies the location of the system non-theme specific resource dictionary:
-    //     Themes\generic.xaml
+    //     Theme\generic.xaml
     ResourceDictionaryLocation.SourceAssembly)]
 
 

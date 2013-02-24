@@ -7,7 +7,7 @@ namespace PopnTouchi2
 {
     public class Session
     {
-        public Themes Themes
+        public Theme Theme
         {
             get
             {
