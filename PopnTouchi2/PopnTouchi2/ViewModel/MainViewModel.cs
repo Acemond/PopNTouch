@@ -8,10 +8,12 @@ using System.Threading.Tasks;
 
 namespace PopnTouchi2
 {
-    public class MainViewModel : ViewModelBase
+    public class MainViewModel : PopnTouchi2.Infrastructure.ViewModelBase
     {
-        public StaveViewModel stave1;
-        public StaveViewModel stave2;
+        public PopnTouchi2.SessionViewModel sessionViewModel;
+        private ICommand play;
+        private ICommand stop;
+        private int changeTheme;
 
         /// <summary>
         /// Constructeur de la VueModele pricipale
@@ -20,9 +22,57 @@ namespace PopnTouchi2
         {
           
         }
+
+        public System.Windows.Input.ICommand Play
+        {
+            get
+            {
+                throw new System.NotImplementedException();
+            }
+            set
+            {
+            }
+        }
+
+        public System.Windows.Input.ICommand Stop
+        {
+            get
+            {
+                throw new System.NotImplementedException();
+            }
+            set
+            {
+            }
+        }
+
+        public System.Windows.Input.ICommand ChangeTheme
+        {
+            get
+            {
+                throw new System.NotImplementedException();
+            }
+            set
+            {
+            }
+        }
+
+        public void playAction()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public void stopAction()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public void changeThemeAction()
+        {
+            throw new System.NotImplementedException();
+        }
 /*
-        private ICommand _play;
-        public ICommand Play
+        private Play _play;
+        public Play Play
         {
             get
             {
@@ -37,8 +87,8 @@ namespace PopnTouchi2
             // création d'un thread pour lancer le calcul du tour suivant sans que cela soit bloquant pour l'IHM
             Task.Factory.StartNew(() =>
             {
-                stave1.Stave.playAllNotes();
-                stave2.Stave.playAllNotes();
+                sessionViewModel.StaveTop.playAllNotes();
+                stave2.StaveTop.playAllNotes();
             });
         }*/
     }

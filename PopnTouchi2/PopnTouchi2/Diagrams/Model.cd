@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
   <Comment CommentText="Stratégie">
-    <Position X="13.875" Y="2.198" Height="0.406" Width="0.794" />
+    <Position X="14.16" Y="2.024" Height="0.406" Width="0.794" />
   </Comment>
   <Class Name="PopnTouchi2.MelodyBubbleGenerator" Collapsed="true">
     <Position X="2.25" Y="3.5" Width="2" />
@@ -40,7 +40,7 @@
   <Class Name="PopnTouchi2.NoteBubbleGenerator" Collapsed="true">
     <Position X="5" Y="3.5" Width="2" />
     <TypeIdentifier>
-      <HashCode>AAEAAgAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAA=</HashCode>
+      <HashCode>AAEAAgAAABAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAA=</HashCode>
       <FileName>Model\NoteBubbleGenerator.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
@@ -60,7 +60,7 @@
   <Class Name="PopnTouchi2.Note">
     <Position X="5" Y="8" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAEAIAACIAAAAAAAEAAAAAAAAAAAAABAAAAAAAg=</HashCode>
+      <HashCode>AAAAAAAAIAACIAAgAAAAEAAAAAAABAAAAABAAAAAAAg=</HashCode>
       <FileName>Model\Note.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -71,17 +71,17 @@
       <FileName>Model\NoteFactory.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="PopnTouchi2.Stave" Collapsed="true">
+  <Class Name="PopnTouchi2.Stave">
     <Position X="7.5" Y="3.5" Width="1.75" />
     <TypeIdentifier>
-      <HashCode>AAAgAEgAAAAAABEAAAAAAAgAAAAAAAAAAAgAAAAAAAQ=</HashCode>
+      <HashCode>BAQgAEgAAAAAABAAAAAIAAgAAAAEAAAAAAgAAAAAAAA=</HashCode>
       <FileName>Model\Stave.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="PopnTouchi2.Instrument">
     <Position X="7" Y="9.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAIAQAAAAAAAAAAAAAAAAQAAAAAAAAABAAAAAAAAA=</HashCode>
+      <HashCode>AAAAIAQAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAA=</HashCode>
       <FileName>Model\Instrument.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -93,7 +93,7 @@
     </TypeIdentifier>
   </Class>
   <Class Name="PopnTouchi2.Theme">
-    <Position X="12.25" Y="2" Width="1.5" />
+    <Position X="12.25" Y="1.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Model\Theme.cs</FileName>
@@ -101,14 +101,6 @@
   </Class>
   <Class Name="PopnTouchi2.Theme1">
     <Position X="9.75" Y="3.75" Width="1.5" />
-    <InheritanceLine Type="PopnTouchi2.Theme" ManuallyRouted="true" FixedFromPoint="true" FixedToPoint="true">
-      <Path>
-        <Point X="12.938" Y="3.103" />
-        <Point X="12.938" Y="3.375" />
-        <Point X="10.5" Y="3.375" />
-        <Point X="10.5" Y="3.75" />
-      </Path>
-    </InheritanceLine>
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Model\Theme1.cs</FileName>
@@ -116,14 +108,6 @@
   </Class>
   <Class Name="PopnTouchi2.Theme2">
     <Position X="11.5" Y="3.75" Width="1.5" />
-    <InheritanceLine Type="PopnTouchi2.Theme" FixedFromPoint="true">
-      <Path>
-        <Point X="12.938" Y="3.103" />
-        <Point X="12.938" Y="3.375" />
-        <Point X="12.25" Y="3.375" />
-        <Point X="12.25" Y="3.75" />
-      </Path>
-    </InheritanceLine>
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Model\Theme2.cs</FileName>
@@ -131,14 +115,6 @@
   </Class>
   <Class Name="PopnTouchi2.Theme3">
     <Position X="13.25" Y="3.75" Width="1.5" />
-    <InheritanceLine Type="PopnTouchi2.Theme" FixedFromPoint="true">
-      <Path>
-        <Point X="12.938" Y="3.103" />
-        <Point X="12.938" Y="3.375" />
-        <Point X="14" Y="3.375" />
-        <Point X="14" Y="3.75" />
-      </Path>
-    </InheritanceLine>
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Model\Theme3.cs</FileName>
@@ -146,14 +122,6 @@
   </Class>
   <Class Name="PopnTouchi2.Theme4">
     <Position X="15" Y="3.75" Width="1.5" />
-    <InheritanceLine Type="PopnTouchi2.Theme" FixedFromPoint="true">
-      <Path>
-        <Point X="12.938" Y="3.103" />
-        <Point X="12.938" Y="3.375" />
-        <Point X="15.75" Y="3.375" />
-        <Point X="15.75" Y="3.75" />
-      </Path>
-    </InheritanceLine>
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Model\Theme4.cs</FileName>
@@ -165,41 +133,6 @@
       <HashCode>AAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Model\Builder.cs</FileName>
     </TypeIdentifier>
-  </Class>
-  <Class Name="PopnTouchi2.Session">
-    <Position X="5.25" Y="1.5" Width="1.5" />
-    <AssociationLine Name="MelodyBubbleGenerator" Type="PopnTouchi2.MelodyBubbleGenerator" ManuallyRouted="true" FixedFromPoint="true" FixedToPoint="true">
-      <Path>
-        <Point X="6" Y="2.806" />
-        <Point X="6" Y="3" />
-        <Point X="3.25" Y="3" />
-        <Point X="3.25" Y="3.5" />
-      </Path>
-    </AssociationLine>
-    <AssociationLine Name="NoteBubbleGenerator" Type="PopnTouchi2.NoteBubbleGenerator" ManuallyRouted="true" FixedFromPoint="true" FixedToPoint="true">
-      <Path>
-        <Point X="6" Y="2.806" />
-        <Point X="6" Y="3.5" />
-      </Path>
-    </AssociationLine>
-    <AssociationLine Name="Stave" Type="PopnTouchi2.Stave" ManuallyRouted="true" FixedFromPoint="true" FixedToPoint="true">
-      <Path>
-        <Point X="6" Y="2.806" />
-        <Point X="6" Y="3.035" />
-        <Point X="8.375" Y="3.035" />
-        <Point X="8.375" Y="3.5" />
-      </Path>
-    </AssociationLine>
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAEAQAAAAAAAAAAAAAAAAAgAAEAGAAAA=</HashCode>
-      <FileName>Model\Session.cs</FileName>
-    </TypeIdentifier>
-    <ShowAsAssociation>
-      <Property Name="Theme" />
-      <Property Name="MelodyBubbleGenerator" />
-      <Property Name="NoteBubbleGenerator" />
-      <Property Name="Stave" />
-    </ShowAsAssociation>
   </Class>
   <Enum Name="PopnTouchi2.Gesture">
     <Position X="13.25" Y="5.5" Width="1.5" />

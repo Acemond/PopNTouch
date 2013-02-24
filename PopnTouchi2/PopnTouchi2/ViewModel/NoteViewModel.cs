@@ -6,9 +6,14 @@ using PopnTouchi2.Infrastructure;
 
 namespace PopnTouchi2
 {
-    public class NoteViewModel : ViewModelBase
+    public class NoteViewModel : PopnTouchi2.Infrastructure.ViewModelBase
     {
         private Note _note;
+
+        public event EventHandler tap;
+
+        public event EventHandler dropNote;
+    
         public Note Note
         {
             get
@@ -19,20 +24,6 @@ namespace PopnTouchi2
             {
                 _note = value;
                 NotifyPropertyChanged("Notes");
-            }
-        }
-
-        bool _isOnStave;
-        public bool IsOnStave
-        {
-            get
-            {
-                return _isOnStave;
-            }
-            set
-            {
-                _isOnStave = value;
-                NotifyPropertyChanged("IsOnStave");
             }
         }
     }

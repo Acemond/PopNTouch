@@ -13,8 +13,8 @@ namespace PopnTouchi2
         public MelodyFactory()
         {
             Melodies = new Dictionary<Gesture, Melody>();
-            Note n = new Note(1,NoteValue.crotchet,Pitch.A);
-            Note n2 = new Note(1,NoteValue.crotchet,Pitch.B);
+            Note n = new Note(1,NoteValue.crotchet,Pitch.A , 2);
+            Note n2 = new Note(1,NoteValue.crotchet,Pitch.B, 3);
             list = new List<Note>() { n , n2 };
             Melodies.Add(Gesture.circle, new Melody(new List<Note>() { n, n2 }));
         }
