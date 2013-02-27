@@ -17,6 +17,7 @@ namespace PopnTouchi2
             MaxPosition = 0;
             Notes = new ObservableCollection<Note>();
             CurrentInstrument = Instruments[0];
+            timer = new Timer();
         }
 
         public List<Instrument> Instruments
@@ -53,13 +54,22 @@ namespace PopnTouchi2
 
         public void addNote(Note note)
         {
-            Notes.Add(note);
-            MaxPosition = Math.Max(MaxPosition, note.Position);
+           /* bool putOnStave = false;
+            foreach (Note n in Notes)
+            {
+                if (!(n.Octave == note.Octave && n.Pitch == note.Pitch && n.Position == note.Position))
+                    putOnStave = true;
+            }
+
+            if (putOnStave)
+            {*/
+                Notes.Add(note);
+                MaxPosition = Math.Max(MaxPosition, note.Position);
+            //}
         }
 
         public void playAllNotes()
         {
-            timer = new Timer();
             timer.Interval = 30000 / GlobalVariables.bpm;
             timer.Start();
             timer.Elapsed += new ElapsedEventHandler(Play_List);
@@ -67,16 +77,16 @@ namespace PopnTouchi2
 
         private void Play_List(object source, ElapsedEventArgs e)
         {
-            if (GlobalVariables.position_Note <= MaxPosition+4)
+            if (GlobalVariables.position_Note <= MaxPosition + 4)
             {
                 for (int i = 0; i < Notes.Count; i++)
                 {
+
                     if (Notes[i].Position == GlobalVariables.position_Note)
                     {
                         CurrentInstrument.playNote(Notes[i]);
                     }
                 }
-                GlobalVariables.position_Note++;
             }
             else
             {
@@ -84,6 +94,7 @@ namespace PopnTouchi2
                 timer.EndInit();
                 timer.Elapsed -= new ElapsedEventHandler(Play_List);
                 GlobalVariables.position_Note = 0;
+                GlobalVariables.position_in_Notes = 0;
             }
         }
 
@@ -93,6 +104,7 @@ namespace PopnTouchi2
             timer.EndInit();
             timer.Elapsed -= new ElapsedEventHandler(Play_List);
             GlobalVariables.position_Note = 0;
+            GlobalVariables.position_in_Notes = 0;
         }
 
     }

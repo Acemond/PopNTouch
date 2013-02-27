@@ -19,11 +19,6 @@ namespace PopnTouchi2
     public partial class DesktopWindow : Window
     {
         //Notes pour faire les testes de sons
-        Note n = new Note(6, NoteValue.quaver, Pitch.A, 0);
-        Note n1 = new Note(6, NoteValue.minim, Pitch.B, 0);
-        Note n2 = new Note(6, NoteValue.crotchet, Pitch.C, 0);
-        Note n3 = new Note(6, NoteValue.minim, Pitch.D, 2);
-        Note n4 = new Note(6, NoteValue.quaver, Pitch.E, 3);
         Instrument i = new Instrument(InstrumentType.piano);
         Instrument i2 = new Instrument(InstrumentType.piano);
         List<Instrument> listinstr = new List<Instrument>();
@@ -38,22 +33,29 @@ namespace PopnTouchi2
             listinstr.Add(i2);
             listinstr.Add(i);
             stave = new Stave(listinstr);
-            stave.addNote(n);
-            stave.addNote(n1);
-            stave.addNote(n2);
-            stave.addNote(n3);
-            stave.addNote(n4);
+            for (int k = 0; k < 30; k++)
+            {
+                Note n = new Note(6, NoteValue.quaver, Pitch.A, k);
+                stave.addNote(n);
+            }
+            String s = "";
+            for (int j = 0; j < stave.Notes.Count; j++)
+            {
+                s += stave.Notes[j].Position;
+            }
+            MessageBox.Show(s);
             //Fin création -> A virer
         }
 
         //*********** Méthodes pour tester le son ***********
         private void playSon(object sender, RoutedEventArgs e)
         {
-            i.playNote(n3);
+           // i.playNote(n3);
         }
 
         private void playSon2(object sender, RoutedEventArgs e)
         {
+           
             stave.playAllNotes();
         }
 

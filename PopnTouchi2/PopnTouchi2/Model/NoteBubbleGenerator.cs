@@ -28,7 +28,23 @@ namespace PopnTouchi2
 
         public void createNoteBubble()
         {
-           //algo pour creer une NoteBubbles
+            //algo pour creer une NoteBubbles
+            int[] values = { 0, 0, 0 };
+            for (int i = 0; i < _noteBubbles.Count; i++)
+            {
+                switch (_noteBubbles[i].Note.Duration)
+                {
+                    case NoteValue.quaver: values[0]++;
+                        break;
+                    case NoteValue.crotchet: values[1]++;
+                        break;
+                    case NoteValue.minim: values[2]++;
+                        break;
+                }
+            }
+
+            NoteBubble n = new NoteBubble(values.Min());
+            _noteBubbles.Add(n);
         }
 
         public void removeFromGenerator(int idNote)

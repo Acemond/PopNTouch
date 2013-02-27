@@ -9,26 +9,21 @@ namespace PopnTouchi2
     {
         public MelodyBubbleGenerator()
         {
-            throw new System.NotImplementedException();
+            MelodyBubbles = new List<MelodyBubble>();
         }
-    
-        public MelodyBubble MelodyBubbles
+
+        public List<MelodyBubble> MelodyBubbles
         {
-            get
-            {
-                throw new System.NotImplementedException();
-            }
-            set
-            {
-            }
+            get;
+            set;
         }
-    
+
         public void createMelodyBubble()
         {
             throw new System.NotImplementedException();
         }
 
-        public void removeFromGenerator(PopnTouchi2.MelodyBubble melody)
+        public void removeFromGenerator(MelodyBubble melody)
         {
             throw new System.NotImplementedException();
         }

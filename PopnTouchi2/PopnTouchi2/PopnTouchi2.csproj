@@ -134,16 +134,12 @@
     <EmbeddedResource Include="Diagrams\Initilisation_jeu.sequencediagram.layout">
       <DependentUpon>Initilisation_jeu.sequencediagram</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Diagrams\pose_bulle_portée.sequencediagram.layout">
-      <DependentUpon>pose_bulle_portée.sequencediagram</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <None Include="Diagrams\Initilisation_jeu.sequencediagram" />
     <None Include="Diagrams\Model.cd" />
-    <None Include="Diagrams\pose_bulle_portée.sequencediagram" />
     <None Include="Diagrams\View_ViewModel.cd" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
