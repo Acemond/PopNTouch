@@ -142,9 +142,13 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <None Include="Diagrams\Initilisation_jeu.sequencediagram" />
-    <None Include="Diagrams\Model.cd" />
+    <None Include="Diagrams\Model.cd">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Diagrams\pose_bulle_portée.sequencediagram" />
-    <None Include="Diagrams\View_ViewModel.cd" />
+    <None Include="Diagrams\View_ViewModel.cd">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
