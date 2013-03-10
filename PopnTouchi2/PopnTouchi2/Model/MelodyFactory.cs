@@ -8,20 +8,21 @@ namespace PopnTouchi2
     public class MelodyFactory
     {
         public Dictionary<Gesture, Melody> Melodies { get; set; }
-        private List<Note> list;
 
         public MelodyFactory()
         {
-            Melodies = new Dictionary<Gesture, Melody>();
-            Note n = new Note(1,NoteValue.crotchet,Pitch.A , 2);
-            Note n2 = new Note(1,NoteValue.crotchet,Pitch.B, 3);
-            list = new List<Note>() { n , n2 };
-            Melodies.Add(Gesture.circle, new Melody(new List<Note>() { n, n2 }));
+            //Grosse base de données sur les mélodies que nous donnera Cedrick Alexandre
         }
 
         public Melody getMelody(Gesture gesture)
         {
             return Melodies[gesture];
+        }
+
+        public Melody getMelody()
+        {
+            //Faire un algo qui détermine quelle mélodie extraire du générateur
+            return Melodies[Gesture.infinite];
         }
     }
 }

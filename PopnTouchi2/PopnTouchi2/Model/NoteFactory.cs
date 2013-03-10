@@ -14,7 +14,7 @@ namespace PopnTouchi2
             _notes = new Dictionary<int, NoteValue>();
         }
 
-        public void createNote(NoteValue noteValue, Pitch pitch)
+        public void createNote(int noteValue, Pitch pitch)
         {
             throw new System.NotImplementedException();
         }

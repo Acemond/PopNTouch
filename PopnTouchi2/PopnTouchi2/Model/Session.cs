@@ -2,73 +2,65 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using PopnTouchi2.Model.Enums;
 
 namespace PopnTouchi2
 {
     public class Session
     {
-<<<<<<< HEAD
-        public Theme Theme
-=======
-        /// <summary>
-        /// Rythme
-        /// </summary>
-        public static int _bpm;
+        //<<<<<<< HEAD
+        private Theme theme;
+
 
         public MelodyBubbleGenerator MelodyBubbleGenerator
->>>>>>> cfc74d4739031189b8bf39e1f3ea6da345159809
+        //>>>>>>> cfc74d4739031189b8bf39e1f3ea6da345159809
         {
-            get
-            {
-                throw new System.NotImplementedException();
-            }
-            set
-            {
-            }
+            get;
+            set;
         }
 
         public NoteBubbleGenerator NoteBubbleGenerator
         {
-            get
-            {
-                throw new System.NotImplementedException();
-            }
-            set
-            {
-            }
+            get;
+            set;
         }
 
         public Stave StaveTop
         {
-            get
-            {
-                throw new System.NotImplementedException();
-            }
-            set
-            {
-            }
+            get;
+            set;
         }
 
         public Stave StaveBottom
         {
-            get
-            {
-                throw new System.NotImplementedException();
-            }
-            set
-            {
-            }
+            get;
+            set;
         }
 
         public Theme Theme
         {
             get
             {
-                throw new System.NotImplementedException();
+                return this.theme;
             }
             set
             {
             }
+        }
+
+        public Session()
+        {
+            theme = new Theme1();
+            MelodyBubbleGenerator = new MelodyBubbleGenerator();
+            NoteBubbleGenerator = new NoteBubbleGenerator();
+            StaveTop = new Stave(theme.getInstrumentsTop());
+            StaveBottom = new Stave(theme.getInstrumentsBottom());
+        }
+
+
+        public void changeBpm(int newBpm)
+        {
+            GlobalVariables.bpm = newBpm;
         }
 
         public void reduce()

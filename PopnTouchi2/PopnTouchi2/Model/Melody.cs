@@ -19,13 +19,8 @@ namespace PopnTouchi2
 
         public List<Note> Notes
         {
-            get
-            {
-                throw new System.NotImplementedException();
-            }
-            set
-            {
-            }
+            get;
+            set;
         }
     }
 }
