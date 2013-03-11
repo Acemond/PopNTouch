@@ -161,6 +161,8 @@
     <Resource Include="Image\bulleblanche.png" />
     <Resource Include="Image\bullecroche.png" />
     <Resource Include="Image\bullenoire.png" />
+    <Resource Include="Image\Leather.png" />
+    <Resource Include="Image\bullesBack.png" />
     <Content Include="Resources\icon.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

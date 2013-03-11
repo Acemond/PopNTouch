@@ -7,9 +7,15 @@ namespace PopnTouchi2
 {
     public class Builder
     {
-        public void generateSession()
+        public Builder()
         {
-            throw new System.NotImplementedException();
+
+        }
+
+        public Session generateSession()
+        {
+            //throw new System.NotImplementedException();
+            return new Session();
         }
     }
 }
