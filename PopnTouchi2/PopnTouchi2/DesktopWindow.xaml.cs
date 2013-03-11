@@ -33,11 +33,14 @@ namespace PopnTouchi2
             listinstr.Add(i2);
             listinstr.Add(i);
             stave = new Stave(listinstr);
-            for (int k = 0; k < 30; k++)
-            {
-                Note n = new Note(6, NoteValue.quaver, Pitch.A, k);
-                stave.addNote(n);
-            }
+            Note n = new Note(6, NoteValue.crotchet, Pitch.A, 0);
+            Note n2 = new Note(6, NoteValue.crotchet, Pitch.E, 2);
+            Note n3 = new Note(6, NoteValue.crotchet, Pitch.E, 1);
+                
+                stave.addNote(n,0);
+                stave.addNote(n2,2);
+                stave.addNote(n3, 1);
+            
             String s = "";
             for (int j = 0; j < stave.Notes.Count; j++)
             {
@@ -48,9 +51,15 @@ namespace PopnTouchi2
         }
 
         //*********** Méthodes pour tester le son ***********
-        private void playSon(object sender, RoutedEventArgs e)
+        private void trier(object sender, RoutedEventArgs e)
         {
-           // i.playNote(n3);
+            stave.trier();
+            String s = "";
+            for (int j = 0; j < stave.Notes.Count; j++)
+            {
+                s += stave.Notes[j].Position;
+            }
+            MessageBox.Show(s);
         }
 
         private void playSon2(object sender, RoutedEventArgs e)

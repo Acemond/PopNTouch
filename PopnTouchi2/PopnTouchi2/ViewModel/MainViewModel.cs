@@ -10,7 +10,7 @@ namespace PopnTouchi2
 {
     public class MainViewModel : PopnTouchi2.Infrastructure.ViewModelBase
     {
-        public PopnTouchi2.SessionViewModel sessionViewModel;
+        public SessionViewModel sessionViewModel;
         private ICommand play;
         private ICommand stop;
         private int changeTheme;

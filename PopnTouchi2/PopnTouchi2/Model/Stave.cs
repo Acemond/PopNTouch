@@ -47,25 +47,28 @@ namespace PopnTouchi2
         private Timer timer;
 
 
-        public void addMelody(MelodyBubble mb)
+        public void addMelody(MelodyBubble mb, int position)
         {
-            throw new System.NotImplementedException();
+            int cardMelody = mb.Melody.Notes.Count;
+            for(int i = 0; i< cardMelody ; i++)
+            {
+                mb.Melody.Notes[i].Position += position;
+
+                Notes.Add(mb.Melody.Notes[i]);
+                Notes.OrderBy(note => note.Position);
+            }
         }
 
-        public void addNote(Note note)
+        public void addNote(Note note, int position)
         {
-           /* bool putOnStave = false;
-            foreach (Note n in Notes)
-            {
-                if (!(n.Octave == note.Octave && n.Pitch == note.Pitch && n.Position == note.Position))
-                    putOnStave = true;
-            }
+            note.Position = position;
+            Notes.Add(note);
+            MaxPosition = Math.Max(MaxPosition, note.Position);
+        }
 
-            if (putOnStave)
-            {*/
-                Notes.Add(note);
-                MaxPosition = Math.Max(MaxPosition, note.Position);
-            //}
+        public void trier()
+        {
+            Notes.OrderBy(note => note.Position);
         }
 
         public void playAllNotes()
@@ -77,16 +80,33 @@ namespace PopnTouchi2
 
         private void Play_List(object source, ElapsedEventArgs e)
         {
+            bool play = true;
             if (GlobalVariables.position_Note <= MaxPosition + 4)
             {
-                for (int i = 0; i < Notes.Count; i++)
-                {
+                //for (int i = 0; i < Notes.Count; i++)
+                //{
 
-                    if (Notes[i].Position == GlobalVariables.position_Note)
+                //    if (Notes[i].Position == GlobalVariables.position_Note)
+                //    {
+                //        CurrentInstrument.playNote(Notes[i]);
+                //    }
+                //}
+               
+                while (play && (GlobalVariables.it_Notes < Notes.Count))
+                {
+                    if (Notes[GlobalVariables.it_Notes].Position == GlobalVariables.position_Note)
                     {
-                        CurrentInstrument.playNote(Notes[i]);
+                        CurrentInstrument.playNote(Notes[GlobalVariables.it_Notes]);
+                        GlobalVariables.it_Notes++;
+                    }
+                    else
+                    {
+                        play = false;
                     }
                 }
+               
+                GlobalVariables.position_Note++;
+
             }
             else
             {
@@ -94,7 +114,7 @@ namespace PopnTouchi2
                 timer.EndInit();
                 timer.Elapsed -= new ElapsedEventHandler(Play_List);
                 GlobalVariables.position_Note = 0;
-                GlobalVariables.position_in_Notes = 0;
+                GlobalVariables.it_Notes = 0;
             }
         }
 
@@ -104,7 +124,7 @@ namespace PopnTouchi2
             timer.EndInit();
             timer.Elapsed -= new ElapsedEventHandler(Play_List);
             GlobalVariables.position_Note = 0;
-            GlobalVariables.position_in_Notes = 0;
+            GlobalVariables.it_Notes = 0;
         }
 
     }

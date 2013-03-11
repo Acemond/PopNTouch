@@ -70,7 +70,6 @@
     </Compile>
     <Compile Include="ViewModel\SessionViewModel.cs" />
     <Compile Include="ViewModel\NoteBubbleViewModel.cs" />
-    <Compile Include="Model\InstrumentViewModel.cs" />
     <Compile Include="Model\Session.cs" />
     <Compile Include="Model\Theme1.cs" />
     <Compile Include="Model\Theme2.cs" />
