@@ -138,6 +138,13 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <None Include="Diagrams\Initilisation_jeu.sequencediagram" />
+    <None Include="Diagrams\Model.cd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Diagrams\pose_bulle_portée.sequencediagram" />
+    <None Include="Diagrams\View_ViewModel.cd">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Diagrams\Model.cd" />
     <None Include="Diagrams\View_ViewModel.cd" />
     <None Include="Properties\Settings.settings">
@@ -153,6 +160,8 @@
     <Resource Include="Image\bulleblanche.png" />
     <Resource Include="Image\bullecroche.png" />
     <Resource Include="Image\bullenoire.png" />
+    <Resource Include="Image\Leather.png" />
+    <Resource Include="Image\bullesBack.png" />
     <Content Include="Resources\icon.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

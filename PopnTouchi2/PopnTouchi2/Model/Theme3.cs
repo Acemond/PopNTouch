@@ -14,6 +14,7 @@ namespace PopnTouchi2
             _instrumentsTop.Add(new Instrument(InstrumentType.piano));
             _instrumentsBottom.Add(new Instrument(InstrumentType.flute));
             _instrumentsBottom.Add(new Instrument(InstrumentType.ocarina));
+            //TODO : define background image, see Theme1 for instance.
         }
 
 

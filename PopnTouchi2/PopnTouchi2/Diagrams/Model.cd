@@ -9,9 +9,6 @@
       <HashCode>AAEAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAQAAA=</HashCode>
       <FileName>Model\MelodyBubbleGenerator.cs</FileName>
     </TypeIdentifier>
-    <ShowAsAssociation>
-      <Property Name="MelodyBubbles" />
-    </ShowAsAssociation>
   </Class>
   <Class Name="PopnTouchi2.MelodyBubble">
     <Position X="2.25" Y="6" Width="1.5" />
@@ -33,7 +30,7 @@
   <Class Name="PopnTouchi2.MelodyFactory">
     <Position X="2.25" Y="10" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAgAAAAAAACAAAAAAAAAAAAAAAAAIAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAACAAAAAAAAAAAAAAAAAIAAAAAAAAAAA=</HashCode>
       <FileName>Model\MelodyFactory.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -95,7 +92,7 @@
   <Class Name="PopnTouchi2.Theme">
     <Position X="12.25" Y="1.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAACAAAAAACABAAAAAAAAAAAAAAACAAAAIgAAAAAAA=</HashCode>
       <FileName>Model\Theme.cs</FileName>
     </TypeIdentifier>
   </Class>

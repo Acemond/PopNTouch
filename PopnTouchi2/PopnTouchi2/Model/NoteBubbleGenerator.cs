@@ -9,21 +9,11 @@ namespace PopnTouchi2
     public class NoteBubbleGenerator
     {
         private ObservableCollection<NoteBubble> _noteBubbles;
+        public NoteBubble NoteBubbles { get; set; }
 
         public NoteBubbleGenerator()
         {
             _noteBubbles = new ObservableCollection<NoteBubble>();
-        }
-
-        public NoteBubble NoteBubbles
-        {
-            get
-            {
-                throw new System.NotImplementedException();
-            }
-            set
-            {
-            }
         }
 
         public void createNoteBubble()

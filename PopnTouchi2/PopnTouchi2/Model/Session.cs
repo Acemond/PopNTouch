@@ -3,61 +3,34 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using PopnTouchi2.Model.Enums;
+using System.Windows.Controls;
+using System.Windows.Media;
 
 namespace PopnTouchi2
 {
-    public class Session
+    public class Session : Grid
     {
-        //<<<<<<< HEAD
-        private Theme theme;
+        #region Attributes
+        public MelodyBubbleGenerator MelodyBubbleGenerator { get; set; }
+        public NoteBubbleGenerator NoteBubbleGenerator { get; set; }
+        public Stave StaveTop { get; set; }
+        public Stave StaveBottom { get; set; }
+        public Theme Theme { get; set; }
+        #endregion
 
-
-        public MelodyBubbleGenerator MelodyBubbleGenerator
-        //>>>>>>> cfc74d4739031189b8bf39e1f3ea6da345159809
-        {
-            get;
-            set;
-        }
-
-        public NoteBubbleGenerator NoteBubbleGenerator
-        {
-            get;
-            set;
-        }
-
-        public Stave StaveTop
-        {
-            get;
-            set;
-        }
-
-        public Stave StaveBottom
-        {
-            get;
-            set;
-        }
-
-        public Theme Theme
-        {
-            get
-            {
-                return this.theme;
-            }
-            set
-            {
-            }
-        }
-
+        #region Constructors
         public Session()
         {
-            theme = new Theme1();
+            Theme = new Theme1();
             MelodyBubbleGenerator = new MelodyBubbleGenerator();
             NoteBubbleGenerator = new NoteBubbleGenerator();
-            StaveTop = new Stave(theme.getInstrumentsTop());
-            StaveBottom = new Stave(theme.getInstrumentsBottom());
+            StaveTop = new Stave(Theme.getInstrumentsTop());
+            StaveBottom = new Stave(Theme.getInstrumentsBottom());
+            Background = Theme._backgroundImage;
         }
+        #endregion
 
-
+        #region Methods
         public void changeBpm(int newBpm)
         {
             GlobalVariables.bpm = newBpm;
@@ -72,5 +45,6 @@ namespace PopnTouchi2
         {
             throw new System.NotImplementedException();
         }
+        #endregion
     }
 }
