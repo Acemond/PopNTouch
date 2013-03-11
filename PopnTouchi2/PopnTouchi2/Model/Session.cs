@@ -24,8 +24,8 @@ namespace PopnTouchi2
             Theme = new Theme1();
             MelodyBubbleGenerator = new MelodyBubbleGenerator();
             NoteBubbleGenerator = new NoteBubbleGenerator();
-            StaveTop = new Stave(Theme.getInstrumentsTop());
-            StaveBottom = new Stave(Theme.getInstrumentsBottom());
+            StaveTop = new Stave(Theme.getInstrumentsTop()[0]);
+            StaveBottom = new Stave(Theme.getInstrumentsBottom()[0]);
             Background = Theme._backgroundImage;
         }
         #endregion

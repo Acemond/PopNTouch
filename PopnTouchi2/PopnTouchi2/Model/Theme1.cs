@@ -12,10 +12,10 @@ namespace PopnTouchi2
         public Theme1()
             : base()
         {
-            _instrumentsTop.Add(new Instrument(InstrumentType.ocarina));
-            _instrumentsTop.Add(new Instrument(InstrumentType.piano));
-            _instrumentsBottom.Add(new Instrument(InstrumentType.flute));
-            _instrumentsBottom.Add(new Instrument(InstrumentType.ocarina));
+            _instrumentsTop[0] = new Instrument(InstrumentType.ocarina);
+            _instrumentsTop[1] = new Instrument(InstrumentType.piano);
+            _instrumentsBottom[0] = new Instrument(InstrumentType.flute);
+            _instrumentsBottom[1] = new Instrument(InstrumentType.ocarina);
             
             _backgroundImage = new ImageBrush();
             _backgroundImage.ImageSource =

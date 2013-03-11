@@ -29,7 +29,7 @@ namespace PopnTouchi2
 
             Builder sessionBuilder = new Builder();
             Session newSession = sessionBuilder.generateSession();
-            desktop.Children.Add(newSession);
+      //      desktop.Children.Add(newSession);
         }
     }
 }

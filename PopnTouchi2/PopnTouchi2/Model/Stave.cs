@@ -11,38 +11,19 @@ namespace PopnTouchi2
     public class Stave
     {
 
-        public Stave(List<Instrument> list)
+        public Stave(Instrument instru)
         {
-            Instruments = list;
             MaxPosition = 0;
             Notes = new ObservableCollection<Note>();
-            CurrentInstrument = Instruments[0];
+            CurrentInstrument = instru;
             timer = new Timer();
         }
 
-        public List<Instrument> Instruments
-        {
-            get;
-            set;
-        }
+        public ObservableCollection<Note> Notes { get; set; }
 
-        public ObservableCollection<Note> Notes
-        {
-            get;
-            set;
-        }
+        public Instrument CurrentInstrument { get; set; }
 
-        public Instrument CurrentInstrument
-        {
-            get;
-            set;
-        }
-
-        public int MaxPosition
-        {
-            get;
-            set;
-        }
+        public int MaxPosition { get; set; } 
 
         private Timer timer;
 
