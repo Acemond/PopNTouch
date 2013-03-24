@@ -18,10 +18,12 @@ namespace PopnTouchi2
         {
             get
             {
-                throw new System.NotImplementedException();
+                return _session; 
             }
             set
             {
+                _session = value;
+                NotifyPropertyChanged("Session");
             }
         }
     }

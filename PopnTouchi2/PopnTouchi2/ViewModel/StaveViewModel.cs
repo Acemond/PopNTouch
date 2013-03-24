@@ -2,10 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using PopnTouchi2.Infrastructure;
 
 namespace PopnTouchi2
 {
-    public class StaveViewModel : PopnTouchi2.Infrastructure.ViewModelBase
+    public class StaveViewModel : ViewModelBase
     {
         private int _instrument;
         private Stave _stave;
@@ -14,10 +15,12 @@ namespace PopnTouchi2
         {
             get
             {
-                throw new System.NotImplementedException();
+                return _instrument; 
             }
             set
             {
+               _instrument = value;
+                NotifyPropertyChanged("CurrentInstrument");
             }
         }
 
@@ -25,10 +28,12 @@ namespace PopnTouchi2
         {
             get
             {
-                throw new System.NotImplementedException();
+                return _stave; 
             }
             set
             {
+                _stave = value;
+                NotifyPropertyChanged("Stave");
             }
         }
     }

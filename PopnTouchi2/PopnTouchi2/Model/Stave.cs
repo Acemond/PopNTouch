@@ -34,16 +34,20 @@ namespace PopnTouchi2
             for(int i = 0; i< cardMelody ; i++)
             {
                 mb.Melody.Notes[i].Position += position;
+                int posArray = position;
+                while (Notes[posArray++].Position < mb.Melody.Notes[i].Position) ;
 
-                Notes.Add(mb.Melody.Notes[i]);
-                Notes.OrderBy(note => note.Position);
-            }
+                Notes.Insert(posArray, mb.Melody.Notes[i]);
+                }
         }
 
         public void addNote(Note note, int position)
         {
             note.Position = position;
-            Notes.Add(note);
+            int i=0;
+            while (Notes[i++].Position < position) ;
+
+            Notes.Insert(i, note);
             MaxPosition = Math.Max(MaxPosition, note.Position);
         }
 

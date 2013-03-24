@@ -8,48 +8,55 @@ using System.Threading.Tasks;
 
 namespace PopnTouchi2
 {
-    public class MainViewModel : PopnTouchi2.Infrastructure.ViewModelBase
+    public class MainViewModel : ViewModelBase
     {
         public SessionViewModel sessionViewModel;
-        private ICommand play;
-        private ICommand stop;
-        private int changeTheme;
+        private ICommand _play;
+        private ICommand _stop;
+        private ICommand _changeTheme;
 
         /// <summary>
         /// Constructeur de la VueModele pricipale
         /// </summary>
         public MainViewModel()
         {
-          
+            sessionViewModel = new SessionViewModel(new Session());
         }
 
-        public System.Windows.Input.ICommand Play
+
+        public ICommand Play
         {
             get
             {
-                throw new System.NotImplementedException();
+                if (_play == null)
+                    _play = new RelayCommand(playAction);
+                return _play;
             }
             set
             {
             }
         }
 
-        public System.Windows.Input.ICommand Stop
+        public ICommand Stop
         {
             get
             {
-                throw new System.NotImplementedException();
+                if (_stop == null)
+                    _stop = new RelayCommand(stopAction);
+                return _stop;
             }
             set
             {
             }
         }
 
-        public System.Windows.Input.ICommand ChangeTheme
+        public ICommand ChangeTheme
         {
             get
             {
-                throw new System.NotImplementedException();
+                if (_changeTheme == null)
+                    _changeTheme = new RelayCommand(changeThemeAction);
+                return _changeTheme;
             }
             set
             {
@@ -58,38 +65,29 @@ namespace PopnTouchi2
 
         public void playAction()
         {
-            throw new System.NotImplementedException();
+            Task.Factory.StartNew(() =>
+            {
+                sessionViewModel.Session.StaveTop.playAllNotes();
+                sessionViewModel.Session.StaveBottom.playAllNotes();
+            });
         }
 
         public void stopAction()
         {
-            throw new System.NotImplementedException();
+            Task.Factory.StartNew(() =>
+            {
+                sessionViewModel.Session.StaveTop.stopMusic();
+                sessionViewModel.Session.StaveBottom.stopMusic();
+            });
         }
 
         public void changeThemeAction()
         {
-            throw new System.NotImplementedException();
-        }
-/*
-        private Play _play;
-        public Play Play
-        {
-            get
+            /*Task.Factory.StartNew(() =>
             {
-                if (_play == null)
-                    _play = new RelayCommand(play_action);
-                return _play;
-            }
+                sessionViewModel.Session
+                sessionViewModel.Session.StaveBottom.stopMusic();
+            });*/ 
         }
-
-        private void play_action()
-        {
-            // création d'un thread pour lancer le calcul du tour suivant sans que cela soit bloquant pour l'IHM
-            Task.Factory.StartNew(() =>
-            {
-                sessionViewModel.StaveTop.playAllNotes();
-                stave2.StaveTop.playAllNotes();
-            });
-        }*/
     }
 }
