@@ -12,5 +12,11 @@
         <Grid Name="melodyFactory" Height="232" Width="322" HorizontalAlignment="Right" VerticalAlignment="Bottom">
             <Image Source=".\Resources\images\ui_items\melodyfactory.png"></Image>
         </Grid>
+        <Grid Name="themes" Height="110" Width="351" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,0,214,0">
+            <Image Source=".\Resources\images\ui_items\themes.png"></Image>
+        </Grid>
+        <Grid Name="exos" Height="72" Width="208" VerticalAlignment="Top" HorizontalAlignment="Right">
+            <Image Source=".\Resources\images\ui_items\exos.png"></Image>
+        </Grid>
     </Grid>
 </Window>
