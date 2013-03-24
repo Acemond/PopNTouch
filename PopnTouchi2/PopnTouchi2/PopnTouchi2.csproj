@@ -157,17 +157,31 @@
     <None Include="Resources\Wave Bank.xwb" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Image\bulleblanche.png" />
-    <Resource Include="Image\bullecroche.png" />
-    <Resource Include="Image\bullenoire.png" />
-    <Resource Include="Image\Leather.png" />
-    <Resource Include="Image\bullesBack.png" />
     <Content Include="Resources\icon.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="PopnTouchi2.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Resource Include="Resources\images\bulleblanche.png" />
+    <Resource Include="Resources\images\bullecroche.png" />
+    <Resource Include="Resources\images\bullenoire.png" />
+    <Resource Include="Resources\images\Leather.png" />
+    <Content Include="Resources\sounds\bubbles\discovery1.mp3" />
+    <Content Include="Resources\sounds\bubbles\discovery2.mp3" />
+    <Content Include="Resources\sounds\bubbles\discovery3.mp3" />
+    <Content Include="Resources\sounds\bubbles\discovery4.mp3" />
+    <Content Include="Resources\sounds\summer\loop_superbirds.mp3" />
+    <Content Include="Resources\sounds\summer\whistle1.mp3" />
+    <Content Include="Resources\sounds\summer\whistle2.mp3" />
+    <Content Include="Resources\sounds\summer\whistle3.mp3" />
+    <Content Include="Resources\sounds\summer\whistle4.mp3" />
+    <Content Include="Resources\sounds\water\geyser.mp3" />
+    <Content Include="Resources\sounds\water\geyser2.mp3" />
+    <Content Include="Resources\sounds\water\loop_bubbles.mp3" />
+    <Content Include="Resources\sounds\water\loop_eveningWater.mp3" />
+    <Content Include="Resources\sounds\water\loop_shore.mp3" />
+    <Content Include="Resources\sounds\water\loop_waterPond.mp3" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
