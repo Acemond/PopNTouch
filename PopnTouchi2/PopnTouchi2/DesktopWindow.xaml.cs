@@ -22,14 +22,14 @@ namespace PopnTouchi2
     /// </summary>
     public partial class DesktopWindow : SurfaceWindow
     {
-
         public DesktopWindow()
         {
             InitializeComponent();
 
             Builder sessionBuilder = new Builder();
             Session newSession = sessionBuilder.generateSession();
-      //      desktop.Children.Add(newSession);
+        //    desktop.Children.Add(newSession);
+
         }
     }
 }
