@@ -157,20 +157,38 @@
     <None Include="Resources\Wave Bank.xwb" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Resources\icon.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
     <Content Include="PopnTouchi2.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Resource Include="Resources\images\bulleblanche.png" />
-    <Resource Include="Resources\images\bullecroche.png" />
-    <Resource Include="Resources\images\bullenoire.png" />
-    <Resource Include="Resources\images\Leather.png" />
+    <Resource Include="Resources\images\backgroundstaves.png" />
+    <Resource Include="Resources\images\bubbles\melodies\8.png" />
+    <Resource Include="Resources\images\bubbles\melodies\s.png" />
+    <Resource Include="Resources\images\bubbles\melodies\t.png" />
+    <Resource Include="Resources\images\bubbles\melodies\wave.png" />
+    <Resource Include="Resources\images\bubbles\melodies\zigzag.png" />
+    <Resource Include="Resources\images\bubbles\notes\bemol.png" />
+    <Resource Include="Resources\images\bubbles\notes\bulleblanche.png" />
+    <Resource Include="Resources\images\bubbles\notes\bullecroche.png" />
+    <Resource Include="Resources\images\bubbles\notes\bullenoire.png" />
+    <Resource Include="Resources\images\bubbles\notes\diese.png" />
+    <Resource Include="Resources\images\notes\black\crotchet.png" />
+    <Resource Include="Resources\images\notes\black\minim.png" />
+    <Resource Include="Resources\images\notes\black\quaver.png" />
+    <Resource Include="Resources\images\notes\white\crotchet.png" />
+    <Resource Include="Resources\images\notes\white\minim.png" />
+    <Resource Include="Resources\images\notes\white\quaver.png" />
+    <Resource Include="Resources\images\ui_items\exos.png" />
+    <Resource Include="Resources\images\ui_items\melodyfactory.png" />
+    <Resource Include="Resources\images\ui_items\notefactory.png" />
+    <Resource Include="Resources\images\ui_items\themes.png" />
     <Content Include="Resources\sounds\bubbles\discovery1.mp3" />
     <Content Include="Resources\sounds\bubbles\discovery2.mp3" />
     <Content Include="Resources\sounds\bubbles\discovery3.mp3" />
     <Content Include="Resources\sounds\bubbles\discovery4.mp3" />
+    <Content Include="Resources\sounds\bubbles\pop1.wav" />
+    <Content Include="Resources\sounds\bubbles\pop2.wav" />
+    <Content Include="Resources\sounds\bubbles\pop3.wav" />
+    <Content Include="Resources\sounds\bubbles\pop4.wav" />
     <Content Include="Resources\sounds\summer\loop_superbirds.mp3" />
     <Content Include="Resources\sounds\summer\whistle1.mp3" />
     <Content Include="Resources\sounds\summer\whistle2.mp3" />
