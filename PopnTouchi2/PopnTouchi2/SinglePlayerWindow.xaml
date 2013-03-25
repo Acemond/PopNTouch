@@ -18,5 +18,18 @@
         <Grid Name="exos" Height="72" Width="208" VerticalAlignment="Top" HorizontalAlignment="Right">
             <Image Source=".\Resources\images\ui_items\exos.png"></Image>
         </Grid>
+        <Grid Name="play" Height="150" Width="140" VerticalAlignment="Top" HorizontalAlignment="Left">
+            <Image Source=".\Resources\images\ui_items\playdrop.png"></Image>
+        </Grid>
+        <Grid Name="sound" VerticalAlignment="Top" HorizontalAlignment="Left">
+            <StackPanel Orientation="Horizontal" Margin="160,40,0,0">
+                <Image Source=".\Resources\images\ui_items\soundpointenable.png" Height="24" Width="24" Margin="0,0,20,0"></Image>
+                <Image Source=".\Resources\images\ui_items\soundpointenable.png" Height="24" Width="24" Margin="0,0,20,0"></Image>
+                <Image Source=".\Resources\images\ui_items\soundpointenable.png" Height="24" Width="24" Margin="0,0,20,0"></Image>
+                <Image Source=".\Resources\images\ui_items\soundpointenable.png" Height="24" Width="24" Margin="0,0,20,0"></Image>
+                <Image Source=".\Resources\images\ui_items\soundpointenable.png" Height="24" Width="24" Margin="0,0,20,0"></Image>
+                <Image Source=".\Resources\images\ui_items\soundpointenable.png" Height="24" Width="24"></Image>
+            </StackPanel>
+        </Grid>
     </Grid>
 </Window>

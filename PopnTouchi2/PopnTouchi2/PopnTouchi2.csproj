@@ -181,6 +181,9 @@
     <Resource Include="Resources\images\ui_items\melodyfactory.png" />
     <Resource Include="Resources\images\ui_items\notefactory.png" />
     <Resource Include="Resources\images\ui_items\themes.png" />
+    <Resource Include="Resources\images\ui_items\playdrop.png" />
+    <Resource Include="Resources\images\ui_items\soundpointdisable.png" />
+    <Resource Include="Resources\images\ui_items\soundpointenable.png" />
     <Content Include="Resources\sounds\bubbles\discovery1.mp3" />
     <Content Include="Resources\sounds\bubbles\discovery2.mp3" />
     <Content Include="Resources\sounds\bubbles\discovery3.mp3" />
