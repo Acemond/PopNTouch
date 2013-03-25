@@ -3,41 +3,33 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using PopnTouchi2.Model.Enums;
+using Microsoft.Surface.Presentation.Controls;
+using System.Windows;
+using System.Windows.Media;
 
 namespace PopnTouchi2
 {
-    public class NoteBubble
+    public class NoteBubble : ScatterViewItem
     {
 
-        public NoteBubble(int noteValue)
+        public NoteBubble(NoteValue noteValue)
         {
-            NoteValue n;
-            switch (noteValue)
-            {
-                case 1: n = NoteValue.quaver;
-                    break;
-                case 2: n = NoteValue.crotchet;
-                    break;
-                case 3: n = NoteValue.minim;
-                    break;
-                default: n = NoteValue.crotchet;
-                    break;
-            }
-
-            Note = new Note(0, n, Pitch.A, -1);
+            Note = new Note(0, noteValue, Pitch.A, -1);
             Id = GlobalVariables.idNoteBubble++;
+
+            CanScale = false;
+            HorizontalAlignment = HorizontalAlignment.Center;
+            CanRotate = false;
+            HorizontalAlignment = HorizontalAlignment.Center;
+
         }
 
-        public Note Note
+        public NoteBubble(NoteValue noteValue, Theme theme): this(noteValue)
         {
-            get;
-            set;
+            this.Content = theme.getNoteBubbleImage(noteValue);
         }
 
-        public int Id
-        {
-            get;
-            set;
-        }
+        public Note Note { get; set; }
+        public int Id { get; set; }
     }
 }

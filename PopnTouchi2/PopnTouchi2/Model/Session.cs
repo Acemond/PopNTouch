@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using PopnTouchi2.Model.Enums;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
+using Microsoft.Surface.Presentation.Controls;
 
 namespace PopnTouchi2
 {
@@ -16,14 +18,19 @@ namespace PopnTouchi2
         public Stave StaveTop { get; set; }
         public Stave StaveBottom { get; set; }
         public Theme Theme { get; set; }
+        public ScatterView Bubbles { get; set; }
         #endregion
 
         #region Constructors
         public Session()
         {
-            Theme = new Theme1();
-            MelodyBubbleGenerator = new MelodyBubbleGenerator();
-            NoteBubbleGenerator = new NoteBubbleGenerator();
+            Theme = new Theme1(); //Could be randomized
+            MelodyBubbleGenerator = new MelodyBubbleGenerator(Theme);
+            NoteBubbleGenerator = new NoteBubbleGenerator(Theme);
+            Bubbles = new ScatterView();
+
+            Children.Add(NoteBubbleGenerator);
+            Children.Add(MelodyBubbleGenerator);
             StaveTop = new Stave(Theme.getInstrumentsTop()[0]);
             StaveBottom = new Stave(Theme.getInstrumentsBottom()[0]);
             Background = Theme._backgroundImage;

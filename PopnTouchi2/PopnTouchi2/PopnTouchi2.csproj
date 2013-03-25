@@ -65,9 +65,6 @@
     <Compile Include="Model\Enums\GlobalVariables.cs" />
     <Compile Include="Model\Game.cs" />
     <Compile Include="Infrastructure\RelayCommand.cs" />
-    <Compile Include="SinglePlayerWindow.xaml.cs">
-      <DependentUpon>SinglePlayerWindow.xaml</DependentUpon>
-    </Compile>
     <Compile Include="ViewModel\SessionViewModel.cs" />
     <Compile Include="ViewModel\NoteBubbleViewModel.cs" />
     <Compile Include="Model\Session.cs" />
@@ -99,22 +96,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="MultiPlayersWindow.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="MultiPlayersWindow.xaml.cs">
-      <DependentUpon>MultiPlayersWindow.xaml</DependentUpon>
-      <SubType>Code</SubType>
-    </Compile>
-    <Page Include="SinglePlayerWindow.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -157,11 +142,13 @@
     <None Include="Resources\Wave Bank.xwb" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Image\bulleblanche.png" />
-    <Resource Include="Image\bullecroche.png" />
-    <Resource Include="Image\bullenoire.png" />
-    <Resource Include="Image\Leather.png" />
-    <Resource Include="Image\bullesBack.png" />
+    <Resource Include="Resources\Images\Theme1\minimBubble.png" />
+    <Resource Include="Resources\Images\Theme1\quaverBubble.png" />
+    <Resource Include="Resources\Images\Theme1\crotchetBubble.png" />
+    <Resource Include="Resources\Images\Theme1\bullesBack.png" />
+    <Resource Include="Resources\Images\Theme1\genenote.png" />
+    <Resource Include="Resources\Images\Theme1\generythme.png" />
+    <Resource Include="Resources\Images\Leather.png" />
     <Content Include="Resources\icon.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

@@ -20,10 +20,47 @@ namespace PopnTouchi2
             _backgroundImage = new ImageBrush();
             _backgroundImage.ImageSource =
                 new BitmapImage(
-                    new Uri(@"../../Image/bullesBack.png", UriKind.Relative)
+                    new Uri(@"../../Resources/Images/Theme1/bullesBack.png", UriKind.Relative)
                 );
+            _noteGeneratorImage = new ImageBrush();
+            _noteGeneratorImage.ImageSource =
+                new BitmapImage(
+                    new Uri(@"../../Resources/Images/Theme1/genenote.png", UriKind.Relative)
+                );
+            _melodyGeneratorImage = new ImageBrush();
+            _melodyGeneratorImage.ImageSource =
+                new BitmapImage(
+                    new Uri(@"../../Resources/Images/Theme1/generythme.png", UriKind.Relative)
+                );
+
+            //noteBubbles dictionary creation
+            ImageBrush crotchetImage = new ImageBrush();
+            crotchetImage.ImageSource =
+                new BitmapImage(
+                    new Uri(@"../../Resources/Images/Theme1/crotchetBubble.png", UriKind.Relative)
+                );
+
+            ImageBrush minimImage = new ImageBrush();
+            minimImage.ImageSource =
+                new BitmapImage(
+                    new Uri(@"../../Resources/Images/Theme1/minimBubble.png", UriKind.Relative)
+                );
+
+            ImageBrush quaverImage = new ImageBrush();
+            quaverImage.ImageSource =
+                new BitmapImage(
+                    new Uri(@"../../Resources/Images/Theme1/quaverBubble.png", UriKind.Relative)
+                );
+
+            _noteBubbleImages.Add(NoteValue.crotchet, crotchetImage);
+            _noteBubbleImages.Add(NoteValue.minim, minimImage);
+            _noteBubbleImages.Add(NoteValue.quaver, quaverImage);
         }
 
+        public override ImageBrush getNoteBubbleImage(NoteValue noteValue)
+        {
+            return _noteBubbleImages[noteValue];
+        }
 
         public void generateObjects()
         {

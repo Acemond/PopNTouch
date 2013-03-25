@@ -4,9 +4,10 @@
 
         xmlns:s="http://schemas.microsoft.com/surface/2008"
         Title="DesktopWindow">
+
     <Grid Name="desktop">
         <Grid.Background>
-            <ImageBrush ImageSource="Image/Leather.png" />
+            <ImageBrush ImageSource="Resources/Images/leather.png" />
         </Grid.Background>
     </Grid>
 </s:SurfaceWindow>
