@@ -4,6 +4,14 @@
 
         xmlns:s="http://schemas.microsoft.com/surface/2008"
         Title="DesktopWindow" Height="1080" Width="1920">
+    <Window.Background>
+        <ImageBrush ImageSource=".\Resources\images\desktop.png"></ImageBrush>
+    </Window.Background>
     <Grid Name="Desktop">
+        <Image Source=".\Resources\images\ui_items\players.png" Height="85" Width="85" HorizontalAlignment="Left" VerticalAlignment="Center" TouchDown="SinglePlayer"></Image>
+        <StackPanel Orientation="Vertical" HorizontalAlignment="Right" VerticalAlignment="Center" TouchDown="MultiplePlayer">
+            <Image Source=".\Resources\images\ui_items\players.png" Height="85" Width="85"></Image>
+            <Image Source=".\Resources\images\ui_items\players.png" Height="85" Width="85"></Image>
+        </StackPanel>
     </Grid>
 </s:SurfaceWindow>

@@ -184,6 +184,8 @@
     <Resource Include="Resources\images\ui_items\playdrop.png" />
     <Resource Include="Resources\images\ui_items\soundpointdisable.png" />
     <Resource Include="Resources\images\ui_items\soundpointenable.png" />
+    <Resource Include="Resources\images\desktop.png" />
+    <Resource Include="Resources\images\ui_items\players.png" />
     <Content Include="Resources\sounds\bubbles\discovery1.mp3" />
     <Content Include="Resources\sounds\bubbles\discovery2.mp3" />
     <Content Include="Resources\sounds\bubbles\discovery3.mp3" />
@@ -192,6 +194,8 @@
     <Content Include="Resources\sounds\bubbles\pop2.wav" />
     <Content Include="Resources\sounds\bubbles\pop3.wav" />
     <Content Include="Resources\sounds\bubbles\pop4.wav" />
+    <Content Include="Resources\sounds\desktop\multiple.mp3" />
+    <Content Include="Resources\sounds\desktop\single.mp3" />
     <Content Include="Resources\sounds\summer\loop_superbirds.mp3" />
     <Content Include="Resources\sounds\summer\whistle1.mp3" />
     <Content Include="Resources\sounds\summer\whistle2.mp3" />
