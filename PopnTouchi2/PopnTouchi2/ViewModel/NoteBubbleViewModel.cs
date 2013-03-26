@@ -14,16 +14,17 @@ namespace PopnTouchi2
 
         public event EventHandler dropBubble;
 
-      //  public event ContainerManipulationCompletedEventArgs dropBubble;
-    
+     
         public NoteBubble Note
         {
             get
             {
-                throw new System.NotImplementedException();
+                return _noteBubble;
             }
             set
             {
+                _noteBubble = value;
+                NotifyPropertyChanged("Note");
             }
         }
 
@@ -31,10 +32,12 @@ namespace PopnTouchi2
         {
             get
             {
-                throw new System.NotImplementedException();
+                return _isOnStave;
             }
             set
             {
+                _isOnStave = value;
+                NotifyPropertyChanged("IsOnStave");
             }
         }
     }

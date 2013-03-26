@@ -7,6 +7,7 @@ using System.Windows.Media;
 using System.Windows.Controls;
 using Microsoft.Surface.Presentation.Controls;
 using System.Windows;
+using System.Windows.Shapes;
 
 namespace PopnTouchi2
 {
@@ -83,6 +84,7 @@ namespace PopnTouchi2
         {
             NoteBubble newBubble = createNoteBubble(((Session)this.Parent).Theme);
             _noteBubbles.Add(newBubble);
+            newBubble.Name = "test";
 
             ((Session)this.Parent).Bubbles.Items.Add(newBubble);
         }

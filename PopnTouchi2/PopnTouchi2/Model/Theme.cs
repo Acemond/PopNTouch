@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Windows.Media;
+using System.Windows.Media.Imaging;
 
 namespace PopnTouchi2
 {
@@ -12,14 +13,14 @@ namespace PopnTouchi2
         protected Instrument[] _instrumentsBottom;
         public ImageBrush _backgroundImage { get; set; } //Theme defines Background
         public ImageBrush _noteGeneratorImage { get; set; }  //Theme defines Elements' aspect
-        protected Dictionary<NoteValue, ImageBrush> _noteBubbleImages { get; set; }  //Theme defines Elements' aspect
+        protected Dictionary<NoteValue, BitmapImage> _noteBubbleImages { get; set; }  //Theme defines Elements' aspect
         public ImageBrush _melodyGeneratorImage { get; set; }  //Theme defines Elements' aspect
 
         public Theme()
         {
             _instrumentsTop = new Instrument[2];
             _instrumentsBottom = new Instrument[2];
-            _noteBubbleImages = new Dictionary<NoteValue, ImageBrush>();
+            _noteBubbleImages = new Dictionary<NoteValue, BitmapImage>();
         }
 
         public void generateObjects()
@@ -27,7 +28,7 @@ namespace PopnTouchi2
             throw new System.NotImplementedException();
         }
 
-        public virtual ImageBrush getNoteBubbleImage(NoteValue noteValue)
+        public virtual BitmapImage getNoteBubbleImageSource(NoteValue noteValue)
         {
             throw new System.NotImplementedException();
         }

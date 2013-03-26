@@ -12,10 +12,10 @@ namespace PopnTouchi2
         public Theme1()
             : base()
         {
-            _instrumentsTop[0] = new Instrument(InstrumentType.ocarina);
-            _instrumentsTop[1] = new Instrument(InstrumentType.piano);
-            _instrumentsBottom[0] = new Instrument(InstrumentType.flute);
-            _instrumentsBottom[1] = new Instrument(InstrumentType.ocarina);
+            _instrumentsTop[0] = new Instrument(InstrumentType.piano);
+            _instrumentsTop[1] = new Instrument(InstrumentType.ocarina);
+            _instrumentsBottom[0] = new Instrument(InstrumentType.ocarina);
+            _instrumentsBottom[1] = new Instrument(InstrumentType.flute);
             
             _backgroundImage = new ImageBrush();
             _backgroundImage.ImageSource =
@@ -34,30 +34,24 @@ namespace PopnTouchi2
                 );
 
             //noteBubbles dictionary creation
-            ImageBrush crotchetImage = new ImageBrush();
-            crotchetImage.ImageSource =
-                new BitmapImage(
-                    new Uri(@"../../Resources/Images/Theme1/crotchetBubble.png", UriKind.Relative)
-                );
+            BitmapImage crotchetImageSource = new BitmapImage(
+                new Uri(@"../../Resources/Images/Theme1/crotchetBubble.png", UriKind.Relative)
+            );
 
-            ImageBrush minimImage = new ImageBrush();
-            minimImage.ImageSource =
-                new BitmapImage(
-                    new Uri(@"../../Resources/Images/Theme1/minimBubble.png", UriKind.Relative)
-                );
+            BitmapImage minimImageSource = new BitmapImage(
+                new Uri(@"../../Resources/Images/Theme1/minimBubble.png", UriKind.Relative)
+            );
 
-            ImageBrush quaverImage = new ImageBrush();
-            quaverImage.ImageSource =
-                new BitmapImage(
-                    new Uri(@"../../Resources/Images/Theme1/quaverBubble.png", UriKind.Relative)
-                );
+            BitmapImage quaverImageSource = new BitmapImage(
+                new Uri(@"../../Resources/Images/Theme1/quaverBubble.png", UriKind.Relative)
+            );
 
-            _noteBubbleImages.Add(NoteValue.crotchet, crotchetImage);
-            _noteBubbleImages.Add(NoteValue.minim, minimImage);
-            _noteBubbleImages.Add(NoteValue.quaver, quaverImage);
+            _noteBubbleImages.Add(NoteValue.crotchet, crotchetImageSource);
+            _noteBubbleImages.Add(NoteValue.minim, minimImageSource);
+            _noteBubbleImages.Add(NoteValue.quaver, quaverImageSource);
         }
 
-        public override ImageBrush getNoteBubbleImage(NoteValue noteValue)
+        public override BitmapImage getNoteBubbleImageSource(NoteValue noteValue)
         {
             return _noteBubbleImages[noteValue];
         }

@@ -6,7 +6,7 @@ using PopnTouchi2.Infrastructure;
 
 namespace PopnTouchi2
 {
-    public class NoteViewModel : PopnTouchi2.Infrastructure.ViewModelBase
+    public class NoteViewModel : ViewModelBase
     {
         private Note _note;
 

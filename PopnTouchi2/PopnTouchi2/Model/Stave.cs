@@ -31,25 +31,34 @@ namespace PopnTouchi2
         public void addMelody(MelodyBubble mb, int position)
         {
             int cardMelody = mb.Melody.Notes.Count;
-            for(int i = 0; i< cardMelody ; i++)
+            int i;
+            for(i = 0; i< cardMelody ; i++)
             {
                 mb.Melody.Notes[i].Position += position;
+                int posArray = 0;
+                while ((posArray < Notes.Count) && (Notes[posArray].Position < mb.Melody.Notes[i].Position))
+                {
+                    posArray++;
+                }
 
-                Notes.Add(mb.Melody.Notes[i]);
-                Notes.OrderBy(note => note.Position);
+                Notes.Insert(posArray, mb.Melody.Notes[i]);
             }
+
+            MaxPosition = Math.Max(MaxPosition, mb.Melody.Notes[i-1].Position);
         }
 
         public void addNote(Note note, int position)
         {
             note.Position = position;
-            Notes.Add(note);
-            MaxPosition = Math.Max(MaxPosition, note.Position);
-        }
 
-        public void trier()
-        {
-            Notes.OrderBy(note => note.Position);
+            int i = 0;
+            while (i < Notes.Count && Notes[i].Position < position)
+            {
+                i++;
+            }
+
+            Notes.Insert(i, note);
+            MaxPosition = Math.Max(MaxPosition, note.Position);
         }
 
         public void playAllNotes()
@@ -64,15 +73,6 @@ namespace PopnTouchi2
             bool play = true;
             if (GlobalVariables.position_Note <= MaxPosition + 4)
             {
-                //for (int i = 0; i < Notes.Count; i++)
-                //{
-
-                //    if (Notes[i].Position == GlobalVariables.position_Note)
-                //    {
-                //        CurrentInstrument.playNote(Notes[i]);
-                //    }
-                //}
-               
                 while (play && (GlobalVariables.it_Notes < Notes.Count))
                 {
                     if (Notes[GlobalVariables.it_Notes].Position == GlobalVariables.position_Note)
@@ -107,6 +107,5 @@ namespace PopnTouchi2
             GlobalVariables.position_Note = 0;
             GlobalVariables.it_Notes = 0;
         }
-
     }
 }

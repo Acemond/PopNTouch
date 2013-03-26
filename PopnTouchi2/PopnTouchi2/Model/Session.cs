@@ -28,6 +28,8 @@ namespace PopnTouchi2
             MelodyBubbleGenerator = new MelodyBubbleGenerator(Theme);
             NoteBubbleGenerator = new NoteBubbleGenerator(Theme);
             Bubbles = new ScatterView();
+            Bubbles.Visibility = Visibility.Visible;
+            this.Children.Add(Bubbles);
 
             Children.Add(NoteBubbleGenerator);
             Children.Add(MelodyBubbleGenerator);
