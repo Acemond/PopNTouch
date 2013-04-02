@@ -45,22 +45,19 @@ namespace PopnTouchi2
             bubbleImage.SetValue(Image.HeightProperty, 50.0);
 
             FrameworkElementFactory touchZone = new FrameworkElementFactory(typeof(Ellipse));
-            touchZone.SetValue(Ellipse.FillProperty, Brushes.Red);
+            touchZone.SetValue(Ellipse.FillProperty, Brushes.Transparent);
             touchZone.SetValue(Ellipse.MarginProperty, new Thickness(25));
 
             FrameworkElementFactory grid = new FrameworkElementFactory(typeof(Grid));
-
             grid.AppendChild(bubbleImage);
             grid.AppendChild(touchZone);
 
             ControlTemplate ct = new ControlTemplate(typeof(ScatterViewItem));
             ct.VisualTree = grid;
 
-            Setter bubbleSetter = new Setter();
-            bubbleSetter.Value = ct;
-
             Style bubbleStyle = new Style(typeof(ScatterViewItem));
-            bubbleStyle.Setters.Add(bubbleSetter);
+            bubbleStyle.Setters.Add(new Setter(TemplateProperty, ct));
+            this.Style = bubbleStyle;
         }
 
         public Note Note { get; set; }
@@ -74,7 +71,7 @@ namespace PopnTouchi2
 
             // int width = int.Parse(GetWidth.Text);
             // int height = int.Parse(GetHeight.Text);
-            int width = 1024;
+            int width = 1366;
             int height = 768;
             bubbleCenter.X = bubbleCenter.X * 1920 / width;
             bubbleCenter.Y = bubbleCenter.Y * 1080 / height;
@@ -128,11 +125,8 @@ namespace PopnTouchi2
 
                 stb.Begin(this);
 
-
                 bubble.Visibility = Visibility.Collapsed;
                 bubble.Visibility = Visibility.Visible;
-
-
             }
         }
     }
