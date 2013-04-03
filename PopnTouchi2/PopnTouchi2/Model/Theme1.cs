@@ -20,10 +20,41 @@ namespace PopnTouchi2
             _backgroundImage = new ImageBrush();
             _backgroundImage.ImageSource =
                 new BitmapImage(
-                    new Uri(@"../../Image/bullesBack.png", UriKind.Relative)
+                    new Uri(@"../../Resources/Images/Theme1/bullesBack.png", UriKind.Relative)
                 );
+            _noteGeneratorImage = new ImageBrush();
+            _noteGeneratorImage.ImageSource =
+                new BitmapImage(
+                    new Uri(@"../../Resources/Images/Theme1/genenote.png", UriKind.Relative)
+                );
+            _melodyGeneratorImage = new ImageBrush();
+            _melodyGeneratorImage.ImageSource =
+                new BitmapImage(
+                    new Uri(@"../../Resources/Images/Theme1/generythme.png", UriKind.Relative)
+                );
+
+            //noteBubbles dictionary creation
+            BitmapImage crotchetImageSource = new BitmapImage(
+                new Uri(@"../../Resources/Images/Theme1/crotchetBubble.png", UriKind.Relative)
+            );
+
+            BitmapImage minimImageSource = new BitmapImage(
+                new Uri(@"../../Resources/Images/Theme1/minimBubble.png", UriKind.Relative)
+            );
+
+            BitmapImage quaverImageSource = new BitmapImage(
+                new Uri(@"../../Resources/Images/Theme1/quaverBubble.png", UriKind.Relative)
+            );
+
+            _noteBubbleImages.Add(NoteValue.crotchet, crotchetImageSource);
+            _noteBubbleImages.Add(NoteValue.minim, minimImageSource);
+            _noteBubbleImages.Add(NoteValue.quaver, quaverImageSource);
         }
 
+        public override BitmapImage getNoteBubbleImageSource(NoteValue noteValue)
+        {
+            return _noteBubbleImages[noteValue];
+        }
 
         public void generateObjects()
         {

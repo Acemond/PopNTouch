@@ -14,6 +14,7 @@ using Microsoft.Surface;
 using Microsoft.Surface.Presentation;
 using Microsoft.Surface.Presentation.Controls;
 using Microsoft.Surface.Presentation.Input;
+using Microsoft.Xna.Framework.Audio;
 
 namespace PopnTouchi2
 {
@@ -29,8 +30,6 @@ namespace PopnTouchi2
             Builder sessionBuilder = new Builder();
             Session newSession = sessionBuilder.generateSession();
         //    desktop.Children.Add(newSession);
-
-            AudioController.playSound(
 
         }
     }

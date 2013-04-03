@@ -38,6 +38,7 @@
     <Reference Include="Microsoft.Xna.Framework.Xact, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553, processorArchitecture=x86" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -65,9 +66,6 @@
     <Compile Include="Model\Enums\GlobalVariables.cs" />
     <Compile Include="Model\Game.cs" />
     <Compile Include="Infrastructure\RelayCommand.cs" />
-    <Compile Include="SinglePlayerWindow.xaml.cs">
-      <DependentUpon>SinglePlayerWindow.xaml</DependentUpon>
-    </Compile>
     <Compile Include="ViewModel\SessionViewModel.cs" />
     <Compile Include="ViewModel\NoteBubbleViewModel.cs" />
     <Compile Include="Model\Session.cs" />
@@ -99,22 +97,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="MultiPlayersWindow.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="MultiPlayersWindow.xaml.cs">
-      <DependentUpon>MultiPlayersWindow.xaml</DependentUpon>
-      <SubType>Code</SubType>
-    </Compile>
-    <Page Include="SinglePlayerWindow.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -157,6 +143,12 @@
     <None Include="Resources\Wave Bank.xwb" />
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="Resources\Images\Theme1\minimBubble.png" />
+    <Resource Include="Resources\Images\Theme1\quaverBubble.png" />
+    <Resource Include="Resources\Images\Theme1\crotchetBubble.png" />
+    <Resource Include="Resources\Images\Theme1\bullesBack.png" />
+    <Resource Include="Resources\Images\Theme1\genenote.png" />
+    <Resource Include="Resources\Images\Theme1\generythme.png" />
     <Content Include="PopnTouchi2.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -181,6 +173,11 @@
     <Resource Include="Resources\images\ui_items\melodyfactory.png" />
     <Resource Include="Resources\images\ui_items\notefactory.png" />
     <Resource Include="Resources\images\ui_items\themes.png" />
+    <Resource Include="Resources\images\ui_items\playdrop.png" />
+    <Resource Include="Resources\images\ui_items\soundpointdisable.png" />
+    <Resource Include="Resources\images\ui_items\soundpointenable.png" />
+    <Resource Include="Resources\images\desktop.png" />
+    <Resource Include="Resources\images\ui_items\players.png" />
     <Content Include="Resources\sounds\bubbles\discovery1.mp3" />
     <Content Include="Resources\sounds\bubbles\discovery2.mp3" />
     <Content Include="Resources\sounds\bubbles\discovery3.mp3" />
@@ -189,6 +186,8 @@
     <Content Include="Resources\sounds\bubbles\pop2.wav" />
     <Content Include="Resources\sounds\bubbles\pop3.wav" />
     <Content Include="Resources\sounds\bubbles\pop4.wav" />
+    <Content Include="Resources\sounds\desktop\multiple.mp3" />
+    <Content Include="Resources\sounds\desktop\single.mp3" />
     <Content Include="Resources\sounds\summer\loop_superbirds.mp3" />
     <Content Include="Resources\sounds\summer\whistle1.mp3" />
     <Content Include="Resources\sounds\summer\whistle2.mp3" />

@@ -43,10 +43,8 @@ namespace PopnTouchi2
         public String getCue()
         {
             String alteration = "";
-            if (Sharp)
-                alteration = "d";
-            if (Flat)
-                alteration = "b";
+            if (Sharp)  alteration = "d";
+            if (Flat)   alteration = "b";
             return Pitch.ToString() + Octave.ToString() + alteration;
         }
 
