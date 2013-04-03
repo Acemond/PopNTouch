@@ -30,6 +30,8 @@ namespace PopnTouchi2
             Session newSession = sessionBuilder.generateSession();
         //    desktop.Children.Add(newSession);
 
+            AudioController.playSound(
+
         }
     }
 }

@@ -28,6 +28,11 @@ namespace PopnTouchi2
             cue.Play();
         }
 
+        public static void playSoundWithString(String son)
+        {
+            AudioController.INSTANCE._soundBank.PlayCue(son);
+        }
+
         public static void stopSound(Cue cue)
         {
             cue.Stop(AudioStopOptions.Immediate);
