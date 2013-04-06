@@ -24,6 +24,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <DocumentationFile>bin\Debug\PopnTouchi2.XML</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -101,6 +102,10 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="SinglePlayerWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -143,62 +148,104 @@
     <None Include="Resources\Wave Bank.xwb" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resources\Images\Theme1\minimBubble.png" />
-    <Resource Include="Resources\Images\Theme1\quaverBubble.png" />
-    <Resource Include="Resources\Images\Theme1\crotchetBubble.png" />
-    <Resource Include="Resources\Images\Theme1\bullesBack.png" />
-    <Resource Include="Resources\Images\Theme1\genenote.png" />
-    <Resource Include="Resources\Images\Theme1\generythme.png" />
     <Content Include="PopnTouchi2.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Resource Include="Resources\images\backgroundstaves.png" />
-    <Resource Include="Resources\images\bubbles\melodies\8.png" />
-    <Resource Include="Resources\images\bubbles\melodies\s.png" />
-    <Resource Include="Resources\images\bubbles\melodies\t.png" />
-    <Resource Include="Resources\images\bubbles\melodies\wave.png" />
-    <Resource Include="Resources\images\bubbles\melodies\zigzag.png" />
-    <Resource Include="Resources\images\bubbles\notes\bemol.png" />
-    <Resource Include="Resources\images\bubbles\notes\bulleblanche.png" />
-    <Resource Include="Resources\images\bubbles\notes\bullecroche.png" />
-    <Resource Include="Resources\images\bubbles\notes\bullenoire.png" />
-    <Resource Include="Resources\images\bubbles\notes\diese.png" />
-    <Resource Include="Resources\images\notes\black\crotchet.png" />
-    <Resource Include="Resources\images\notes\black\minim.png" />
-    <Resource Include="Resources\images\notes\black\quaver.png" />
-    <Resource Include="Resources\images\notes\white\crotchet.png" />
-    <Resource Include="Resources\images\notes\white\minim.png" />
-    <Resource Include="Resources\images\notes\white\quaver.png" />
-    <Resource Include="Resources\images\ui_items\exos.png" />
-    <Resource Include="Resources\images\ui_items\melodyfactory.png" />
-    <Resource Include="Resources\images\ui_items\notefactory.png" />
-    <Resource Include="Resources\images\ui_items\themes.png" />
-    <Resource Include="Resources\images\ui_items\playdrop.png" />
-    <Resource Include="Resources\images\ui_items\soundpointdisable.png" />
-    <Resource Include="Resources\images\ui_items\soundpointenable.png" />
+    <Resource Include="Resources\Images\Theme1\background.png" />
+    <Resource Include="Resources\Images\Theme1\Bubbles\Melodies\8.png" />
+    <Resource Include="Resources\Images\Theme1\Bubbles\Melodies\s.png" />
+    <Resource Include="Resources\Images\Theme1\Bubbles\Melodies\t.png" />
+    <Resource Include="Resources\Images\Theme1\Bubbles\Melodies\wave.png" />
+    <Resource Include="Resources\Images\Theme1\Bubbles\Melodies\zigzag.png" />
+    <Resource Include="Resources\Images\Theme1\Bubbles\Notes\bemol.png" />
+    <Resource Include="Resources\Images\Theme1\Bubbles\Notes\bulleblanche.png" />
+    <Resource Include="Resources\Images\Theme1\Bubbles\Notes\bullecroche.png" />
+    <Resource Include="Resources\Images\Theme1\Bubbles\Notes\bullenoire.png" />
+    <Resource Include="Resources\Images\Theme1\Bubbles\Notes\diese.png" />
+    <Resource Include="Resources\Images\UI_items\Notes\black\crotchet.png" />
+    <Resource Include="Resources\Images\UI_items\Notes\black\minim.png" />
+    <Resource Include="Resources\Images\UI_items\Notes\black\quaver.png" />
+    <Resource Include="Resources\Images\UI_items\Notes\white\crotchet.png" />
+    <Resource Include="Resources\Images\UI_items\Notes\white\minim.png" />
+    <Resource Include="Resources\Images\UI_items\Notes\white\quaver.png" />
+    <Resource Include="Resources\Images\UI_items\exos.png" />
+    <Resource Include="Resources\Images\Theme1\melodyfactory.png" />
+    <Resource Include="Resources\Images\Theme1\notefactory.png" />
+    <Resource Include="Resources\Images\UI_items\themes.png" />
+    <Resource Include="Resources\Images\Theme1\playdrop.png" />
+    <Resource Include="Resources\Images\Theme1\soundpointdisable.png" />
+    <Resource Include="Resources\Images\Theme1\soundpointenable.png" />
     <Resource Include="Resources\images\desktop.png" />
-    <Resource Include="Resources\images\ui_items\players.png" />
-    <Content Include="Resources\sounds\bubbles\discovery1.mp3" />
-    <Content Include="Resources\sounds\bubbles\discovery2.mp3" />
-    <Content Include="Resources\sounds\bubbles\discovery3.mp3" />
-    <Content Include="Resources\sounds\bubbles\discovery4.mp3" />
-    <Content Include="Resources\sounds\bubbles\pop1.wav" />
-    <Content Include="Resources\sounds\bubbles\pop2.wav" />
-    <Content Include="Resources\sounds\bubbles\pop3.wav" />
-    <Content Include="Resources\sounds\bubbles\pop4.wav" />
-    <Content Include="Resources\sounds\desktop\multiple.mp3" />
-    <Content Include="Resources\sounds\desktop\single.mp3" />
-    <Content Include="Resources\sounds\summer\loop_superbirds.mp3" />
-    <Content Include="Resources\sounds\summer\whistle1.mp3" />
-    <Content Include="Resources\sounds\summer\whistle2.mp3" />
-    <Content Include="Resources\sounds\summer\whistle3.mp3" />
-    <Content Include="Resources\sounds\summer\whistle4.mp3" />
-    <Content Include="Resources\sounds\water\geyser.mp3" />
-    <Content Include="Resources\sounds\water\geyser2.mp3" />
-    <Content Include="Resources\sounds\water\loop_bubbles.mp3" />
-    <Content Include="Resources\sounds\water\loop_eveningWater.mp3" />
-    <Content Include="Resources\sounds\water\loop_shore.mp3" />
-    <Content Include="Resources\sounds\water\loop_waterPond.mp3" />
+    <Resource Include="Resources\Images\UI_items\players.png" />
+    <Resource Include="Resources\Images\Theme2\background.png" />
+    <Resource Include="Resources\Images\Theme2\Bubbles\Melodies\8.png" />
+    <Resource Include="Resources\Images\Theme2\Bubbles\Melodies\s.png" />
+    <Resource Include="Resources\Images\Theme2\Bubbles\Melodies\t.png" />
+    <Resource Include="Resources\Images\Theme2\Bubbles\Melodies\wave.png" />
+    <Resource Include="Resources\Images\Theme2\Bubbles\Melodies\zigzag.png" />
+    <Resource Include="Resources\Images\Theme2\Bubbles\Notes\bemol.png" />
+    <Resource Include="Resources\Images\Theme2\Bubbles\Notes\bulleblanche.png" />
+    <Resource Include="Resources\Images\Theme2\Bubbles\Notes\bullecroche.png" />
+    <Resource Include="Resources\Images\Theme2\Bubbles\Notes\bullenoire.png" />
+    <Resource Include="Resources\Images\Theme2\Bubbles\Notes\diese.png" />
+    <Resource Include="Resources\Images\Theme2\melodyfactory.png" />
+    <Resource Include="Resources\Images\Theme2\notefactory.png" />
+    <Resource Include="Resources\Images\Theme2\playdrop.png" />
+    <Resource Include="Resources\Images\Theme2\soundpointdisable.png" />
+    <Resource Include="Resources\Images\Theme2\soundpointenable.png" />
+    <Resource Include="Resources\Images\Theme3\background.png" />
+    <Resource Include="Resources\Images\Theme3\Bubbles\Melodies\8.png" />
+    <Resource Include="Resources\Images\Theme3\Bubbles\Melodies\s.png" />
+    <Resource Include="Resources\Images\Theme3\Bubbles\Melodies\t.png" />
+    <Resource Include="Resources\Images\Theme3\Bubbles\Melodies\wave.png" />
+    <Resource Include="Resources\Images\Theme3\Bubbles\Melodies\zigzag.png" />
+    <Resource Include="Resources\Images\Theme3\Bubbles\Notes\bemol.png" />
+    <Resource Include="Resources\Images\Theme3\Bubbles\Notes\bulleblanche.png" />
+    <Resource Include="Resources\Images\Theme3\Bubbles\Notes\bullecroche.png" />
+    <Resource Include="Resources\Images\Theme3\Bubbles\Notes\bullenoire.png" />
+    <Resource Include="Resources\Images\Theme3\Bubbles\Notes\diese.png" />
+    <Resource Include="Resources\Images\Theme3\melodyfactory.png" />
+    <Resource Include="Resources\Images\Theme3\notefactory.png" />
+    <Resource Include="Resources\Images\Theme3\playdrop.png" />
+    <Resource Include="Resources\Images\Theme3\soundpointdisable.png" />
+    <Resource Include="Resources\Images\Theme3\soundpointenable.png" />
+    <Resource Include="Resources\Images\Theme4\background.png" />
+    <Resource Include="Resources\Images\Theme4\Bubbles\Melodies\8.png" />
+    <Resource Include="Resources\Images\Theme4\Bubbles\Melodies\s.png" />
+    <Resource Include="Resources\Images\Theme4\Bubbles\Melodies\t.png" />
+    <Resource Include="Resources\Images\Theme4\Bubbles\Melodies\wave.png" />
+    <Resource Include="Resources\Images\Theme4\Bubbles\Melodies\zigzag.png" />
+    <Resource Include="Resources\Images\Theme4\Bubbles\Notes\bemol.png" />
+    <Resource Include="Resources\Images\Theme4\Bubbles\Notes\bulleblanche.png" />
+    <Resource Include="Resources\Images\Theme4\Bubbles\Notes\bullecroche.png" />
+    <Resource Include="Resources\Images\Theme4\Bubbles\Notes\bullenoire.png" />
+    <Resource Include="Resources\Images\Theme4\Bubbles\Notes\diese.png" />
+    <Resource Include="Resources\Images\Theme4\melodyfactory.png" />
+    <Resource Include="Resources\Images\Theme4\notefactory.png" />
+    <Resource Include="Resources\Images\Theme4\playdrop.png" />
+    <Resource Include="Resources\Images\Theme4\soundpointdisable.png" />
+    <Resource Include="Resources\Images\Theme4\soundpointenable.png" />
+    <Content Include="Resources\Sounds\bubbles\discovery1.mp3" />
+    <Content Include="Resources\Sounds\bubbles\discovery2.mp3" />
+    <Content Include="Resources\Sounds\bubbles\discovery3.mp3" />
+    <Content Include="Resources\Sounds\bubbles\discovery4.mp3" />
+    <Content Include="Resources\Sounds\bubbles\pop1.wav" />
+    <Content Include="Resources\Sounds\bubbles\pop2.wav" />
+    <Content Include="Resources\Sounds\bubbles\pop3.wav" />
+    <Content Include="Resources\Sounds\bubbles\pop4.wav" />
+    <Content Include="Resources\Sounds\desktop\multiple.mp3" />
+    <Content Include="Resources\Sounds\desktop\single.mp3" />
+    <Content Include="Resources\Sounds\summer\loop_superbirds.mp3" />
+    <Content Include="Resources\Sounds\summer\whistle1.mp3" />
+    <Content Include="Resources\Sounds\summer\whistle2.mp3" />
+    <Content Include="Resources\Sounds\summer\whistle3.mp3" />
+    <Content Include="Resources\Sounds\summer\whistle4.mp3" />
+    <Content Include="Resources\Sounds\water\geyser.mp3" />
+    <Content Include="Resources\Sounds\water\geyser2.mp3" />
+    <Content Include="Resources\Sounds\water\loop_bubbles.mp3" />
+    <Content Include="Resources\Sounds\water\loop_eveningWater.mp3" />
+    <Content Include="Resources\Sounds\water\loop_shore.mp3" />
+    <Content Include="Resources\Sounds\water\loop_waterPond.mp3" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

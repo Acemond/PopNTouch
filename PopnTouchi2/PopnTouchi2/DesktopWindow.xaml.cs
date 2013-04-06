@@ -23,6 +23,9 @@ namespace PopnTouchi2
     /// </summary>
     public partial class DesktopWindow : SurfaceWindow
     {
+        /// <summary>
+        /// 
+        /// </summary>
         public DesktopWindow()
         {
             InitializeComponent();
