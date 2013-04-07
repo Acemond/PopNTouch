@@ -5,22 +5,25 @@ using System.Text;
 
 namespace PopnTouchi2
 {
+    /// <summary>
+    /// Represents a set of notes.
+    /// </summary>
     public class Melody
     {
+        /// <summary>
+        /// Property.
+        /// List of notes defining the Melody.
+        /// </summary>
+        public List<Note> Notes { get; set; }
 
         /// <summary>
-        /// Generates a object of class Melody with a given List of notes.
+        /// Melody Constructor.
+        /// Generates an object of class Melody with a given list of notes.
         /// </summary>
-        /// <param name="listnote"></param>
+        /// <param name="listnote">The notes list to copy</param>
         public Melody(List<Note> listnote)
         {
             Notes = listnote;
-        }
-
-        public List<Note> Notes
-        {
-            get;
-            set;
         }
     }
 }

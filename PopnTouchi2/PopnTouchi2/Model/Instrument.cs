@@ -9,43 +9,58 @@ using PopnTouchi2.Model.Enums;
 
 namespace PopnTouchi2
 {
+    /// <summary>
+    /// Defines an instrument and methods to play sounds with it.
+    /// </summary>
     public class Instrument
     {
-        private InstrumentType _name;
- //       private Dictionary<Pitch, String> _sounds; // à quoi ça sert?
+        /// <summary>
+        /// Property.
+        /// Type of an instrument.
+        /// </summary>
+        public InstrumentType Name { get; set; }
+        
+        /// <summary>
+        /// TODO
+        /// </summary>
+        //private Dictionary<Pitch, String> _sounds; // à quoi ça sert?
 
         #region constructors
         /// <summary>
-        /// Generates an object of class Instrument from a given name.
+        /// Instrument Constructor.
+        /// Generates an object of class Instrument with a given type.
         /// </summary>
-        /// <param name="instru"></param>
+        /// <param name="instru">The type for the new instrument</param>
         public Instrument(InstrumentType instru)
         {
-            _name = instru;
+            Name = instru;
         }
         #endregion
 
         #region methods
         /// <summary>
-        /// Plays the given note with the instrument
+        /// Plays the given note with the instrument.
+        /// </summary>
+        /// <param name="n">The note to be played</param>
+        public void PlayNote(Note n)
+        {
+            Instrument tmp = new Instrument(Name);
+            Thread t = new Thread(tmp.ActionPlay);
+            t.Start(n);
+        }
+
+        /// <summary>
+        /// TODO
         /// </summary>
         /// <param name="n"></param>
-        public void playNote(Note n)
-        {
-            Instrument tmp = new Instrument(_name);
-            Thread t = new Thread(tmp.Action_Play);
-            t.Start(n);
-         }
-
- 
-        public void Action_Play(object n)
+        public void ActionPlay(object n)
         {
             Note note = n as Note;
             TimeSpan t = new TimeSpan(0, 0, 0, 0, (note.Duration.GetHashCode() * 30000) / GlobalVariables.bpm);
-            Cue cue = AudioController.INSTANCE._soundBank.GetCue(_name.ToString() + "_" + note.getCue());
-            AudioController.playSound(cue);
+            Cue cue = AudioController.INSTANCE.SoundBank.GetCue(Name.ToString() + "_" + note.GetCue());
+            AudioController.PlaySound(cue);
             Thread.Sleep(t);
-            AudioController.stopSound(cue);
+            AudioController.StopSound(cue);
         }
         #endregion
     }

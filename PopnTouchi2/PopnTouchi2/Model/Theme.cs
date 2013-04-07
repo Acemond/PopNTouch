@@ -7,40 +7,87 @@ using System.Windows.Media.Imaging;
 
 namespace PopnTouchi2
 {
+    /// <summary>
+    /// Abstract Theme Class provides necessary methods to define multiples and differents themes for the application.
+    /// </summary>
     public abstract class Theme
     {
-        protected Instrument[] _instrumentsTop;
-        protected Instrument[] _instrumentsBottom;
-        public ImageBrush _backgroundImage { get; set; } //Theme defines Background
-        public ImageBrush _noteGeneratorImage { get; set; }  //Theme defines Elements' aspect
-        protected Dictionary<NoteValue, BitmapImage> _noteBubbleImages { get; set; }  //Theme defines Elements' aspect
-        public ImageBrush _melodyGeneratorImage { get; set; }  //Theme defines Elements' aspect
+        /// <summary>
+        /// Parameter.
+        /// Array of two instruments for the upper Stave.
+        /// </summary>
+        protected Instrument[] instrumentsTop;
+        /// <summary>
+        /// Parameter.
+        /// Array of two instruments for the lower Stave.
+        /// </summary>
+        protected Instrument[] instrumentsBottom;
+        /// <summary>
+        /// Property.
+        /// Theme defines Background.
+        /// </summary>
+        public ImageBrush BackgroundImage { get; set; }
+        /// <summary>
+        /// Property.
+        /// Theme defines Elements' aspect.
+        /// </summary>
+        public ImageBrush NoteGeneratorImage { get; set; }
+        /// <summary>
+        /// Property.
+        /// Theme defines Elements' aspect.
+        /// </summary>
+        protected Dictionary<NoteValue, BitmapImage> NoteBubbleImages { get; set; }
+        /// <summary>
+        /// Property.
+        /// Theme defines Elements' aspect.
+        /// </summary>
+        public ImageBrush MelodyGeneratorImage { get; set; }
 
+        /// <summary>
+        /// Theme Constructor.
+        /// Initialize instruments for each stave and a new Dictionary mapping a NoteBubble to its image.
+        /// </summary>
         public Theme()
         {
-            _instrumentsTop = new Instrument[2];
-            _instrumentsBottom = new Instrument[2];
-            _noteBubbleImages = new Dictionary<NoteValue, BitmapImage>();
+            instrumentsTop = new Instrument[2];
+            instrumentsBottom = new Instrument[2];
+            NoteBubbleImages = new Dictionary<NoteValue, BitmapImage>();
         }
 
-        public void generateObjects()
+        /// <summary>
+        /// TODO
+        /// </summary>
+        public void GenerateObjects()
         {
             throw new System.NotImplementedException();
         }
 
-        public virtual BitmapImage getNoteBubbleImageSource(NoteValue noteValue)
+        /// <summary>
+        /// TODO
+        /// </summary>
+        /// <param name="noteValue"></param>
+        /// <returns></returns>
+        public virtual BitmapImage GetNoteBubbleImageSource(NoteValue noteValue)
         {
             throw new System.NotImplementedException();
         }
 
-        public Instrument[] getInstrumentsTop()
+        /// <summary>
+        /// TODO Pourquoi faire un getter ? Alors qu'on pourrait faire une propriété?
+        /// </summary>
+        /// <returns></returns>
+        public Instrument[] GetInstrumentsTop()
         {
-            return _instrumentsTop;
+            return instrumentsTop;
         }
 
-        public Instrument[] getInstrumentsBottom()
+        /// <summary>
+        /// TODO Pourquoi faire un getter ? Alors qu'on pourrait faire une propriété?
+        /// </summary>
+        /// <returns></returns>
+        public Instrument[] GetInstrumentsBottom()
         {
-            return _instrumentsBottom;
+            return instrumentsBottom;
         }
     }
 }

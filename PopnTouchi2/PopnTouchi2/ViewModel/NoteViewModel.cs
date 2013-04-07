@@ -6,23 +6,50 @@ using PopnTouchi2.Infrastructure;
 
 namespace PopnTouchi2
 {
+    /// <summary>
+    /// Binds Note's properties to the View.
+    /// </summary>
     public class NoteViewModel : ViewModelBase
     {
-        private Note _note;
+        /// <summary>
+        /// Parameter.
+        /// Note element from the Model.
+        /// </summary>
+        private Note note;
 
+        /// <summary>
+        /// Parameter.
+        /// Event triggered when the Note is tapped.
+        /// </summary>
         public event EventHandler tap;
 
+        /// <summary>
+        /// Parameter.
+        /// Event triggered when the Note is dropped on the stave.
+        /// </summary>
         public event EventHandler dropNote;
-    
+
+        /// <summary>
+        /// NoteViewModel Constructor.
+        /// TODO
+        /// </summary>
+        public NoteViewModel()
+        {
+        }
+
+        /// <summary>
+        /// Property.
+        /// TODO
+        /// </summary>
         public Note Note
         {
             get
             {
-                return _note;
+                return note;
             }
             set
             {
-                _note = value;
+                note = value;
                 NotifyPropertyChanged("Notes");
             }
         }

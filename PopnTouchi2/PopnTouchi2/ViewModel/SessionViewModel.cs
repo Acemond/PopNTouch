@@ -2,27 +2,44 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using PopnTouchi2.Infrastructure;
 
 namespace PopnTouchi2
 {
-    public class SessionViewModel : PopnTouchi2.Infrastructure.ViewModelBase
+    /// <summary>
+    /// Binds Session's properties to the View.
+    /// </summary>
+    public class SessionViewModel : ViewModelBase
     {
-        private Session _session;
+        /// <summary>
+        /// Parameter.
+        /// Session's element from the Model.
+        /// </summary>
+        private Session session;
 
+        /// <summary>
+        /// SessionViewModel Construtor.
+        /// TODO
+        /// </summary>
+        /// <param name="session"></param>
         public SessionViewModel(Session session)
         {
             throw new System.NotImplementedException();
         }
 
+        /// <summary>
+        /// Property.
+        /// TODO
+        /// </summary>
         public Session Session
         {
             get
             {
-                return _session; 
+                return session; 
             }
             set
             {
-                _session = value;
+                session = value;
                 NotifyPropertyChanged("Session");
             }
         }

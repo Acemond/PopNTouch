@@ -6,16 +6,25 @@ using Microsoft.Surface.Presentation.Controls;
 
 namespace PopnTouchi2
 {
+    /// <summary>
+    /// Creates game environnement including sessions.
+    /// </summary>
     public class Builder
     {
+        /// <summary>
+        /// Builder Constructor.
+        /// </summary>
         public Builder()
         {
 
         }
 
-        public Session generateSession()
+        /// <summary>
+        /// Creates a new game session.
+        /// </summary>
+        /// <returns>The session newly created</returns>
+        public Session GenerateSession()
         {
-            //throw new System.NotImplementedException();
             return new Session();
         }
     }

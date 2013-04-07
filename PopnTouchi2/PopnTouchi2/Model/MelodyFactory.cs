@@ -5,14 +5,25 @@ using System.Text;
 
 namespace PopnTouchi2
 {
+    /// <summary>
+    /// Defines all default melodies contained in the application.
+    /// </summary>
     public class MelodyFactory
     {
+        /// <summary>
+        /// Property.
+        /// Map a Gesture to its specific melody.
+        /// </summary>
         public Dictionary<Gesture, Melody> Melodies { get; set; }
 
+        /// <summary>
+        /// MelodyFactory Constructor.
+        /// Defines and creates all known melodies.
+        /// TODO Add DataBase from Cedrick Alexandre
+        /// </summary>
         public MelodyFactory()
         {
             Melodies = new Dictionary<Gesture, Melody>();
-            //Grosse base de données sur les mélodies que nous donnera Cedrick Alexandre*
             //quaver = Croche
             //crotchet = Noire
             //minim = Blanche
@@ -25,14 +36,23 @@ namespace PopnTouchi2
             Melodies.Add(Gesture.infinite, new Melody(l));
         }
 
-        public Melody getMelody(Gesture gesture)
+        /// <summary>
+        /// Finds the melody associated to a gesture from Melodies Dictionary.
+        /// </summary>
+        /// <param name="gesture">The gesture</param>
+        /// <returns>The melody found</returns>
+        public Melody GetMelody(Gesture gesture)
         {
             return Melodies[gesture];
         }
 
-        public Melody getMelody()
+        /// <summary>
+        /// Randomly returns a melody known in the Dictionary.
+        /// TODO Faire un algo qui détermine quelle mélodie extraire du générateur
+        /// </summary>
+        /// <returns>The random melody</returns>
+        public Melody GetMelody()
         {
-            //Faire un algo qui détermine quelle mélodie extraire du générateur
             return Melodies[Gesture.infinite];
         }
     }

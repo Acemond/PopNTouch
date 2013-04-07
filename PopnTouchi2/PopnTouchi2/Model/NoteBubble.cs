@@ -13,16 +13,46 @@ using System.Windows.Shapes;
 
 namespace PopnTouchi2
 {
+    /// <summary>
+    /// Represents a graphic item containing an instance of Note.
+    /// </summary>
     public class NoteBubble : ScatterViewItem
     {
-        private int[] _offsettab { get; set; }
-        private Dictionary<int, String> _dictionary = new Dictionary<int, string>();
+        /// <summary>
+        /// Property.
+        /// TODO Qu'est ce que c'est ? Trouver meilleure appelation de l'attribut
+        /// </summary>
+        private int[] Offsettab { get; set; }
 
+        /// <summary>
+        /// Parameter.
+        /// TODO Qu'est ce que c'est ? Trouver meilleure appelation de l'attribut
+        /// </summary>
+        private Dictionary<int, String> dictionary = new Dictionary<int, string>();
+
+        /// <summary>
+        /// Property.
+        /// NoteBubble's contained Note
+        /// </summary>
+        public Note Note { get; set; }
+
+        /// <summary>
+        /// Property.
+        /// NoteBubble unique ID.
+        /// </summary>
+        public int Id { get; set; }
+
+        /// <summary>
+        /// NoteBubble Constructor.
+        /// Creates a new NoteBubble object and its Note.
+        /// Defines a global offset array for the stave flattening.
+        /// Defines the position of the newly created NoteBubble in its grid.
+        /// </summary>
+        /// <param name="noteValue">The NoteValue needed to create a Note</param>
         public NoteBubble(NoteValue noteValue)
         {
-            //Définition du tableau global d'offset pour applatissement de portée
-            _offsettab = new int[] { 0, 0, 0, 14, 25, 37, 47, 56, 64, 71, 76, 80, 83, 85, 85, 84, 80, 75, 68, 60, 50, 38, 26, 15, 4, -3, -9, -11, -12, -11, -7 };
-            _dictionary = new Dictionary<int, string>();
+            Offsettab = new int[] { 0, 0, 0, 14, 25, 37, 47, 56, 64, 71, 76, 80, 83, 85, 85, 84, 80, 75, 68, 60, 50, 38, 26, 15, 4, -3, -9, -11, -12, -11, -7 };
+            dictionary = new Dictionary<int, string>();
 
             Note = new Note(0, noteValue, Pitch.A, -1);
             Id = GlobalVariables.idNoteBubble++;
@@ -36,10 +66,17 @@ namespace PopnTouchi2
 
         }
 
+        /// <summary>
+        /// NoteBubble Theme Constructor.
+        /// Specifies a Theme for the new NoteBubble object.
+        /// Sets all its graphics attributes and view behaviours.
+        /// </summary>
+        /// <param name="noteValue">The NoteValue needed to create a Note</param>
+        /// <param name="theme">The Theme needed to find the NoteBubble's image</param>
         public NoteBubble(NoteValue noteValue, Theme theme): this(noteValue)
         {
             FrameworkElementFactory bubbleImage = new FrameworkElementFactory(typeof(Image));
-            bubbleImage.SetValue(Image.SourceProperty, theme.getNoteBubbleImageSource(noteValue));
+            bubbleImage.SetValue(Image.SourceProperty, theme.GetNoteBubbleImageSource(noteValue));
             bubbleImage.SetValue(Image.IsHitTestVisibleProperty, false);
             bubbleImage.SetValue(Image.WidthProperty, 50.0);
             bubbleImage.SetValue(Image.HeightProperty, 50.0);
@@ -60,9 +97,11 @@ namespace PopnTouchi2
             this.Style = bubbleStyle;
         }
 
-        public Note Note { get; set; }
-        public int Id { get; set; }
-
+        /// <summary>
+        /// TODO Description détaillée de ce que fait cette méthode
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void TouchLeaveBubble(object sender, ContainerManipulationCompletedEventArgs e)
         {
             ScatterViewItem bubble = new ScatterViewItem();
@@ -83,7 +122,7 @@ namespace PopnTouchi2
             else bubbleCenter.X = Math.Floor((bubbleCenter.X + 30) / 60) * 60;
 
             //"Applatissement" de la portée (MAJ : Switch -> Tableau !)
-            int offset=_offsettab[((long)bubbleCenter.X/60)];
+            int offset= Offsettab[((long)bubbleCenter.X/60)];
             bubbleCenter.Y += offset;
 
           
