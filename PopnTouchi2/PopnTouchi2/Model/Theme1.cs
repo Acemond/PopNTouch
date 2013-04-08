@@ -7,56 +7,70 @@ using System.Windows.Media.Imaging;
 
 namespace PopnTouchi2
 {
+    /// <summary>
+    /// Theme1 inherits from Abstract Class Theme. Defines Application's Theme number 1.
+    /// </summary>
     public class Theme1 : Theme
     {
+        /// <summary>
+        /// Theme1 Constructor.
+        /// Calls Theme Constructor. Initialize instruments and interface's elements according to the theme desired.
+        /// </summary>
         public Theme1()
             : base()
         {
-            _instrumentsTop[0] = new Instrument(InstrumentType.piano);
-            _instrumentsTop[1] = new Instrument(InstrumentType.ocarina);
-            _instrumentsBottom[0] = new Instrument(InstrumentType.ocarina);
-            _instrumentsBottom[1] = new Instrument(InstrumentType.flute);
+            instrumentsTop[0] = new Instrument(InstrumentType.piano);
+            instrumentsTop[1] = new Instrument(InstrumentType.ocarina);
+            instrumentsBottom[0] = new Instrument(InstrumentType.ocarina);
+            instrumentsBottom[1] = new Instrument(InstrumentType.flute);
             
-            _backgroundImage = new ImageBrush();
-            _backgroundImage.ImageSource =
+            BackgroundImage = new ImageBrush();
+            BackgroundImage.ImageSource =
                 new BitmapImage(
-                    new Uri(@"../../Resources/Images/Theme1/bullesBack.png", UriKind.Relative)
+                    new Uri(@"../../Resources/Images/Theme1/background.png", UriKind.Relative)
                 );
-            _noteGeneratorImage = new ImageBrush();
-            _noteGeneratorImage.ImageSource =
+            NoteGeneratorImage = new ImageBrush();
+            NoteGeneratorImage.ImageSource =
                 new BitmapImage(
-                    new Uri(@"../../Resources/Images/Theme1/genenote.png", UriKind.Relative)
+                    new Uri(@"../../Resources/Images/Theme1/notefactory.png", UriKind.Relative)
                 );
-            _melodyGeneratorImage = new ImageBrush();
-            _melodyGeneratorImage.ImageSource =
+            MelodyGeneratorImage = new ImageBrush();
+            MelodyGeneratorImage.ImageSource =
                 new BitmapImage(
-                    new Uri(@"../../Resources/Images/Theme1/generythme.png", UriKind.Relative)
+                    new Uri(@"../../Resources/Images/Theme1/melodyfactory.png", UriKind.Relative)
                 );
 
-            //noteBubbles dictionary creation
             BitmapImage crotchetImageSource = new BitmapImage(
-                new Uri(@"../../Resources/Images/Theme1/crotchetBubble.png", UriKind.Relative)
+                new Uri(@"../../Resources/Images/Theme1/Bubbles/Notes/bullenoire.png", UriKind.Relative)
             );
 
             BitmapImage minimImageSource = new BitmapImage(
-                new Uri(@"../../Resources/Images/Theme1/minimBubble.png", UriKind.Relative)
+                new Uri(@"../../Resources/Images/Theme1/Bubbles/Notes/bulleblanche.png", UriKind.Relative)
             );
 
             BitmapImage quaverImageSource = new BitmapImage(
-                new Uri(@"../../Resources/Images/Theme1/quaverBubble.png", UriKind.Relative)
+                new Uri(@"../../Resources/Images/Theme1/Bubbles/Notes/bullecroche.png", UriKind.Relative)
             );
 
-            _noteBubbleImages.Add(NoteValue.crotchet, crotchetImageSource);
-            _noteBubbleImages.Add(NoteValue.minim, minimImageSource);
-            _noteBubbleImages.Add(NoteValue.quaver, quaverImageSource);
+            NoteBubbleImages.Add(NoteValue.crotchet, crotchetImageSource);
+            NoteBubbleImages.Add(NoteValue.minim, minimImageSource);
+            NoteBubbleImages.Add(NoteValue.quaver, quaverImageSource);
         }
 
-        public override BitmapImage getNoteBubbleImageSource(NoteValue noteValue)
+        /// <summary>
+        /// Find the NoteBubble's Image according to a NoteValue.
+        /// </summary>
+        /// <param name="noteValue">The Notevalue needed to find the Bubble Image</param>
+        /// <returns>A BitmapImage linked to the Bubble</returns>
+        public override BitmapImage GetNoteBubbleImageSource(NoteValue noteValue)
         {
-            return _noteBubbleImages[noteValue];
+            return NoteBubbleImages[noteValue];
         }
 
-        public void generateObjects()
+        /// <summary>
+        /// TODO
+        /// </summary>
+        public void GenerateObjects()
         {
             throw new System.NotImplementedException();
         }

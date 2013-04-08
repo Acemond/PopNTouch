@@ -5,6 +5,9 @@ using System.Text;
 
 namespace PopnTouchi2.Model.Enums
 {
+    /// <summary>
+    /// Sets all shared global variables.
+    /// </summary>
     public class GlobalVariables
     {
         public static int bpm = 90;

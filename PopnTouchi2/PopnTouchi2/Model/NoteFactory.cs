@@ -5,16 +5,32 @@ using System.Text;
 
 namespace PopnTouchi2
 {
+    /// <summary>
+    /// Defines all default notes possible in the application.
+    /// </summary>
     public class NoteFactory
     {
-        private Dictionary<int, NoteValue> _notes;
+        /// <summary>
+        /// Parameter.
+        /// Dictionary mapping an Integer to a specific NoteValue
+        /// </summary>
+        private Dictionary<int, NoteValue> notes;
 
+        /// <summary>
+        /// NoteFactory Constructor.
+        /// Initializes the Notes Dictionary.
+        /// </summary>
         public NoteFactory()
         {
-            _notes = new Dictionary<int, NoteValue>();
+            notes = new Dictionary<int, NoteValue>();
         }
 
-        public void createNote(int noteValue, Pitch pitch)
+        /// <summary>
+        /// TODO
+        /// </summary>
+        /// <param name="noteValue"></param>
+        /// <param name="pitch"></param>
+        public void CreateNote(int noteValue, Pitch pitch)
         {
             throw new System.NotImplementedException();
         }

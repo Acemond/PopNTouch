@@ -8,80 +8,117 @@ using System.Threading.Tasks;
 
 namespace PopnTouchi2
 {
+    /// <summary>
+    /// TODO
+    /// </summary>
     public class MainViewModel : ViewModelBase
     {
+        /// <summary>
+        /// Parameter.
+        /// Session's View Model.
+        /// </summary>
         public SessionViewModel sessionViewModel;
-        private ICommand _play;
-        private ICommand _stop;
-        private ICommand _changeTheme;
+        /// <summary>
+        /// Parameter.
+        /// TODO
+        /// </summary>
+        private ICommand play;
+        /// <summary>
+        /// Parameter.
+        /// TODO
+        /// </summary>
+        private ICommand stop;
+        /// <summary>
+        /// Parameter.
+        /// TODO
+        /// </summary>
+        private ICommand changeTheme;
 
         /// <summary>
-        /// Constructeur de la VueModele pricipale
+        /// MainViewModel Constructor.
+        /// Initializes the SessionViewModel.
         /// </summary>
         public MainViewModel()
         {
             sessionViewModel = new SessionViewModel(new Session());
         }
 
-
+        /// <summary>
+        /// TODO
+        /// </summary>
         public ICommand Play
         {
             get
             {
-                if (_play == null)
-                    _play = new RelayCommand(playAction);
-                return _play;
+                if (play == null)
+                    play = new RelayCommand(PlayAction);
+                return play;
             }
             set
             {
             }
         }
 
+        /// <summary>
+        /// TODO
+        /// </summary>
         public ICommand Stop
         {
             get
             {
-                if (_stop == null)
-                    _stop = new RelayCommand(stopAction);
-                return _stop;
+                if (stop == null)
+                    stop = new RelayCommand(StopAction);
+                return stop;
             }
             set
             {
             }
         }
 
+        /// <summary>
+        /// TODO
+        /// </summary>
         public ICommand ChangeTheme
         {
             get
             {
-                if (_changeTheme == null)
-                    _changeTheme = new RelayCommand(changeThemeAction);
-                return _changeTheme;
+                if (changeTheme == null)
+                    changeTheme = new RelayCommand(ChangeThemeAction);
+                return changeTheme;
             }
             set
             {
             }
         }
 
-        public void playAction()
+        /// <summary>
+        /// TODO
+        /// </summary>
+        public void PlayAction()
         {
             Task.Factory.StartNew(() =>
             {
-                sessionViewModel.Session.StaveTop.playAllNotes();
-                sessionViewModel.Session.StaveBottom.playAllNotes();
+                sessionViewModel.Session.StaveTop.PlayAllNotes();
+                sessionViewModel.Session.StaveBottom.PlayAllNotes();
             });
         }
 
-        public void stopAction()
+        /// <summary>
+        /// TODO
+        /// </summary>
+        public void StopAction()
         {
             Task.Factory.StartNew(() =>
             {
-                sessionViewModel.Session.StaveTop.stopMusic();
-                sessionViewModel.Session.StaveBottom.stopMusic();
+                sessionViewModel.Session.StaveTop.StopMusic();
+                sessionViewModel.Session.StaveBottom.StopMusic();
             });
         }
 
-        public void changeThemeAction()
+        /// <summary>
+        /// TODO
+        /// </summary>
+        public void ChangeThemeAction()
         {
             /*Task.Factory.StartNew(() =>
             {

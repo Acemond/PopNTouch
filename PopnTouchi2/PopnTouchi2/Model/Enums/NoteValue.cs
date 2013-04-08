@@ -6,7 +6,7 @@ using System.Text;
 namespace PopnTouchi2
 {
     /// <summary>
-    /// Notes value expressed in half time
+    /// Sets Notes value expressed in half time.
     /// </summary>
     public enum NoteValue
     {

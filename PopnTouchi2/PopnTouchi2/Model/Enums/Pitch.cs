@@ -5,6 +5,9 @@ using System.Text;
 
 namespace PopnTouchi2
 {
+    /// <summary>
+    /// Sets Pitch classes names
+    /// </summary>
     public enum Pitch
     {
         A,

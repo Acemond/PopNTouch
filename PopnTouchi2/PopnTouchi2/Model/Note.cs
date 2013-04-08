@@ -9,19 +9,50 @@ using System.Threading;
 
 namespace PopnTouchi2
 {
+    /// <summary>
+    /// Sets and defines all attributes and methods needed to manage a music Note.
+    /// </summary>
     public class Note
     {
+        /// <summary>
+        /// Property.
+        /// Note Octave between TODO Value Range
+        /// </summary>
         public int Octave { get; set; }
+
+        /// <summary>
+        /// Property.
+        /// Note Duration defined by the NoteValue Enumeration.
+        /// </summary>
         public NoteValue Duration { get; set; }
+
+        /// <summary>
+        /// Property.
+        /// Note Pitch defined by the Pitch Enumeration.
+        /// </summary>
         public Pitch Pitch { get; set; }
+
+        /// <summary>
+        /// Property.
+        /// Note Position between TODO Value Range
+        /// </summary>
         public int Position { get; set; }
 
-        // Attributs pour dièse et bémol
+        /// <summary>
+        /// Property.
+        /// Flat Note attribute : Set to True if the Note is flatten.
+        /// </summary>
         public bool Flat { get; set; }
+
+        /// <summary>
+        /// Property.
+        /// Sharp Note attribute : Set to True if the Note is sharpen.
+        /// </summary>
         public bool Sharp { get; set; }
         
         /// <summary>
-        /// Generates a new object of class Notes with a given octave, duration and pitch.
+        /// Note Constructor.
+        /// Generates a new object of class Note with a given octave, duration and pitch.
         /// </summary>
         /// <param name="oct">Octave</param>
         /// <param name="d">NoteValue</param>
@@ -37,10 +68,10 @@ namespace PopnTouchi2
         }
 
         /// <summary>
-        /// Returns a string describing the note
+        /// Generates a string describing the note.
         /// </summary>
-        /// <returns></returns>
-        public String getCue()
+        /// <returns>The string newly created</returns>
+        public String GetCue()
         {
             String alteration = "";
             if (Sharp)  alteration = "d";
@@ -51,8 +82,8 @@ namespace PopnTouchi2
         /// <summary>
         /// Getter of duration's enum number
         /// </summary>
-        /// <returns></returns>
-        public int getDuration()
+        /// <returns>The Duration's Enumation Rank</returns>
+        public int GetDuration()
         {
             return Duration.GetHashCode();
         }
