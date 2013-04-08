@@ -19,10 +19,10 @@ namespace PopnTouchi2
         public Theme1()
             : base()
         {
-            instrumentsTop[0] = new Instrument(InstrumentType.piano);
-            instrumentsTop[1] = new Instrument(InstrumentType.ocarina);
-            instrumentsBottom[0] = new Instrument(InstrumentType.ocarina);
-            instrumentsBottom[1] = new Instrument(InstrumentType.flute);
+            InstrumentsTop[0] = new Instrument(InstrumentType.piano);
+            InstrumentsTop[1] = new Instrument(InstrumentType.ocarina);
+            InstrumentsBottom[0] = new Instrument(InstrumentType.ocarina);
+            InstrumentsBottom[1] = new Instrument(InstrumentType.flute);
             
             BackgroundImage = new ImageBrush();
             BackgroundImage.ImageSource =

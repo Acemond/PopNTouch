@@ -64,8 +64,8 @@ namespace PopnTouchi2
 
             Children.Add(NoteBubbleGenerator);
             Children.Add(MelodyBubbleGenerator);
-            StaveTop = new Stave(Theme.GetInstrumentsTop()[0]);
-            StaveBottom = new Stave(Theme.GetInstrumentsBottom()[0]);
+            StaveTop = new Stave(Theme.InstrumentsTop[0]);
+            StaveBottom = new Stave(Theme.InstrumentsBottom[0]);
             Background = Theme.BackgroundImage;
         }
         #endregion

@@ -13,15 +13,15 @@ namespace PopnTouchi2
     public abstract class Theme
     {
         /// <summary>
-        /// Parameter.
+        /// Property.
         /// Array of two instruments for the upper Stave.
         /// </summary>
-        protected Instrument[] instrumentsTop;
+        public Instrument[] InstrumentsTop { get; set; }
         /// <summary>
-        /// Parameter.
+        /// Property.
         /// Array of two instruments for the lower Stave.
         /// </summary>
-        protected Instrument[] instrumentsBottom;
+        public Instrument[] InstrumentsBottom { get; set; }
         /// <summary>
         /// Property.
         /// Theme defines Background.
@@ -49,8 +49,8 @@ namespace PopnTouchi2
         /// </summary>
         public Theme()
         {
-            instrumentsTop = new Instrument[2];
-            instrumentsBottom = new Instrument[2];
+            InstrumentsTop = new Instrument[2];
+            InstrumentsBottom = new Instrument[2];
             NoteBubbleImages = new Dictionary<NoteValue, BitmapImage>();
         }
 
@@ -70,24 +70,6 @@ namespace PopnTouchi2
         public virtual BitmapImage GetNoteBubbleImageSource(NoteValue noteValue)
         {
             throw new System.NotImplementedException();
-        }
-
-        /// <summary>
-        /// TODO Pourquoi faire un getter ? Alors qu'on pourrait faire une propriété?
-        /// </summary>
-        /// <returns></returns>
-        public Instrument[] GetInstrumentsTop()
-        {
-            return instrumentsTop;
-        }
-
-        /// <summary>
-        /// TODO Pourquoi faire un getter ? Alors qu'on pourrait faire une propriété?
-        /// </summary>
-        /// <returns></returns>
-        public Instrument[] GetInstrumentsBottom()
-        {
-            return instrumentsBottom;
         }
     }
 }
