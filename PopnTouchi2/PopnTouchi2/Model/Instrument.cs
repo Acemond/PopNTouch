@@ -19,11 +19,6 @@ namespace PopnTouchi2
         /// Type of an instrument.
         /// </summary>
         public InstrumentType Name { get; set; }
-        
-        /// <summary>
-        /// TODO
-        /// </summary>
-        //private Dictionary<Pitch, String> _sounds; // à quoi ça sert?
 
         #region constructors
         /// <summary>

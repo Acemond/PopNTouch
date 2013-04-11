@@ -20,15 +20,9 @@ namespace PopnTouchi2
     {
         /// <summary>
         /// Property.
-        /// TODO Qu'est ce que c'est ? Trouver meilleure appelation de l'attribut
+        /// Defines the vertical offset of the manipulation grid
         /// </summary>
         private int[] Offsettab { get; set; }
-
-        /// <summary>
-        /// Parameter.
-        /// TODO Qu'est ce que c'est ? Trouver meilleure appelation de l'attribut
-        /// </summary>
-        private Dictionary<int, String> dictionary = new Dictionary<int, string>();
 
         /// <summary>
         /// Property.
@@ -52,7 +46,6 @@ namespace PopnTouchi2
         public NoteBubble(NoteValue noteValue)
         {
             Offsettab = new int[] { 0, 0, 0, 14, 25, 37, 47, 56, 64, 71, 76, 80, 83, 85, 85, 84, 80, 75, 68, 60, 50, 38, 26, 15, 4, -3, -9, -11, -12, -11, -7 };
-            dictionary = new Dictionary<int, string>();
 
             Note = new Note(0, noteValue, "la", -1);
             Id = GlobalVariables.idNoteBubble++;
@@ -78,8 +71,8 @@ namespace PopnTouchi2
             FrameworkElementFactory bubbleImage = new FrameworkElementFactory(typeof(Image));
             bubbleImage.SetValue(Image.SourceProperty, theme.GetNoteBubbleImageSource(noteValue));
             bubbleImage.SetValue(Image.IsHitTestVisibleProperty, false);
-            bubbleImage.SetValue(Image.WidthProperty, 50.0);
-            bubbleImage.SetValue(Image.HeightProperty, 50.0);
+            bubbleImage.SetValue(Image.WidthProperty, 85.0);
+            bubbleImage.SetValue(Image.HeightProperty, 85.0);
 
             FrameworkElementFactory touchZone = new FrameworkElementFactory(typeof(Ellipse));
             touchZone.SetValue(Ellipse.FillProperty, Brushes.Transparent);

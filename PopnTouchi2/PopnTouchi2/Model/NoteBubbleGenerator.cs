@@ -24,7 +24,8 @@ namespace PopnTouchi2
 
         /// <summary>
         /// Property.
-        /// TODO Que fait cet attribut?
+        /// How many notes of each type are currently available on the screen.
+        /// Used in creation algorithm.
         /// </summary>
         public Dictionary<NoteValue, int> WildBubbles { get; set; }
 
