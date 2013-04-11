@@ -6,6 +6,8 @@
         Title="DesktopWindow"
         Height="1080"
         Width="1920"
+                 Margin="0"
+                 Padding="0"
         WindowStyle="None">
     
     <Window.Background>

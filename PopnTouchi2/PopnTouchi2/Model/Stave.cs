@@ -64,9 +64,7 @@ namespace PopnTouchi2
                 mb.Melody.Notes[i].Position += position;
                 int posArray = 0;
                 while ((posArray < Notes.Count) && (Notes[posArray].Position < mb.Melody.Notes[i].Position))
-                {
                     posArray++;
-                }
 
                 Notes.Insert(posArray, mb.Melody.Notes[i]);
             }
@@ -85,10 +83,7 @@ namespace PopnTouchi2
             if (!Notes.Contains(note))
             {
                 int i = 0;
-                while (i < Notes.Count && Notes[i].Position < position)
-                {
-                    i++;
-                }
+                for (i = 0; (i < Notes.Count && Notes[i].Position < position); i++);
 
                 Notes.Insert(i, note);
                 MaxPosition = Math.Max(MaxPosition, note.Position);
@@ -99,10 +94,7 @@ namespace PopnTouchi2
         /// Remove the note from the list Notes
         /// </summary>
         /// <param name="note">The note to remove</param>
-        public void RemoveNote(Note note)
-        {
-            Notes.Remove(note);
-        }
+        public void RemoveNote(Note note) { Notes.Remove(note); }
 
         /// <summary>
         /// Plays all the notes contained by the stave.
@@ -136,19 +128,13 @@ namespace PopnTouchi2
                         CurrentInstrument.PlayNote(Notes[GlobalVariables.it_Notes]);
                         GlobalVariables.it_Notes++;
                     }
-                    else
-                    {
-                        play = false;
-                    }
+                    else play = false;
                 }
                
                 GlobalVariables.position_Note++;
 
             }
-            else
-            {
-                StopMusic();
-            }
+            else StopMusic();
         }
 
         /// <summary>

@@ -14,6 +14,7 @@ namespace PopnTouchi2
     /// </summary>
     public class Note
     {
+        #region Properties
         /// <summary>
         /// Property.
         /// Note Octave between TODO Value Range
@@ -49,7 +50,8 @@ namespace PopnTouchi2
         /// Sharp Note attribute : Set to True if the Note is sharpen.
         /// </summary>
         public bool Sharp { get; set; }
-        
+        #endregion
+
         /// <summary>
         /// Note Constructor.
         /// Generates a new object of class Note with a given octave, duration and pitch.

@@ -57,7 +57,7 @@ namespace PopnTouchi2
             HorizontalAlignment = HorizontalAlignment.Center;
 
             ContainerManipulationCompleted += TouchLeaveBubble;
-            PreviewTouchDown += NoteBubble_TouchDown;
+            //PreviewTouchDown += NoteBubble_TouchDown;
 
         }
 
@@ -78,7 +78,7 @@ namespace PopnTouchi2
 
             FrameworkElementFactory touchZone = new FrameworkElementFactory(typeof(Ellipse));
             touchZone.SetValue(Ellipse.FillProperty, Brushes.Transparent);
-            touchZone.SetValue(Ellipse.MarginProperty, new Thickness(25));
+            touchZone.SetValue(Ellipse.MarginProperty, new Thickness(15));
 
             FrameworkElementFactory grid = new FrameworkElementFactory(typeof(Grid));
             grid.AppendChild(bubbleImage);
@@ -105,8 +105,8 @@ namespace PopnTouchi2
 
             // int width = int.Parse(GetWidth.Text);
             // int height = int.Parse(GetHeight.Text);
-            int width = 1366;
-            int height = 768;
+            int width = (int)((Session)(((ScatterView)(this.Parent)).Parent)).ActualWidth;
+            int height = (int)((Session)(((ScatterView)(this.Parent)).Parent)).ActualHeight;
             bubbleCenter.X = bubbleCenter.X * 1920 / width;
             bubbleCenter.Y = bubbleCenter.Y * 1080 / height;
 
@@ -164,18 +164,19 @@ namespace PopnTouchi2
             }
         }
 
+        //TODO
         /// <summary>
         /// When the user touchDown on a bubble, it makes a little sound effect
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void NoteBubble_TouchDown(object sender, TouchEventArgs e)
+        /*private void NoteBubble_TouchDown(object sender, TouchEventArgs e)
         {
             String effect = "discovery";
             Random r = new Random();
             int nb = r.Next(1, 5);
             effect += nb.ToString();
             AudioController.PlaySoundWithString(effect);
-        }
+        }*/
     }
 }

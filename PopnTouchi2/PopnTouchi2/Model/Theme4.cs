@@ -15,8 +15,7 @@ namespace PopnTouchi2
         /// Calls Theme Constructor. Initialize instruments and interface's elements according to the theme desired.
         /// TODO Define images. See Theme1 for instance.
         /// </summary>
-        public Theme4()
-            : base()
+        public Theme4() : base()
         {
             InstrumentsTop[0] = new Instrument(InstrumentType.flute);
             InstrumentsTop[1] = new Instrument(InstrumentType.piano);

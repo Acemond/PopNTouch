@@ -44,6 +44,7 @@ namespace PopnTouchi2
             WildBubbles.Add(NoteValue.quaver, 0);
 
             //Defines size and position
+            //TODO : set relative to Grid size
             this.Width = 368;
             this.Height = 234;
             this.HorizontalAlignment = System.Windows.HorizontalAlignment.Left;
@@ -112,8 +113,7 @@ namespace PopnTouchi2
         {
             for (int i = 0; i < NoteBubbles.Count; i++)
             {
-                if (NoteBubbles[i].Id == idNote)
-                    NoteBubbles.RemoveAt(i);
+                if (NoteBubbles[i].Id == idNote) NoteBubbles.RemoveAt(i);
             }
         }
 

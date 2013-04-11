@@ -39,7 +39,6 @@ namespace PopnTouchi2
 
             Session newSession = sessionBuilder.GenerateSession();
             this.Desktop.Children.Add(newSession);
-
         }
     }
 }
