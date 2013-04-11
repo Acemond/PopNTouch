@@ -20,9 +20,9 @@ namespace PopnTouchi2
             : base()
         {
             InstrumentsTop[0] = new Instrument(InstrumentType.piano);
-            InstrumentsTop[1] = new Instrument(InstrumentType.ocarina);
-            InstrumentsBottom[0] = new Instrument(InstrumentType.ocarina);
-            InstrumentsBottom[1] = new Instrument(InstrumentType.flute);
+            InstrumentsTop[1] = new Instrument(InstrumentType.flute);
+            InstrumentsBottom[0] = new Instrument(InstrumentType.contrebass);
+            InstrumentsBottom[1] = new Instrument(InstrumentType.bass);
             
             BackgroundImage = new ImageBrush();
             BackgroundImage.ImageSource =
@@ -55,6 +55,8 @@ namespace PopnTouchi2
             NoteBubbleImages.Add(NoteValue.crotchet, crotchetImageSource);
             NoteBubbleImages.Add(NoteValue.minim, minimImageSource);
             NoteBubbleImages.Add(NoteValue.quaver, quaverImageSource);
+
+            sound = AudioController.INSTANCE.SoundBank.GetCue("loop_eveningWater");
         }
 
         /// <summary>

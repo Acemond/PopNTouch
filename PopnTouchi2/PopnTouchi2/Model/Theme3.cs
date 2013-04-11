@@ -18,10 +18,10 @@ namespace PopnTouchi2
         public Theme3()
             : base()
         {
-            InstrumentsTop[0] = new Instrument(InstrumentType.ocarina);
+            InstrumentsTop[0] = new Instrument(InstrumentType.violon);
             InstrumentsTop[1] = new Instrument(InstrumentType.piano);
-            InstrumentsBottom[0] = new Instrument(InstrumentType.flute);
-            InstrumentsBottom[1] = new Instrument(InstrumentType.ocarina);
+            InstrumentsBottom[0] = new Instrument(InstrumentType.contrebass);
+            InstrumentsBottom[1] = new Instrument(InstrumentType.vibraphone);
         }
 
         /// <summary>

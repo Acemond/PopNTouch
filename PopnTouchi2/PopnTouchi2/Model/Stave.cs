@@ -82,15 +82,26 @@ namespace PopnTouchi2
         public void AddNote(Note note, int position)
         {
             note.Position = position;
-
-            int i = 0;
-            while (i < Notes.Count && Notes[i].Position < position)
+            if (!Notes.Contains(note))
             {
-                i++;
-            }
+                int i = 0;
+                while (i < Notes.Count && Notes[i].Position < position)
+                {
+                    i++;
+                }
 
-            Notes.Insert(i, note);
-            MaxPosition = Math.Max(MaxPosition, note.Position);
+                Notes.Insert(i, note);
+                MaxPosition = Math.Max(MaxPosition, note.Position);
+            }
+        }
+
+        /// <summary>
+        /// Remove the note from the list Notes
+        /// </summary>
+        /// <param name="note">The note to remove</param>
+        public void RemoveNote(Note note)
+        {
+            Notes.Remove(note);
         }
 
         /// <summary>
@@ -111,8 +122,8 @@ namespace PopnTouchi2
         /// Event triggered when the play button is touched.
         /// TODO Plus de détails
         /// </summary>
-        /// <param name="source">Source</param>
-        /// <param name="e">ElapsedEventArgs</param>
+        /// <param name="source"></param>
+        /// <param name="e"></param>
         private void PlayList(object source, ElapsedEventArgs e)
         {
             bool play = true;

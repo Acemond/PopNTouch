@@ -8,6 +8,7 @@ using System.Windows.Controls;
 using Microsoft.Surface.Presentation.Controls;
 using System.Windows;
 using System.Windows.Shapes;
+using System.Windows.Input;
 
 namespace PopnTouchi2
 {
@@ -122,7 +123,7 @@ namespace PopnTouchi2
         /// </summary>
         /// <param name="sender">Sender</param>
         /// <param name="e">TouchEventArgs</param>
-        public void NoteBubbleGeneratorTouchDown(object sender, System.Windows.Input.TouchEventArgs e)
+        public void NoteBubbleGeneratorTouchDown(object sender, TouchEventArgs e)
         {
             NoteBubble newBubble = CreateNoteBubble(((Session)this.Parent).Theme);
             NoteBubbles.Add(newBubble);

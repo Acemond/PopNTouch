@@ -10,8 +10,14 @@ namespace PopnTouchi2
     /// </summary>
     public enum InstrumentType
     {
-        piano = 1,
-        ocarina = 2,
-        flute = 3
+        bass = 1,
+        clarinette = 2,
+        contrebass = 3,
+        flute = 4,
+        piano = 5,
+        saxo = 6,
+        vibraphone = 7,
+        violon = 8
+
     }
 }

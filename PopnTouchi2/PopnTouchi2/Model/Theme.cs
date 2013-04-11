@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using Microsoft.Xna.Framework.Audio;
 
 namespace PopnTouchi2
 {
@@ -42,6 +43,12 @@ namespace PopnTouchi2
         /// Theme defines Elements' aspect.
         /// </summary>
         public ImageBrush MelodyGeneratorImage { get; set; }
+
+        /// <summary>
+        /// Property
+        /// Theme's sound
+        /// </summary>
+        public Cue sound { get; set; }
 
         /// <summary>
         /// Theme Constructor.

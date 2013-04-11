@@ -10,6 +10,7 @@ using System.Windows.Media.Animation;
 using System.Windows.Controls;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using System.Windows.Input;
 
 namespace PopnTouchi2
 {
@@ -56,6 +57,7 @@ namespace PopnTouchi2
             HorizontalAlignment = HorizontalAlignment.Center;
 
             ContainerManipulationCompleted += TouchLeaveBubble;
+            PreviewTouchDown += NoteBubble_TouchDown;
 
         }
 
@@ -160,6 +162,20 @@ namespace PopnTouchi2
                 bubble.Visibility = Visibility.Collapsed;
                 bubble.Visibility = Visibility.Visible;
             }
+        }
+
+        /// <summary>
+        /// When the user touchDown on a bubble, it makes a little sound effect
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void NoteBubble_TouchDown(object sender, TouchEventArgs e)
+        {
+            String effect = "discovery";
+            Random r = new Random();
+            int nb = r.Next(1, 5);
+            effect += nb.ToString();
+            AudioController.PlaySoundWithString(effect);
         }
     }
 }

@@ -7,6 +7,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using Microsoft.Surface.Presentation.Controls;
+using Microsoft.Xna.Framework.Audio;
 
 namespace PopnTouchi2
 {
@@ -46,6 +47,12 @@ namespace PopnTouchi2
         /// Session's Bubbles' ScatterView instance.
         /// </summary>
         public ScatterView Bubbles { get; set; }
+
+        /// <summary>
+        /// Property
+        /// Session's Background sound
+        /// </summary>
+        public Cue BackgroundSound { get; set; }
         #endregion
 
         #region Constructors
@@ -67,6 +74,10 @@ namespace PopnTouchi2
             StaveTop = new Stave(Theme.InstrumentsTop[0]);
             StaveBottom = new Stave(Theme.InstrumentsBottom[0]);
             Background = Theme.BackgroundImage;
+
+            //sound methods
+            BackgroundSound = Theme.sound;
+            BackgroundSound.Play();
         }
         #endregion
 
