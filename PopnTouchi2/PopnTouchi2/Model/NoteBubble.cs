@@ -54,7 +54,7 @@ namespace PopnTouchi2
             Offsettab = new int[] { 0, 0, 0, 14, 25, 37, 47, 56, 64, 71, 76, 80, 83, 85, 85, 84, 80, 75, 68, 60, 50, 38, 26, 15, 4, -3, -9, -11, -12, -11, -7 };
             dictionary = new Dictionary<int, string>();
 
-            Note = new Note(0, noteValue, Pitch.A, -1);
+            Note = new Note(0, noteValue, "la", -1);
             Id = GlobalVariables.idNoteBubble++;
 
             CanScale = false;

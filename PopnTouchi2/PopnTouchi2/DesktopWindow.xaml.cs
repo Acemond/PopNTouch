@@ -15,6 +15,10 @@ using Microsoft.Surface.Presentation;
 using Microsoft.Surface.Presentation.Controls;
 using Microsoft.Surface.Presentation.Input;
 using Microsoft.Xna.Framework.Audio;
+using System.Threading;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
+using System.IO;
 
 namespace PopnTouchi2
 {
@@ -33,9 +37,21 @@ namespace PopnTouchi2
 
             Builder sessionBuilder = new Builder();
 
-            Session newSession = sessionBuilder.GenerateSession();
-            this.Desktop.Children.Add(newSession);
+        //    Session newSession = sessionBuilder.GenerateSession();
+       //     this.Desktop.Children.Add(newSession);
 
+            AudioController.PlaySoundWithString("loop_eveningWater");
+            
+         }
+
+        private void button1_Click(object sender, RoutedEventArgs e)
+        {
+            AudioController.FadeInBackgroundSound();
+        }
+
+        private void button2_Click(object sender, RoutedEventArgs e)
+        {
+            AudioController.FadeOutBackgroundSound();
         }
     }
 }

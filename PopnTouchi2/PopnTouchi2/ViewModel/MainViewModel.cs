@@ -5,6 +5,7 @@ using System.Text;
 using System.Windows.Input;
 using PopnTouchi2.Infrastructure;
 using System.Threading.Tasks;
+using System.Threading;
 
 namespace PopnTouchi2
 {
@@ -44,7 +45,7 @@ namespace PopnTouchi2
         }
 
         /// <summary>
-        /// TODO
+        /// Command which play the music
         /// </summary>
         public ICommand Play
         {
@@ -60,7 +61,7 @@ namespace PopnTouchi2
         }
 
         /// <summary>
-        /// TODO
+        /// Command which stop the played music
         /// </summary>
         public ICommand Stop
         {
@@ -76,7 +77,7 @@ namespace PopnTouchi2
         }
 
         /// <summary>
-        /// TODO
+        /// The command to change the theme
         /// </summary>
         public ICommand ChangeTheme
         {
@@ -92,19 +93,21 @@ namespace PopnTouchi2
         }
 
         /// <summary>
-        /// TODO
+        /// The action of playing the music
         /// </summary>
         public void PlayAction()
         {
             Task.Factory.StartNew(() =>
             {
+                AudioController.FadeOutBackgroundSound();
+                Thread.Sleep(500);
                 sessionViewModel.Session.StaveTop.PlayAllNotes();
                 sessionViewModel.Session.StaveBottom.PlayAllNotes();
             });
         }
 
         /// <summary>
-        /// TODO
+        /// The action of stoping the music
         /// </summary>
         public void StopAction()
         {
@@ -112,11 +115,13 @@ namespace PopnTouchi2
             {
                 sessionViewModel.Session.StaveTop.StopMusic();
                 sessionViewModel.Session.StaveBottom.StopMusic();
+                Thread.Sleep(10000);
+                AudioController.FadeInBackgroundSound();
             });
         }
 
         /// <summary>
-        /// TODO
+        /// The action of changing the theme
         /// </summary>
         public void ChangeThemeAction()
         {

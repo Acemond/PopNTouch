@@ -7,13 +7,13 @@ using System.Windows.Input;
 namespace PopnTouchi2.Infrastructure
 {
     /// <summary>
-    /// TODO
+    /// Create a specific command which will be called in the Xaml
     /// </summary>
     public class RelayCommand : ICommand
     {
         /// <summary>
         /// Parameter.
-        /// TODO
+        /// The action to execute
         /// </summary>
         Action execute;
 
@@ -24,7 +24,7 @@ namespace PopnTouchi2.Infrastructure
         public event EventHandler CanExecuteChanged;
 
         /// <summary>
-        /// TODO
+        /// Execute setter
         /// </summary>
         /// <param name="execute"></param>
         public RelayCommand(Action execute)

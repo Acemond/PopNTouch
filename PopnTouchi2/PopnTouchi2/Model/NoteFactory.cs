@@ -30,7 +30,7 @@ namespace PopnTouchi2
         /// </summary>
         /// <param name="noteValue"></param>
         /// <param name="pitch"></param>
-        public void CreateNote(int noteValue, Pitch pitch)
+        public void CreateNote(int noteValue, String pitch)
         {
             throw new System.NotImplementedException();
         }

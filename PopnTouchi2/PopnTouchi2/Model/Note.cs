@@ -28,9 +28,9 @@ namespace PopnTouchi2
 
         /// <summary>
         /// Property.
-        /// Note Pitch defined by the Pitch Enumeration.
+        /// Note Pitch defined by a String, for example : "la" , "do", "re"...
         /// </summary>
-        public Pitch Pitch { get; set; }
+        public String Pitch { get; set; }
 
         /// <summary>
         /// Property.
@@ -56,12 +56,13 @@ namespace PopnTouchi2
         /// </summary>
         /// <param name="oct">Octave</param>
         /// <param name="d">NoteValue</param>
-        /// <param name="p">Pitch</param>
-        public Note(int oct, NoteValue d, Pitch p, int posit)
+        /// <param name="pitch">String</param>
+        /// <param name="posit">int</param>
+        public Note(int oct, NoteValue d, String pitch, int posit)
         {
             Octave = oct;
             Duration = d;
-            Pitch = p;
+            Pitch = pitch;
             Sharp = false;
             Flat = false;
             Position = posit;
@@ -74,9 +75,25 @@ namespace PopnTouchi2
         public String GetCue()
         {
             String alteration = "";
-            if (Sharp)  alteration = "d";
-            if (Flat)   alteration = "b";
-            return Pitch.ToString() + Octave.ToString() + alteration;
+            if (Sharp)
+            {
+                alteration = "_d";
+            }
+
+            if (Flat)
+            {
+                switch(Pitch)
+                {
+                    case "do" : Pitch = "si" ; break;
+                    case "re" : Pitch = "do" ; alteration = "_d"; break;
+                    case "mi" : Pitch = "re" ; alteration = "_d"; break;
+                    case "fa" : Pitch = "mi" ; break;
+                    case "sol": Pitch = "fa" ; alteration = "_d"; break;
+                    case "la" : Pitch = "sol"; alteration = "_d"; break;
+                    case "si" : Pitch = "la" ; alteration = "_d"; break;
+                }
+            }
+            return Pitch + Octave.ToString() + alteration;
         }
 
         /// <summary>

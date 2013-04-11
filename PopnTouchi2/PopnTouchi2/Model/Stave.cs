@@ -99,6 +99,9 @@ namespace PopnTouchi2
         /// </summary>
         public void PlayAllNotes()
         {
+            //Decrease the background sound
+            AudioController.UpdateVolume(0f);
+
             Timer.Interval = 30000 / GlobalVariables.bpm;
             Timer.Start();
             Timer.Elapsed += new ElapsedEventHandler(PlayList);
@@ -133,11 +136,7 @@ namespace PopnTouchi2
             }
             else
             {
-                Timer.Stop();
-                Timer.EndInit();
-                Timer.Elapsed -= new ElapsedEventHandler(PlayList);
-                GlobalVariables.position_Note = 0;
-                GlobalVariables.it_Notes = 0;
+                StopMusic();
             }
         }
 
@@ -151,6 +150,9 @@ namespace PopnTouchi2
             Timer.Elapsed -= new ElapsedEventHandler(PlayList);
             GlobalVariables.position_Note = 0;
             GlobalVariables.it_Notes = 0;
+
+            //begin the fade In of the background sound
+            AudioController.FadeInBackgroundSound();
         }
     }
 }

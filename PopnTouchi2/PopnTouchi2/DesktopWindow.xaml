@@ -11,5 +11,8 @@
     <Window.Background>
         <ImageBrush ImageSource=".\Resources\images\desktop.png"></ImageBrush>
     </Window.Background>
-    <Grid Name="Desktop"></Grid>
+    <Grid Name="Desktop">
+        <Button Content="Fade In" Height="23" HorizontalAlignment="Left" Margin="154,91,0,0" Name="button1" VerticalAlignment="Top" Width="75" Click="button1_Click" />
+        <Button Content="Fade Out" Height="23" HorizontalAlignment="Left" Margin="167,128,0,0" Name="button2" VerticalAlignment="Top" Width="75" Click="button2_Click" />
+    </Grid>
 </s:SurfaceWindow>

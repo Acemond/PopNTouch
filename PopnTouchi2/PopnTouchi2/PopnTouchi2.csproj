@@ -90,7 +90,6 @@
     <Compile Include="Model\NoteBubbleGenerator.cs" />
     <Compile Include="Model\NoteFactory.cs" />
     <Compile Include="Model\Enums\NoteValue.cs" />
-    <Compile Include="Model\Enums\Pitch.cs" />
     <Compile Include="Model\Stave.cs" />
     <Compile Include="ViewModel\NoteViewModel.cs" />
     <Page Include="DesktopWindow.xaml">
@@ -123,7 +122,7 @@
       <DependentUpon>pose_bulle_portee.sequencediagram</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
+      <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <None Include="Diagrams\Initilisation_jeu.sequencediagram" />
@@ -223,27 +222,6 @@
     <Resource Include="Resources\Images\Theme4\playdrop.png" />
     <Resource Include="Resources\Images\Theme4\soundpointdisable.png" />
     <Resource Include="Resources\Images\Theme4\soundpointenable.png" />
-    <Content Include="Resources\Sounds\bubbles\discovery1.mp3" />
-    <Content Include="Resources\Sounds\bubbles\discovery2.mp3" />
-    <Content Include="Resources\Sounds\bubbles\discovery3.mp3" />
-    <Content Include="Resources\Sounds\bubbles\discovery4.mp3" />
-    <Content Include="Resources\Sounds\bubbles\pop1.wav" />
-    <Content Include="Resources\Sounds\bubbles\pop2.wav" />
-    <Content Include="Resources\Sounds\bubbles\pop3.wav" />
-    <Content Include="Resources\Sounds\bubbles\pop4.wav" />
-    <Content Include="Resources\Sounds\desktop\multiple.mp3" />
-    <Content Include="Resources\Sounds\desktop\single.mp3" />
-    <Content Include="Resources\Sounds\summer\loop_superbirds.mp3" />
-    <Content Include="Resources\Sounds\summer\whistle1.mp3" />
-    <Content Include="Resources\Sounds\summer\whistle2.mp3" />
-    <Content Include="Resources\Sounds\summer\whistle3.mp3" />
-    <Content Include="Resources\Sounds\summer\whistle4.mp3" />
-    <Content Include="Resources\Sounds\water\geyser.mp3" />
-    <Content Include="Resources\Sounds\water\geyser2.mp3" />
-    <Content Include="Resources\Sounds\water\loop_bubbles.mp3" />
-    <Content Include="Resources\Sounds\water\loop_eveningWater.mp3" />
-    <Content Include="Resources\Sounds\water\loop_shore.mp3" />
-    <Content Include="Resources\Sounds\water\loop_waterPond.mp3" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
