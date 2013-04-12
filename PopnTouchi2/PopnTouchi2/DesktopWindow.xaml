@@ -13,7 +13,4 @@
     <Window.Background>
         <ImageBrush ImageSource=".\Resources\images\desktop.png"></ImageBrush>
     </Window.Background>
-    <Grid Name="Desktop">
-     
-    </Grid>
 </s:SurfaceWindow>

@@ -35,10 +35,8 @@ namespace PopnTouchi2
         {
             InitializeComponent();
 
-            Builder sessionBuilder = new Builder();
-
-            Session newSession = sessionBuilder.GenerateSession();
-            this.Desktop.Children.Add(newSession);
+            Desktop Desktop = new Desktop();
+            this.AddChild(Desktop);
         }
     }
 }

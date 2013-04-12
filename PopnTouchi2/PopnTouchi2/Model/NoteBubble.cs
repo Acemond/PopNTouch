@@ -57,7 +57,7 @@ namespace PopnTouchi2
             HorizontalAlignment = HorizontalAlignment.Center;
 
             ContainerManipulationCompleted += TouchLeaveBubble;
-            //PreviewTouchDown += NoteBubble_TouchDown;
+            //PreviewTouchDown += NoteBubble_TouchDown; //TODO
 
         }
 
