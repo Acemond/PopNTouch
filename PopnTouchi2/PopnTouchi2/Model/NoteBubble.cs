@@ -11,6 +11,8 @@ using System.Windows.Controls;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.Windows.Input;
+using System.Timers;
+using System.Windows.Threading;
 
 namespace PopnTouchi2
 {
@@ -38,6 +40,18 @@ namespace PopnTouchi2
         public int Id { get; set; }
 
         /// <summary>
+        /// Local boolean to stop or continue wild bubble animation
+        /// </summary>
+        private bool _canAnimate;
+
+        /// <summary>
+        /// Storyboard used locally to animate bubbles
+        /// </summary>
+        public Storyboard Storyboard { get; set; }
+
+        public DispatcherTimer DispatcherTimer { get; set; }
+
+        /// <summary>
         /// NoteBubble Constructor.
         /// Creates a new NoteBubble object and its Note.
         /// Defines a global offset array for the stave flattening.
@@ -47,6 +61,12 @@ namespace PopnTouchi2
         public NoteBubble(NoteValue noteValue)
         {
             Offsettab = new int[] { 0, 0, 0, 14, 25, 37, 47, 56, 64, 71, 76, 80, 83, 85, 85, 84, 80, 75, 68, 60, 50, 38, 26, 15, 4, -3, -9, -11, -12, -11, -7 };
+            _canAnimate = true;
+            Storyboard = new Storyboard();
+            DispatcherTimer = new DispatcherTimer();
+            DispatcherTimer.Tick += new EventHandler(t_Tick);
+            Random r = new Random();
+            Center = new Point(r.Next(1920), r.Next(500, 1080));
 
             Note = new Note(0, noteValue, "la", -1);
             Id = GlobalVariables.idNoteBubble++;
@@ -57,8 +77,9 @@ namespace PopnTouchi2
             HorizontalAlignment = HorizontalAlignment.Center;
 
             ContainerManipulationCompleted += TouchLeaveBubble;
-            //PreviewTouchDown += NoteBubble_TouchDown; //TODO
 
+            PreviewTouchDown += NoteBubble_TouchDown;
+            AnimateBubble();
         }
 
         /// <summary>
@@ -162,6 +183,82 @@ namespace PopnTouchi2
                 bubble.Visibility = Visibility.Collapsed;
                 bubble.Visibility = Visibility.Visible;
             }
+            else
+            {
+                _canAnimate = true;
+                AnimateBubble();
+            }
+        }
+
+        /// <summary>
+        /// Animates wild bubbles.
+        /// </summary>
+        private void AnimateBubble()
+        {
+            if (_canAnimate)
+            {
+                PointAnimation centerAnimation = new PointAnimation();
+                SineEase ease = new SineEase();
+                ease.EasingMode = EasingMode.EaseInOut;
+                Random r = new Random();
+                Double xOffset = (-2) * (r.Next() % 2 - .5) * r.Next(50, 100);
+                Double yOffset = (-2) * (r.Next() % 2 - .5) * r.Next(50, 100);
+
+                if (Center.X + xOffset > 1920)
+                    xOffset = 1920 - Center.X;
+                if (Center.X + xOffset < 0)
+                    xOffset = 0 - Center.X;
+                if(Center.Y + yOffset > 1080)
+                    yOffset = 1080 - Center.Y;
+                if (Center.Y + yOffset < 630)
+                    yOffset = 630 - Center.Y;
+
+                centerAnimation.From = Center;
+                centerAnimation.To = new Point(Center.X + xOffset, Center.Y + yOffset);
+                centerAnimation.Duration = new Duration(TimeSpan.FromSeconds(r.Next(10, 20)));
+                centerAnimation.AccelerationRatio = .3;
+                centerAnimation.DecelerationRatio = .3;
+                centerAnimation.FillBehavior = FillBehavior.HoldEnd;
+                Storyboard.Children.Add(centerAnimation);
+                Storyboard.SetTarget(centerAnimation, this);
+                Storyboard.SetTargetProperty(centerAnimation, new PropertyPath(ScatterViewItem.CenterProperty));
+
+                centerAnimation.Completed += new EventHandler(centerAnimation_Completed);
+
+                Storyboard.Begin();
+            }
+        }
+
+        void centerAnimation_Completed(object sender, EventArgs e)
+        {
+            Center = ActualCenter;
+            Storyboard.Remove();
+            Storyboard.Children = new TimelineCollection();
+            Random r = new Random();
+            DispatcherTimer.Interval = TimeSpan.FromMilliseconds(r.Next(3000, 9000));
+            DispatcherTimer.Start();
+        }
+
+        void t_Tick(object sender, EventArgs e)
+        {
+            DispatcherTimer.Stop();
+            AnimateBubble();
+        }
+
+        //TODO : Add to method below when functionnal
+        private void NoteBubble_TouchDown(object sender, TouchEventArgs e)
+        {
+            stopAnimation();
+        }
+
+        public void stopAnimation()
+        {
+            _canAnimate = false;
+            DispatcherTimer.Stop();
+            Storyboard.Pause();
+            Center = this.ActualCenter;
+            Orientation = this.Orientation;
+            Storyboard.Remove();
         }
 
         //TODO

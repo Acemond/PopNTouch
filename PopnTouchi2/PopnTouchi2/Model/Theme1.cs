@@ -55,7 +55,7 @@ namespace PopnTouchi2
             NoteBubbleImages.Add(NoteValue.minim, minimImageSource);
             NoteBubbleImages.Add(NoteValue.quaver, quaverImageSource);
 
-            sound = AudioController.INSTANCE.SoundBank.GetCue("loop_eveningWater");
+            //sound = AudioController.INSTANCE.SoundBank.GetCue("loop_eveningWater"); //TODO
         }
 
         /// <summary>

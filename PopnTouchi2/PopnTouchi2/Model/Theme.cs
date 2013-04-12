@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using Microsoft.Xna.Framework.Audio;
+//using Microsoft.Xna.Framework.Audio;
 
 
 namespace PopnTouchi2
@@ -49,7 +49,7 @@ namespace PopnTouchi2
         /// Property
         /// Theme's sound
         /// </summary>
-        public Cue sound { get; set; }
+        //public Cue sound { get; set; } //TODO
 
         /// <summary>
         /// Theme Constructor.
