@@ -162,6 +162,7 @@ namespace PopnTouchi2
                 DoubleAnimation gridHeightAnimation = new DoubleAnimation();
                 DoubleAnimation gridWidthAnimation = new DoubleAnimation();
                 DoubleAnimation orientationAnimation = new DoubleAnimation();
+                ThicknessAnimation borderAnimation = new ThicknessAnimation();
 
                 centerPosAnimation.From = svi.ActualCenter;
                 centerPosAnimation.To = new Point(mainDesktop.ActualWidth / 2, mainDesktop.ActualHeight / 2);
@@ -183,7 +184,7 @@ namespace PopnTouchi2
                 Storyboard.SetTargetProperty(orientationAnimation, new PropertyPath(ScatterViewItem.OrientationProperty));
 
                 heightAnimation.From = svi.ActualHeight ;
-                heightAnimation.To = (svi.ActualHeight - 30) * 4 + 30;
+                heightAnimation.To = svi.ActualHeight * 4;
                 heightAnimation.Duration = new Duration(TimeSpan.FromSeconds(1));
                 heightAnimation.EasingFunction = new ExponentialEase();
                 heightAnimation.AccelerationRatio = 1;
@@ -193,7 +194,7 @@ namespace PopnTouchi2
                 Storyboard.SetTargetProperty(heightAnimation, new PropertyPath(ScatterViewItem.HeightProperty));
 
                 widthAnimation.From = svi.ActualWidth;
-                widthAnimation.To = (svi.ActualWidth - 30)  * 4 + 30;
+                widthAnimation.To = svi.ActualWidth  * 4;
                 widthAnimation.Duration = new Duration(TimeSpan.FromSeconds(1));
                 widthAnimation.EasingFunction = new ExponentialEase();
                 widthAnimation.AccelerationRatio = 1;
@@ -201,6 +202,14 @@ namespace PopnTouchi2
                 stb.Children.Add(widthAnimation);
                 Storyboard.SetTarget(widthAnimation, svi);
                 Storyboard.SetTargetProperty(widthAnimation, new PropertyPath(ScatterViewItem.WidthProperty));
+
+                borderAnimation.From = new Thickness(15);
+                borderAnimation.To = new Thickness(60);
+                borderAnimation.Duration = new Duration(TimeSpan.FromSeconds(1));
+                borderAnimation.FillBehavior = FillBehavior.HoldEnd;
+                stb.Children.Add(borderAnimation);
+                Storyboard.SetTarget(borderAnimation, svi);
+                Storyboard.SetTargetProperty(borderAnimation, new PropertyPath(ScatterViewItem.BorderThicknessProperty));
 
                 gridHeightAnimation.From = ActualHeight;
                 gridHeightAnimation.To = ActualHeight * 4;
@@ -396,9 +405,16 @@ namespace PopnTouchi2
             svi.PreviewTouchDown += new EventHandler<System.Windows.Input.TouchEventArgs>(Session_TouchDown);
         }
 
+        //Stops the animation and set coordinates to current location
         void Session_TouchDown(object sender, System.Windows.Input.TouchEventArgs e)
         {
-//            stbTest.Pause();
+            stbTest.Pause();
+            ScatterViewItem svi = (ScatterViewItem)Parent;
+            Desktop mainDesktop = (Desktop)((ScatterView)svi.Parent).Parent;
+
+            svi.Center = svi.ActualCenter;
+            svi.Orientation = svi.ActualOrientation;
+            stbTest.Remove();
         }
         /////////////
 
