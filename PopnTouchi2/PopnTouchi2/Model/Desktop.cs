@@ -13,14 +13,14 @@ namespace PopnTouchi2
     public class Desktop : Grid
     {
         public ScatterView Photos { get; set; }
-        public Button CreateSession { get; set; }
+        public SurfaceButton CreateSession { get; set; }
         public Builder sessionBuilder { get; set; }
 
 
         public Desktop()
         {
 
-            CreateSession = new Button();
+            CreateSession = new SurfaceButton();
             CreateSession.Width = 200;
             CreateSession.Height = 75;
             CreateSession.HorizontalAlignment = System.Windows.HorizontalAlignment.Left;

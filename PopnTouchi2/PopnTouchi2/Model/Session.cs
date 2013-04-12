@@ -50,7 +50,8 @@ namespace PopnTouchi2
         public ScatterView Bubbles { get; set; }
 
         //TODO delete (Adrien only)
-        public Button Reducer { get; set; }
+        public Storyboard stbTest { get; set; }
+        public SurfaceButton Reducer { get; set; }
         private bool reduced;
 
         /// <summary>
@@ -67,6 +68,46 @@ namespace PopnTouchi2
         /// </summary>
         public Session()
         {
+            //////////////////////////////////////////////////
+            Opacity = 0;
+
+            Storyboard stb = new Storyboard();
+            DoubleAnimation openingAnimation = new DoubleAnimation();
+            DoubleAnimation heightAnimation = new DoubleAnimation();
+            DoubleAnimation widthAnimation = new DoubleAnimation();
+            ExponentialEase ease = new ExponentialEase();
+            ease.EasingMode = EasingMode.EaseOut;
+            ease.Exponent = 2;
+
+            openingAnimation.From = 0;
+            openingAnimation.To = 1;
+            openingAnimation.Duration = new Duration(TimeSpan.FromSeconds(.8));
+            openingAnimation.FillBehavior = FillBehavior.HoldEnd;
+            stb.Children.Add(openingAnimation);
+            Storyboard.SetTarget(openingAnimation, this);
+            Storyboard.SetTargetProperty(openingAnimation, new PropertyPath(Grid.OpacityProperty));
+
+            heightAnimation.From = 1080 * 0.8;
+            heightAnimation.To = 1080;
+            heightAnimation.Duration = new Duration(TimeSpan.FromSeconds(.8));
+            heightAnimation.EasingFunction = ease;
+            heightAnimation.FillBehavior = FillBehavior.HoldEnd;
+            stb.Children.Add(heightAnimation);
+            Storyboard.SetTarget(heightAnimation, this);
+            Storyboard.SetTargetProperty(heightAnimation, new PropertyPath(Grid.HeightProperty));
+
+            widthAnimation.From = 1920 * 0.8;
+            widthAnimation.To = 1920 ;
+            widthAnimation.Duration = new Duration(TimeSpan.FromSeconds(.8));
+            widthAnimation.EasingFunction = ease;
+            widthAnimation.FillBehavior = FillBehavior.Stop;
+            stb.Children.Add(widthAnimation);
+            Storyboard.SetTarget(widthAnimation, this);
+            Storyboard.SetTargetProperty(widthAnimation, new PropertyPath(Grid.WidthProperty));
+
+            stb.Begin();
+            ///////////////////////////////////////////////////
+
             Theme = new Theme1(); //Could be randomized
             Background = Theme.BackgroundImage;
 
@@ -83,7 +124,7 @@ namespace PopnTouchi2
             StaveBottom = new Stave(Theme.InstrumentsBottom[0]);
             
             //TODO : DELETE (Adrien only), Test Button //
-            Reducer = new Button();
+            Reducer = new SurfaceButton();
             reduced = false;
             Reducer.Width = 100;
             Reducer.Height = 25;
@@ -301,9 +342,63 @@ namespace PopnTouchi2
             svi.BorderThickness = new Thickness(15);
             svi.Width += 30;
             svi.Height += 30;
+
+            widthAnimation.Completed += new EventHandler(stb_border_Completed);
+
             stb.Begin(this);
 
+
             reduced = true;
+        }
+
+        void stb_border_Completed(object sender, EventArgs e)
+        {
+            ScatterViewItem svi = (ScatterViewItem)Parent;
+            Desktop mainDesktop = (Desktop)((ScatterView)svi.Parent).Parent;
+
+            stbTest = new Storyboard();
+            PointAnimation centerPosAnimation = new PointAnimation();
+            DoubleAnimation orientationAnimation = new DoubleAnimation();
+
+
+            ExponentialEase ease = new ExponentialEase();
+            ease.EasingMode = EasingMode.EaseOut;
+            ease.Exponent = 1.5;
+
+            Random r = new Random();
+            Point newCenter = new Point(r.Next((int)mainDesktop.ActualWidth), r.Next((int)mainDesktop.ActualHeight));
+            Double newOrientation = r.Next(-180,180);
+
+            centerPosAnimation.From = svi.ActualCenter;
+            centerPosAnimation.To = newCenter;
+            centerPosAnimation.Duration = new Duration(TimeSpan.FromSeconds(5));
+            centerPosAnimation.DecelerationRatio = .9;
+            centerPosAnimation.EasingFunction = ease;
+            centerPosAnimation.FillBehavior = FillBehavior.Stop;
+            stbTest.Children.Add(centerPosAnimation);
+            Storyboard.SetTarget(centerPosAnimation, svi);
+            Storyboard.SetTargetProperty(centerPosAnimation, new PropertyPath(ScatterViewItem.CenterProperty));
+
+            orientationAnimation.From = svi.ActualOrientation;
+            orientationAnimation.To = newOrientation;
+            orientationAnimation.Duration = new Duration(TimeSpan.FromSeconds(5));
+            orientationAnimation.DecelerationRatio = .9;
+            orientationAnimation.EasingFunction = ease;
+            orientationAnimation.FillBehavior = FillBehavior.Stop;
+            stbTest.Children.Add(orientationAnimation);
+            Storyboard.SetTarget(orientationAnimation, svi);
+            Storyboard.SetTargetProperty(orientationAnimation, new PropertyPath(ScatterViewItem.OrientationProperty));
+
+            svi.Center = newCenter;
+            svi.Orientation = newOrientation;
+
+            stbTest.Begin();
+            svi.PreviewTouchDown += new EventHandler<System.Windows.Input.TouchEventArgs>(Session_TouchDown);
+        }
+
+        void Session_TouchDown(object sender, System.Windows.Input.TouchEventArgs e)
+        {
+//            stbTest.Pause();
         }
         /////////////
 
