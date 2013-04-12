@@ -8,7 +8,7 @@ using System.Windows.Controls;
 using System.Windows.Media;
 using Microsoft.Surface.Presentation.Controls;
 using System.Windows.Media.Animation;
-//using Microsoft.Xna.Framework.Audio; //TODO
+using Microsoft.Xna.Framework.Audio;
 
 namespace PopnTouchi2
 {
@@ -58,7 +58,7 @@ namespace PopnTouchi2
         /// Property
         /// Session's Background sound
         /// </summary>
-        //public Cue BackgroundSound { get; set; }
+        public Cue BackgroundSound { get; set; }
         #endregion
 
         #region Constructors
@@ -140,8 +140,8 @@ namespace PopnTouchi2
             
             //TODO uncomment when ok
             //sound methods
-            /*BackgroundSound = Theme.sound;
-            BackgroundSound.Play();*/
+            BackgroundSound = Theme.sound;
+            BackgroundSound.Play();
         }
 
         //TODO Delete
