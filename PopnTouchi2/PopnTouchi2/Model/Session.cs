@@ -73,8 +73,7 @@ namespace PopnTouchi2
 
             Storyboard stb = new Storyboard();
             DoubleAnimation openingAnimation = new DoubleAnimation();
-            DoubleAnimation heightAnimation = new DoubleAnimation();
-            DoubleAnimation widthAnimation = new DoubleAnimation();
+            ThicknessAnimation marginAnimation = new ThicknessAnimation();
             ExponentialEase ease = new ExponentialEase();
             ease.EasingMode = EasingMode.EaseOut;
             ease.Exponent = 2;
@@ -87,23 +86,14 @@ namespace PopnTouchi2
             Storyboard.SetTarget(openingAnimation, this);
             Storyboard.SetTargetProperty(openingAnimation, new PropertyPath(Grid.OpacityProperty));
 
-            heightAnimation.From = 1080 * 0.8;
-            heightAnimation.To = 1080;
-            heightAnimation.Duration = new Duration(TimeSpan.FromSeconds(.8));
-            heightAnimation.EasingFunction = ease;
-            heightAnimation.FillBehavior = FillBehavior.HoldEnd;
-            stb.Children.Add(heightAnimation);
-            Storyboard.SetTarget(heightAnimation, this);
-            Storyboard.SetTargetProperty(heightAnimation, new PropertyPath(Grid.HeightProperty));
-
-            widthAnimation.From = 1920 * 0.8;
-            widthAnimation.To = 1920 ;
-            widthAnimation.Duration = new Duration(TimeSpan.FromSeconds(.8));
-            widthAnimation.EasingFunction = ease;
-            widthAnimation.FillBehavior = FillBehavior.Stop;
-            stb.Children.Add(widthAnimation);
-            Storyboard.SetTarget(widthAnimation, this);
-            Storyboard.SetTargetProperty(widthAnimation, new PropertyPath(Grid.WidthProperty));
+            marginAnimation.From = new Thickness(50);
+            marginAnimation.To = new Thickness(0);
+            marginAnimation.Duration = new Duration(TimeSpan.FromSeconds(.8));
+            marginAnimation.EasingFunction = ease;
+            marginAnimation.FillBehavior = FillBehavior.Stop;
+            stb.Children.Add(marginAnimation);
+            Storyboard.SetTarget(marginAnimation, this);
+            Storyboard.SetTargetProperty(marginAnimation, new PropertyPath(Grid.MarginProperty));
 
             stb.Begin();
             ///////////////////////////////////////////////////
