@@ -215,7 +215,7 @@ namespace PopnTouchi2
 
                 centerAnimation.From = Center;
                 centerAnimation.To = new Point(Center.X + xOffset, Center.Y + yOffset);
-                centerAnimation.Duration = new Duration(TimeSpan.FromSeconds(r.Next(10, 20)));
+                centerAnimation.Duration = new Duration(TimeSpan.FromSeconds(r.Next(9, 21)));
                 centerAnimation.AccelerationRatio = .3;
                 centerAnimation.DecelerationRatio = .3;
                 centerAnimation.FillBehavior = FillBehavior.HoldEnd;
