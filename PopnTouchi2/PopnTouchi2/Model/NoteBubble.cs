@@ -51,6 +51,8 @@ namespace PopnTouchi2
 
         public DispatcherTimer DispatcherTimer { get; set; }
 
+        public ScatterView ParentSV { get; set; }
+
         /// <summary>
         /// NoteBubble Constructor.
         /// Creates a new NoteBubble object and its Note.
@@ -58,7 +60,7 @@ namespace PopnTouchi2
         /// Defines the position of the newly created NoteBubble in its grid.
         /// </summary>
         /// <param name="noteValue">The NoteValue needed to create a Note</param>
-        public NoteBubble(NoteValue noteValue)
+        public NoteBubble(NoteValue noteValue, ScatterView sv)
         {
             Offsettab = new int[] { 0, 0, 0, 14, 25, 37, 47, 56, 64, 71, 76, 80, 83, 85, 85, 84, 80, 75, 68, 60, 50, 38, 26, 15, 4, -3, -9, -11, -12, -11, -7 };
             _canAnimate = true;
@@ -66,7 +68,8 @@ namespace PopnTouchi2
             DispatcherTimer = new DispatcherTimer();
             DispatcherTimer.Tick += new EventHandler(t_Tick);
             Random r = new Random();
-            Center = new Point(r.Next(1920), r.Next(500, 1080));
+            Center = new Point(r.Next((int)sv.ActualWidth), r.Next((int)(635*sv.ActualHeight/1080), (int)sv.ActualHeight));
+            ParentSV = sv;
 
             Note = new Note(0, noteValue, "la", -1);
             Id = GlobalVariables.idNoteBubble++;
@@ -89,7 +92,7 @@ namespace PopnTouchi2
         /// </summary>
         /// <param name="noteValue">The NoteValue needed to create a Note</param>
         /// <param name="theme">The Theme needed to find the NoteBubble's image</param>
-        public NoteBubble(NoteValue noteValue, Theme theme): this(noteValue)
+        public NoteBubble(NoteValue noteValue, Theme theme, ScatterView sv): this(noteValue, sv)
         {
             FrameworkElementFactory bubbleImage = new FrameworkElementFactory(typeof(Image));
             bubbleImage.SetValue(Image.SourceProperty, theme.GetNoteBubbleImageSource(noteValue));
@@ -204,14 +207,14 @@ namespace PopnTouchi2
                 Double xOffset = (-2) * (r.Next() % 2 - .5) * r.Next(50, 100);
                 Double yOffset = (-2) * (r.Next() % 2 - .5) * r.Next(50, 100);
 
-                if (Center.X + xOffset > 1920)
-                    xOffset = 1920 - Center.X;
+                if (Center.X + xOffset > ParentSV.ActualWidth)
+                    xOffset = ParentSV.ActualWidth - Center.X;
                 if (Center.X + xOffset < 0)
                     xOffset = 0 - Center.X;
-                if(Center.Y + yOffset > 1080)
-                    yOffset = 1080 - Center.Y;
-                if (Center.Y + yOffset < 630)
-                    yOffset = 630 - Center.Y;
+                if (Center.Y + yOffset > ParentSV.ActualHeight)
+                    yOffset = ParentSV.ActualHeight - Center.Y;
+                if (Center.Y + yOffset < 630 * ParentSV.ActualHeight / 1080)
+                    yOffset = (630 * ParentSV.ActualHeight / 1080) - Center.Y;
 
                 centerAnimation.From = Center;
                 centerAnimation.To = new Point(Center.X + xOffset, Center.Y + yOffset);

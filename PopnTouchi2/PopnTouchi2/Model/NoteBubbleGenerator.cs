@@ -70,7 +70,7 @@ namespace PopnTouchi2
         /// <returns>A newly created NoteBubble</returns>
         public NoteBubble CreateNoteBubble(Theme theme)
         {
-            return new NoteBubble(MostNeeded(), theme);
+            return new NoteBubble(MostNeeded(), theme, ((Session)Parent).Bubbles);
         }
 
         /// <summary>

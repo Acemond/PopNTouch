@@ -310,6 +310,7 @@ namespace PopnTouchi2
             mainDesktop.Children.Remove(this);
             svi.Width = Width;
             svi.Height = Height;
+            svi.CanScale = false;
             svi.Content = this;
             svi.BorderBrush = Brushes.White;
             svi.Orientation = 0;
