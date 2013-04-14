@@ -8,7 +8,8 @@ using System.Windows.Controls;
 using System.Windows.Media;
 using Microsoft.Surface.Presentation.Controls;
 using System.Windows.Media.Animation;
-//using Microsoft.Xna.Framework.Audio;
+using Microsoft.Xna.Framework.Audio;
+using System.Threading;
 
 namespace PopnTouchi2
 {
@@ -58,7 +59,7 @@ namespace PopnTouchi2
         /// Property
         /// Session's Background sound
         /// </summary>
-        //public Cue BackgroundSound { get; set; } //TODO
+        public Cue BackgroundSound { get; set; } //TODO
         #endregion
 
         #region Constructors
@@ -127,11 +128,9 @@ namespace PopnTouchi2
             Reducer.Click += new RoutedEventHandler(Reducer_Click);
             /////////////////////////////////////////////
 
-            
-            //TODO uncomment when ok
-            //sound methods
-            //BackgroundSound = Theme.sound;
-            //BackgroundSound.Play();
+            BackgroundSound = Theme.sound;
+         //   BackgroundSound.Play();
+         //   AudioController.FadeInBackgroundSound();
         }
 
         //TODO Delete
@@ -283,6 +282,8 @@ namespace PopnTouchi2
                 this.NoteBubbleGenerator.Height = NoteBubbleGenerator.ActualHeight / 4;
                 this.MelodyBubbleGenerator.Width = MelodyBubbleGenerator.ActualWidth / 4;
                 this.MelodyBubbleGenerator.Height = MelodyBubbleGenerator.ActualHeight / 4;
+
+                StopBackgroundSound();
             }
         }
 
@@ -417,6 +418,12 @@ namespace PopnTouchi2
         }
         /////////////
 
+        public void StopBackgroundSound()
+        {
+            AudioController.FadeOutBackgroundSound();
+            BackgroundSound.Stop(AudioStopOptions.Immediate);
+        }
+
         #endregion
 
         #region Methods
@@ -445,5 +452,7 @@ namespace PopnTouchi2
             throw new System.NotImplementedException();
         }
         #endregion
+
+
     }
 }
