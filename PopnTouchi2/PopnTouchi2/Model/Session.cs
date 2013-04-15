@@ -130,15 +130,15 @@ namespace PopnTouchi2
             //sound methods
             BackgroundSound = Theme.sound;
             BackgroundSound.Play();
-            AudioController.FadeInBackgroundSound(); //TODO (sale)
+            AudioController.FadeInBackgroundSound();
         }
 
-        //TODO Replace by gesture (Adrien's got an idea)
+        //TODO Replace by gesture (Adrien's got an idea) AND organize
         void Reducer_Click(object sender, RoutedEventArgs e)
         {
             if (reduced)
             {
-                AudioController.FadeInBackgroundSound(); //TODO
+                AudioController.FadeInBackgroundSound();
                 Reducer.Content = "Reduce !";
                 Reducer.Background = Brushes.Red;
 
@@ -222,10 +222,7 @@ namespace PopnTouchi2
                 Storyboard.SetTargetProperty(gridWidthAnimation, new PropertyPath(Grid.WidthProperty));
 
                 widthAnimation.Completed += new EventHandler(stb_enlarge_Completed);
-
-                /*Width = ActualWidth * 4;
-                Height = ActualHeight * 4;*/
-
+                
                 stb.Begin(this);
 
 
@@ -238,7 +235,7 @@ namespace PopnTouchi2
             }
             else
             {
-                AudioController.FadeOutBackgroundSound(); //TODO
+                AudioController.FadeOutBackgroundSound();
                 stopAllAnimations();
                 Reducer.Content = "Enlarge !";
                 Reducer.Background = Brushes.Green;

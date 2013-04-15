@@ -133,15 +133,11 @@ namespace PopnTouchi2
         private static void FadeOut_Action(object source, ElapsedEventArgs e)
         {
             if (AudioController.INSTANCE.backgroundVolume > 0.05f)
-            {
-                AudioController.INSTANCE.backgroundVolume *= 0.60f;
-                AudioController.UpdateVolume(AudioController.INSTANCE.backgroundVolume);
-            }
+                AudioController.UpdateVolume(AudioController.INSTANCE.backgroundVolume * 0.60f);
             else
             {
                 stopTimer();
-                AudioController.INSTANCE.backgroundVolume = 0;
-                AudioController.UpdateVolume(AudioController.INSTANCE.backgroundVolume);
+                AudioController.UpdateVolume(0);
                 Console.WriteLine(AudioController.INSTANCE.backgroundVolume.ToString());
             }
         }
@@ -165,14 +161,10 @@ namespace PopnTouchi2
         private static void FadeIn_Action(object source, ElapsedEventArgs e)
         {
             if (AudioController.INSTANCE.backgroundVolume == 0)
-            {
-                AudioController.INSTANCE.backgroundVolume = 0.05f;
-                AudioController.UpdateVolume(AudioController.INSTANCE.backgroundVolume);
-            }
+                AudioController.UpdateVolume(0.05f);
             else if (AudioController.INSTANCE.backgroundVolume < GlobalVariables.maxVolume)
             {
-                AudioController.INSTANCE.backgroundVolume *= 1.2f;
-                AudioController.UpdateVolume(AudioController.INSTANCE.backgroundVolume);
+                AudioController.UpdateVolume(AudioController.INSTANCE.backgroundVolume * 1.2f);
                 Console.WriteLine(AudioController.INSTANCE.backgroundVolume.ToString());
             }
             else stopTimer();
