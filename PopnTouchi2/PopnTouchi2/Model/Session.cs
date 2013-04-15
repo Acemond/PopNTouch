@@ -70,6 +70,7 @@ namespace PopnTouchi2
             //////////////////////////////////////////////////
             Opacity = 0;
 
+            AudioController.FadeInBackgroundSound(); //TODO
             Storyboard stb = new Storyboard();
             DoubleAnimation openingAnimation = new DoubleAnimation();
             ThicknessAnimation marginAnimation = new ThicknessAnimation();
@@ -112,7 +113,7 @@ namespace PopnTouchi2
             StaveTop = new Stave(Theme.InstrumentsTop[0]);
             StaveBottom = new Stave(Theme.InstrumentsBottom[0]);
             
-            //TODO : DELETE (Adrien only), Test Button //
+            //TODO : Organize //
             Reducer = new SurfaceButton();
             reduced = false;
             Reducer.Width = 100;
@@ -132,11 +133,12 @@ namespace PopnTouchi2
             BackgroundSound.Play();
         }
 
-        //TODO Delete
+        //TODO Replace by gesture (Adrien's got an idea)
         void Reducer_Click(object sender, RoutedEventArgs e)
         {
             if (reduced)
             {
+                AudioController.FadeInBackgroundSound(); //TODO
                 Reducer.Content = "Reduce !";
                 Reducer.Background = Brushes.Red;
 
@@ -236,6 +238,7 @@ namespace PopnTouchi2
             }
             else
             {
+                AudioController.FadeOutBackgroundSound(); //TODO
                 stopAllAnimations();
                 Reducer.Content = "Enlarge !";
                 Reducer.Background = Brushes.Green;

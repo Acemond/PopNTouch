@@ -5,6 +5,9 @@ using System.Text;
 using Microsoft.Xna.Framework.Audio;
 using System.Timers;
 using PopnTouchi2.Model.Enums;
+using System.Windows.Media.Animation;
+using System.Windows;
+using System.Windows.Controls;
 
 namespace PopnTouchi2
 {
@@ -134,10 +137,7 @@ namespace PopnTouchi2
                 AudioController.UpdateVolume(AudioController.INSTANCE.backgroundVolume);
                 Console.WriteLine(AudioController.INSTANCE.backgroundVolume.ToString());
             }
-            else
-            {
-                stopTimer();
-            }
+            else stopTimer();
         }
 
         /// <summary>
@@ -164,10 +164,7 @@ namespace PopnTouchi2
                 AudioController.UpdateVolume(AudioController.INSTANCE.backgroundVolume);
                 Console.WriteLine(AudioController.INSTANCE.backgroundVolume.ToString());
             }
-            else
-            {
-                stopTimer();
-            }
+            else stopTimer();
         }
 
         /// <summary>
