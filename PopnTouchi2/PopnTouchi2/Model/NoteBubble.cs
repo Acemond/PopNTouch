@@ -81,7 +81,7 @@ namespace PopnTouchi2
 
             ContainerManipulationCompleted += TouchLeaveBubble;
 
-            PreviewTouchDown += NoteBubble_TouchDown;
+            PreviewTouchDown += NoteBubbleTouchDown;
             AnimateBubble();
         }
 
@@ -248,12 +248,6 @@ namespace PopnTouchi2
             AnimateBubble();
         }
 
-        //TODO : Add to method below when functionnal
-        /*private void NoteBubble_TouchDown(object sender, TouchEventArgs e)
-        {
-            stopAnimation();
-        }*/
-
         public void stopAnimation()
         {
             _canAnimate = false;
@@ -264,13 +258,13 @@ namespace PopnTouchi2
             Storyboard.Remove();
         }
 
-        //TODO
+
         /// <summary>
         /// When the user touchDown on a bubble, it makes a little sound effect
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void NoteBubble_TouchDown(object sender, TouchEventArgs e)
+        private void NoteBubbleTouchDown(object sender, TouchEventArgs e)
         {
             stopAnimation();
             String effect = "discovery";

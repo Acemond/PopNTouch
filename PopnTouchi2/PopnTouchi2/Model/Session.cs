@@ -9,6 +9,7 @@ using System.Windows.Media;
 using Microsoft.Surface.Presentation.Controls;
 using System.Windows.Media.Animation;
 using Microsoft.Xna.Framework.Audio;
+using System.Threading;
 
 namespace PopnTouchi2
 {
@@ -125,7 +126,6 @@ namespace PopnTouchi2
 
             Reducer.Click += new RoutedEventHandler(Reducer_Click);
             /////////////////////////////////////////////
-
 
             //sound methods
             BackgroundSound = Theme.sound;
@@ -415,6 +415,12 @@ namespace PopnTouchi2
         }
         /////////////
 
+        public void StopBackgroundSound()
+        {
+            AudioController.FadeOutBackgroundSound();
+            BackgroundSound.Stop(AudioStopOptions.Immediate);
+        }
+
         #endregion
 
         #region Methods
@@ -443,5 +449,7 @@ namespace PopnTouchi2
             throw new System.NotImplementedException();
         }
         #endregion
+
+
     }
 }

@@ -37,13 +37,13 @@ namespace PopnTouchi2
         /// Parameter.
         /// AudioController's waveBank
         /// </summary>
-        private WaveBank waveBank;
+        private WaveBank WaveBank;
 
         /// <summary>
         /// Parameter
         /// Music Category of the waveBank
         /// </summary>
-        public AudioCategory musicCategory;
+        public AudioCategory BackgroundCategory;
 
         /// <summary>
         /// Parameter
@@ -67,12 +67,13 @@ namespace PopnTouchi2
             path = path.Replace(@"\bin\Debug", @"\Resources");
 
             audioEngine = new AudioEngine(path + @"\sound.xgs");
-            waveBank = new WaveBank(audioEngine, path + @"\Wave Bank.xwb");
+            WaveBank = new WaveBank(audioEngine, path + @"\Wave Bank.xwb");
             SoundBank = new SoundBank(audioEngine, path + @"\Sound Bank.xsb");
 
             //get the background sound category to change the volume of these sounds
-            musicCategory = audioEngine.GetCategory("Background sound");
-            backgroundVolume = 1.0f;           
+            BackgroundCategory = audioEngine.GetCategory("Background sound");
+            backgroundVolume = 0.05f;
+            BackgroundCategory.SetVolume(backgroundVolume);
             t = new Timer();
         }
 
@@ -110,7 +111,7 @@ namespace PopnTouchi2
         public static void UpdateVolume(float volume)
         {
             AudioController.INSTANCE.backgroundVolume = volume;
-            AudioController.INSTANCE.musicCategory.SetVolume(volume);
+            AudioController.INSTANCE.BackgroundCategory.SetVolume(volume);
         }
 
         /// <summary>
@@ -135,7 +136,6 @@ namespace PopnTouchi2
             {
                 AudioController.INSTANCE.backgroundVolume *= 0.60f;
                 AudioController.UpdateVolume(AudioController.INSTANCE.backgroundVolume);
-                Console.WriteLine(AudioController.INSTANCE.backgroundVolume.ToString());
             }
             else
             {
@@ -168,7 +168,6 @@ namespace PopnTouchi2
             {
                 AudioController.INSTANCE.backgroundVolume = 0.05f;
                 AudioController.UpdateVolume(AudioController.INSTANCE.backgroundVolume);
-                Console.WriteLine(AudioController.INSTANCE.backgroundVolume.ToString());
             }
             else if (AudioController.INSTANCE.backgroundVolume < GlobalVariables.maxVolume)
             {
