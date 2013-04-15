@@ -129,8 +129,8 @@ namespace PopnTouchi2
             /////////////////////////////////////////////
 
             BackgroundSound = Theme.sound;
-         //   BackgroundSound.Play();
-         //   AudioController.FadeInBackgroundSound();
+            BackgroundSound.Play();
+            AudioController.FadeInBackgroundSound();
         }
 
         //TODO Delete

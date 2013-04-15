@@ -47,9 +47,11 @@ namespace PopnTouchi2
                 new Uri(@"../../Resources/Images/Theme1/Bubbles/Notes/bulleblanche.png", UriKind.Relative)
             );
 
-            BitmapImage quaverImageSource = new BitmapImage(
+            /*BitmapImage quaverImageSource = new BitmapImage(
                 new Uri(@"../../Resources/Images/Theme1/Bubbles/Notes/bullecroche.png", UriKind.Relative)
-            );
+            );*/
+
+            BitmapImage quaverImageSource = GetBitmapImage("bullecroche");
 
             NoteBubbleImages.Add(NoteValue.crotchet, crotchetImageSource);
             NoteBubbleImages.Add(NoteValue.minim, minimImageSource);
@@ -66,6 +68,12 @@ namespace PopnTouchi2
         public override BitmapImage GetNoteBubbleImageSource(NoteValue noteValue)
         {
             return NoteBubbleImages[noteValue];
+        }
+
+        public BitmapImage GetBitmapImage(String img)
+        {
+            Console.WriteLine(this.ToString());
+            return new BitmapImage(new Uri(@"../../Resources/Images/Theme1/Bubbles/Notes/"+img+".png",UriKind.Relative));
         }
 
         /// <summary>

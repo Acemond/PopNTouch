@@ -271,7 +271,7 @@ namespace PopnTouchi2
             Random r = new Random();
             int nb = r.Next(1, 5);
             effect += nb.ToString();
-          //  AudioController.PlaySoundWithString(effect);
+            AudioController.PlaySoundWithString(effect);
         }
     }
 }
