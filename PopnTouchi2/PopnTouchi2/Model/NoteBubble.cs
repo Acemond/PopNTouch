@@ -249,10 +249,10 @@ namespace PopnTouchi2
         }
 
         //TODO : Add to method below when functionnal
-        private void NoteBubble_TouchDown(object sender, TouchEventArgs e)
+        /*private void NoteBubble_TouchDown(object sender, TouchEventArgs e)
         {
             stopAnimation();
-        }
+        }*/
 
         public void stopAnimation()
         {
@@ -270,13 +270,14 @@ namespace PopnTouchi2
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        /*private void NoteBubble_TouchDown(object sender, TouchEventArgs e)
+        private void NoteBubble_TouchDown(object sender, TouchEventArgs e)
         {
+            stopAnimation();
             String effect = "discovery";
             Random r = new Random();
             int nb = r.Next(1, 5);
             effect += nb.ToString();
             AudioController.PlaySoundWithString(effect);
-        }*/
+        }
     }
 }
