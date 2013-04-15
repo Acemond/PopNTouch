@@ -49,7 +49,7 @@ namespace PopnTouchi2
         /// Property
         /// Theme's sound
         /// </summary>
-        public Cue sound { get; set; } //TODO
+        public Cue sound { get; set; }
 
         /// <summary>
         /// Theme Constructor.

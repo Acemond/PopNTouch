@@ -50,7 +50,6 @@ namespace PopnTouchi2
         /// </summary>
         public ScatterView Bubbles { get; set; }
 
-        //TODO delete (Adrien only)
         public Storyboard stbTest { get; set; }
         public SurfaceButton Reducer { get; set; }
         private bool reduced;
@@ -59,7 +58,7 @@ namespace PopnTouchi2
         /// Property
         /// Session's Background sound
         /// </summary>
-        public Cue BackgroundSound { get; set; } //TODO
+        public Cue BackgroundSound { get; set; }
         #endregion
 
         #region Constructors
@@ -114,7 +113,7 @@ namespace PopnTouchi2
             StaveTop = new Stave(Theme.InstrumentsTop[0]);
             StaveBottom = new Stave(Theme.InstrumentsBottom[0]);
             
-            //TODO : DELETE (Adrien only), Test Button //
+            //TODO : Organize //
             Reducer = new SurfaceButton();
             reduced = false;
             Reducer.Width = 100;
@@ -128,16 +127,18 @@ namespace PopnTouchi2
             Reducer.Click += new RoutedEventHandler(Reducer_Click);
             /////////////////////////////////////////////
 
+            //sound methods
             BackgroundSound = Theme.sound;
             BackgroundSound.Play();
             AudioController.FadeInBackgroundSound();
         }
 
-        //TODO Delete
+        //TODO Replace by gesture (Adrien's got an idea) AND organize
         void Reducer_Click(object sender, RoutedEventArgs e)
         {
             if (reduced)
             {
+                AudioController.FadeInBackgroundSound();
                 Reducer.Content = "Reduce !";
                 Reducer.Background = Brushes.Red;
 
@@ -221,10 +222,7 @@ namespace PopnTouchi2
                 Storyboard.SetTargetProperty(gridWidthAnimation, new PropertyPath(Grid.WidthProperty));
 
                 widthAnimation.Completed += new EventHandler(stb_enlarge_Completed);
-
-                /*Width = ActualWidth * 4;
-                Height = ActualHeight * 4;*/
-
+                
                 stb.Begin(this);
 
 
@@ -237,6 +235,7 @@ namespace PopnTouchi2
             }
             else
             {
+                AudioController.FadeOutBackgroundSound();
                 stopAllAnimations();
                 Reducer.Content = "Enlarge !";
                 Reducer.Background = Brushes.Green;
@@ -282,16 +281,13 @@ namespace PopnTouchi2
                 this.NoteBubbleGenerator.Height = NoteBubbleGenerator.ActualHeight / 4;
                 this.MelodyBubbleGenerator.Width = MelodyBubbleGenerator.ActualWidth / 4;
                 this.MelodyBubbleGenerator.Height = MelodyBubbleGenerator.ActualHeight / 4;
-
-                StopBackgroundSound();
             }
         }
 
         private void stopAllAnimations()
         {
-            foreach(NoteBubble nb in Bubbles.Items){
+            foreach(NoteBubble nb in Bubbles.Items)
                 nb.stopAnimation();
-            }
         }
 
         void stb_enlarge_Completed(object sender, EventArgs e)
@@ -355,8 +351,6 @@ namespace PopnTouchi2
             widthAnimation.Completed += new EventHandler(stb_border_Completed);
 
             stb.Begin(this);
-
-
             reduced = true;
         }
 
