@@ -64,6 +64,7 @@
     <Compile Include="DesktopWindow.xaml.cs">
       <DependentUpon>DesktopWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Infrastructure\Animations.cs" />
     <Compile Include="Model\Builder.cs" />
     <Compile Include="Model\Desktop.cs" />
     <Compile Include="Model\Enums\GlobalVariables.cs" />

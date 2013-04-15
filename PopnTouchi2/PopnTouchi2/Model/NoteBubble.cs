@@ -154,7 +154,7 @@ namespace PopnTouchi2
                 {
                     if (bubbleCenter.Y >= 335) bubbleCenter.Y = 335;
                     bubbleCenter.Y = Math.Floor((bubbleCenter.Y - 20) / 25) * 25 + 35; //-20 et 35 pour 50
-
+                    
                 }
                 else
                 {
