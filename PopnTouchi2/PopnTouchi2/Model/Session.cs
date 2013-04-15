@@ -70,7 +70,6 @@ namespace PopnTouchi2
             //////////////////////////////////////////////////
             Opacity = 0;
 
-            AudioController.FadeInBackgroundSound(); //TODO
             Storyboard stb = new Storyboard();
             DoubleAnimation openingAnimation = new DoubleAnimation();
             ThicknessAnimation marginAnimation = new ThicknessAnimation();
@@ -131,6 +130,7 @@ namespace PopnTouchi2
             //sound methods
             BackgroundSound = Theme.sound;
             BackgroundSound.Play();
+            AudioController.FadeInBackgroundSound(); //TODO (sale)
         }
 
         //TODO Replace by gesture (Adrien's got an idea)
