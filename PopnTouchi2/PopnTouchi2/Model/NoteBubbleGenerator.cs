@@ -8,6 +8,7 @@ using System.Windows.Controls;
 using Microsoft.Surface.Presentation.Controls;
 using System.Windows;
 using System.Windows.Shapes;
+using System.Windows.Input;
 
 namespace PopnTouchi2
 {
@@ -43,6 +44,7 @@ namespace PopnTouchi2
             WildBubbles.Add(NoteValue.quaver, 0);
 
             //Defines size and position
+            //TODO : set relative to Grid size
             this.Width = 368;
             this.Height = 234;
             this.HorizontalAlignment = System.Windows.HorizontalAlignment.Left;
@@ -68,7 +70,7 @@ namespace PopnTouchi2
         /// <returns>A newly created NoteBubble</returns>
         public NoteBubble CreateNoteBubble(Theme theme)
         {
-            return new NoteBubble(MostNeeded(), theme);
+            return new NoteBubble(MostNeeded(), theme, ((Session)Parent).Bubbles);
         }
 
         /// <summary>
@@ -111,8 +113,7 @@ namespace PopnTouchi2
         {
             for (int i = 0; i < NoteBubbles.Count; i++)
             {
-                if (NoteBubbles[i].Id == idNote)
-                    NoteBubbles.RemoveAt(i);
+                if (NoteBubbles[i].Id == idNote) NoteBubbles.RemoveAt(i);
             }
         }
 
@@ -122,7 +123,7 @@ namespace PopnTouchi2
         /// </summary>
         /// <param name="sender">Sender</param>
         /// <param name="e">TouchEventArgs</param>
-        public void NoteBubbleGeneratorTouchDown(object sender, System.Windows.Input.TouchEventArgs e)
+        public void NoteBubbleGeneratorTouchDown(object sender, TouchEventArgs e)
         {
             NoteBubble newBubble = CreateNoteBubble(((Session)this.Parent).Theme);
             NoteBubbles.Add(newBubble);

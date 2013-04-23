@@ -36,7 +36,7 @@ namespace PopnTouchi2
         /// <summary>
         /// Plays the given note with the instrument.
         /// </summary>
-        /// <param name="n">The note to be played</param>
+        /// <param name="n">The note to play</param>
         public void PlayNote(Note n)
         {
             Instrument tmp = new Instrument(Name);
@@ -45,13 +45,14 @@ namespace PopnTouchi2
         }
 
         /// <summary>
-        /// TODO
+        /// Called by PlayNote(Note n)
+        /// The action of playing a sound during the TimeSpan t
         /// </summary>
-        /// <param name="n"></param>
+        /// <param name="n">The Note to play</param>
         public void ActionPlay(object n)
         {
             Note note = n as Note;
-            TimeSpan t = new TimeSpan(0, 0, 0, 0, (note.Duration.GetHashCode() * 30000) / GlobalVariables.bpm);
+            TimeSpan t = new TimeSpan(0, 0, 0, 0, (note.Duration.GetHashCode() * 30100) / GlobalVariables.bpm);
             Cue cue = AudioController.INSTANCE.SoundBank.GetCue(Name.ToString() + "_" + note.GetCue());
             AudioController.PlaySound(cue);
             Thread.Sleep(t);

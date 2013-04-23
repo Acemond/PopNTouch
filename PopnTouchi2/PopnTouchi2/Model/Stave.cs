@@ -64,9 +64,7 @@ namespace PopnTouchi2
                 mb.Melody.Notes[i].Position += position;
                 int posArray = 0;
                 while ((posArray < Notes.Count) && (Notes[posArray].Position < mb.Melody.Notes[i].Position))
-                {
                     posArray++;
-                }
 
                 Notes.Insert(posArray, mb.Melody.Notes[i]);
             }
@@ -82,16 +80,21 @@ namespace PopnTouchi2
         public void AddNote(Note note, int position)
         {
             note.Position = position;
-
-            int i = 0;
-            while (i < Notes.Count && Notes[i].Position < position)
+            if (!Notes.Contains(note))
             {
-                i++;
-            }
+                int i = 0;
+                for (i = 0; (i < Notes.Count && Notes[i].Position < position); i++);
 
-            Notes.Insert(i, note);
-            MaxPosition = Math.Max(MaxPosition, note.Position);
+                Notes.Insert(i, note);
+                MaxPosition = Math.Max(MaxPosition, note.Position);
+            }
         }
+
+        /// <summary>
+        /// Remove the note from the list Notes
+        /// </summary>
+        /// <param name="note">The note to remove</param>
+        public void RemoveNote(Note note) { Notes.Remove(note); }
 
         /// <summary>
         /// Plays all the notes contained by the stave.
@@ -99,6 +102,9 @@ namespace PopnTouchi2
         /// </summary>
         public void PlayAllNotes()
         {
+            //Decrease the background sound
+            AudioController.UpdateVolume(0f);
+
             Timer.Interval = 30000 / GlobalVariables.bpm;
             Timer.Start();
             Timer.Elapsed += new ElapsedEventHandler(PlayList);
@@ -108,8 +114,8 @@ namespace PopnTouchi2
         /// Event triggered when the play button is touched.
         /// TODO Plus de détails
         /// </summary>
-        /// <param name="source">Source</param>
-        /// <param name="e">ElapsedEventArgs</param>
+        /// <param name="source"></param>
+        /// <param name="e"></param>
         private void PlayList(object source, ElapsedEventArgs e)
         {
             bool play = true;
@@ -122,23 +128,13 @@ namespace PopnTouchi2
                         CurrentInstrument.PlayNote(Notes[GlobalVariables.it_Notes]);
                         GlobalVariables.it_Notes++;
                     }
-                    else
-                    {
-                        play = false;
-                    }
+                    else play = false;
                 }
                
                 GlobalVariables.position_Note++;
 
             }
-            else
-            {
-                Timer.Stop();
-                Timer.EndInit();
-                Timer.Elapsed -= new ElapsedEventHandler(PlayList);
-                GlobalVariables.position_Note = 0;
-                GlobalVariables.it_Notes = 0;
-            }
+            else StopMusic();
         }
 
         /// <summary>
@@ -151,6 +147,9 @@ namespace PopnTouchi2
             Timer.Elapsed -= new ElapsedEventHandler(PlayList);
             GlobalVariables.position_Note = 0;
             GlobalVariables.it_Notes = 0;
+
+            //begin the fade In of the background sound
+            AudioController.FadeInBackgroundSound();
         }
     }
 }

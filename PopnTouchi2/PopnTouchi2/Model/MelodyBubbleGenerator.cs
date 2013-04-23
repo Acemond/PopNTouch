@@ -68,7 +68,7 @@ namespace PopnTouchi2
         /// <param name="e"></param>
         private void MelodyBubbleGeneratorTouchDown(object sender, System.Windows.Input.TouchEventArgs e)
         {
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
         }
     }
 }

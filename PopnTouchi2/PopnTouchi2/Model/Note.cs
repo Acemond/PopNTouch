@@ -14,6 +14,7 @@ namespace PopnTouchi2
     /// </summary>
     public class Note
     {
+        #region Properties
         /// <summary>
         /// Property.
         /// Note Octave between 1 or 2
@@ -28,9 +29,9 @@ namespace PopnTouchi2
 
         /// <summary>
         /// Property.
-        /// Note Pitch defined by the Pitch Enumeration.
+        /// Note Pitch defined by a String, for example : "la" , "do", "re"...
         /// </summary>
-        public Pitch Pitch { get; set; }
+        public String Pitch { get; set; }
 
         /// <summary>
         /// Property.
@@ -49,20 +50,27 @@ namespace PopnTouchi2
         /// Sharp Note attribute : Set to True if the Note is sharpen.
         /// </summary>
         public bool Sharp { get; set; }
-        
+        #endregion
+
         /// <summary>
         /// Note Constructor.
         /// Generates a new object of class Note with a given octave, duration and pitch.
         /// </summary>
         /// <param name="oct">Octave</param>
         /// <param name="d">NoteValue</param>
+<<<<<<< HEAD
         /// <param name="p">Pitch</param>
         /// <param name="posit">Position</param>
         public Note(int oct, NoteValue d, Pitch p, int posit)
+=======
+        /// <param name="pitch">String</param>
+        /// <param name="posit">int</param>
+        public Note(int oct, NoteValue d, String pitch, int posit)
+>>>>>>> master
         {
             Octave = oct;
             Duration = d;
-            Pitch = p;
+            Pitch = pitch;
             Sharp = false;
             Flat = false;
             Position = posit;
@@ -75,9 +83,25 @@ namespace PopnTouchi2
         public String GetCue()
         {
             String alteration = "";
-            if (Sharp)  alteration = "d";
-            if (Flat)   alteration = "b";
-            return Pitch.ToString() + Octave.ToString() + alteration;
+            if (Sharp)
+            {
+                alteration = "_d";
+            }
+
+            if (Flat)
+            {
+                switch(Pitch)
+                {
+                    case "do" : Pitch = "si" ; break;
+                    case "re" : Pitch = "do" ; alteration = "_d"; break;
+                    case "mi" : Pitch = "re" ; alteration = "_d"; break;
+                    case "fa" : Pitch = "mi" ; break;
+                    case "sol": Pitch = "fa" ; alteration = "_d"; break;
+                    case "la" : Pitch = "sol"; alteration = "_d"; break;
+                    case "si" : Pitch = "la" ; alteration = "_d"; break;
+                }
+            }
+            return Pitch + Octave.ToString() + alteration;
         }
 
         /// <summary>

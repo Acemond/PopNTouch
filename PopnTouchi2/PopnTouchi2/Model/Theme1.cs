@@ -16,13 +16,12 @@ namespace PopnTouchi2
         /// Theme1 Constructor.
         /// Calls Theme Constructor. Initialize instruments and interface's elements according to the theme desired.
         /// </summary>
-        public Theme1()
-            : base()
+        public Theme1() : base()
         {
             InstrumentsTop[0] = new Instrument(InstrumentType.piano);
-            InstrumentsTop[1] = new Instrument(InstrumentType.ocarina);
-            InstrumentsBottom[0] = new Instrument(InstrumentType.ocarina);
-            InstrumentsBottom[1] = new Instrument(InstrumentType.flute);
+            InstrumentsTop[1] = new Instrument(InstrumentType.flute);
+            InstrumentsBottom[0] = new Instrument(InstrumentType.contrebass);
+            InstrumentsBottom[1] = new Instrument(InstrumentType.bass);
             
             BackgroundImage = new ImageBrush();
             BackgroundImage.ImageSource =
@@ -48,13 +47,17 @@ namespace PopnTouchi2
                 new Uri(@"../../Resources/Images/Theme1/Bubbles/Notes/bulleblanche.png", UriKind.Relative)
             );
 
-            BitmapImage quaverImageSource = new BitmapImage(
+            /*BitmapImage quaverImageSource = new BitmapImage(
                 new Uri(@"../../Resources/Images/Theme1/Bubbles/Notes/bullecroche.png", UriKind.Relative)
-            );
+            );*/
+
+            BitmapImage quaverImageSource = GetBitmapImage("bullecroche");
 
             NoteBubbleImages.Add(NoteValue.crotchet, crotchetImageSource);
             NoteBubbleImages.Add(NoteValue.minim, minimImageSource);
             NoteBubbleImages.Add(NoteValue.quaver, quaverImageSource);
+
+            sound = AudioController.INSTANCE.SoundBank.GetCue("loop_eveningWater"); //TODO
         }
 
         /// <summary>
@@ -65,6 +68,12 @@ namespace PopnTouchi2
         public override BitmapImage GetNoteBubbleImageSource(NoteValue noteValue)
         {
             return NoteBubbleImages[noteValue];
+        }
+
+        public BitmapImage GetBitmapImage(String img)
+        {
+            Console.WriteLine(this.ToString());
+            return new BitmapImage(new Uri(@"../../Resources/Images/Theme1/Bubbles/Notes/"+img+".png",UriKind.Relative));
         }
 
         /// <summary>

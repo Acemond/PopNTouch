@@ -15,6 +15,10 @@ using Microsoft.Surface.Presentation;
 using Microsoft.Surface.Presentation.Controls;
 using Microsoft.Surface.Presentation.Input;
 using Microsoft.Xna.Framework.Audio;
+using System.Threading;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
+using System.IO;
 
 namespace PopnTouchi2
 {
@@ -31,9 +35,8 @@ namespace PopnTouchi2
         {
             InitializeComponent();
 
-            Builder sessionBuilder = new Builder();
-            Session newSession = sessionBuilder.GenerateSession();
-            this.Desktop.Children.Add(newSession);
+            Desktop Desktop = new Desktop();
+            this.AddChild(Desktop);
         }
     }
 }

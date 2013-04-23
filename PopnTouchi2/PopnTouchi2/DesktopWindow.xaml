@@ -6,10 +6,11 @@
         Title="DesktopWindow"
         Height="1080"
         Width="1920"
+                 Margin="0"
+                 Padding="0"
         WindowStyle="None">
     
     <Window.Background>
         <ImageBrush ImageSource=".\Resources\images\desktop.png"></ImageBrush>
     </Window.Background>
-    <Grid Name="Desktop"></Grid>
 </s:SurfaceWindow>
