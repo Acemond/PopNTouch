@@ -44,6 +44,11 @@ namespace PopnTouchi2
         /// Theme defines Elements' aspect.
         /// </summary>
         public ImageBrush MelodyGeneratorImage { get; set; }
+        /// <summary>
+        /// Property.
+        /// Theme defines Play button aspect.
+        /// </summary>
+        public ImageBrush PlayImage { get; set; }
 
         /// <summary>
         /// Property

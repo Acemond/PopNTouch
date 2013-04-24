@@ -38,6 +38,11 @@ namespace PopnTouchi2
                 new BitmapImage(
                     new Uri(@"../../Resources/Images/Theme1/melodyfactory.png", UriKind.Relative)
                 );
+            PlayImage = new ImageBrush();
+            PlayImage.ImageSource =
+                new BitmapImage(
+                    new Uri(@"../../Resources/Images/Theme1/playdrop.png", UriKind.Relative)
+                );
 
             BitmapImage crotchetImageSource = new BitmapImage(
                 new Uri(@"../../Resources/Images/Theme1/Bubbles/Notes/bullenoire.png", UriKind.Relative)
