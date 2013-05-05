@@ -112,6 +112,17 @@ namespace PopnTouchi2
 
             StaveTop = new Stave(Theme.InstrumentsTop[0]);
             StaveBottom = new Stave(Theme.InstrumentsBottom[0]);
+
+            //Button Play
+            Button play = new Button();
+            play.Visibility = Visibility.Visible;
+            play.Content = "Play";
+            play.Width = 100;
+            play.Height = 30;
+            play.VerticalAlignment = System.Windows.VerticalAlignment.Top;
+            play.HorizontalAlignment = System.Windows.HorizontalAlignment.Left;
+            play.Click += new RoutedEventHandler(play_Click);
+            Children.Add(play);
             
             //TODO : Organize //
             Reducer = new SurfaceButton();
@@ -131,6 +142,12 @@ namespace PopnTouchi2
             BackgroundSound = Theme.sound;
             BackgroundSound.Play();
             AudioController.FadeInBackgroundSound();
+        }
+
+        void play_Click(object sender, RoutedEventArgs e)
+        {
+            StaveTop.PlayAllNotes();
+            StaveBottom.PlayAllNotes();
         }
 
         //TODO Replace by gesture (Adrien's got an idea) AND organize

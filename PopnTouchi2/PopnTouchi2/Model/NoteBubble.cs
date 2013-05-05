@@ -23,12 +23,6 @@ namespace PopnTouchi2
     {
         /// <summary>
         /// Property.
-        /// Defines the vertical offset of the manipulation grid
-        /// </summary>
-        private int[] Offsettab { get; set; }
-
-        /// <summary>
-        /// Property.
         /// NoteBubble's contained Note
         /// </summary>
         public Note Note { get; set; }
@@ -62,7 +56,6 @@ namespace PopnTouchi2
         /// <param name="noteValue">The NoteValue needed to create a Note</param>
         public NoteBubble(NoteValue noteValue, ScatterView sv)
         {
-            Offsettab = new int[] { 0, 0, 0, 14, 25, 37, 47, 56, 64, 71, 76, 80, 83, 85, 85, 84, 80, 75, 68, 60, 50, 38, 26, 15, 4, -3, -9, -11, -12, -11, -7 };
             _canAnimate = true;
             Storyboard = new Storyboard();
             DispatcherTimer = new DispatcherTimer();
@@ -141,7 +134,7 @@ namespace PopnTouchi2
             else bubbleCenter.X = Math.Floor((bubbleCenter.X + 30) / 60) * 60;
 
             //"Applatissement" de la portée (MAJ : Switch -> Tableau !)
-            int offset= Offsettab[((long)bubbleCenter.X/60)];
+            int offset= GlobalVariables.Offsettab[((long)bubbleCenter.X/60)];
             bubbleCenter.Y += offset;
 
           
