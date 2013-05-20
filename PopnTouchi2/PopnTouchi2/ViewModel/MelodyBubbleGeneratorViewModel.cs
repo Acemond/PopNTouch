@@ -23,7 +23,7 @@ namespace PopnTouchi2.ViewModel
         /// Property.
         /// The Grid containing the melodybubblegenerator.
         /// </summary>
-        private Grid Grid { get; set; }
+        public Grid Grid { get; set; }
 
         /// <summary>
         /// MelodyBubbleGeneratorViewModel Constructor
@@ -46,10 +46,24 @@ namespace PopnTouchi2.ViewModel
         /// </summary>
         /// <param name="nbg">The NoteBubbleGenerator item</param>
         /// <param name="theme">The Theme item</param>
-        public MelodyBubbleGeneratorViewModel(MelodyBubbleGenerator mbg, Theme theme)
+        public MelodyBubbleGeneratorViewModel(MelodyBubbleGenerator mbg, Session s)
             : this(mbg)
         {
-            Grid.Background = theme.NoteGeneratorImage;
+            switch (s.ThemeID)
+            {
+                case 1:
+                    Grid.Background = (new Theme1ViewModel(s.Theme)).MelodyGeneratorImage;
+                    break;
+                case 2:
+                    Grid.Background = (new Theme2ViewModel(s.Theme)).MelodyGeneratorImage;
+                    break;
+                case 3:
+                    Grid.Background = (new Theme3ViewModel(s.Theme)).MelodyGeneratorImage;
+                    break;
+                case 4:
+                    Grid.Background = (new Theme4ViewModel(s.Theme)).MelodyGeneratorImage;
+                    break;
+            }
         }
 
         /// <summary>

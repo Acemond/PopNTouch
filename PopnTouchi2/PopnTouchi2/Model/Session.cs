@@ -44,6 +44,12 @@ namespace PopnTouchi2
         /// Session's Theme instance.
         /// </summary>
         public Theme Theme { get; set; }
+
+        /// <summary>
+        /// Property.
+        /// The Theme number.
+        /// </summary>
+        public int ThemeID { get; set; }
         /// <summary>
         /// Property.
         /// Session's Bubbles' ScatterView instance.
@@ -101,17 +107,17 @@ namespace PopnTouchi2
             Theme = new Theme1(); //Could be randomized
             Background = Theme.BackgroundImage;
 
-            NoteBubbleGenerator = new NoteBubbleGenerator(Theme);
+            NoteBubbleGenerator = new NoteBubbleGenerator();
             Children.Add(NoteBubbleGenerator);
-            MelodyBubbleGenerator = new MelodyBubbleGenerator(Theme);
+            MelodyBubbleGenerator = new MelodyBubbleGenerator();
             Children.Add(MelodyBubbleGenerator);
 
             Bubbles = new ScatterView();
             Bubbles.Visibility = Visibility.Visible;
             Children.Add(Bubbles);
 
-            StaveTop = new Stave(Theme.InstrumentsTop[0]);
-            StaveBottom = new Stave(Theme.InstrumentsBottom[0]);
+            StaveTop = new Stave(true, Theme.InstrumentsTop[0]);
+            StaveBottom = new Stave(false, Theme.InstrumentsBottom[0]);
             
             //TODO : Organize //
             Reducer = new SurfaceButton();

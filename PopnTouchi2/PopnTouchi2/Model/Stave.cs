@@ -33,6 +33,12 @@ namespace PopnTouchi2
 
         /// <summary>
         /// Parameter.
+        /// True if this instance is for the upper stave.
+        /// </summary>
+        public Boolean isUp;
+
+        /// <summary>
+        /// Parameter.
         /// A Timer object needed to play Notes' sounds.
         /// </summary>
         private Timer Timer;
@@ -42,12 +48,20 @@ namespace PopnTouchi2
         /// Initializes a new empty list of Notes, a Timer, the MaxPosition to 0 and the instrument
         /// </summary>
         /// <param name="instru">The instrument to be used</param>
-        public Stave(Instrument instru)
+        public Stave(Boolean up, Instrument instru)
         {
             MaxPosition = 0;
             Notes = new ObservableCollection<Note>();
             CurrentInstrument = instru;
             Timer = new Timer();
+            if (up)
+            {
+                isUp = true;
+            }
+            else
+            {
+                isUp = false;
+            }
         }
 
         /// <summary>

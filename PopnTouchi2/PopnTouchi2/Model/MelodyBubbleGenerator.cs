@@ -9,7 +9,7 @@ namespace PopnTouchi2
     /// <summary>
     /// Represents a graphic item aware of how many MelodyBubble have been created.
     /// </summary>
-    public class MelodyBubbleGenerator : Grid
+    public class MelodyBubbleGenerator
     {
         /// <summary>
         /// Property.
@@ -24,24 +24,6 @@ namespace PopnTouchi2
         public MelodyBubbleGenerator()
         {
             MelodyBubbles = new List<MelodyBubble>();
-
-            //Defines size and position
-            this.Width = 368;
-            this.Height = 234;
-            this.HorizontalAlignment = System.Windows.HorizontalAlignment.Right;
-            this.VerticalAlignment = System.Windows.VerticalAlignment.Bottom;
-
-            this.TouchDown += new EventHandler<System.Windows.Input.TouchEventArgs>(MelodyBubbleGeneratorTouchDown);
-        }
-
-        /// <summary>
-        /// MelodyBubbleGenerator Theme Constructor.
-        /// Adds a specific Theme to the MelodyBubbleGenerator newly created.
-        /// </summary>
-        /// <param name="theme">The Theme to be used</param>
-        public MelodyBubbleGenerator(Theme theme): this()
-        {
-            Background = theme.MelodyGeneratorImage;
         }
 
         /// <summary>
@@ -59,16 +41,6 @@ namespace PopnTouchi2
         public void RemoveFromGenerator(MelodyBubble melody)
         {
             throw new System.NotImplementedException();
-        }
-
-        /// <summary>
-        /// TODO
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void MelodyBubbleGeneratorTouchDown(object sender, System.Windows.Input.TouchEventArgs e)
-        {
-            //throw new NotImplementedException();
         }
     }
 }

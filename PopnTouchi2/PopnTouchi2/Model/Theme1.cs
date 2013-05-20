@@ -22,71 +22,8 @@ namespace PopnTouchi2
             InstrumentsTop[1] = new Instrument(InstrumentType.flute);
             InstrumentsBottom[0] = new Instrument(InstrumentType.contrebass);
             InstrumentsBottom[1] = new Instrument(InstrumentType.bass);
-            
-            BackgroundImage = new ImageBrush();
-            BackgroundImage.ImageSource =
-                new BitmapImage(
-                    new Uri(@"../../Resources/Images/Theme1/background.png", UriKind.Relative)
-                );
-            NoteGeneratorImage = new ImageBrush();
-            NoteGeneratorImage.ImageSource =
-                new BitmapImage(
-                    new Uri(@"../../Resources/Images/Theme1/notefactory.png", UriKind.Relative)
-                );
-            MelodyGeneratorImage = new ImageBrush();
-            MelodyGeneratorImage.ImageSource =
-                new BitmapImage(
-                    new Uri(@"../../Resources/Images/Theme1/melodyfactory.png", UriKind.Relative)
-                );
-            PlayImage = new ImageBrush();
-            PlayImage.ImageSource =
-                new BitmapImage(
-                    new Uri(@"../../Resources/Images/Theme1/playdrop.png", UriKind.Relative)
-                );
 
-            BitmapImage crotchetImageSource = new BitmapImage(
-                new Uri(@"../../Resources/Images/Theme1/Bubbles/Notes/bullenoire.png", UriKind.Relative)
-            );
-
-            BitmapImage minimImageSource = new BitmapImage(
-                new Uri(@"../../Resources/Images/Theme1/Bubbles/Notes/bulleblanche.png", UriKind.Relative)
-            );
-
-            /*BitmapImage quaverImageSource = new BitmapImage(
-                new Uri(@"../../Resources/Images/Theme1/Bubbles/Notes/bullecroche.png", UriKind.Relative)
-            );*/
-
-            BitmapImage quaverImageSource = GetBitmapImage("bullecroche");
-
-            NoteBubbleImages.Add(NoteValue.crotchet, crotchetImageSource);
-            NoteBubbleImages.Add(NoteValue.minim, minimImageSource);
-            NoteBubbleImages.Add(NoteValue.quaver, quaverImageSource);
-
-            sound = AudioController.INSTANCE.SoundBank.GetCue("loop_eveningWater"); //TODO
-        }
-
-        /// <summary>
-        /// Find the NoteBubble's Image according to a NoteValue.
-        /// </summary>
-        /// <param name="noteValue">The Notevalue needed to find the Bubble Image</param>
-        /// <returns>A BitmapImage linked to the Bubble</returns>
-        public override BitmapImage GetNoteBubbleImageSource(NoteValue noteValue)
-        {
-            return NoteBubbleImages[noteValue];
-        }
-
-        public BitmapImage GetBitmapImage(String img)
-        {
-            Console.WriteLine(this.ToString());
-            return new BitmapImage(new Uri(@"../../Resources/Images/Theme1/Bubbles/Notes/"+img+".png",UriKind.Relative));
-        }
-
-        /// <summary>
-        /// TODO
-        /// </summary>
-        public void GenerateObjects()
-        {
-            throw new System.NotImplementedException();
+            sound = AudioController.INSTANCE.SoundBank.GetCue("loop_eveningWater");
         }
     }
 }

@@ -40,6 +40,15 @@ namespace PopnTouchi2.ViewModel.Animation
         protected bool canAnimate;
 
         /// <summary>
+        /// Global Animation Constructor.
+        /// </summary>
+        protected Animation()
+        {
+            Storyboard = new Storyboard();
+            DispatcherTimer = new DispatcherTimer();
+        }
+
+        /// <summary>
         /// Stops a current animation performing.
         /// </summary>
         protected void stopAnimation()

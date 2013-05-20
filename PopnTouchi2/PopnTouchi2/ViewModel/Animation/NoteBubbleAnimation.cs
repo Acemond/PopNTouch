@@ -22,10 +22,9 @@ namespace PopnTouchi2.ViewModel.Animation
 
         #region Constructors
         public NoteBubbleAnimation(NoteBubbleViewModel nbVM)
+            : base()
         {
             ManipulationGrid = new int[] { 0, 0, 0, 14, 25, 37, 47, 56, 64, 71, 76, 80, 83, 85, 85, 84, 80, 75, 68, 60, 50, 38, 26, 15, 4, -3, -9, -11, -12, -11, -7 };
-            Storyboard = new Storyboard();
-            DispatcherTimer = new DispatcherTimer();
             SVItem = nbVM.SVItem;
             ParentSV = nbVM.ParentSV;
             canAnimate = true;

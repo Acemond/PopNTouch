@@ -13,7 +13,6 @@ namespace PopnTouchi2
         /// <summary>
         /// Theme3 Constructor.
         /// Calls Theme Constructor. Initialize instruments and interface's elements according to the theme desired.
-        /// TODO Define images. See Theme1 for instance.
         /// </summary>
         public Theme4() : base()
         {
@@ -21,14 +20,8 @@ namespace PopnTouchi2
             InstrumentsTop[1] = new Instrument(InstrumentType.piano);
             InstrumentsBottom[0] = new Instrument(InstrumentType.bass);
             InstrumentsBottom[1] = new Instrument(InstrumentType.vibraphone);
-        }
 
-        /// <summary>
-        /// TODO
-        /// </summary>
-        public void GenerateObjects()
-        {
-            throw new System.NotImplementedException();
+            // TODO sound = AudioController.INSTANCE.SoundBank.GetCue("loop_eveningWater");
         }
     }
 }
