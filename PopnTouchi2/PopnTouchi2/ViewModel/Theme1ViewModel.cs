@@ -51,7 +51,44 @@ namespace PopnTouchi2.ViewModel
             NoteBubbleImages = new Dictionary<NoteValue, BitmapImage>();
             theme = t;
 
-            //TODO Define image
+            BackgroundImage = new ImageBrush();
+            BackgroundImage.ImageSource =
+                new BitmapImage(
+                    new Uri(@"../../Resources/Images/Theme1/background.png", UriKind.Relative)
+                );
+            NoteGeneratorImage = new ImageBrush();
+            NoteGeneratorImage.ImageSource =
+                new BitmapImage(
+                    new Uri(@"../../Resources/Images/Theme1/notefactory.png", UriKind.Relative)
+                );
+            MelodyGeneratorImage = new ImageBrush();
+            MelodyGeneratorImage.ImageSource =
+                new BitmapImage(
+                    new Uri(@"../../Resources/Images/Theme1/melodyfactory.png", UriKind.Relative)
+                );
+            PlayImage = new ImageBrush();
+            PlayImage.ImageSource =
+                new BitmapImage(
+                    new Uri(@"../../Resources/Images/Theme1/playdrop.png", UriKind.Relative)
+                );
+
+            BitmapImage crotchetImageSource = new BitmapImage(
+                new Uri(@"../../Resources/Images/Theme1/Bubbles/Notes/bullenoire.png", UriKind.Relative)
+            );
+
+            BitmapImage minimImageSource = new BitmapImage(
+                new Uri(@"../../Resources/Images/Theme1/Bubbles/Notes/bulleblanche.png", UriKind.Relative)
+            );
+
+            /*BitmapImage quaverImageSource = new BitmapImage(
+                new Uri(@"../../Resources/Images/Theme1/Bubbles/Notes/bullecroche.png", UriKind.Relative)
+            );*/
+
+            BitmapImage quaverImageSource = GetBitmapImage("bullecroche");
+
+            NoteBubbleImages.Add(NoteValue.crotchet, crotchetImageSource);
+            NoteBubbleImages.Add(NoteValue.minim, minimImageSource);
+            NoteBubbleImages.Add(NoteValue.quaver, quaverImageSource);
         }
 
         public BitmapImage GetBitmapImage(String img)

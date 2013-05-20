@@ -146,10 +146,10 @@ namespace PopnTouchi2.ViewModel.Animation
                 Storyboard.Begin(sessionVM.Grid);
 
 
-                (new NoteBubbleGeneratorViewModel(sessionVM.Session.NoteBubbleGenerator, sessionVM.Session)).Grid.Width = NoteBubbleGenerator.ActualWidth * 4;
-                this.NoteBubbleGenerator.Height = NoteBubbleGenerator.ActualHeight * 4;
-                this.MelodyBubbleGenerator.Width = MelodyBubbleGenerator.ActualWidth * 4;
-                this.MelodyBubbleGenerator.Height = MelodyBubbleGenerator.ActualHeight * 4;
+                sessionVM.NbgVM.Grid.Width = sessionVM.NbgVM.Grid.ActualWidth * 4;
+                sessionVM.NbgVM.Grid.Height = sessionVM.NbgVM.Grid.ActualHeight * 4;
+                sessionVM.MbgVM.Grid.Width = sessionVM.MbgVM.Grid.ActualWidth * 4;
+                sessionVM.MbgVM.Grid.Height = sessionVM.MbgVM.Grid.ActualHeight * 4;
 
                 sessionVM.Reduced = false;
             }
@@ -197,10 +197,10 @@ namespace PopnTouchi2.ViewModel.Animation
 
                 Storyboard.Begin(sessionVM.Grid);
 
-                this.NoteBubbleGenerator.Width = NoteBubbleGenerator.ActualWidth / 4;
-                this.NoteBubbleGenerator.Height = NoteBubbleGenerator.ActualHeight / 4;
-                this.MelodyBubbleGenerator.Width = MelodyBubbleGenerator.ActualWidth / 4;
-                this.MelodyBubbleGenerator.Height = MelodyBubbleGenerator.ActualHeight / 4;
+                sessionVM.NbgVM.Grid.Width = sessionVM.NbgVM.Grid.ActualWidth / 4;
+                sessionVM.NbgVM.Grid.Height = sessionVM.NbgVM.Grid.ActualHeight / 4;
+                sessionVM.MbgVM.Grid.Width = sessionVM.MbgVM.Grid.ActualWidth / 4;
+                sessionVM.MbgVM.Grid.Height = sessionVM.MbgVM.Grid.ActualHeight / 4;
             }
         }
     }
