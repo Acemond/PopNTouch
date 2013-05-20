@@ -17,7 +17,7 @@ namespace PopnTouchi2
         #region Properties
         /// <summary>
         /// Property.
-        /// Note Octave between TODO Value Range
+        /// Note Octave between 1 or 2
         /// </summary>
         public int Octave { get; set; }
 
@@ -35,7 +35,7 @@ namespace PopnTouchi2
 
         /// <summary>
         /// Property.
-        /// Note Position between TODO Value Range
+        /// Note Position on the stave
         /// </summary>
         public int Position { get; set; }
 
@@ -58,9 +58,15 @@ namespace PopnTouchi2
         /// </summary>
         /// <param name="oct">Octave</param>
         /// <param name="d">NoteValue</param>
+<<<<<<< HEAD
+        /// <param name="p">Pitch</param>
+        /// <param name="posit">Position</param>
+        public Note(int oct, NoteValue d, Pitch p, int posit)
+=======
         /// <param name="pitch">String</param>
         /// <param name="posit">int</param>
         public Note(int oct, NoteValue d, String pitch, int posit)
+>>>>>>> master
         {
             Octave = oct;
             Duration = d;
