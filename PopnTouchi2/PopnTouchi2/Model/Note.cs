@@ -58,15 +58,9 @@ namespace PopnTouchi2
         /// </summary>
         /// <param name="oct">Octave</param>
         /// <param name="d">NoteValue</param>
-<<<<<<< HEAD
         /// <param name="p">Pitch</param>
         /// <param name="posit">Position</param>
-        public Note(int oct, NoteValue d, Pitch p, int posit)
-=======
-        /// <param name="pitch">String</param>
-        /// <param name="posit">int</param>
         public Note(int oct, NoteValue d, String pitch, int posit)
->>>>>>> master
         {
             Octave = oct;
             Duration = d;
