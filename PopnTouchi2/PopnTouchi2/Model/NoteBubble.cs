@@ -11,7 +11,6 @@ namespace PopnTouchi2
     /// </summary>
     public class NoteBubble
     {
-
         /// <summary>
         /// Property.
         /// NoteBubble's contained Note

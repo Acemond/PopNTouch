@@ -10,7 +10,7 @@ using System.Windows.Input;
 
 namespace PopnTouchi2.ViewModel.Animation
 {
-    class NoteBubbleAnimation : Animation
+    class MelodyBubbleAnimation : Animation
     {
         #region Properties
         /// <summary>
@@ -20,14 +20,14 @@ namespace PopnTouchi2.ViewModel.Animation
         private int[] ManipulationGrid { get; set; }
         #endregion
 
-        #region Constructors
-        public NoteBubbleAnimation(NoteBubbleViewModel nbVM)
+         #region Constructors
+        public MelodyBubbleAnimation(MelodyBubbleViewModel mbVM)
         {
             ManipulationGrid = new int[] { 0, 0, 0, 14, 25, 37, 47, 56, 64, 71, 76, 80, 83, 85, 85, 84, 80, 75, 68, 60, 50, 38, 26, 15, 4, -3, -9, -11, -12, -11, -7 };
             Storyboard = new Storyboard();
             DispatcherTimer = new DispatcherTimer();
-            SVItem = nbVM.SVItem;
-            ParentSV = nbVM.ParentSV;
+            SVItem = mbVM.SVItem;
+            ParentSV = mbVM.ParentSV;
             canAnimate = true;
 
             DispatcherTimer.Tick += new EventHandler(t_Tick);
@@ -192,11 +192,7 @@ namespace PopnTouchi2.ViewModel.Animation
         private void touchDown(object sender, TouchEventArgs e)
         {
             stopAnimation();
-            String effect = "discovery";
-            Random r = new Random();
-            int nb = r.Next(1, 5);
-            effect += nb.ToString();
-            AudioController.PlaySoundWithString(effect);
+            // TODO lecture du theme contenu dans la bulle
         }
         #endregion
     }

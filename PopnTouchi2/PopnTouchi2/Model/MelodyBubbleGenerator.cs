@@ -47,7 +47,7 @@ namespace PopnTouchi2
         /// <summary>
         /// TODO
         /// </summary>
-        public void CreateMelodyBubble()
+        public MelodyBubble CreateMelodyBubble()
         {
             throw new System.NotImplementedException();
         }

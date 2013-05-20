@@ -11,18 +11,15 @@ using System.Windows.Shapes;
 using PopnTouchi2.Infrastructure;
 using PopnTouchi2.ViewModel.Animation;
 
-namespace PopnTouchi2
+namespace PopnTouchi2.ViewModel
 {
-    /// <summary>
-    /// Binds NoteBubble's properties to the View.
-    /// </summary>
-    public class NoteBubbleViewModel : ViewModelBase
+    class MelodyBubbleViewModel : ViewModelBase
     {
         /// <summary>
         /// Parameter.
-        /// NoteBubble element from the Model.
+        /// MelodyBubble element from the Model.
         /// </summary>
-        private NoteBubble noteBubble;
+        private MelodyBubble melodyBubble;
 
         /// <summary>
         /// Property.
@@ -38,9 +35,9 @@ namespace PopnTouchi2
 
         /// <summary>
         /// Parameter.
-        /// The NoteBubbleAnimation item handling all animations for the noteBubble.
+        /// The MelodyBubbleAnimation item handling all animations for the melodyBubble.
         /// </summary>
-        private NoteBubbleAnimation animation;
+        private MelodyBubbleAnimation animation;
 
         /// <summary>
         /// Parameter.
@@ -54,13 +51,13 @@ namespace PopnTouchi2
         /// </summary>
         public event EventHandler dropBubble;
 
-        /// <summary>
+         /// <summary>
         /// NoteBubbleViewModel Constructor.
         /// TODO
         /// </summary>
-        public NoteBubbleViewModel(NoteBubble nb, ScatterView sv)
+        public MelodyBubbleViewModel(MelodyBubble mb, ScatterView sv)
         {
-            noteBubble = nb;
+            melodyBubble = mb;
             SVItem = new ScatterViewItem();
             ParentSV = sv;
             
@@ -72,7 +69,7 @@ namespace PopnTouchi2
             SVItem.CanRotate = false;
             SVItem.HorizontalAlignment = HorizontalAlignment.Center;
 
-            animation = new NoteBubbleAnimation(this);
+            animation = new MelodyBubbleAnimation(this);
         }
 
         /// <summary>
@@ -81,11 +78,11 @@ namespace PopnTouchi2
         /// <param name="?"></param>
         /// <param name="sv"></param>
         /// <param name="theme"></param>
-        public NoteBubbleViewModel(NoteBubble nb, ScatterView sv, Theme theme) 
-            : this(nb, sv)
+        public MelodyBubbleViewModel(MelodyBubble mb, ScatterView sv, Theme theme) 
+            : this(mb, sv)
         {
             FrameworkElementFactory bubbleImage = new FrameworkElementFactory(typeof(Image));
-            bubbleImage.SetValue(Image.SourceProperty, theme.GetNoteBubbleImageSource(nb.Note.Duration));
+            bubbleImage.SetValue(Image.SourceProperty, theme.GetNoteBubbleImageSource(mb.Melody));
             bubbleImage.SetValue(Image.IsHitTestVisibleProperty, false);
             bubbleImage.SetValue(Image.WidthProperty, 85.0);
             bubbleImage.SetValue(Image.HeightProperty, 85.0);
@@ -104,41 +101,6 @@ namespace PopnTouchi2
             Style bubbleStyle = new Style(typeof(ScatterViewItem));
             bubbleStyle.Setters.Add(new Setter(ScatterViewItem.TemplateProperty, ct));
             SVItem.Style = bubbleStyle;
-        }
-
-
-        /// <summary>
-        /// Property.
-        /// TODO
-        /// </summary>
-        public NoteBubble Note
-        {
-            get
-            {
-                return noteBubble;
-            }
-            set
-            {
-                noteBubble = value;
-                NotifyPropertyChanged("Note");
-            }
-        }
-
-        /// <summary>
-        /// Property.
-        /// TODO
-        /// </summary>
-        public bool IsOnStave
-        {
-            get
-            {
-                return isOnStave;
-            }
-            set
-            {
-                isOnStave = value;
-                NotifyPropertyChanged("IsOnStave");
-            }
         }
     }
 }

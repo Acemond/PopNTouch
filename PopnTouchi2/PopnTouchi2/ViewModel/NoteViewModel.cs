@@ -33,8 +33,9 @@ namespace PopnTouchi2
         /// NoteViewModel Constructor.
         /// TODO
         /// </summary>
-        public NoteViewModel()
+        public NoteViewModel(Note n)
         {
+            note = n;
         }
 
         /// <summary>

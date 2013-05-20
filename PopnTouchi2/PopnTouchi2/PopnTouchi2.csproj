@@ -69,7 +69,11 @@
     <Compile Include="Model\Desktop.cs" />
     <Compile Include="Model\Enums\GlobalVariables.cs" />
     <Compile Include="Infrastructure\RelayCommand.cs" />
+    <Compile Include="ViewModel\Animation\MelodyBubbleAnimation.cs" />
     <Compile Include="ViewModel\Animation\NoteBubbleAnimation.cs" />
+    <Compile Include="ViewModel\MelodyBubbleGeneratorViewModel.cs" />
+    <Compile Include="ViewModel\MelodyBubbleViewModel.cs" />
+    <Compile Include="ViewModel\NoteBubbleGeneratorViewModel.cs" />
     <Compile Include="ViewModel\SessionViewModel.cs" />
     <Compile Include="ViewModel\NoteBubbleViewModel.cs" />
     <Compile Include="Model\Session.cs" />
