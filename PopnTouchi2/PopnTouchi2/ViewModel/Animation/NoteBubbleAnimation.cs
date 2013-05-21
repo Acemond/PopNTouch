@@ -85,6 +85,19 @@ namespace PopnTouchi2.ViewModel.Animation
                 Storyboard.Begin();
             }
         }
+
+        /// <summary>
+        /// Stops a current animation performing.
+        /// </summary>
+        public void StopAnimation()
+        {
+            canAnimate = false;
+            DispatcherTimer.Stop();
+            Storyboard.Pause();
+            SVItem.Center = SVItem.ActualCenter;
+            SVItem.Orientation = SVItem.Orientation;
+            Storyboard.Remove();
+        }
         #endregion
 
         #region Events
@@ -93,7 +106,7 @@ namespace PopnTouchi2.ViewModel.Animation
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        void t_Tick(object sender, EventArgs e)
+        public void t_Tick(object sender, EventArgs e)
         {
             DispatcherTimer.Stop();
             Animate();
@@ -104,7 +117,7 @@ namespace PopnTouchi2.ViewModel.Animation
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void centerAnimation_Completed(object sender, EventArgs e)
+        public void centerAnimation_Completed(object sender, EventArgs e)
         {
             SVItem.Center = SVItem.ActualCenter;
             Storyboard.Remove();
@@ -118,7 +131,7 @@ namespace PopnTouchi2.ViewModel.Animation
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void touchLeave(object sender, ContainerManipulationCompletedEventArgs e)
+        public void touchLeave(object sender, ContainerManipulationCompletedEventArgs e)
         {
             ScatterViewItem bubble = new ScatterViewItem();
             bubble = e.Source as ScatterViewItem;
@@ -195,7 +208,7 @@ namespace PopnTouchi2.ViewModel.Animation
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void touchDown(object sender, TouchEventArgs e)
+        public void touchDown(object sender, TouchEventArgs e)
         {
             StopAnimation();
             String effect = "discovery";

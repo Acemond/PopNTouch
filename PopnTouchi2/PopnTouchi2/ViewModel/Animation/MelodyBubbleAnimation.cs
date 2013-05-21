@@ -202,7 +202,7 @@ namespace PopnTouchi2.ViewModel.Animation
         /// <param name="e"></param>
         private void touchDown(object sender, TouchEventArgs e)
         {
-            StopAnimation();
+            
             // TODO lecture du theme contenu dans la bulle
         }
         #endregion

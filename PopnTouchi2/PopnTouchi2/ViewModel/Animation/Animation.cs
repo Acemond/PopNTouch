@@ -47,18 +47,5 @@ namespace PopnTouchi2.ViewModel.Animation
             Storyboard = new Storyboard();
             DispatcherTimer = new DispatcherTimer();
         }
-
-        /// <summary>
-        /// Stops a current animation performing.
-        /// </summary>
-        public void StopAnimation()
-        {
-            canAnimate = false;
-            DispatcherTimer.Stop();
-            Storyboard.Pause();
-            SVItem.Center = SVItem.ActualCenter;
-            SVItem.Orientation = SVItem.Orientation;
-            Storyboard.Remove();
-        }
     }
 }
