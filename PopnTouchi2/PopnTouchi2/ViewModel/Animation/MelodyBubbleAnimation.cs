@@ -10,7 +10,7 @@ using System.Windows.Input;
 
 namespace PopnTouchi2.ViewModel.Animation
 {
-    class MelodyBubbleAnimation : Animation
+    public class MelodyBubbleAnimation : Animation
     {
         #region Properties
         /// <summary>
@@ -18,12 +18,24 @@ namespace PopnTouchi2.ViewModel.Animation
         /// Defines the vertical offset of the manipulation grid
         /// </summary>
         private int[] ManipulationGrid { get; set; }
+
+        /// <summary>
+        /// Parameter.
+        /// Private attribute of current sessionVM.
+        /// </summary>
+        private SessionViewModel sessionVM; 
         #endregion
 
          #region Constructors
-        public MelodyBubbleAnimation(MelodyBubbleViewModel mbVM) 
+        /// <summary>
+        /// MelodyBubbleAnimation's Constructor.
+        /// </summary>
+        /// <param name="mbVM"></param>
+        /// <param name="s"></param>
+        public MelodyBubbleAnimation(MelodyBubbleViewModel mbVM, SessionViewModel s) 
             : base()
         {
+            sessionVM = s;
             ManipulationGrid = new int[] { 0, 0, 0, 14, 25, 37, 47, 56, 64, 71, 76, 80, 83, 85, 85, 84, 80, 75, 68, 60, 50, 38, 26, 15, 4, -3, -9, -11, -12, -11, -7 };
             SVItem = mbVM.SVItem;
             ParentSV = mbVM.ParentSV;
@@ -119,8 +131,8 @@ namespace PopnTouchi2.ViewModel.Animation
 
             // int width = int.Parse(GetWidth.Text);
             // int height = int.Parse(GetHeight.Text);
-            int width = (int)((Session)(((ScatterView)(SVItem.Parent)).Parent)).ActualWidth;
-            int height = (int)((Session)(((ScatterView)(SVItem.Parent)).Parent)).ActualHeight;
+            int width = (int)sessionVM.Grid.ActualWidth;
+            int height = (int)sessionVM.Grid.ActualHeight;
             bubbleCenter.X = bubbleCenter.X * 1920 / width;
             bubbleCenter.Y = bubbleCenter.Y * 1080 / height;
 
@@ -190,7 +202,7 @@ namespace PopnTouchi2.ViewModel.Animation
         /// <param name="e"></param>
         private void touchDown(object sender, TouchEventArgs e)
         {
-            stopAnimation();
+            StopAnimation();
             // TODO lecture du theme contenu dans la bulle
         }
         #endregion

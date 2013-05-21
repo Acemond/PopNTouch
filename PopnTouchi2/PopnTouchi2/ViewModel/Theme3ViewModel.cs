@@ -8,7 +8,7 @@ using System.Windows.Media.Imaging;
 
 namespace PopnTouchi2.ViewModel
 {
-    class Theme3ViewModel : ViewModelBase
+    public class Theme3ViewModel : ViewModelBase
     {
         /// <summary>
         /// Parameter.
@@ -38,6 +38,12 @@ namespace PopnTouchi2.ViewModel
         /// Property.
         /// Theme defines Elements' aspect.
         /// </summary>
+        protected Dictionary<Melody, BitmapImage> MelodyBubbleImages { get; set; }
+
+        /// <summary>
+        /// Property.
+        /// Theme defines Elements' aspect.
+        /// </summary>
         public ImageBrush MelodyGeneratorImage { get; set; }
 
         /// <summary>
@@ -46,7 +52,8 @@ namespace PopnTouchi2.ViewModel
         /// </summary>
         public ImageBrush PlayImage { get; set; }
 
-        public Theme3ViewModel(Theme t)
+        public Theme3ViewModel(Theme t, SessionViewModel s)
+            : base(s)
         {
             NoteBubbleImages = new Dictionary<NoteValue, BitmapImage>();
             theme = t;
@@ -65,9 +72,19 @@ namespace PopnTouchi2.ViewModel
         /// </summary>
         /// <param name="noteValue">The Notevalue needed to find the Bubble Image</param>
         /// <returns>A BitmapImage linked to the Bubble</returns>
-        public override BitmapImage GetNoteBubbleImageSource(NoteValue noteValue)
+        public BitmapImage GetNoteBubbleImageSource(NoteValue noteValue)
         {
             return NoteBubbleImages[noteValue];
+        }
+
+        /// <summary>
+        /// Find the NoteBubble's Image according to a NoteValue.
+        /// </summary>
+        /// <param name="noteValue">The Notevalue needed to find the Bubble Image</param>
+        /// <returns>A BitmapImage linked to the Bubble</returns>
+        public BitmapImage GetMelodyBubbleImageSource(Melody melody)
+        {
+            return MelodyBubbleImages[melody];
         }
     }
 }

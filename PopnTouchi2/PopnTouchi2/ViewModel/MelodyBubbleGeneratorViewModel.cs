@@ -11,7 +11,7 @@ namespace PopnTouchi2.ViewModel
     /// <summary>
     /// Binds MelodyBubbleGenerator's properties to the View.
     /// </summary>
-    class MelodyBubbleGeneratorViewModel : ViewModelBase
+    public class MelodyBubbleGeneratorViewModel : ViewModelBase
     {
         /// <summary>
         /// Parameter.
@@ -26,10 +26,11 @@ namespace PopnTouchi2.ViewModel
         public Grid Grid { get; set; }
 
         /// <summary>
-        /// MelodyBubbleGeneratorViewModel Constructor
+        /// NoteBubbleGenerator Theme related constructor
         /// </summary>
         /// <param name="nbg">The NoteBubbleGenerator item</param>
-        public MelodyBubbleGeneratorViewModel(MelodyBubbleGenerator mbg)
+        /// <param name="theme">The Theme item</param>
+        public MelodyBubbleGeneratorViewModel(MelodyBubbleGenerator mbg, SessionViewModel s) : base(s)
         {
             melodyBubbleGenerator = mbg;
             //TODO : set relative to Grid size
@@ -37,33 +38,23 @@ namespace PopnTouchi2.ViewModel
             Grid.Height = 234;
             Grid.HorizontalAlignment = System.Windows.HorizontalAlignment.Right;
             Grid.VerticalAlignment = System.Windows.VerticalAlignment.Bottom;
-
-            Grid.TouchDown += new EventHandler<System.Windows.Input.TouchEventArgs>(touchDown);
-        }
-
-        /// <summary>
-        /// NoteBubbleGenerator Theme related constructor
-        /// </summary>
-        /// <param name="nbg">The NoteBubbleGenerator item</param>
-        /// <param name="theme">The Theme item</param>
-        public MelodyBubbleGeneratorViewModel(MelodyBubbleGenerator mbg, Session s)
-            : this(mbg)
-        {
-            switch (s.ThemeID)
+            switch (s.Session.ThemeID)
             {
                 case 1:
-                    Grid.Background = (new Theme1ViewModel(s.Theme)).MelodyGeneratorImage;
+                    Grid.Background = (new Theme1ViewModel(s.Session.Theme, s)).MelodyGeneratorImage;
                     break;
                 case 2:
-                    Grid.Background = (new Theme2ViewModel(s.Theme)).MelodyGeneratorImage;
+                    Grid.Background = (new Theme2ViewModel(s.Session.Theme, s)).MelodyGeneratorImage;
                     break;
                 case 3:
-                    Grid.Background = (new Theme3ViewModel(s.Theme)).MelodyGeneratorImage;
+                    Grid.Background = (new Theme3ViewModel(s.Session.Theme, s)).MelodyGeneratorImage;
                     break;
                 case 4:
-                    Grid.Background = (new Theme4ViewModel(s.Theme)).MelodyGeneratorImage;
+                    Grid.Background = (new Theme4ViewModel(s.Session.Theme, s)).MelodyGeneratorImage;
                     break;
             }
+
+            Grid.TouchDown += new EventHandler<System.Windows.Input.TouchEventArgs>(touchDown);
         }
 
         /// <summary>
@@ -76,7 +67,7 @@ namespace PopnTouchi2.ViewModel
         {
             MelodyBubble newBubble = melodyBubbleGenerator.CreateMelodyBubble();
 
-            ((Session)Grid.Parent).Bubbles.Items.Add(newBubble);
+            SessionVM.Bubbles.Items.Add(newBubble);
         }
     }
 }

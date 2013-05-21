@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using PopnTouchi2.Infrastructure;
 
-namespace PopnTouchi2
+namespace PopnTouchi2.ViewModel
 {
     /// <summary>
     /// Binds Note's properties to the View.
@@ -33,7 +33,7 @@ namespace PopnTouchi2
         /// NoteViewModel Constructor.
         /// TODO
         /// </summary>
-        public NoteViewModel(Note n)
+        public NoteViewModel(Note n, SessionViewModel s) : base(s)
         {
             note = n;
         }

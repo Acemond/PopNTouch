@@ -11,13 +11,13 @@ namespace PopnTouchi2.ViewModel
     /// <summary>
     /// Binds NoteBubbleGenerator's properties to the View.
     /// </summary>
-    class NoteBubbleGeneratorViewModel : ViewModelBase
+    public class NoteBubbleGeneratorViewModel : ViewModelBase
     {
         /// <summary>
-        /// Parameter.
+        /// Property.
         /// NoteBubbleGenerator element from the Model.
         /// </summary>
-        private NoteBubbleGenerator noteBubbleGenerator;
+        public NoteBubbleGenerator NoteBubbleGenerator { get; set; }
 
         /// <summary>
         /// Property.
@@ -26,44 +26,36 @@ namespace PopnTouchi2.ViewModel
         public Grid Grid { get; set; }
 
         /// <summary>
-        /// NoteBubbleGeneratorViewModel Constructor
+        /// NoteBubbleGenerator Theme related constructor
         /// </summary>
         /// <param name="nbg">The NoteBubbleGenerator item</param>
-        public NoteBubbleGeneratorViewModel(NoteBubbleGenerator nbg)
+        /// <param name="theme">The Theme item</param>
+        public NoteBubbleGeneratorViewModel(NoteBubbleGenerator nbg, SessionViewModel s)
+            : base(s)
         {
-            noteBubbleGenerator = nbg;
+            NoteBubbleGenerator = nbg;
             //TODO : set relative to Grid size
             Grid.Width = 368;
             Grid.Height = 234;
             Grid.HorizontalAlignment = System.Windows.HorizontalAlignment.Left;
             Grid.VerticalAlignment = System.Windows.VerticalAlignment.Bottom;
-
-            Grid.TouchDown += new EventHandler<System.Windows.Input.TouchEventArgs>(touchDown);
-        }
-
-        /// <summary>
-        /// NoteBubbleGenerator Theme related constructor
-        /// </summary>
-        /// <param name="nbg">The NoteBubbleGenerator item</param>
-        /// <param name="theme">The Theme item</param>
-        public NoteBubbleGeneratorViewModel(NoteBubbleGenerator nbg, Session s)
-            : this(nbg)
-        {
-            switch (s.ThemeID)
+            switch (s.Session.ThemeID)
             {
                 case 1:
-                    Grid.Background = (new Theme1ViewModel(s.Theme)).NoteGeneratorImage;
+                    Grid.Background = (new Theme1ViewModel(s.Session.Theme, s)).NoteGeneratorImage;
                     break;
                 case 2:
-                    Grid.Background = (new Theme2ViewModel(s.Theme)).NoteGeneratorImage;
+                    Grid.Background = (new Theme2ViewModel(s.Session.Theme, s)).NoteGeneratorImage;
                     break;
                 case 3:
-                    Grid.Background = (new Theme3ViewModel(s.Theme)).NoteGeneratorImage;
+                    Grid.Background = (new Theme3ViewModel(s.Session.Theme, s)).NoteGeneratorImage;
                     break;
                 case 4:
-                    Grid.Background = (new Theme4ViewModel(s.Theme)).NoteGeneratorImage;
+                    Grid.Background = (new Theme4ViewModel(s.Session.Theme, s)).NoteGeneratorImage;
                     break;
             }
+
+            Grid.TouchDown += new EventHandler<System.Windows.Input.TouchEventArgs>(touchDown);
         }
 
         /// <summary>
@@ -74,9 +66,9 @@ namespace PopnTouchi2.ViewModel
         /// <param name="e">TouchEventArgs</param>
         public void touchDown(object sender, TouchEventArgs e)
         {
-            NoteBubble newBubble = noteBubbleGenerator.CreateNoteBubble();
+            NoteBubble newBubble = NoteBubbleGenerator.CreateNoteBubble();
 
-            ((Session)Grid.Parent).Bubbles.Items.Add(newBubble);
+            SessionVM.Bubbles.Items.Add(newBubble);
         }
     }
 }

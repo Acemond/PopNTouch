@@ -10,7 +10,7 @@ using System.Windows.Input;
 
 namespace PopnTouchi2.ViewModel.Animation
 {
-    class NoteBubbleAnimation : Animation
+    public class NoteBubbleAnimation : Animation
     {
         #region Properties
         /// <summary>
@@ -18,6 +18,12 @@ namespace PopnTouchi2.ViewModel.Animation
         /// Defines the vertical offset of the manipulation grid
         /// </summary>
         private int[] ManipulationGrid { get; set; }
+
+        /// <summary>
+        /// Parameter.
+        /// Private
+        /// </summary>
+        private SessionViewModel sessionVM;
         #endregion
 
         #region Constructors
@@ -119,8 +125,8 @@ namespace PopnTouchi2.ViewModel.Animation
 
             // int width = int.Parse(GetWidth.Text);
             // int height = int.Parse(GetHeight.Text);
-            int width = (int)((Session)(((ScatterView)(SVItem.Parent)).Parent)).ActualWidth;
-            int height = (int)((Session)(((ScatterView)(SVItem.Parent)).Parent)).ActualHeight;
+            int width = (int)sessionVM.Grid.ActualWidth;
+            int height = (int)sessionVM.Grid.ActualHeight;
             bubbleCenter.X = bubbleCenter.X * 1920 / width;
             bubbleCenter.Y = bubbleCenter.Y * 1080 / height;
 
@@ -190,7 +196,7 @@ namespace PopnTouchi2.ViewModel.Animation
         /// <param name="e"></param>
         private void touchDown(object sender, TouchEventArgs e)
         {
-            stopAnimation();
+            StopAnimation();
             String effect = "discovery";
             Random r = new Random();
             int nb = r.Next(1, 5);

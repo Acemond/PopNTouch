@@ -6,7 +6,7 @@ using System.Windows.Media;
 
 namespace PopnTouchi2.ViewModel.Animation
 {
-    class StaveAnimation : Animation
+    public class StaveAnimation : Animation
     {
         /// <summary>
         /// Property.

@@ -22,7 +22,6 @@ namespace PopnTouchi2.ViewModel
         /// Session's element from the Model.
         /// </summary>
         private Session session;
-
         /// <summary>
         /// Property.
         /// TODO
@@ -39,7 +38,6 @@ namespace PopnTouchi2.ViewModel
                 NotifyPropertyChanged("Session");
             }
         }
-
         /// <summary>
         /// Property.
         /// Session's Bubbles' ScatterView instance.
@@ -58,8 +56,16 @@ namespace PopnTouchi2.ViewModel
         /// </summary>
         public Grid Grid { get; set; }
 
+        /// <summary>
+        /// Property.
+        /// ViewModel of the MelodyBubbleGenerator attached to the session.
+        /// </summary>
         public MelodyBubbleGeneratorViewModel MbgVM { get; set; }
 
+        /// <summary>
+        /// Property.
+        /// ViewModel of the NoteBubbleGenerator attached to the session.
+        /// </summary>
         public NoteBubbleGeneratorViewModel NbgVM { get; set; }
 
         /// <summary>
@@ -79,13 +85,18 @@ namespace PopnTouchi2.ViewModel
         /// TODO
         /// </summary>
         /// <param name="session"></param>
-        public SessionViewModel(Session s)
+        public SessionViewModel(Session s) : base()
         {
+            SessionVM = this;
             Session = s;
             Grid.Opacity = 0;
 
-            NbgVM = new NoteBubbleGeneratorViewModel(Session.NoteBubbleGenerator, Session);
-            MbgVM = new MelodyBubbleGeneratorViewModel(Session.MelodyBubbleGenerator, Session);
+            Bubbles = new ScatterView();
+            Bubbles.Visibility = Visibility.Visible;
+            Grid.Children.Add(Bubbles);
+
+            NbgVM = new NoteBubbleGeneratorViewModel(Session.NoteBubbleGenerator, this);
+            MbgVM = new MelodyBubbleGeneratorViewModel(Session.MelodyBubbleGenerator, this);
             Grid.Children.Add(NbgVM.Grid);
             Grid.Children.Add(MbgVM.Grid);
 
@@ -94,22 +105,18 @@ namespace PopnTouchi2.ViewModel
             switch (s.ThemeID)
             {
                 case 1:
-                    Grid.Background = (new Theme1ViewModel(Session.Theme)).BackgroundImage;
+                    Grid.Background = (new Theme1ViewModel(Session.Theme, this)).BackgroundImage;
                     break;
                 case 2:
-                    Grid.Background = (new Theme2ViewModel(Session.Theme)).BackgroundImage;
+                    Grid.Background = (new Theme2ViewModel(Session.Theme, this)).BackgroundImage;
                     break;
                 case 3:
-                    Grid.Background = (new Theme3ViewModel(Session.Theme)).BackgroundImage;
+                    Grid.Background = (new Theme3ViewModel(Session.Theme, this)).BackgroundImage;
                     break;
                 case 4:
-                    Grid.Background = (new Theme4ViewModel(Session.Theme)).BackgroundImage;
+                    Grid.Background = (new Theme4ViewModel(Session.Theme, this)).BackgroundImage;
                     break;
             }
-
-            Bubbles = new ScatterView();
-            Bubbles.Visibility = Visibility.Visible;
-            Grid.Children.Add(Bubbles);
 
             Reducer = new SurfaceButton();
             Reduced = false;

@@ -11,7 +11,7 @@ using System.Windows.Shapes;
 using PopnTouchi2.Infrastructure;
 using PopnTouchi2.ViewModel.Animation;
 
-namespace PopnTouchi2
+namespace PopnTouchi2.ViewModel
 {
     /// <summary>
     /// Binds NoteBubble's properties to the View.
@@ -20,34 +20,59 @@ namespace PopnTouchi2
     {
         /// <summary>
         /// Parameter.
-        /// NoteBubble element from the Model.
         /// </summary>
         private NoteBubble noteBubble;
-
+        /// <summary>
+        /// Property.
+        /// NoteBubble element from the Model.
+        /// </summary>
+        public NoteBubble NoteBubble
+        {
+            get
+            {
+                return noteBubble;
+            }
+            set
+            {
+                noteBubble = value;
+                NotifyPropertyChanged("NoteBubble");
+            }
+        }
         /// <summary>
         /// Property.
         /// The parent ScatterView.
         /// </summary>
         public ScatterView ParentSV { get; set; }
-
         /// <summary>
         /// Property.
         /// The ScatterViewItem containing the notebubble.
         /// </summary>
         public ScatterViewItem SVItem { get; set; }
-
         /// <summary>
         /// Parameter.
         /// The NoteBubbleAnimation item handling all animations for the noteBubble.
         /// </summary>
-        private NoteBubbleAnimation animation;
-
+        public NoteBubbleAnimation Animation { get; set; }
         /// <summary>
         /// Parameter.
-        /// True if the center of the Bubble is located on the stave.
         /// </summary>
         private bool isOnStave;
-
+        /// <summary>
+        /// Property.
+        /// True if the center of the Bubble is located on the stave.
+        /// </summary>
+        public bool IsOnStave
+        {
+            get
+            {
+                return isOnStave;
+            }
+            set
+            {
+                isOnStave = value;
+                NotifyPropertyChanged("IsOnStave");
+            }
+        }
         /// <summary>
         /// Parameter.
         /// Event triggered when a NoteBubble is dropped on the stave.
@@ -55,15 +80,17 @@ namespace PopnTouchi2
         public event EventHandler dropBubble;
 
         /// <summary>
-        /// NoteBubbleViewModel Constructor.
-        /// TODO
+        /// NoteBubbleViewModel theme specific constructor.
         /// </summary>
-        public NoteBubbleViewModel(NoteBubble nb, ScatterView sv)
+        /// <param name="?"></param>
+        /// <param name="sv"></param>
+        /// <param name="theme"></param>
+        public NoteBubbleViewModel(NoteBubble nb, ScatterView sv, SessionViewModel s) : base(s)
         {
-            noteBubble = nb;
+            NoteBubble = nb;
             SVItem = new ScatterViewItem();
             ParentSV = sv;
-            
+
             Random r = new Random();
             SVItem.Center = new Point(r.Next((int)sv.ActualWidth), r.Next((int)(635 * sv.ActualHeight / 1080), (int)sv.ActualHeight));
 
@@ -72,20 +99,22 @@ namespace PopnTouchi2
             SVItem.CanRotate = false;
             SVItem.HorizontalAlignment = HorizontalAlignment.Center;
 
-            animation = new NoteBubbleAnimation(this);
-        }
-
-        /// <summary>
-        /// NoteBubbleViewModel theme specific constructor.
-        /// </summary>
-        /// <param name="?"></param>
-        /// <param name="sv"></param>
-        /// <param name="theme"></param>
-        public NoteBubbleViewModel(NoteBubble nb, ScatterView sv, Theme theme) 
-            : this(nb, sv)
-        {
             FrameworkElementFactory bubbleImage = new FrameworkElementFactory(typeof(Image));
-            bubbleImage.SetValue(Image.SourceProperty, theme.GetNoteBubbleImageSource(nb.Note.Duration));
+            switch (s.Session.ThemeID)
+            {
+                case 1:
+                    bubbleImage.SetValue(Image.SourceProperty, new Theme1ViewModel(s.Session.Theme, s).GetNoteBubbleImageSource(nb.Note.Duration));
+                    break;
+                case 2:
+                    bubbleImage.SetValue(Image.SourceProperty, new Theme2ViewModel(s.Session.Theme, s).GetNoteBubbleImageSource(nb.Note.Duration));
+                    break;
+                case 3:
+                    bubbleImage.SetValue(Image.SourceProperty, new Theme3ViewModel(s.Session.Theme, s).GetNoteBubbleImageSource(nb.Note.Duration));
+                    break;
+                case 4:
+                    bubbleImage.SetValue(Image.SourceProperty, new Theme4ViewModel(s.Session.Theme, s).GetNoteBubbleImageSource(nb.Note.Duration));
+                    break;
+            }
             bubbleImage.SetValue(Image.IsHitTestVisibleProperty, false);
             bubbleImage.SetValue(Image.WidthProperty, 85.0);
             bubbleImage.SetValue(Image.HeightProperty, 85.0);
@@ -104,41 +133,8 @@ namespace PopnTouchi2
             Style bubbleStyle = new Style(typeof(ScatterViewItem));
             bubbleStyle.Setters.Add(new Setter(ScatterViewItem.TemplateProperty, ct));
             SVItem.Style = bubbleStyle;
-        }
 
-
-        /// <summary>
-        /// Property.
-        /// TODO
-        /// </summary>
-        public NoteBubble Note
-        {
-            get
-            {
-                return noteBubble;
-            }
-            set
-            {
-                noteBubble = value;
-                NotifyPropertyChanged("Note");
-            }
-        }
-
-        /// <summary>
-        /// Property.
-        /// TODO
-        /// </summary>
-        public bool IsOnStave
-        {
-            get
-            {
-                return isOnStave;
-            }
-            set
-            {
-                isOnStave = value;
-                NotifyPropertyChanged("IsOnStave");
-            }
+            Animation = new NoteBubbleAnimation(this);
         }
     }
 }

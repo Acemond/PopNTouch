@@ -8,41 +8,41 @@ using Microsoft.Surface.Presentation.Controls;
 
 namespace PopnTouchi2.ViewModel.Animation
 {
-    abstract class Animation
+    public abstract class Animation
     {
         /// <summary>
         /// Property.
         /// Storyboard animation.
         /// </summary>
-        protected Storyboard Storyboard { get; set; }
+        public Storyboard Storyboard { get; set; }
         /// <summary>
         /// Property.
         /// DispatcherTimer.
         /// </summary>
-        protected DispatcherTimer DispatcherTimer { get; set; }
+        public DispatcherTimer DispatcherTimer { get; set; }
 
         /// <summary>
         /// Property.
         /// The ScatterViewItem animated.
         /// </summary>
-        protected ScatterViewItem SVItem { get; set; }
+        public ScatterViewItem SVItem { get; set; }
 
         /// <summary>
         /// Property.
         /// The ScatterView containing the ScatterViewItem currently animated.
         /// </summary>
-        protected ScatterView ParentSV { get; set; }
+        public ScatterView ParentSV { get; set; }
 
         /// <summary>
         /// Parameter.
         /// Boolean to stop or continue current animation.
         /// </summary>
-        protected bool canAnimate;
+        public bool canAnimate;
 
         /// <summary>
         /// Global Animation Constructor.
         /// </summary>
-        protected Animation()
+        public Animation()
         {
             Storyboard = new Storyboard();
             DispatcherTimer = new DispatcherTimer();
@@ -51,7 +51,7 @@ namespace PopnTouchi2.ViewModel.Animation
         /// <summary>
         /// Stops a current animation performing.
         /// </summary>
-        protected void stopAnimation()
+        public void StopAnimation()
         {
             canAnimate = false;
             DispatcherTimer.Stop();

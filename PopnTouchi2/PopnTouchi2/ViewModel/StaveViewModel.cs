@@ -3,10 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using PopnTouchi2.Infrastructure;
-
 using PopnTouchi2.ViewModel.Animation;
 
-namespace PopnTouchi2
+namespace PopnTouchi2.ViewModel
 {
     /// <summary>
     /// Binds Stave's properties to the View.
@@ -35,10 +34,10 @@ namespace PopnTouchi2
         /// StaveViewModel Constructor.
         /// TODO
         /// </summary>
-        public StaveViewModel(Stave s)
+        public StaveViewModel(Stave stave, SessionViewModel s) : base(s)
         {
-            stave = s;
-            if (s.isUp)
+            this.stave = stave;
+            if (stave.isUp)
             {
                 //TODO Image =
             }
@@ -47,7 +46,7 @@ namespace PopnTouchi2
                 //TODO Image =
             }
 
-            animation = new StaveAnimation(s);
+            animation = new StaveAnimation(stave);
         }
 
         /// <summary>
