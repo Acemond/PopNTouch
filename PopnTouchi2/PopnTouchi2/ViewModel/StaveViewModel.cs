@@ -28,7 +28,7 @@ namespace PopnTouchi2.ViewModel
         /// Parameter.
         /// StaveAnimation item handling all animations related to the stave.
         /// </summary>
-        private StaveAnimation animation;
+        public StaveAnimation Animation { get; set; }
 
         /// <summary>
         /// StaveViewModel Constructor.
@@ -46,7 +46,7 @@ namespace PopnTouchi2.ViewModel
                 //TODO Image =
             }
 
-            animation = new StaveAnimation(stave);
+            Animation = new StaveAnimation(stave);
         }
 
         /// <summary>

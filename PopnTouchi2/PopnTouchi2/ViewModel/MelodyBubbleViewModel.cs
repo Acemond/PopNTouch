@@ -100,7 +100,7 @@ namespace PopnTouchi2.ViewModel
             bubbleStyle.Setters.Add(new Setter(ScatterViewItem.TemplateProperty, ct));
             SVItem.Style = bubbleStyle;
 
-            animation = new MelodyBubbleAnimation(this);
+            animation = new MelodyBubbleAnimation(this, s);
         }
     }
 }

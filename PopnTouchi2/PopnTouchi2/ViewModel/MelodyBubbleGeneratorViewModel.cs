@@ -32,6 +32,7 @@ namespace PopnTouchi2.ViewModel
         /// <param name="theme">The Theme item</param>
         public MelodyBubbleGeneratorViewModel(MelodyBubbleGenerator mbg, SessionViewModel s) : base(s)
         {
+            Grid = new Grid();
             melodyBubbleGenerator = mbg;
             //TODO : set relative to Grid size
             Grid.Width = 368;

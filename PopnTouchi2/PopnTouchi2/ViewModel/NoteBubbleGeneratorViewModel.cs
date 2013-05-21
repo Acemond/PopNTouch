@@ -33,6 +33,7 @@ namespace PopnTouchi2.ViewModel
         public NoteBubbleGeneratorViewModel(NoteBubbleGenerator nbg, SessionViewModel s)
             : base(s)
         {
+            Grid = new Grid();
             NoteBubbleGenerator = nbg;
             //TODO : set relative to Grid size
             Grid.Width = 368;

@@ -69,7 +69,8 @@ namespace PopnTouchi2.ViewModel.Animation
                 sessionVM.Reducer.Background = Brushes.Red;
 
                 ScatterViewItem svi = (ScatterViewItem)sessionVM.Grid.Parent;
-                Desktop mainDesktop = (Desktop)((ScatterView)svi.Parent).Parent;
+                DesktopViewModel mainDesktop = new DesktopViewModel();
+                mainDesktop.Grid = (Grid)((ScatterView)svi.Parent).Parent;
 
                 Storyboard stb = new Storyboard();
                 PointAnimation centerPosAnimation = new PointAnimation();
@@ -81,7 +82,7 @@ namespace PopnTouchi2.ViewModel.Animation
                 ThicknessAnimation borderAnimation = new ThicknessAnimation();
 
                 centerPosAnimation.From = svi.ActualCenter;
-                centerPosAnimation.To = new Point(mainDesktop.ActualWidth / 2, mainDesktop.ActualHeight / 2);
+                centerPosAnimation.To = new Point(mainDesktop.Grid.ActualWidth / 2, mainDesktop.Grid.ActualHeight / 2);
                 centerPosAnimation.Duration = new Duration(TimeSpan.FromSeconds(.75));
                 centerPosAnimation.FillBehavior = FillBehavior.HoldEnd;
                 stb.Children.Add(centerPosAnimation);
@@ -227,11 +228,12 @@ namespace PopnTouchi2.ViewModel.Animation
         void stb_enlarge_Completed(object sender, EventArgs e)
         {
             ScatterViewItem svi = (ScatterViewItem)sessionVM.Grid.Parent;
-            Desktop mainDesktop = (Desktop)((ScatterView)svi.Parent).Parent;
+            DesktopViewModel mainDesktop = new DesktopViewModel();
+            mainDesktop.Grid = (Grid)((ScatterView)svi.Parent).Parent;
             svi.Content = null;
 
             ((ScatterView)svi.Parent).Items.Remove(svi);
-            mainDesktop.Children.Add(sessionVM.Grid);
+            mainDesktop.Grid.Children.Add(sessionVM.Grid);
         }
 
         /// <summary>
@@ -242,15 +244,16 @@ namespace PopnTouchi2.ViewModel.Animation
         void stb_Completed(object sender, EventArgs e)
         {
             ScatterViewItem svi = new ScatterViewItem();
-            Desktop mainDesktop = (Desktop)sessionVM.Grid.Parent;
-            mainDesktop.Children.Remove(sessionVM.Grid);
+            DesktopViewModel mainDesktop = new DesktopViewModel();
+            mainDesktop.Grid = (Grid)sessionVM.Grid.Parent;
+            mainDesktop.Grid.Children.Remove(sessionVM.Grid);
             svi.Width = sessionVM.Grid.Width;
             svi.Height = sessionVM.Grid.Height;
             svi.CanScale = false;
             svi.Content = this;
             svi.BorderBrush = Brushes.White;
             svi.Orientation = 0;
-            svi.Center = new Point(mainDesktop.ActualWidth / 2, mainDesktop.ActualHeight / 2);
+            svi.Center = new Point(mainDesktop.Grid.ActualWidth / 2, mainDesktop.Grid.ActualHeight / 2);
             mainDesktop.Photos.Items.Add(svi);
 
 
@@ -301,7 +304,8 @@ namespace PopnTouchi2.ViewModel.Animation
         void stb_border_Completed(object sender, EventArgs e)
         {
             ScatterViewItem svi = (ScatterViewItem)sessionVM.Grid.Parent;
-            Desktop mainDesktop = (Desktop)((ScatterView)svi.Parent).Parent;
+            DesktopViewModel mainDesktop = new DesktopViewModel();
+            mainDesktop.Grid = (Grid)((ScatterView)svi.Parent).Parent;
 
             Storyboard = new Storyboard();
             PointAnimation centerPosAnimation = new PointAnimation();
@@ -313,7 +317,7 @@ namespace PopnTouchi2.ViewModel.Animation
             ease.Exponent = 1.5;
 
             Random r = new Random();
-            Point newCenter = new Point(r.Next((int)mainDesktop.ActualWidth), r.Next((int)mainDesktop.ActualHeight));
+            Point newCenter = new Point(r.Next((int)mainDesktop.Grid.ActualWidth), r.Next((int)mainDesktop.Grid.ActualHeight));
             Double newOrientation = r.Next(-180, 180);
 
             centerPosAnimation.From = svi.ActualCenter;
@@ -352,7 +356,8 @@ namespace PopnTouchi2.ViewModel.Animation
         {
             Storyboard.Pause();
             ScatterViewItem svi = (ScatterViewItem)sessionVM.Grid.Parent;
-            Desktop mainDesktop = (Desktop)((ScatterView)svi.Parent).Parent;
+            DesktopViewModel mainDesktop = new DesktopViewModel();
+            mainDesktop.Grid = (Grid)((ScatterView)svi.Parent).Parent;
 
             svi.Center = svi.ActualCenter;
             svi.Orientation = svi.ActualOrientation;

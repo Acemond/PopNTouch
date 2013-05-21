@@ -91,6 +91,7 @@ namespace PopnTouchi2.ViewModel
             Session = s;
             Grid.Opacity = 0;
 
+            Grid = new Grid();
             Bubbles = new ScatterView();
             Bubbles.Visibility = Visibility.Visible;
             Grid.Children.Add(Bubbles);

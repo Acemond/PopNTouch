@@ -65,8 +65,6 @@
       <DependentUpon>DesktopWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="ViewModel\Animation\Animation.cs" />
-    <Compile Include="Model\Builder.cs" />
-    <Compile Include="Model\Desktop.cs" />
     <Compile Include="Model\Enums\GlobalVariables.cs" />
     <Compile Include="Infrastructure\RelayCommand.cs" />
     <Compile Include="ViewModel\Animation\MelodyBubbleAnimation.cs" />
@@ -89,7 +87,7 @@
     <Compile Include="Model\Theme.cs" />
     <Compile Include="ViewModel\StaveViewModel.cs" />
     <Compile Include="Infrastructure\ViewModelBase.cs" />
-    <Compile Include="ViewModel\MainViewModel.cs" />
+    <Compile Include="ViewModel\DesktopViewModel.cs" />
     <Compile Include="Model\AudioController.cs" />
     <Compile Include="Model\Enums\Gesture.cs" />
     <Compile Include="Model\Instrument.cs" />

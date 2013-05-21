@@ -1,54 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
-  <Class Name="PopnTouchi2.NoteViewModel" HideInheritanceLine="true">
-    <Position X="1.5" Y="3.75" Width="1.75" />
-    <TypeIdentifier>
-      <HashCode>AAAQACAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAEAAAA=</HashCode>
-      <FileName>ViewModel\NoteViewModel.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="PopnTouchi2.MainViewModel" HideInheritanceLine="true">
-    <Position X="6" Y="2.5" Width="1.75" />
-    <AssociationLine Name="Play" Type="System.Windows.Input.ICommand" FixedFromPoint="true" FixedToPoint="true">
-      <Path>
-        <Point X="6.947" Y="2.5" />
-        <Point X="6.947" Y="1" />
-        <Point X="8.25" Y="1" />
-      </Path>
-    </AssociationLine>
-    <AssociationLine Name="Stop" Type="System.Windows.Input.ICommand" FixedFromPoint="true" FixedToPoint="true">
-      <Path>
-        <Point X="7.678" Y="2.5" />
-        <Point X="7.678" Y="1.75" />
-        <Point X="8.25" Y="1.75" />
-      </Path>
-    </AssociationLine>
-    <AssociationLine Name="ChangeTheme" Type="System.Windows.Input.ICommand" FixedFromPoint="true" FixedToPoint="true">
-      <Path>
-        <Point X="7.531" Y="2.5" />
-        <Point X="7.531" Y="1.313" />
-        <Point X="8.25" Y="1.313" />
-      </Path>
-    </AssociationLine>
-    <TypeIdentifier>
-      <HashCode>AAAAAgAAAAAgAAAAAAIAAAAAAACgAAAAoBAEAAAQAAA=</HashCode>
-      <FileName>ViewModel\MainViewModel.cs</FileName>
-    </TypeIdentifier>
-    <ShowAsAssociation>
-      <Property Name="Play" />
-      <Property Name="Stop" />
-      <Property Name="ChangeTheme" />
-    </ShowAsAssociation>
-  </Class>
-  <Class Name="PopnTouchi2.StaveViewModel" HideInheritanceLine="true">
-    <Position X="3.75" Y="4" Width="1.75" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAgCAAAgAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAA=</HashCode>
-      <FileName>ViewModel\StaveViewModel.cs</FileName>
-    </TypeIdentifier>
-  </Class>
   <Class Name="PopnTouchi2.Infrastructure.RelayCommand">
-    <Position X="10.25" Y="3.25" Width="1.5" />
+    <Position X="13.5" Y="0.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAACAAQAAEAEAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Infrastructure\RelayCommand.cs</FileName>
@@ -56,46 +9,137 @@
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="PopnTouchi2.Infrastructure.ViewModelBase">
-    <Position X="10.25" Y="1.25" Width="2" />
+    <Position X="10.25" Y="0.5" Width="2" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAIAAAAAAAAAAgAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAQAAIAAAAAAAAAAgAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Infrastructure\ViewModelBase.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
   </Class>
-  <Class Name="PopnTouchi2.NoteBubbleViewModel" HideInheritanceLine="true">
-    <Position X="1.5" Y="1" Width="2" />
-    <TypeIdentifier>
-      <HashCode>AAAIAAAAgBAAAAAAAAAAAAAAAAAEAAAAAAAAAAEAAAA=</HashCode>
-      <FileName>ViewModel\NoteBubbleViewModel.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="PopnTouchi2.SessionViewModel" HideInheritanceLine="true">
-    <Position X="3.75" Y="1.5" Width="1.75" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAgAAAAAAAAAAA=</HashCode>
-      <FileName>ViewModel\SessionViewModel.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="PopnTouchi2.MultiPlayersWindow" Collapsed="true">
-    <Position X="13.25" Y="0.75" Width="2" />
-    <TypeIdentifier>
-      <HashCode>AEAAAAAAAAAAAACACQAAAIgAAAAAAAAAEAAAAAAAAAA=</HashCode>
-      <FileName>MultiPlayersWindow.xaml.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="PopnTouchi2.SinglePlayerWindow" Collapsed="true">
-    <Position X="13.25" Y="1.75" Width="2" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>SinglePlayerWindow.xaml.cs</FileName>
-    </TypeIdentifier>
-  </Class>
   <Class Name="PopnTouchi2.DesktopWindow" Collapsed="true">
-    <Position X="13.25" Y="2.75" Width="2" />
+    <Position X="15.75" Y="0.75" Width="2" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>DesktopWindow.xaml.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PopnTouchi2.ViewModel.DesktopViewModel" Collapsed="true">
+    <Position X="3.5" Y="6.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAgAAAAAAQDAAIAAAAAAAAACgAAAAoBgAAAAQAAI=</HashCode>
+      <FileName>ViewModel\DesktopViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PopnTouchi2.ViewModel.Theme4ViewModel" Collapsed="true">
+    <Position X="10.25" Y="6.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CAASQAAAABAAAABAAAACAAAAASAAQAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ViewModel\Theme4ViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PopnTouchi2.ViewModel.MelodyBubbleGeneratorViewModel" Collapsed="true">
+    <Position X="17" Y="6.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAgAAAAAAAAAAAABAAAAAAAAAAAAAQAAAAAAAAAA=</HashCode>
+      <FileName>ViewModel\MelodyBubbleGeneratorViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PopnTouchi2.ViewModel.MelodyBubbleViewModel" Collapsed="true">
+    <Position X="23.75" Y="6.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAABAAAAgAAAgAAAAAAAAIQBAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ViewModel\MelodyBubbleViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PopnTouchi2.ViewModel.NoteBubbleGeneratorViewModel" Collapsed="true">
+    <Position X="5.75" Y="6.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAEAAAA=</HashCode>
+      <FileName>ViewModel\NoteBubbleGeneratorViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PopnTouchi2.ViewModel.NoteBubbleViewModel" Collapsed="true">
+    <Position X="12.5" Y="6.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAABCAAAgAAAgAAAgAAAAAQAAAAEAAAAAAAAAAAAAAg=</HashCode>
+      <FileName>ViewModel\NoteBubbleViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PopnTouchi2.ViewModel.NoteViewModel" Collapsed="true">
+    <Position X="19.25" Y="6.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AQAAACAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAEAAAA=</HashCode>
+      <FileName>ViewModel\NoteViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PopnTouchi2.ViewModel.SessionViewModel" Collapsed="true">
+    <Position X="26" Y="6.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAgIIAAAAAQAAhAEAAAAAAgAAAAAAAAAAAAAAAQA=</HashCode>
+      <FileName>ViewModel\SessionViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PopnTouchi2.ViewModel.StaveViewModel" Collapsed="true">
+    <Position X="8" Y="6.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAgAAAAAAAAAgAAIAAAAAAAAAAAQAAAAAAAAAAA=</HashCode>
+      <FileName>ViewModel\StaveViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PopnTouchi2.ViewModel.Theme1ViewModel" Collapsed="true">
+    <Position X="14.75" Y="6.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CAASQAAAABAAAABAAAACAAAAASAAQAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ViewModel\Theme1ViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PopnTouchi2.ViewModel.Theme2ViewModel" Collapsed="true">
+    <Position X="21.5" Y="6.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CAASQAAAABAAAABAAAACAAAAASAAQAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ViewModel\Theme2ViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PopnTouchi2.ViewModel.Theme3ViewModel" Collapsed="true">
+    <Position X="28.25" Y="6.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CAASQAAAABAAAABAAAACAAAAASAAQAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ViewModel\Theme3ViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PopnTouchi2.ViewModel.Animation.Animation" Collapsed="true">
+    <Position X="21.25" Y="1.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAABAAAAAAQAgAAAAAAAAAAAAACAgAAAAAAAEAAAAAA=</HashCode>
+      <FileName>ViewModel\Animation\Animation.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PopnTouchi2.ViewModel.Animation.MelodyBubbleAnimation" Collapsed="true">
+    <Position X="20.25" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAgAAAAAAAQAAEAAAAAAQAAAAAACAAQAAAAAAAAgA=</HashCode>
+      <FileName>ViewModel\Animation\MelodyBubbleAnimation.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PopnTouchi2.ViewModel.Animation.NoteBubbleAnimation" Collapsed="true">
+    <Position X="24.75" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAgAAAAAAAQAAEAAAAAAQAAAAAACAAQAAAAAAAAgA=</HashCode>
+      <FileName>ViewModel\Animation\NoteBubbleAnimation.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PopnTouchi2.ViewModel.Animation.SessionAnimation" Collapsed="true">
+    <Position X="18" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAIAAEAAEAAAEAAAAAAAAgAAAAAAgACAA=</HashCode>
+      <FileName>ViewModel\Animation\SessionAnimation.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PopnTouchi2.ViewModel.Animation.StaveAnimation" Collapsed="true">
+    <Position X="22.5" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAQAAAAAABAAAAAAAAAAAAA=</HashCode>
+      <FileName>ViewModel\Animation\StaveAnimation.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Interface Name="System.Windows.Input.ICommand">

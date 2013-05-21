@@ -6,6 +6,7 @@ using System.ComponentModel;
 using PopnTouchi2.ViewModel;
 using System.Runtime.CompilerServices;
 [assembly: InternalsVisibleTo("SessionViewModel")]
+[assembly: InternalsVisibleTo("DesktopViewModel")]
 
 namespace PopnTouchi2.Infrastructure
 {
