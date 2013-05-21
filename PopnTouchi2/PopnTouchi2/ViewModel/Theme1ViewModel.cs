@@ -12,9 +12,25 @@ namespace PopnTouchi2.ViewModel
     {
         /// <summary>
         /// Parameter.
-        /// Theme element from the Model.
         /// </summary>
         private Theme theme;
+
+        /// <summary>
+        /// Property.
+        /// Theme element from the Model.
+        /// </summary>
+        public Theme Theme
+        {
+            get
+            {
+                return theme;
+            }
+            set
+            {
+                theme = value;
+                NotifyPropertyChanged("Theme");
+            }
+        }
 
         /// <summary>
         /// Property.
@@ -52,10 +68,12 @@ namespace PopnTouchi2.ViewModel
         /// </summary>
         public ImageBrush PlayImage { get; set; }
 
-        public Theme1ViewModel(Theme t, SessionViewModel s) : base(s)
+        public Theme1ViewModel(Theme t, SessionViewModel s) 
+            : base(s)
         {
             NoteBubbleImages = new Dictionary<NoteValue, BitmapImage>();
-            theme = t;
+            MelodyBubbleImages = new Dictionary<Melody, BitmapImage>();
+            Theme = t;
 
             BackgroundImage = new ImageBrush();
             BackgroundImage.ImageSource =

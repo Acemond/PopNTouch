@@ -89,21 +89,19 @@ namespace PopnTouchi2.ViewModel
         {
             SessionVM = this;
             Session = s;
-            Grid.Opacity = 0;
-
             Grid = new Grid();
             Bubbles = new ScatterView();
+            NbgVM = new NoteBubbleGeneratorViewModel(Session.NoteBubbleGenerator, this);
+            MbgVM = new MelodyBubbleGeneratorViewModel(Session.MelodyBubbleGenerator, this);
+
+            Grid.Opacity = 0;
             Bubbles.Visibility = Visibility.Visible;
             Grid.Children.Add(Bubbles);
 
-            NbgVM = new NoteBubbleGeneratorViewModel(Session.NoteBubbleGenerator, this);
-            MbgVM = new MelodyBubbleGeneratorViewModel(Session.MelodyBubbleGenerator, this);
             Grid.Children.Add(NbgVM.Grid);
             Grid.Children.Add(MbgVM.Grid);
 
-            Animation = new SessionAnimation(this);
-
-            switch (s.ThemeID)
+            switch (Session.ThemeID)
             {
                 case 1:
                     Grid.Background = (new Theme1ViewModel(Session.Theme, this)).BackgroundImage;
@@ -128,6 +126,8 @@ namespace PopnTouchi2.ViewModel
             Reducer.Background = Brushes.Red;
             Reducer.Content = "Reduce !";
             Grid.Children.Add(Reducer);
+
+            Animation = new SessionAnimation(this);
 
             Reducer.Click += new RoutedEventHandler(Animation.Reducer_Click);
         }

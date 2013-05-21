@@ -30,13 +30,13 @@ namespace PopnTouchi2
     {
         /// <summary>
         /// DesktopWindow Constructor.
-        /// Initializes a new Session.
+        /// Initializes a new DesktopView.
         /// </summary>
         public DesktopWindow()
         {
             InitializeComponent();
 
-            DesktopViewModel Desktop = new DesktopViewModel();
+            DesktopView Desktop = new DesktopView();
             this.AddChild(Desktop);
         }
     }

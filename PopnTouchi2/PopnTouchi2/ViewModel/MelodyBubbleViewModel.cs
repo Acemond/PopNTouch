@@ -17,9 +17,24 @@ namespace PopnTouchi2.ViewModel
     {
         /// <summary>
         /// Parameter.
-        /// MelodyBubble element from the Model.
         /// </summary>
         private MelodyBubble melodyBubble;
+        /// <summary>
+        /// Property.
+        /// MelodyBubble element from the Model.
+        /// </summary>
+        public MelodyBubble MelodyBubble
+        {
+            get
+            {
+                return melodyBubble;
+            }
+            set
+            {
+                melodyBubble = value;
+                NotifyPropertyChanged("MelodyBubble");
+            }
+        }
         /// <summary>
         /// Property.
         /// The parent ScatterView.
@@ -34,7 +49,7 @@ namespace PopnTouchi2.ViewModel
         /// Parameter.
         /// The MelodyBubbleAnimation item handling all animations for the melodyBubble.
         /// </summary>
-        private MelodyBubbleAnimation animation;
+        public MelodyBubbleAnimation Animation { get; set; }
         /// <summary>
         /// Parameter.
         /// True if the center of the Bubble is located on the stave.
@@ -52,9 +67,10 @@ namespace PopnTouchi2.ViewModel
         /// </summary>
         public MelodyBubbleViewModel(MelodyBubble mb, ScatterView sv, SessionViewModel s) : base(s)
         {
-            melodyBubble = mb;
+            MelodyBubble = mb;
             SVItem = new ScatterViewItem();
             ParentSV = sv;
+            isOnStave = false;
             
             Random r = new Random();
             SVItem.Center = new Point(r.Next((int)sv.ActualWidth), r.Next((int)(635 * sv.ActualHeight / 1080), (int)sv.ActualHeight));
@@ -65,19 +81,19 @@ namespace PopnTouchi2.ViewModel
             SVItem.HorizontalAlignment = HorizontalAlignment.Center;
 
             FrameworkElementFactory bubbleImage = new FrameworkElementFactory(typeof(Image));
-            switch (s.Session.ThemeID)
+            switch (SessionVM.Session.ThemeID)
             {
                 case 1:
-                    bubbleImage.SetValue(Image.SourceProperty, new Theme1ViewModel(s.Session.Theme, s).GetMelodyBubbleImageSource(mb.Melody));
+                    bubbleImage.SetValue(Image.SourceProperty, new Theme1ViewModel(SessionVM.Session.Theme, SessionVM).GetMelodyBubbleImageSource(mb.Melody));
                     break;
                 case 2:
-                    bubbleImage.SetValue(Image.SourceProperty, new Theme2ViewModel(s.Session.Theme, s).GetMelodyBubbleImageSource(mb.Melody));
+                    bubbleImage.SetValue(Image.SourceProperty, new Theme2ViewModel(SessionVM.Session.Theme, SessionVM).GetMelodyBubbleImageSource(mb.Melody));
                     break;
                 case 3:
-                    bubbleImage.SetValue(Image.SourceProperty, new Theme3ViewModel(s.Session.Theme, s).GetMelodyBubbleImageSource(mb.Melody));
+                    bubbleImage.SetValue(Image.SourceProperty, new Theme3ViewModel(SessionVM.Session.Theme, SessionVM).GetMelodyBubbleImageSource(mb.Melody));
                     break;
                 case 4:
-                    bubbleImage.SetValue(Image.SourceProperty, new Theme4ViewModel(s.Session.Theme, s).GetMelodyBubbleImageSource(mb.Melody));
+                    bubbleImage.SetValue(Image.SourceProperty, new Theme4ViewModel(SessionVM.Session.Theme, SessionVM).GetMelodyBubbleImageSource(mb.Melody));
                     break;
             }
 
@@ -100,7 +116,7 @@ namespace PopnTouchi2.ViewModel
             bubbleStyle.Setters.Add(new Setter(ScatterViewItem.TemplateProperty, ct));
             SVItem.Style = bubbleStyle;
 
-            animation = new MelodyBubbleAnimation(this, s);
+            Animation = new MelodyBubbleAnimation(this, SessionVM);
         }
     }
 }

@@ -58,6 +58,7 @@ namespace PopnTouchi2
         public Session()
         {
             Theme = new Theme1(); //Could be randomized
+            ThemeID = 1;
 
             NoteBubbleGenerator = new NoteBubbleGenerator();
             MelodyBubbleGenerator = new MelodyBubbleGenerator();

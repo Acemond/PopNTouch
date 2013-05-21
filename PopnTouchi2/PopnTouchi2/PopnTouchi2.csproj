@@ -61,6 +61,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="DesktopView.cs" />
     <Compile Include="DesktopWindow.xaml.cs">
       <DependentUpon>DesktopWindow.xaml</DependentUpon>
     </Compile>
@@ -87,7 +88,7 @@
     <Compile Include="Model\Theme.cs" />
     <Compile Include="ViewModel\StaveViewModel.cs" />
     <Compile Include="Infrastructure\ViewModelBase.cs" />
-    <Compile Include="ViewModel\DesktopViewModel.cs" />
+    <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="Model\AudioController.cs" />
     <Compile Include="Model\Enums\Gesture.cs" />
     <Compile Include="Model\Instrument.cs" />

@@ -90,6 +90,7 @@ namespace PopnTouchi2.ViewModel
             NoteBubble = nb;
             SVItem = new ScatterViewItem();
             ParentSV = sv;
+            isOnStave = false;
 
             Random r = new Random();
             SVItem.Center = new Point(r.Next((int)sv.ActualWidth), r.Next((int)(635 * sv.ActualHeight / 1080), (int)sv.ActualHeight));
@@ -100,19 +101,19 @@ namespace PopnTouchi2.ViewModel
             SVItem.HorizontalAlignment = HorizontalAlignment.Center;
 
             FrameworkElementFactory bubbleImage = new FrameworkElementFactory(typeof(Image));
-            switch (s.Session.ThemeID)
+            switch (SessionVM.Session.ThemeID)
             {
                 case 1:
-                    bubbleImage.SetValue(Image.SourceProperty, new Theme1ViewModel(s.Session.Theme, s).GetNoteBubbleImageSource(nb.Note.Duration));
+                    bubbleImage.SetValue(Image.SourceProperty, new Theme1ViewModel(SessionVM.Session.Theme, SessionVM).GetNoteBubbleImageSource(nb.Note.Duration));
                     break;
                 case 2:
-                    bubbleImage.SetValue(Image.SourceProperty, new Theme2ViewModel(s.Session.Theme, s).GetNoteBubbleImageSource(nb.Note.Duration));
+                    bubbleImage.SetValue(Image.SourceProperty, new Theme2ViewModel(SessionVM.Session.Theme, SessionVM).GetNoteBubbleImageSource(nb.Note.Duration));
                     break;
                 case 3:
-                    bubbleImage.SetValue(Image.SourceProperty, new Theme3ViewModel(s.Session.Theme, s).GetNoteBubbleImageSource(nb.Note.Duration));
+                    bubbleImage.SetValue(Image.SourceProperty, new Theme3ViewModel(SessionVM.Session.Theme, SessionVM).GetNoteBubbleImageSource(nb.Note.Duration));
                     break;
                 case 4:
-                    bubbleImage.SetValue(Image.SourceProperty, new Theme4ViewModel(s.Session.Theme, s).GetNoteBubbleImageSource(nb.Note.Duration));
+                    bubbleImage.SetValue(Image.SourceProperty, new Theme4ViewModel(SessionVM.Session.Theme, SessionVM).GetNoteBubbleImageSource(nb.Note.Duration));
                     break;
             }
             bubbleImage.SetValue(Image.IsHitTestVisibleProperty, false);
@@ -134,7 +135,7 @@ namespace PopnTouchi2.ViewModel
             bubbleStyle.Setters.Add(new Setter(ScatterViewItem.TemplateProperty, ct));
             SVItem.Style = bubbleStyle;
 
-            Animation = new NoteBubbleAnimation(this);
+            Animation = new NoteBubbleAnimation(this, SessionVM);
         }
     }
 }

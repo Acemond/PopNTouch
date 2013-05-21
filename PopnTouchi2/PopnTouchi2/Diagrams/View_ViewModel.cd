@@ -23,11 +23,11 @@
       <FileName>DesktopWindow.xaml.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="PopnTouchi2.ViewModel.DesktopViewModel" Collapsed="true">
+  <Class Name="PopnTouchi2.ViewModel.MainViewModel" Collapsed="true">
     <Position X="3.5" Y="6.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAgAAAAAAQDAAIAAAAAAAAACgAAAAoBgAAAAQAAI=</HashCode>
-      <FileName>ViewModel\DesktopViewModel.cs</FileName>
+      <HashCode>AAAAAAAAAAAAQAAAIAAAAAAAAACgAAAAoBgAAAAQAAI=</HashCode>
+      <FileName>ViewModel\MainViewModel.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="PopnTouchi2.ViewModel.Theme4ViewModel" Collapsed="true">
@@ -140,6 +140,13 @@
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAQAAAAAABAAAAAAAAAAAAA=</HashCode>
       <FileName>ViewModel\Animation\StaveAnimation.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PopnTouchi2.DesktopView" Collapsed="true">
+    <Position X="18.25" Y="0.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAQAACAAAAAAAAAAAAAgAAAAAAAQAAAAAAA=</HashCode>
+      <FileName>DesktopView.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Interface Name="System.Windows.Input.ICommand">
