@@ -34,7 +34,11 @@ namespace PopnTouchi2.ViewModel
             }
         }
 
-        public List<NoteBubbleViewModel> NoteBubblesVMs { get; set; }
+        /// <summary>
+        /// Property.
+        /// List Containing all NoteBubbleViewModel created until now.
+        /// </summary>
+        public List<NoteBubbleViewModel> NoteBubbleVMs { get; set; }
 
         /// <summary>
         /// Property.
@@ -51,7 +55,7 @@ namespace PopnTouchi2.ViewModel
             : base(s)
         {
             Grid = new Grid();
-            NoteBubblesVMs = new List<NoteBubbleViewModel>();
+            NoteBubbleVMs = new List<NoteBubbleViewModel>();
             NoteBubbleGenerator = nbg;
             //TODO : set relative to Grid size
             Grid.Width = 368;
@@ -87,7 +91,7 @@ namespace PopnTouchi2.ViewModel
         {
             NoteBubble newBubble = NoteBubbleGenerator.CreateNoteBubble();
             NoteBubbleViewModel nbVM = new NoteBubbleViewModel(newBubble, SessionVM.Bubbles, SessionVM);
-            NoteBubblesVMs.Add(nbVM);
+            NoteBubbleVMs.Add(nbVM);
             SessionVM.Bubbles.Items.Add(nbVM.SVItem);
         }
     }

@@ -36,6 +36,12 @@ namespace PopnTouchi2.ViewModel
 
         /// <summary>
         /// Property.
+        /// List Containing all MelodyBubbleViewModel created until now.
+        /// </summary>
+        public List<MelodyBubbleViewModel> MelodyBubbleVMs;
+
+        /// <summary>
+        /// Property.
         /// The Grid containing the melodybubblegenerator.
         /// </summary>
         public Grid Grid { get; set; }
@@ -48,6 +54,7 @@ namespace PopnTouchi2.ViewModel
         public MelodyBubbleGeneratorViewModel(MelodyBubbleGenerator mbg, SessionViewModel s) : base(s)
         {
             Grid = new Grid();
+            MelodyBubbleVMs = new List<MelodyBubbleViewModel>();
             melodyBubbleGenerator = mbg;
             //TODO : set relative to Grid size
             Grid.Width = 368;
@@ -83,7 +90,8 @@ namespace PopnTouchi2.ViewModel
         {
             MelodyBubble newBubble = MelodyBubbleGenerator.CreateMelodyBubble();
             MelodyBubbleViewModel mbVM = new MelodyBubbleViewModel(newBubble, SessionVM.Bubbles, SessionVM);
-            SessionVM.Bubbles.Items.Add(mbVM);
+            MelodyBubbleVMs.Add(mbVM);
+            SessionVM.Bubbles.Items.Add(mbVM.SVItem);
         }
     }
 }
