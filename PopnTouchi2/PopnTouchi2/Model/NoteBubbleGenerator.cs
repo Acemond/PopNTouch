@@ -47,7 +47,6 @@ namespace PopnTouchi2
         /// <summary>
         /// Creates a new NoteBubble with a given theme.
         /// </summary>
-        /// <param name="theme">The Theme to be used</param>
         /// <returns>A newly created NoteBubble</returns>
         public NoteBubble CreateNoteBubble()
         {
@@ -75,7 +74,7 @@ namespace PopnTouchi2
                 mostNeededNote = res[rand.Next(res.Count)];
                 WildBubbles[mostNeededNote]++;
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 switch (rand.Next(2))
                 {

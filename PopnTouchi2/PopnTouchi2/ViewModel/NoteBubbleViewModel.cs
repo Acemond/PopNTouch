@@ -84,9 +84,9 @@ namespace PopnTouchi2.ViewModel
         /// <summary>
         /// NoteBubbleViewModel theme specific constructor.
         /// </summary>
-        /// <param name="?"></param>
-        /// <param name="sv"></param>
-        /// <param name="theme"></param>
+        /// <param name="nb">The NoteBubble to link with its ViewModel</param>
+        /// <param name="sv">The Parent ScatterView</param>
+        /// <param name="s">The current SessionVM</param>
         public NoteBubbleViewModel(NoteBubble nb, ScatterView sv, SessionViewModel s) : base(s)
         {
             NoteBubble = nb;

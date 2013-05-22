@@ -34,6 +34,8 @@ namespace PopnTouchi2.ViewModel
             }
         }
 
+        public List<NoteBubbleViewModel> NoteBubblesVMs { get; set; }
+
         /// <summary>
         /// Property.
         /// The Grid containing the notebubblegenerator.
@@ -44,11 +46,12 @@ namespace PopnTouchi2.ViewModel
         /// NoteBubbleGenerator Theme related constructor
         /// </summary>
         /// <param name="nbg">The NoteBubbleGenerator item</param>
-        /// <param name="theme">The Theme item</param>
+        /// <param name="s">The current SessionVM</param>
         public NoteBubbleGeneratorViewModel(NoteBubbleGenerator nbg, SessionViewModel s)
             : base(s)
         {
             Grid = new Grid();
+            NoteBubblesVMs = new List<NoteBubbleViewModel>();
             NoteBubbleGenerator = nbg;
             //TODO : set relative to Grid size
             Grid.Width = 368;
@@ -84,7 +87,8 @@ namespace PopnTouchi2.ViewModel
         {
             NoteBubble newBubble = NoteBubbleGenerator.CreateNoteBubble();
             NoteBubbleViewModel nbVM = new NoteBubbleViewModel(newBubble, SessionVM.Bubbles, SessionVM);
-            SessionVM.Bubbles.Items.Add(nbVM);
+            NoteBubblesVMs.Add(nbVM);
+            SessionVM.Bubbles.Items.Add(nbVM.SVItem);
         }
     }
 }

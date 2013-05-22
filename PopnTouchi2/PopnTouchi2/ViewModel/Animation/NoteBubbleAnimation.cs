@@ -10,6 +10,9 @@ using System.Windows.Input;
 
 namespace PopnTouchi2.ViewModel.Animation
 {
+    /// <summary>
+    /// Defines all animations linked to a NoteBubble item.
+    /// </summary>
     public class NoteBubbleAnimation : Animation
     {
         #region Properties
@@ -27,6 +30,11 @@ namespace PopnTouchi2.ViewModel.Animation
         #endregion
 
         #region Constructors
+        /// <summary>
+        /// NoteBubbleAnimation Constructor.
+        /// </summary>
+        /// <param name="nbVM">Linked with the NoteBubbleVM</param>
+        /// <param name="s">The current SessionViewModel</param>
         public NoteBubbleAnimation(NoteBubbleViewModel nbVM, SessionViewModel s)
             : base()
         {

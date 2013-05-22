@@ -8,6 +8,9 @@ using System.Windows.Media.Imaging;
 
 namespace PopnTouchi2.ViewModel
 {
+    /// <summary>
+    /// Graphic items descriptions link to Theme number 3.
+    /// </summary>
     public class Theme3ViewModel : ViewModelBase
     {
         /// <summary>
@@ -68,6 +71,11 @@ namespace PopnTouchi2.ViewModel
         /// </summary>
         public ImageBrush PlayImage { get; set; }
 
+        /// <summary>
+        /// Theme3ViewModel Constructor.
+        /// </summary>
+        /// <param name="t">The Theme</param>
+        /// <param name="s">The current SessionViewModel performing</param>
         public Theme3ViewModel(Theme t, SessionViewModel s)
             : base(s)
         {
@@ -78,6 +86,11 @@ namespace PopnTouchi2.ViewModel
            //TODO Define Images
         }
 
+        /// <summary>
+        /// Retrieves the bubble bitmap image with the given name.
+        /// </summary>
+        /// <param name="img">Image name</param>
+        /// <returns>BitmapImage corresponding</returns>
         public BitmapImage GetBitmapImage(String img)
         {
             Console.WriteLine(this.ToString());
@@ -95,9 +108,9 @@ namespace PopnTouchi2.ViewModel
         }
 
         /// <summary>
-        /// Find the NoteBubble's Image according to a NoteValue.
+        /// Find the MelodyBubble's Image according to a melody.
         /// </summary>
-        /// <param name="noteValue">The Notevalue needed to find the Bubble Image</param>
+        /// <param name="melody">The Melody needed to find the Bubble Image</param>
         /// <returns>A BitmapImage linked to the Bubble</returns>
         public BitmapImage GetMelodyBubbleImageSource(Melody melody)
         {

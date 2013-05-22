@@ -82,9 +82,9 @@ namespace PopnTouchi2.ViewModel
 
         /// <summary>
         /// SessionViewModel Construtor.
-        /// TODO
+        /// Initializes all SessionViewModel components.
         /// </summary>
-        /// <param name="session"></param>
+        /// <param name="s">The Session to link with its ViewModel</param>
         public SessionViewModel(Session s) : base()
         {
             SessionVM = this;

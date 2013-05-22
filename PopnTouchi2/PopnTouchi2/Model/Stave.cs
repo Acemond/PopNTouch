@@ -47,6 +47,7 @@ namespace PopnTouchi2
         /// Stave Constructor.
         /// Initializes a new empty list of Notes, a Timer, the MaxPosition to 0 and the instrument
         /// </summary>
+        /// <param name="up">True if the current instance is the upper stave</param>
         /// <param name="instru">The instrument to be used</param>
         public Stave(Boolean up, Instrument instru)
         {

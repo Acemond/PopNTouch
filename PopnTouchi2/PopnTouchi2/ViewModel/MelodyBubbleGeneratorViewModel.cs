@@ -41,10 +41,10 @@ namespace PopnTouchi2.ViewModel
         public Grid Grid { get; set; }
 
         /// <summary>
-        /// NoteBubbleGenerator Theme related constructor
+        /// MelodyBubbleGenerator Theme related constructor
         /// </summary>
-        /// <param name="nbg">The NoteBubbleGenerator item</param>
-        /// <param name="theme">The Theme item</param>
+        /// <param name="mbg">The MelodyBubbleGenerator item</param>
+        /// <param name="s">The current SessionViewModel</param>
         public MelodyBubbleGeneratorViewModel(MelodyBubbleGenerator mbg, SessionViewModel s) : base(s)
         {
             Grid = new Grid();

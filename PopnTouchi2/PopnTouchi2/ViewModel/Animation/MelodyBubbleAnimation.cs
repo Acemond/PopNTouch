@@ -10,6 +10,9 @@ using System.Windows.Input;
 
 namespace PopnTouchi2.ViewModel.Animation
 {
+    /// <summary>
+    /// Defines all animations linked to a Melody Bubble Item.
+    /// </summary>
     public class MelodyBubbleAnimation : Animation
     {
         #region Properties

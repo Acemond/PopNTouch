@@ -60,7 +60,8 @@ namespace PopnTouchi2
         /// <param name="e"></param>
         void CreateSession_Button_Click(object sender, RoutedEventArgs e)
         {
-            Children.Add((new SessionViewModel(new Session())).Grid);
+            SessionVM = new SessionViewModel(new Session());
+            Children.Add(SessionVM.Grid);
         }
 
     }

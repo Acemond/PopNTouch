@@ -6,6 +6,9 @@ using System.Windows.Media;
 
 namespace PopnTouchi2.ViewModel.Animation
 {
+    /// <summary>
+    /// Defines all animations used for the two staves.
+    /// </summary>
     public class StaveAnimation : Animation
     {
         /// <summary>

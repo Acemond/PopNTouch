@@ -8,6 +8,9 @@ using System.Windows.Media.Imaging;
 
 namespace PopnTouchi2.ViewModel
 {
+    /// <summary>
+    /// Graphic items descriptions link to Theme number 1.
+    /// </summary>
     public class Theme1ViewModel : ViewModelBase
     {
         /// <summary>
@@ -68,6 +71,11 @@ namespace PopnTouchi2.ViewModel
         /// </summary>
         public ImageBrush PlayImage { get; set; }
 
+        /// <summary>
+        /// Theme1ViewModel Constructor.
+        /// </summary>
+        /// <param name="t">The Theme</param>
+        /// <param name="s">The current SessionViewModel performing</param>
         public Theme1ViewModel(Theme t, SessionViewModel s) 
             : base(s)
         {
@@ -91,18 +99,11 @@ namespace PopnTouchi2.ViewModel
                     new Uri(@"../../Resources/Images/Theme1/melodyfactory.png", UriKind.Relative)
                 );
             PlayImage = new ImageBrush();
-            PlayImage.ImageSource =
-                new BitmapImage(
-                    new Uri(@"../../Resources/Images/Theme1/playdrop.png", UriKind.Relative)
-                );
+            PlayImage.ImageSource = GetBitmapImage("playdrop");
 
-            BitmapImage crotchetImageSource = new BitmapImage(
-                new Uri(@"../../Resources/Images/Theme1/Bubbles/Notes/bullenoire.png", UriKind.Relative)
-            );
+            BitmapImage crotchetImageSource = GetBitmapImage("bullenoire");
 
-            BitmapImage minimImageSource = new BitmapImage(
-                new Uri(@"../../Resources/Images/Theme1/Bubbles/Notes/bulleblanche.png", UriKind.Relative)
-            );
+            BitmapImage minimImageSource = GetBitmapImage("bulleblanche");
 
             /*BitmapImage quaverImageSource = new BitmapImage(
                 new Uri(@"../../Resources/Images/Theme1/Bubbles/Notes/bullecroche.png", UriKind.Relative)
@@ -115,6 +116,11 @@ namespace PopnTouchi2.ViewModel
             NoteBubbleImages.Add(NoteValue.quaver, quaverImageSource);
         }
 
+        /// <summary>
+        /// Retrieves the bubble bitmap image with the given name.
+        /// </summary>
+        /// <param name="img">Image name</param>
+        /// <returns>BitmapImage corresponding</returns>
         public BitmapImage GetBitmapImage(String img)
         {
             Console.WriteLine(this.ToString());
@@ -132,9 +138,9 @@ namespace PopnTouchi2.ViewModel
         }
 
         /// <summary>
-        /// Find the NoteBubble's Image according to a NoteValue.
+        /// Find the MelodyBubble's Image according to a melody.
         /// </summary>
-        /// <param name="noteValue">The Notevalue needed to find the Bubble Image</param>
+        /// <param name="melody">The Melody needed to find the Bubble Image</param>
         /// <returns>A BitmapImage linked to the Bubble</returns>
         public BitmapImage GetMelodyBubbleImageSource(Melody melody)
         {

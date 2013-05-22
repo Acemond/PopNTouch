@@ -11,6 +11,9 @@ using System.Threading;
 
 namespace PopnTouchi2.ViewModel.Animation
 {
+    /// <summary>
+    /// Defines all animations used for the Session.
+    /// </summary>
     public class SessionAnimation : Animation
     {
         /// <summary>
@@ -215,7 +218,7 @@ namespace PopnTouchi2.ViewModel.Animation
         /// </summary>
         private void stopAllBubblesAnimations()
         {
-            foreach (NoteBubbleViewModel nb in sessionVM.Bubbles.Items)
+            foreach (NoteBubbleViewModel nb in sessionVM.NbgVM.NoteBubblesVMs)
                 nb.Animation.StopAnimation();
         }
 
@@ -247,7 +250,7 @@ namespace PopnTouchi2.ViewModel.Animation
             svi.Width = sessionVM.Grid.Width;
             svi.Height = sessionVM.Grid.Height;
             svi.CanScale = false;
-            svi.Content = this;
+            svi.Content = sessionVM.Grid;
             svi.BorderBrush = Brushes.White;
             svi.Orientation = 0;
             svi.Center = new Point(mainDesktop.ActualWidth / 2, mainDesktop.ActualHeight / 2);

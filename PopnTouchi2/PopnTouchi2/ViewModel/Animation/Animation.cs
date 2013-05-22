@@ -8,6 +8,9 @@ using Microsoft.Surface.Presentation.Controls;
 
 namespace PopnTouchi2.ViewModel.Animation
 {
+    /// <summary>
+    /// Defines major properties of an Animation Class.
+    /// </summary>
     public abstract class Animation
     {
         /// <summary>

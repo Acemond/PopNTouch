@@ -13,6 +13,9 @@ using PopnTouchi2.ViewModel.Animation;
 
 namespace PopnTouchi2.ViewModel
 {
+    /// <summary>
+    /// Defines all graphic items linked to a MelodyBubble.
+    /// </summary>
     public class MelodyBubbleViewModel : ViewModelBase
     {
         /// <summary>
