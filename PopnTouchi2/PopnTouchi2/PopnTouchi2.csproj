@@ -61,14 +61,23 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="DesktopView.cs" />
     <Compile Include="DesktopWindow.xaml.cs">
       <DependentUpon>DesktopWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Infrastructure\Animations.cs" />
-    <Compile Include="Model\Builder.cs" />
-    <Compile Include="Model\Desktop.cs" />
+    <Compile Include="ViewModel\Animation\Animation.cs" />
     <Compile Include="Model\Enums\GlobalVariables.cs" />
     <Compile Include="Infrastructure\RelayCommand.cs" />
+    <Compile Include="ViewModel\Animation\MelodyBubbleAnimation.cs" />
+    <Compile Include="ViewModel\Animation\NoteBubbleAnimation.cs" />
+    <Compile Include="ViewModel\Animation\SessionAnimation.cs" />
+    <Compile Include="ViewModel\Animation\StaveAnimation.cs" />
+    <Compile Include="ViewModel\Theme4ViewModel.cs" />
+    <Compile Include="ViewModel\Theme3ViewModel.cs" />
+    <Compile Include="ViewModel\Theme2ViewModel.cs" />
+    <Compile Include="ViewModel\MelodyBubbleGeneratorViewModel.cs" />
+    <Compile Include="ViewModel\MelodyBubbleViewModel.cs" />
+    <Compile Include="ViewModel\NoteBubbleGeneratorViewModel.cs" />
     <Compile Include="ViewModel\SessionViewModel.cs" />
     <Compile Include="ViewModel\NoteBubbleViewModel.cs" />
     <Compile Include="Model\Session.cs" />
@@ -95,6 +104,7 @@
     <Compile Include="Model\Enums\NoteValue.cs" />
     <Compile Include="Model\Stave.cs" />
     <Compile Include="ViewModel\NoteViewModel.cs" />
+    <Compile Include="ViewModel\Theme1ViewModel.cs" />
     <Page Include="DesktopWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

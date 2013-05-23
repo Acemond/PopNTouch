@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using PopnTouchi2.Infrastructure;
+using PopnTouchi2.ViewModel.Animation;
 
-namespace PopnTouchi2
+namespace PopnTouchi2.ViewModel
 {
     /// <summary>
     /// Binds Stave's properties to the View.
@@ -24,11 +25,28 @@ namespace PopnTouchi2
         private Stave stave;
 
         /// <summary>
+        /// Parameter.
+        /// StaveAnimation item handling all animations related to the stave.
+        /// </summary>
+        public StaveAnimation Animation { get; set; }
+
+        /// <summary>
         /// StaveViewModel Constructor.
         /// TODO
         /// </summary>
-        public StaveViewModel()
+        public StaveViewModel(Stave stave, SessionViewModel s) : base(s)
         {
+            this.stave = stave;
+            if (stave.isUp)
+            {
+                //TODO Image =
+            }
+            else
+            {
+                //TODO Image =
+            }
+
+            Animation = new StaveAnimation(stave);
         }
 
         /// <summary>
@@ -45,23 +63,6 @@ namespace PopnTouchi2
             {
                instrument = value;
                 NotifyPropertyChanged("CurrentInstrument");
-            }
-        }
-
-        /// <summary>
-        /// Property.
-        /// TODO
-        /// </summary>
-        public Stave Stave
-        {
-            get
-            {
-                return stave; 
-            }
-            set
-            {
-                stave = value;
-                NotifyPropertyChanged("Stave");
             }
         }
     }

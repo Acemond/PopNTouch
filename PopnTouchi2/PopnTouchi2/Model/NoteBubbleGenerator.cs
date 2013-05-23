@@ -15,13 +15,13 @@ namespace PopnTouchi2
     /// <summary>
     /// Represents a graphic item aware of how many NoteBubble have been created.
     /// </summary>
-    public class NoteBubbleGenerator : Grid
+    public class NoteBubbleGenerator
     {
         /// <summary>
         /// Parameter.
         /// List of NoteBubbles created observable by the NoteBubbleViewModel Class.
         /// </summary>
-        private ObservableCollection<NoteBubble> NoteBubbles;
+        public ObservableCollection<NoteBubble> NoteBubbles;
 
         /// <summary>
         /// Property.
@@ -42,35 +42,17 @@ namespace PopnTouchi2
             WildBubbles.Add(NoteValue.crotchet, 0);
             WildBubbles.Add(NoteValue.minim, 0);
             WildBubbles.Add(NoteValue.quaver, 0);
-
-            //Defines size and position
-            //TODO : set relative to Grid size
-            this.Width = 368;
-            this.Height = 234;
-            this.HorizontalAlignment = System.Windows.HorizontalAlignment.Left;
-            this.VerticalAlignment = System.Windows.VerticalAlignment.Bottom;
-
-            this.TouchDown += new EventHandler<System.Windows.Input.TouchEventArgs>(NoteBubbleGeneratorTouchDown);
-        }
-
-        /// <summary>
-        /// NoteBubbleGenerator Theme Constructor.
-        /// Defines the Generator Image related to its Theme.
-        /// </summary>
-        /// <param name="theme">The Theme to be used</param>
-        public NoteBubbleGenerator(Theme theme): this()
-        {
-            Background = theme.NoteGeneratorImage;
         }
 
         /// <summary>
         /// Creates a new NoteBubble with a given theme.
         /// </summary>
-        /// <param name="theme">The Theme to be used</param>
         /// <returns>A newly created NoteBubble</returns>
-        public NoteBubble CreateNoteBubble(Theme theme)
+        public NoteBubble CreateNoteBubble()
         {
-            return new NoteBubble(MostNeeded(), theme, ((Session)Parent).Bubbles);
+            NoteBubble newBubble = new NoteBubble(MostNeeded());
+            NoteBubbles.Add(newBubble);
+            return newBubble;
         }
 
         /// <summary>
@@ -92,7 +74,7 @@ namespace PopnTouchi2
                 mostNeededNote = res[rand.Next(res.Count)];
                 WildBubbles[mostNeededNote]++;
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 switch (rand.Next(2))
                 {
@@ -109,27 +91,12 @@ namespace PopnTouchi2
         /// Updates the Generator's NoteBubble list.
         /// </summary>
         /// <param name="idNote">The unique ID of the NoteBubble to be removed</param>
-        public void RemoveFromGenerator(int idNote)
+        public void removeFromGenerator(int idNote)
         {
             for (int i = 0; i < NoteBubbles.Count; i++)
             {
                 if (NoteBubbles[i].Id == idNote) NoteBubbles.RemoveAt(i);
             }
-        }
-
-        /// <summary>
-        /// Event triggered when the NoteBubbleGenerator is touch.
-        /// Generates a new NoteBubble according to the MostNeeded algorithm.
-        /// </summary>
-        /// <param name="sender">Sender</param>
-        /// <param name="e">TouchEventArgs</param>
-        public void NoteBubbleGeneratorTouchDown(object sender, TouchEventArgs e)
-        {
-            NoteBubble newBubble = CreateNoteBubble(((Session)this.Parent).Theme);
-            NoteBubbles.Add(newBubble);
-            newBubble.Name = "test";
-
-            ((Session)this.Parent).Bubbles.Items.Add(newBubble);
         }
     }
 }

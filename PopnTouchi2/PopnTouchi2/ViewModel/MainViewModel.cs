@@ -2,23 +2,21 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
 using PopnTouchi2.Infrastructure;
 using System.Threading.Tasks;
 using System.Threading;
+using Microsoft.Surface.Presentation.Controls;
 
-namespace PopnTouchi2
+namespace PopnTouchi2.ViewModel
 {
     /// <summary>
     /// TODO
     /// </summary>
     public class MainViewModel : ViewModelBase
     {
-        /// <summary>
-        /// Parameter.
-        /// Session's View Model.
-        /// </summary>
-        public SessionViewModel sessionViewModel;
         /// <summary>
         /// Parameter.
         /// TODO
@@ -39,9 +37,8 @@ namespace PopnTouchi2
         /// MainViewModel Constructor.
         /// Initializes the SessionViewModel.
         /// </summary>
-        public MainViewModel()
+        public MainViewModel() : base()
         {
-            sessionViewModel = new SessionViewModel(new Session());
         }
 
         /// <summary>
@@ -101,8 +98,8 @@ namespace PopnTouchi2
             {
                 AudioController.FadeOutBackgroundSound();
                 Thread.Sleep(500);
-                sessionViewModel.Session.StaveTop.PlayAllNotes();
-                sessionViewModel.Session.StaveBottom.PlayAllNotes();
+                SessionVM.Session.StaveTop.PlayAllNotes();
+                SessionVM.Session.StaveBottom.PlayAllNotes();
             });
         }
 
@@ -113,8 +110,8 @@ namespace PopnTouchi2
         {
             Task.Factory.StartNew(() =>
             {
-                sessionViewModel.Session.StaveTop.StopMusic();
-                sessionViewModel.Session.StaveBottom.StopMusic();
+                SessionVM.Session.StaveTop.StopMusic();
+                SessionVM.Session.StaveBottom.StopMusic();
                 Thread.Sleep(10000);
                 AudioController.FadeInBackgroundSound();
             });
@@ -127,8 +124,8 @@ namespace PopnTouchi2
         {
             /*Task.Factory.StartNew(() =>
             {
-                sessionViewModel.Session
-                sessionViewModel.Session.StaveBottom.stopMusic();
+                SessionVM.Session
+                SessionVM.Session.StaveBottom.stopMusic();
             });*/ 
         }
     }

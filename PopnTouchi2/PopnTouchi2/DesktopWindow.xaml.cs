@@ -19,6 +19,7 @@ using System.Threading;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using System.IO;
+using PopnTouchi2.ViewModel;
 
 namespace PopnTouchi2
 {
@@ -29,13 +30,13 @@ namespace PopnTouchi2
     {
         /// <summary>
         /// DesktopWindow Constructor.
-        /// Initializes a new Session.
+        /// Initializes a new DesktopView.
         /// </summary>
         public DesktopWindow()
         {
             InitializeComponent();
 
-            Desktop Desktop = new Desktop();
+            DesktopView Desktop = new DesktopView();
             this.AddChild(Desktop);
         }
     }
