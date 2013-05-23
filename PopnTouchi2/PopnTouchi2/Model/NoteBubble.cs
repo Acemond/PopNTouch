@@ -13,6 +13,7 @@ using System.Windows.Shapes;
 using System.Windows.Input;
 using System.Timers;
 using System.Windows.Threading;
+using PopnTouchi2.Infrastructure;
 
 namespace PopnTouchi2
 {
@@ -160,21 +161,7 @@ namespace PopnTouchi2
                 bubbleCenter.X = bubbleCenter.X * width / 1920;
                 bubbleCenter.Y = bubbleCenter.Y * height / 1080;
 
-                Storyboard stb = new Storyboard();
-                PointAnimation moveCenter = new PointAnimation();
-
-                moveCenter.From = bubble.ActualCenter;
-                moveCenter.To = bubbleCenter;
-                moveCenter.Duration = new Duration(TimeSpan.FromSeconds(0.15));
-                bubble.Center = bubbleCenter;
-                moveCenter.FillBehavior = FillBehavior.Stop;
-
-                stb.Children.Add(moveCenter);
-
-                Storyboard.SetTarget(moveCenter, bubble);
-                Storyboard.SetTargetProperty(moveCenter, new PropertyPath(ScatterViewItem.CenterProperty));
-
-                stb.Begin(this);
+                Animations.BubblePlacementOnStave(bubble, bubbleCenter, this);
 
                 bubble.Visibility = Visibility.Collapsed;
                 bubble.Visibility = Visibility.Visible;
@@ -199,7 +186,7 @@ namespace PopnTouchi2
                 Random r = new Random();
                 Double xOffset = (-2) * (r.Next() % 2 - .5) * r.Next(50, 100);
                 Double yOffset = (-2) * (r.Next() % 2 - .5) * r.Next(50, 100);
-
+               
                 if (Center.X + xOffset > ParentSV.ActualWidth)
                     xOffset = ParentSV.ActualWidth - Center.X;
                 if (Center.X + xOffset < 0)
