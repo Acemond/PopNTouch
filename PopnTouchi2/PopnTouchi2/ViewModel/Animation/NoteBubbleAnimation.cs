@@ -217,7 +217,10 @@ namespace PopnTouchi2.ViewModel.Animation
                 bubble.Visibility = Visibility.Collapsed;
                 bubble.Visibility = Visibility.Visible;
 
-   
+                NoteViewModel noteVM = new NoteViewModel(bubbleCenter, noteBubbleVM.NoteBubble.Note, sessionVM.Notes, sessionVM);
+                sessionVM.Notes.Items.Add(noteVM.SVItem);
+                sessionVM.Bubbles.Items.Remove(noteBubbleVM.SVItem);
+                
             }
             else
             {

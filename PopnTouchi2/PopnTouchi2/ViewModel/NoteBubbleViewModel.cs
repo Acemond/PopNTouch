@@ -55,26 +55,7 @@ namespace PopnTouchi2.ViewModel
         /// The NoteBubbleAnimation item handling all animations for the noteBubble.
         /// </summary>
         public NoteBubbleAnimation Animation { get; set; }
-        /// <summary>
-        /// Parameter.
-        /// </summary>
-        private bool isOnStave;
-        /// <summary>
-        /// Property.
-        /// True if the center of the Bubble is located on the stave.
-        /// </summary>
-        public bool IsOnStave
-        {
-            get
-            {
-                return isOnStave;
-            }
-            set
-            {
-                isOnStave = value;
-                NotifyPropertyChanged("IsOnStave");
-            }
-        }
+ 
         /// <summary>
         /// Parameter.
         /// Event triggered when a NoteBubble is dropped on the stave.
@@ -92,7 +73,6 @@ namespace PopnTouchi2.ViewModel
             NoteBubble = nb;
             SVItem = new ScatterViewItem();
             ParentSV = sv;
-            isOnStave = false;
 
             Random r = new Random();
             SVItem.Center = new Point(r.Next((int)sv.ActualWidth), r.Next((int)(635 * sv.ActualHeight / 1080), (int)sv.ActualHeight));

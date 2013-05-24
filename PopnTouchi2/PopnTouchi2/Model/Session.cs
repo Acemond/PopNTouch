@@ -43,11 +43,7 @@ namespace PopnTouchi2
         /// The Theme number.
         /// </summary>
         public int ThemeID { get; set; }
-        /// <summary>
-        /// Property
-        /// Session's Background sound
-        /// </summary>
-        public Cue BackgroundSound { get; set; }
+    
         #endregion
 
         #region Constructors
@@ -67,8 +63,7 @@ namespace PopnTouchi2
             StaveBottom = new Stave(false, Theme.InstrumentsBottom[0]);
             
             //sound methods
-            BackgroundSound = Theme.sound;
-            BackgroundSound.Play();
+            Theme.sound.Play();
             AudioController.FadeInBackgroundSound();
         }
         #endregion
@@ -80,7 +75,7 @@ namespace PopnTouchi2
         public void StopBackgroundSound()
         {
             AudioController.FadeOutBackgroundSound();
-            BackgroundSound.Stop(AudioStopOptions.Immediate);
+            Theme.sound.Stop(AudioStopOptions.Immediate);
         }
 
         /// <summary>
