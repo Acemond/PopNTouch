@@ -93,7 +93,6 @@ namespace PopnTouchi2.ViewModel
         /// <returns>BitmapImage corresponding</returns>
         public BitmapImage GetBitmapImage(String img)
         {
-            Console.WriteLine(this.ToString());
             return new BitmapImage(new Uri(@"../../Resources/Images/Theme2/Bubbles/Notes/" + img + ".png", UriKind.Relative));
         }
 

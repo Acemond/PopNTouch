@@ -9,6 +9,7 @@ using System.Windows.Media.Animation;
 using PopnTouchi2.ViewModel.Animation;
 using System.Windows;
 using System.Windows.Controls;
+using System.Threading;
 
 namespace PopnTouchi2.ViewModel
 {
@@ -75,6 +76,18 @@ namespace PopnTouchi2.ViewModel
         public SurfaceButton Reducer { get; set; }
 
         /// <summary>
+        /// Property.
+        /// Play Button.
+        /// </summary>
+        public SurfaceButton Play { get; set; }
+
+        /// <summary>
+        /// Property.
+        /// Stop Button.
+        /// </summary>
+        public SurfaceButton Stop { get; set; }
+
+        /// <summary>
         /// Parameter.
         /// True if the session is reduced on the background.
         /// </summary>
@@ -130,8 +143,48 @@ namespace PopnTouchi2.ViewModel
             Animation = new SessionAnimation(this);
 
             Reducer.Click += new RoutedEventHandler(Animation.Reducer_Click);
+
+            Play = new SurfaceButton();
+            Play.Width = 100;
+            Play.Height = 25;
+            Play.HorizontalAlignment = System.Windows.HorizontalAlignment.Left;
+            Play.VerticalAlignment = System.Windows.VerticalAlignment.Top;
+            Play.Background = Brushes.Red;
+            Play.Content = "Play !";
+            Grid.Children.Add(Play);
+            Play.Visibility = Visibility.Visible;
+
+            Play.Click+=new RoutedEventHandler(Play_Click);
+
+            Stop = new SurfaceButton();
+            Stop.Width = 100;
+            Stop.Height = 25;
+            Stop.HorizontalAlignment = System.Windows.HorizontalAlignment.Center;
+            Stop.VerticalAlignment = System.Windows.VerticalAlignment.Top;
+            Stop.Background = Brushes.Blue;
+            Stop.Content = "Stop !";
+            Grid.Children.Add(Stop);
+            Stop.Visibility = Visibility.Hidden;
+
+            Stop.Click += new RoutedEventHandler(Stop_Click);
         }
 
-        
+        private void Play_Click(object sender, RoutedEventArgs e)
+        {
+          //  AudioController.FadeOutBackgroundSound();
+            session.StaveTop.PlayAllNotes();
+            session.StaveBottom.PlayAllNotes();
+            Play.Visibility = Visibility.Hidden;
+            Stop.Visibility = Visibility.Visible;
+        }
+
+        private void Stop_Click(object sender, RoutedEventArgs e)
+        {
+        //    AudioController.FadeInBackgroundSound();
+            session.StaveTop.StopMusic();
+            session.StaveBottom.StopMusic();
+            Stop.Visibility = Visibility.Hidden;
+            Play.Visibility = Visibility.Visible;
+        }
     }
 }

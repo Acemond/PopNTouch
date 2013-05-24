@@ -20,7 +20,7 @@ namespace PopnTouchi2
         {
             InstrumentsTop[0] = new Instrument(InstrumentType.piano);
             InstrumentsTop[1] = new Instrument(InstrumentType.flute);
-            InstrumentsBottom[0] = new Instrument(InstrumentType.contrebass);
+            InstrumentsBottom[0] = new Instrument(InstrumentType.saxo);
             InstrumentsBottom[1] = new Instrument(InstrumentType.bass);
 
             sound = AudioController.INSTANCE.SoundBank.GetCue("loop_eveningWater");

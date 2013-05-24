@@ -30,7 +30,7 @@ namespace PopnTouchi2
         /// <param name="noteValue">The NoteValue needed to create a Note</param>
         public NoteBubble(NoteValue noteValue)
         {
-            Note = new Note(0, noteValue, "la", -1);
+            Note = new Note(1, noteValue, "la", -1);
             Id = GlobalVariables.idNoteBubble++;
         }
     }

@@ -95,7 +95,7 @@ namespace PopnTouchi2
                     case "si" : Pitch = "la" ; alteration = "_d"; break;
                 }
             }
-            return Pitch + Octave.ToString() + alteration;
+            return Pitch + "_" + Octave.ToString() + alteration;
         }
 
         /// <summary>

@@ -27,6 +27,12 @@ namespace PopnTouchi2.ViewModel.Animation
         /// Private
         /// </summary>
         private SessionViewModel sessionVM;
+
+        /// <summary>
+        /// Property.
+        /// The NoteBubbleViewModel associated
+        /// </summary>
+        private NoteBubbleViewModel noteBubbleVM { get; set; }
         #endregion
 
         #region Constructors
@@ -40,6 +46,7 @@ namespace PopnTouchi2.ViewModel.Animation
         {
             sessionVM = s;
             ManipulationGrid = new int[] { 0, 0, 0, 14, 25, 37, 47, 56, 64, 71, 76, 80, 83, 85, 85, 84, 80, 75, 68, 60, 50, 38, 26, 15, 4, -3, -9, -11, -12, -11, -7 };
+            noteBubbleVM = nbVM;
             SVItem = nbVM.SVItem;
             ParentSV = nbVM.ParentSV;
             canAnimate = true;
@@ -162,6 +169,8 @@ namespace PopnTouchi2.ViewModel.Animation
             int offset = ManipulationGrid[((long)bubbleCenter.X / 60)];
             bubbleCenter.Y += offset;
 
+         //   MessageBox.Show(bubbleCenter.X.ToString() + "," + bubbleCenter.Y.ToString());
+            int positionNote = (int)(bubbleCenter.X - 120) / 60;
 
             //Y dans le cadre portée ?
             //Si oui, animation
@@ -173,11 +182,15 @@ namespace PopnTouchi2.ViewModel.Animation
                     if (bubbleCenter.Y >= 335) bubbleCenter.Y = 335;
                     bubbleCenter.Y = Math.Floor((bubbleCenter.Y - 20) / 25) * 25 + 35; //-20 et 35 pour 50
 
+                    sessionVM.Session.StaveTop.AddNote(noteBubbleVM.NoteBubble.Note, positionNote);
+
                 }
                 else
                 {
                     if (bubbleCenter.Y <= 405) bubbleCenter.Y = 405;
                     bubbleCenter.Y = Math.Floor((bubbleCenter.Y + 10) / 25) * 25 + 5; //20 et 5 pour 50
+
+                    sessionVM.Session.StaveBottom.AddNote(noteBubbleVM.NoteBubble.Note, positionNote);
                 }
 
                 bubbleCenter.Y -= offset;
@@ -203,6 +216,8 @@ namespace PopnTouchi2.ViewModel.Animation
 
                 bubble.Visibility = Visibility.Collapsed;
                 bubble.Visibility = Visibility.Visible;
+
+   
             }
             else
             {

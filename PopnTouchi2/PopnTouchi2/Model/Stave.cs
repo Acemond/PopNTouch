@@ -27,7 +27,7 @@ namespace PopnTouchi2
 
         /// <summary>
         /// Property.
-        /// TODO
+        /// Position of the last Note of the stave
         /// </summary>
         public int MaxPosition { get; set; }
 
@@ -36,6 +36,12 @@ namespace PopnTouchi2
         /// True if this instance is for the upper stave.
         /// </summary>
         public Boolean isUp;
+
+        /// <summary>
+        /// Property.
+        /// Iterator of the Notes list
+        /// </summary>
+        public int IteratorNotes { get; set; }
 
         /// <summary>
         /// Parameter.
@@ -55,6 +61,7 @@ namespace PopnTouchi2
             Notes = new ObservableCollection<Note>();
             CurrentInstrument = instru;
             Timer = new Timer();
+            IteratorNotes = 0;
             if (up)
             {
                 isUp = true;
@@ -98,7 +105,7 @@ namespace PopnTouchi2
             if (!Notes.Contains(note))
             {
                 int i = 0;
-                for (i = 0; (i < Notes.Count && Notes[i].Position < position); i++);
+                for (i=0; (i < Notes.Count && Notes[i].Position < position); i++);
 
                 Notes.Insert(i, note);
                 MaxPosition = Math.Max(MaxPosition, note.Position);
@@ -118,7 +125,7 @@ namespace PopnTouchi2
         public void PlayAllNotes()
         {
             //Decrease the background sound
-            AudioController.UpdateVolume(0f);
+           // AudioController.UpdateVolume(0f);
 
             Timer.Interval = 30000 / GlobalVariables.bpm;
             Timer.Start();
@@ -134,19 +141,40 @@ namespace PopnTouchi2
         private void PlayList(object source, ElapsedEventArgs e)
         {
             bool play = true;
-            if (GlobalVariables.position_Note <= MaxPosition + 4)
+
+            if (Math.Max(GlobalVariables.position_NoteUp, GlobalVariables.position_NoteDown) <= MaxPosition + 4)
             {
-                while (play && (GlobalVariables.it_Notes < Notes.Count))
+                if (isUp)
                 {
-                    if (Notes[GlobalVariables.it_Notes].Position == GlobalVariables.position_Note)
+                    while (play && (IteratorNotes < Notes.Count))
                     {
-                        CurrentInstrument.PlayNote(Notes[GlobalVariables.it_Notes]);
-                        GlobalVariables.it_Notes++;
+                        if (Notes[IteratorNotes].Position == GlobalVariables.position_NoteUp)
+                        {
+                            CurrentInstrument.PlayNote(Notes[IteratorNotes]);
+                            IteratorNotes++;
+                        }
+                        else play = false;
+
                     }
-                    else play = false;
+
+                    GlobalVariables.position_NoteUp++;
                 }
-               
-                GlobalVariables.position_Note++;
+
+                else
+                {
+                    while (play && (IteratorNotes < Notes.Count))
+                    {
+                        if (Notes[IteratorNotes].Position == GlobalVariables.position_NoteDown)
+                        {
+                            CurrentInstrument.PlayNote(Notes[IteratorNotes]);
+                            IteratorNotes++;
+                        }
+                        else play = false;
+
+                    }
+
+                    GlobalVariables.position_NoteDown++;
+                }
 
             }
             else StopMusic();
@@ -160,8 +188,9 @@ namespace PopnTouchi2
             Timer.Stop();
             Timer.EndInit();
             Timer.Elapsed -= new ElapsedEventHandler(PlayList);
-            GlobalVariables.position_Note = 0;
-            GlobalVariables.it_Notes = 0;
+            GlobalVariables.position_NoteUp = 0;
+            GlobalVariables.position_NoteDown = 0;
+            IteratorNotes = 0;
 
             //begin the fade In of the background sound
             AudioController.FadeInBackgroundSound();

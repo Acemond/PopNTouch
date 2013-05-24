@@ -138,7 +138,6 @@ namespace PopnTouchi2
             {
                 stopTimer();
                 AudioController.UpdateVolume(0);
-                Console.WriteLine(AudioController.INSTANCE.backgroundVolume.ToString());
             }
         }
 
@@ -165,7 +164,6 @@ namespace PopnTouchi2
             else if (AudioController.INSTANCE.backgroundVolume < GlobalVariables.maxVolume)
             {
                 AudioController.UpdateVolume(AudioController.INSTANCE.backgroundVolume * 1.2f);
-                Console.WriteLine(AudioController.INSTANCE.backgroundVolume.ToString());
             }
             else stopTimer();
         }
