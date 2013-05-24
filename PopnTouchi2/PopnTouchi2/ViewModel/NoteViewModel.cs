@@ -80,6 +80,7 @@ namespace PopnTouchi2.ViewModel
             SVItem.HorizontalAlignment = HorizontalAlignment.Center;
             SVItem.CanRotate = false;
             SVItem.HorizontalAlignment = HorizontalAlignment.Center;
+            
 
             FrameworkElementFactory bubbleImage = new FrameworkElementFactory(typeof(Image));
 
@@ -93,7 +94,8 @@ namespace PopnTouchi2.ViewModel
 
             FrameworkElementFactory touchZone = new FrameworkElementFactory(typeof(Ellipse));
             touchZone.SetValue(Ellipse.FillProperty, Brushes.Transparent);
-            touchZone.SetValue(Ellipse.MarginProperty, new Thickness(20));
+            touchZone.SetValue(Ellipse.MarginProperty, new Thickness(20, 1, 12, 1));
+            
 
             FrameworkElementFactory grid = new FrameworkElementFactory(typeof(Grid));
             grid.AppendChild(bubbleImage);
