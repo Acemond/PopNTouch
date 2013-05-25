@@ -41,5 +41,8 @@ namespace PopnTouchi2
             InstrumentsTop = new Instrument[2];
             InstrumentsBottom = new Instrument[2];
         }
+
+        public abstract void refreshSound();
+        
     }
 }

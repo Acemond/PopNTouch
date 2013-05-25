@@ -70,6 +70,7 @@
     <Compile Include="Model\Enums\GlobalVariables.cs" />
     <Compile Include="Infrastructure\RelayCommand.cs" />
     <Compile Include="ViewModel\Animation\MelodyBubbleAnimation.cs" />
+    <Compile Include="ViewModel\Animation\NoteAnimation.cs" />
     <Compile Include="ViewModel\Animation\NoteBubbleAnimation.cs" />
     <Compile Include="ViewModel\Animation\SessionAnimation.cs" />
     <Compile Include="ViewModel\Animation\StaveAnimation.cs" />

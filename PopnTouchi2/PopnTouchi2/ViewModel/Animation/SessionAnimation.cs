@@ -71,7 +71,8 @@ namespace PopnTouchi2.ViewModel.Animation
             if (SessionVM.Reduced)
             {
                 SessionVM.LoadSession("test.bin");
-                AudioController.FadeInBackgroundSound();
+                SessionVM.Session.StopBackgroundSound();
+
                 SessionVM.Reducer.Content = "Reduce !";
                 SessionVM.Reducer.Background = System.Windows.Media.Brushes.Red;
                 
@@ -178,7 +179,8 @@ namespace PopnTouchi2.ViewModel.Animation
                 sc.Save("sc.jpg");
                 //Graphics.DrawImage(sc);
 
-                AudioController.FadeOutBackgroundSound();
+                SessionVM.Session.StopBackgroundSound();
+
                 stopAllBubblesAnimations();
                 SessionVM.Reducer.Content = "Enlarge !";
                 SessionVM.Reducer.Background = System.Windows.Media.Brushes.Green;

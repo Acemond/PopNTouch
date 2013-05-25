@@ -14,6 +14,7 @@ using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 using PopnTouchi2.Model;
 using System.Windows.Media.Imaging;
+using Microsoft.Xna.Framework.Audio;
 
 namespace PopnTouchi2.ViewModel
 {
@@ -48,6 +49,12 @@ namespace PopnTouchi2.ViewModel
         /// Session's Bubbles' ScatterView instance.
         /// </summary>
         public ScatterView Bubbles { get; set; }
+
+        /// <summary>
+        /// Property.
+        /// Session's Notes' ScatterView instance.
+        /// </summary>
+        public ScatterView Notes { get; set; }
 
         /// <summary>
         /// Parameter.
@@ -108,12 +115,15 @@ namespace PopnTouchi2.ViewModel
             Session = s;
             Grid = new Grid();
             Bubbles = new ScatterView();
+            Notes = new ScatterView();
             NbgVM = new NoteBubbleGeneratorViewModel(Session.NoteBubbleGenerator, this);
             MbgVM = new MelodyBubbleGeneratorViewModel(Session.MelodyBubbleGenerator, this);
 
             Grid.Opacity = 0;
             Bubbles.Visibility = Visibility.Visible;
+            Notes.Visibility = Visibility.Visible;
             Grid.Children.Add(Bubbles);
+            Grid.Children.Add(Notes);
 
             Grid.Children.Add(NbgVM.Grid);
             Grid.Children.Add(MbgVM.Grid);
@@ -154,7 +164,7 @@ namespace PopnTouchi2.ViewModel
             Play.HorizontalAlignment = System.Windows.HorizontalAlignment.Left;
             Play.VerticalAlignment = System.Windows.VerticalAlignment.Top;
             Play.Background = Brushes.Red;
-            Play.Content = "Play !";
+            Play.Content = "Play";
             Grid.Children.Add(Play);
             Play.Visibility = Visibility.Visible;
 
@@ -166,16 +176,18 @@ namespace PopnTouchi2.ViewModel
             Stop.HorizontalAlignment = System.Windows.HorizontalAlignment.Center;
             Stop.VerticalAlignment = System.Windows.VerticalAlignment.Top;
             Stop.Background = Brushes.Blue;
-            Stop.Content = "Stop !";
+            Stop.Content = "Stop";
             Grid.Children.Add(Stop);
             Stop.Visibility = Visibility.Hidden;
 
-            Stop.Click += new RoutedEventHandler(Stop_Click);
+            Stop.Click += new RoutedEventHandler(Stop_Click);          
+
         }
 
         private void Play_Click(object sender, RoutedEventArgs e)
         {
-          //  AudioController.FadeOutBackgroundSound();
+            session.StopBackgroundSound();
+
             session.StaveTop.PlayAllNotes();
             session.StaveBottom.PlayAllNotes();
             Play.Visibility = Visibility.Hidden;
@@ -184,7 +196,8 @@ namespace PopnTouchi2.ViewModel
 
         private void Stop_Click(object sender, RoutedEventArgs e)
         {
-        //    AudioController.FadeInBackgroundSound();
+            session.PlayBackgroundSound();
+
             session.StaveTop.StopMusic();
             session.StaveBottom.StopMusic();
             Stop.Visibility = Visibility.Hidden;
@@ -223,8 +236,8 @@ namespace PopnTouchi2.ViewModel
                 default: Session.Theme = new Theme1(); break;
             }
 
-            Session.StaveTop = new Stave(true, Session.Theme.InstrumentsTop[0]);
-            Session.StaveBottom = new Stave(false, Session.Theme.InstrumentsBottom[0]);
+            Session.StaveTop = new Stave(true, Session.Theme.InstrumentsTop[0], Session.Theme);
+            Session.StaveBottom = new Stave(false, Session.Theme.InstrumentsBottom[0], Session.Theme);
             Session.StaveTop.Notes = sd.StaveTopNotes;
             Session.StaveBottom.Notes = sd.StaveBottomNotes;
             Session.ThemeID = sd.ThemeID;
