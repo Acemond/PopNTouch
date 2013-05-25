@@ -45,20 +45,24 @@ namespace PopnTouchi2.ViewModel
         /// The parent ScatterView.
         /// </summary>
         public ScatterView ParentSV { get; set; }
+
         /// <summary>
         /// Property.
         /// The ScatterViewItem containing the notebubble.
         /// </summary>
         public ScatterViewItem SVItem { get; set; }
+
         /// <summary>
         /// Parameter.
         /// The NoteBubbleAnimation item handling all animations for the noteBubble.
         /// </summary>
         public NoteBubbleAnimation Animation { get; set; }
+
         /// <summary>
         /// Parameter.
         /// </summary>
         private bool isOnStave;
+
         /// <summary>
         /// Property.
         /// True if the center of the Bubble is located on the stave.

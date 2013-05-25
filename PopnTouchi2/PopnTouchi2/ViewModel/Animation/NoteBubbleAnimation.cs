@@ -152,8 +152,6 @@ namespace PopnTouchi2.ViewModel.Animation
             bubble = e.Source as ScatterViewItem;
             Point bubbleCenter = bubble.ActualCenter;
 
-            // int width = int.Parse(GetWidth.Text);
-            // int height = int.Parse(GetHeight.Text);
             int width = (int)sessionVM.Grid.ActualWidth;
             int height = (int)sessionVM.Grid.ActualHeight;
             bubbleCenter.X = bubbleCenter.X * 1920 / width;
@@ -169,7 +167,6 @@ namespace PopnTouchi2.ViewModel.Animation
             int offset = ManipulationGrid[((long)bubbleCenter.X / 60)];
             bubbleCenter.Y += offset;
 
-         //   MessageBox.Show(bubbleCenter.X.ToString() + "," + bubbleCenter.Y.ToString());
             int positionNote = (int)(bubbleCenter.X - 120) / 60;
 
             //Y dans le cadre portée ?

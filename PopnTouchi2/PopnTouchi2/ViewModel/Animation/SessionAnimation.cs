@@ -8,6 +8,9 @@ using System.Windows.Media;
 using Microsoft.Surface.Presentation.Controls;
 using System.Windows.Media.Animation;
 using System.Threading;
+using System.IO;
+using System.Windows.Media.Imaging;
+using System.Drawing;
 
 namespace PopnTouchi2.ViewModel.Animation
 {
@@ -67,13 +70,15 @@ namespace PopnTouchi2.ViewModel.Animation
         {
             if (SessionVM.Reduced)
             {
+                SessionVM.LoadSession("test.bin");
                 AudioController.FadeInBackgroundSound();
                 SessionVM.Reducer.Content = "Reduce !";
-                SessionVM.Reducer.Background = Brushes.Red;
-
+                SessionVM.Reducer.Background = System.Windows.Media.Brushes.Red;
+                
                 ScatterViewItem svi = (ScatterViewItem)SessionVM.Grid.Parent;
                 DesktopView mainDesktop = (DesktopView)((ScatterView)svi.Parent).Parent;
 
+                #region Animation Settings
                 Storyboard stb = new Storyboard();
                 PointAnimation centerPosAnimation = new PointAnimation();
                 DoubleAnimation heightAnimation = new DoubleAnimation();
@@ -84,7 +89,7 @@ namespace PopnTouchi2.ViewModel.Animation
                 ThicknessAnimation borderAnimation = new ThicknessAnimation();
 
                 centerPosAnimation.From = svi.ActualCenter;
-                centerPosAnimation.To = new Point(mainDesktop.ActualWidth / 2, mainDesktop.ActualHeight / 2);
+                centerPosAnimation.To = new System.Windows.Point(mainDesktop.ActualWidth / 2, mainDesktop.ActualHeight / 2);
                 centerPosAnimation.Duration = new Duration(TimeSpan.FromSeconds(.75));
                 centerPosAnimation.FillBehavior = FillBehavior.HoldEnd;
                 stb.Children.Add(centerPosAnimation);
@@ -151,9 +156,9 @@ namespace PopnTouchi2.ViewModel.Animation
                 Storyboard.SetTargetProperty(gridWidthAnimation, new PropertyPath(Grid.WidthProperty));
 
                 widthAnimation.Completed += new EventHandler(stb_enlarge_Completed);
+                #endregion
 
                 stb.Begin(SessionVM.Grid);
-
 
                 SessionVM.NbgVM.Grid.Width = SessionVM.NbgVM.Grid.ActualWidth * 4;
                 SessionVM.NbgVM.Grid.Height = SessionVM.NbgVM.Grid.ActualHeight * 4;
@@ -164,11 +169,21 @@ namespace PopnTouchi2.ViewModel.Animation
             }
             else
             {
+                SessionVM.SaveSession("test.bin");
+
+                SessionVM.Grid.Children.Remove(SessionVM.Bubbles);
+                ScatterViewItem svii = new ScatterViewItem();
+                MemoryStream ms = new MemoryStream(Screenshot.GetSnapshot(SessionVM.Grid, .5, 100));
+                System.Drawing.Image sc = System.Drawing.Image.FromStream(ms);
+                sc.Save("sc.jpg");
+                //Graphics.DrawImage(sc);
+
                 AudioController.FadeOutBackgroundSound();
                 stopAllBubblesAnimations();
                 SessionVM.Reducer.Content = "Enlarge !";
-                SessionVM.Reducer.Background = Brushes.Green;
+                SessionVM.Reducer.Background = System.Windows.Media.Brushes.Green;
 
+                #region Animation Settings
                 Storyboard stb = new Storyboard();
                 DoubleAnimation heightAnimation = new DoubleAnimation();
                 DoubleAnimation widthAnimation = new DoubleAnimation();
@@ -203,6 +218,7 @@ namespace PopnTouchi2.ViewModel.Animation
                 SessionVM.Grid.Width = SessionVM.Grid.ActualWidth / 4;
 
                 widthAnimation.Completed += new EventHandler(stb_Completed);
+                #endregion
 
                 stb.Begin(SessionVM.Grid);
 
@@ -251,9 +267,9 @@ namespace PopnTouchi2.ViewModel.Animation
             svi.Height = SessionVM.Grid.Height;
             svi.CanScale = false;
             svi.Content = SessionVM.Grid;
-            svi.BorderBrush = Brushes.White;
+            svi.BorderBrush = System.Windows.Media.Brushes.White;
             svi.Orientation = 0;
-            svi.Center = new Point(mainDesktop.ActualWidth / 2, mainDesktop.ActualHeight / 2);
+            svi.Center = new System.Windows.Point(mainDesktop.ActualWidth / 2, mainDesktop.ActualHeight / 2);
             mainDesktop.Photos.Items.Add(svi);
 
 
@@ -316,7 +332,7 @@ namespace PopnTouchi2.ViewModel.Animation
             ease.Exponent = 1.5;
 
             Random r = new Random();
-            Point newCenter = new Point(r.Next((int)mainDesktop.ActualWidth), r.Next((int)mainDesktop.ActualHeight));
+            System.Windows.Point newCenter = new System.Windows.Point(r.Next((int)mainDesktop.ActualWidth), r.Next((int)mainDesktop.ActualHeight));
             Double newOrientation = r.Next(-180, 180);
 
             centerPosAnimation.From = svi.ActualCenter;

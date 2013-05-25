@@ -10,6 +10,10 @@ using PopnTouchi2.ViewModel.Animation;
 using System.Windows;
 using System.Windows.Controls;
 using System.Threading;
+using System.IO;
+using System.Runtime.Serialization.Formatters.Binary;
+using PopnTouchi2.Model;
+using System.Windows.Media.Imaging;
 
 namespace PopnTouchi2.ViewModel
 {
@@ -185,6 +189,45 @@ namespace PopnTouchi2.ViewModel
             session.StaveBottom.StopMusic();
             Stop.Visibility = Visibility.Hidden;
             Play.Visibility = Visibility.Visible;
+        }
+
+        /// <summary>
+        /// Saves current session into binary file
+        /// </summary>
+        /// <param name="newBpm">Path of the savefile</param>
+        public void SaveSession(string path)
+        {
+            Stream stream = File.Open(path, FileMode.Create);
+            BinaryFormatter formatter = new BinaryFormatter();
+
+            SessionData sd = new SessionData(this.Session);
+            formatter.Serialize(stream, sd);
+            stream.Close();
+        }
+
+        /// <summary>
+        /// Loads a session from a binary file
+        /// </summary>
+        /// <param name="newBpm">Path of the savefile</param>
+        public void LoadSession(string path)
+        {
+            BinaryFormatter formatter = new BinaryFormatter();
+            FileStream stream = File.Open(path, FileMode.Open);
+            SessionData sd = (SessionData)formatter.Deserialize(stream);
+            stream.Close();
+            switch (Session.ThemeID)
+            {
+                case 2: Session.Theme = new Theme2(); break;
+                case 3: Session.Theme = new Theme3(); break;
+                case 4: Session.Theme = new Theme4(); break;
+                default: Session.Theme = new Theme1(); break;
+            }
+
+            Session.StaveTop = new Stave(true, Session.Theme.InstrumentsTop[0]);
+            Session.StaveBottom = new Stave(false, Session.Theme.InstrumentsBottom[0]);
+            Session.StaveTop.Notes = sd.StaveTopNotes;
+            Session.StaveBottom.Notes = sd.StaveBottomNotes;
+            Session.ThemeID = sd.ThemeID;
         }
     }
 }

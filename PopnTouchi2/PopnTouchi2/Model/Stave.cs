@@ -62,14 +62,7 @@ namespace PopnTouchi2
             CurrentInstrument = instru;
             Timer = new Timer();
             IteratorNotes = 0;
-            if (up)
-            {
-                isUp = true;
-            }
-            else
-            {
-                isUp = false;
-            }
+            isUp = up;
         }
 
         /// <summary>
