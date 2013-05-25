@@ -59,12 +59,12 @@ namespace PopnTouchi2
             NoteBubbleGenerator = new NoteBubbleGenerator();
             MelodyBubbleGenerator = new MelodyBubbleGenerator();
 
-            StaveTop = new Stave(true, Theme.InstrumentsTop[0]);
-            StaveBottom = new Stave(false, Theme.InstrumentsBottom[0]);
+            StaveTop = new Stave(true, Theme.InstrumentsTop[0], Theme);
+            StaveBottom = new Stave(false, Theme.InstrumentsBottom[0], Theme);
             
             //sound methods
             Theme.sound.Play();
-            AudioController.FadeInBackgroundSound();
+          //  AudioController.FadeInBackgroundSound();
         }
         #endregion
 
@@ -74,8 +74,16 @@ namespace PopnTouchi2
         /// </summary>
         public void StopBackgroundSound()
         {
-            AudioController.FadeOutBackgroundSound();
-            Theme.sound.Stop(AudioStopOptions.Immediate);
+            Theme.sound.Stop(AudioStopOptions.AsAuthored);
+        }
+
+        /// <summary>
+        /// Start all the background environnement's sounds.
+        /// </summary>
+        public void PlayBackgroundSound()
+        {
+            Theme.refreshSound();
+            Theme.sound.Play();
         }
 
         /// <summary>

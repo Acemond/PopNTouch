@@ -96,7 +96,7 @@ namespace PopnTouchi2.ViewModel
         {
             Task.Factory.StartNew(() =>
             {
-                AudioController.FadeOutBackgroundSound();
+               // AudioController.FadeOutBackgroundSound();
                 Thread.Sleep(500);
                 SessionVM.Session.StaveTop.PlayAllNotes();
                 SessionVM.Session.StaveBottom.PlayAllNotes();
@@ -113,7 +113,7 @@ namespace PopnTouchi2.ViewModel
                 SessionVM.Session.StaveTop.StopMusic();
                 SessionVM.Session.StaveBottom.StopMusic();
                 Thread.Sleep(10000);
-                AudioController.FadeInBackgroundSound();
+               // AudioController.FadeInBackgroundSound();
             });
         }
 

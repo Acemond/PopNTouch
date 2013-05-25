@@ -52,12 +52,6 @@ namespace PopnTouchi2
         public float backgroundVolume;
 
         /// <summary>
-        /// Parameter
-        /// The timer used to fade in/out the background sound
-        /// </summary>
-        public Timer t;
-
-        /// <summary>
         /// AudioController Constructor.
         /// Initializes AudioEngine, SoundBank and WaveBank.
         /// </summary>
@@ -69,12 +63,6 @@ namespace PopnTouchi2
             audioEngine = new AudioEngine(path + @"\sound.xgs");
             WaveBank = new WaveBank(audioEngine, path + @"\Wave Bank.xwb");
             SoundBank = new SoundBank(audioEngine, path + @"\Sound Bank.xsb");
-
-            //get the background sound category to change the volume of these sounds
-            BackgroundCategory = audioEngine.GetCategory("Background sound");
-            backgroundVolume = 0.05f;
-            BackgroundCategory.SetVolume(backgroundVolume);
-            t = new Timer();
         }
 
         /// <summary>
@@ -101,7 +89,7 @@ namespace PopnTouchi2
         /// <param name="cue">The sound to be stopped</param>
         public static void StopSound(Cue cue)
         {
-            cue.Stop(AudioStopOptions.Immediate);
+            cue.Stop(AudioStopOptions.AsAuthored);
         }
 
         /// <summary>
@@ -112,72 +100,6 @@ namespace PopnTouchi2
         {
             AudioController.INSTANCE.backgroundVolume = volume;
             AudioController.INSTANCE.BackgroundCategory.SetVolume(volume);
-        }
-
-        /// <summary>
-        /// Fade Out the background Sound
-        /// </summary>
-        public static void FadeOutBackgroundSound()
-        {
-            stopTimer();
-            AudioController.INSTANCE.t.Interval = 300;
-            AudioController.INSTANCE.t.Start();
-            AudioController.INSTANCE.t.Elapsed += new ElapsedEventHandler(FadeOut_Action);
-        }
-
-        /// <summary>
-        /// The action of fading out
-        /// </summary>
-        /// <param name="source"></param>
-        /// <param name="e"></param>
-        private static void FadeOut_Action(object source, ElapsedEventArgs e)
-        {
-            if (AudioController.INSTANCE.backgroundVolume > 0.05f)
-                AudioController.UpdateVolume(AudioController.INSTANCE.backgroundVolume * 0.60f);
-            else
-            {
-                stopTimer();
-                AudioController.UpdateVolume(0);
-            }
-        }
-
-        /// <summary>
-        /// Fade in the background Sound
-        /// </summary>
-        public static void FadeInBackgroundSound()
-        {
-            stopTimer();
-            AudioController.INSTANCE.t.Interval = 600;
-            AudioController.INSTANCE.t.Start();
-            AudioController.INSTANCE.t.Elapsed += new ElapsedEventHandler(FadeIn_Action);
-        }
-
-        /// <summary>
-        /// The action of fading in
-        /// </summary>
-        /// <param name="source"></param>
-        /// <param name="e"></param>
-        private static void FadeIn_Action(object source, ElapsedEventArgs e)
-        {
-            if (AudioController.INSTANCE.backgroundVolume == 0)
-                AudioController.UpdateVolume(0.05f);
-            else if (AudioController.INSTANCE.backgroundVolume < GlobalVariables.maxVolume)
-            {
-                AudioController.UpdateVolume(AudioController.INSTANCE.backgroundVolume * 1.2f);
-            }
-            else stopTimer();
-        }
-
-        /// <summary>
-        /// Stop the AudioController's Timer, used to avoid conflit between fade in/out
-        /// </summary>
-        private static void stopTimer()
-        {
-            AudioController.INSTANCE.t.Stop();
-            AudioController.INSTANCE.t.EndInit();
-            AudioController.INSTANCE.t.Elapsed -= new ElapsedEventHandler(FadeOut_Action);
-            AudioController.INSTANCE.t.Elapsed -= new ElapsedEventHandler(FadeIn_Action);  
-                 
         }
     }
 }

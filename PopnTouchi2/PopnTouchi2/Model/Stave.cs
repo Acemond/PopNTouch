@@ -14,6 +14,12 @@ namespace PopnTouchi2
     public class Stave
     {
         /// <summary>
+        /// Attribute
+        /// Link the stave to the theme
+        /// </summary>
+        private Theme theme;
+
+        /// <summary>
         /// Property.
         /// A list of Notes observable by the StaveViewModel.
         /// </summary>
@@ -55,8 +61,9 @@ namespace PopnTouchi2
         /// </summary>
         /// <param name="up">True if the current instance is the upper stave</param>
         /// <param name="instru">The instrument to be used</param>
-        public Stave(Boolean up, Instrument instru)
+        public Stave(Boolean up, Instrument instru, Theme theme)
         {
+            this.theme = theme;
             MaxPosition = 0;
             Notes = new ObservableCollection<Note>();
             CurrentInstrument = instru;
@@ -124,9 +131,6 @@ namespace PopnTouchi2
         /// </summary>
         public void PlayAllNotes()
         {
-            //Decrease the background sound
-           // AudioController.UpdateVolume(0f);
-
             Timer.Interval = 30000 / GlobalVariables.bpm;
             Timer.Start();
             Timer.Elapsed += new ElapsedEventHandler(PlayList);
@@ -191,9 +195,11 @@ namespace PopnTouchi2
             GlobalVariables.position_NoteUp = 0;
             GlobalVariables.position_NoteDown = 0;
             IteratorNotes = 0;
-
-            //begin the fade In of the background sound
-            AudioController.FadeInBackgroundSound();
+            if (isUp)
+            {
+                theme.refreshSound();
+                theme.sound.Play();
+            }
         }
     }
 }

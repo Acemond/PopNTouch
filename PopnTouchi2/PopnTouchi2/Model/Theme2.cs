@@ -23,5 +23,10 @@ namespace PopnTouchi2
 
             // TODO sound = AudioController.INSTANCE.SoundBank.GetCue("loop_eveningWater");
         }
+
+        public override void refreshSound()
+        {
+            sound = AudioController.INSTANCE.SoundBank.GetCue("loop_eveningWater");
+        }
     }
 }

@@ -10,6 +10,7 @@ using PopnTouchi2.ViewModel.Animation;
 using System.Windows;
 using System.Windows.Controls;
 using System.Threading;
+using Microsoft.Xna.Framework.Audio;
 
 namespace PopnTouchi2.ViewModel
 {
@@ -175,12 +176,14 @@ namespace PopnTouchi2.ViewModel
             Grid.Children.Add(Stop);
             Stop.Visibility = Visibility.Hidden;
 
-            Stop.Click += new RoutedEventHandler(Stop_Click);
+            Stop.Click += new RoutedEventHandler(Stop_Click);          
+
         }
 
         private void Play_Click(object sender, RoutedEventArgs e)
         {
-          //  AudioController.FadeOutBackgroundSound();
+            session.StopBackgroundSound();
+
             session.StaveTop.PlayAllNotes();
             session.StaveBottom.PlayAllNotes();
             Play.Visibility = Visibility.Hidden;
@@ -189,7 +192,8 @@ namespace PopnTouchi2.ViewModel
 
         private void Stop_Click(object sender, RoutedEventArgs e)
         {
-        //    AudioController.FadeInBackgroundSound();
+            session.PlayBackgroundSound();
+
             session.StaveTop.StopMusic();
             session.StaveBottom.StopMusic();
             Stop.Visibility = Visibility.Hidden;
