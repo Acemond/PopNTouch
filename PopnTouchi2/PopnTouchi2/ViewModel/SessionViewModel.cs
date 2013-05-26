@@ -128,16 +128,17 @@ namespace PopnTouchi2.ViewModel
             Grid.Opacity = 0;
             Bubbles.Visibility = Visibility.Visible;
             Notes.Visibility = Visibility.Visible;
+
             Grid.Children.Add(Bubbles);
-            Grid.SetZIndex(Bubbles, 2);
             Grid.Children.Add(Notes);
-            Grid.SetZIndex(Notes, 1);
-
             Grid.Children.Add(NbgVM.Grid);
-            Grid.SetZIndex(NbgVM.Grid, 0);
             Grid.Children.Add(MbgVM.Grid);
-            Grid.SetZIndex(MbgVM.Grid, 0);
 
+            Grid.SetZIndex(Bubbles, 2);
+            Grid.SetZIndex(Notes, 1);
+            Grid.SetZIndex(NbgVM.Grid, 0);
+            Grid.SetZIndex(MbgVM.Grid, 0);
+            
             switch (Session.ThemeID)
             {
                 case 1:
@@ -246,6 +247,7 @@ namespace PopnTouchi2.ViewModel
             FileStream stream = File.Open(path, FileMode.Open);
             SessionData sd = (SessionData)formatter.Deserialize(stream);
             stream.Close();
+
             switch (Session.ThemeID)
             {
                 case 2: Session.Theme = new Theme2(); break;

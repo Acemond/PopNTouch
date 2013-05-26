@@ -55,7 +55,7 @@ namespace PopnTouchi2
             Photos = new ScatterView();
             Children.Add(Photos);
 
-            SessionVM = new SessionViewModel(new Session());
+            SessionVM = new SessionViewModel(new Session(), IDs);
             Children.Add(SessionVM.Grid);
         }
 
