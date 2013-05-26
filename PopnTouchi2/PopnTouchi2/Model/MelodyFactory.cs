@@ -55,7 +55,7 @@ namespace PopnTouchi2
             List<Note> l4 = new List<Note>();
             l4.Add(new Note(2, NoteValue.crotchet, "re", 0));
             l4.Add(new Note(2, NoteValue.quaver, "la", 2));
-            l4.Add(new Note(2, NoteValue.minim, "fa", 3));
+            l4.Add(new Note(2, NoteValue.minim, "si", 3));
             Melodies.Add(Gesture.zigzag, new Melody(l4, Gesture.zigzag));
         }
 

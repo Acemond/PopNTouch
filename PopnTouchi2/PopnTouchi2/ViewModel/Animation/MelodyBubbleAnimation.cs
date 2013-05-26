@@ -32,7 +32,7 @@ namespace PopnTouchi2.ViewModel.Animation
         /// Parameter.
         /// Private melody in the MelodyBubbleViewModel
         /// </summary>
-        private Melody melody;
+        private MelodyBubbleViewModel melodyBubbleVM;
 
         /// <summary>
         /// Property
@@ -40,6 +40,11 @@ namespace PopnTouchi2.ViewModel.Animation
         /// </summary>
         public Boolean playUp;
 
+        /// <summary>
+        /// Property.
+        /// Center of the given bubble to animate
+        /// </summary>
+        private Point bubbleCenter;
 
         #endregion
 
@@ -52,7 +57,7 @@ namespace PopnTouchi2.ViewModel.Animation
         public MelodyBubbleAnimation(MelodyBubbleViewModel mbVM, SessionViewModel s) 
             : base()
         {
-            melody = mbVM.MelodyBubble.Melody;
+            melodyBubbleVM = mbVM;
             sessionVM = s;
             ManipulationGrid = new int[] { 0, 0, 0, 14, 25, 37, 47, 56, 64, 71, 76, 80, 83, 85, 85, 84, 80, 75, 68, 60, 50, 38, 26, 15, 4, -3, -9, -11, -12, -11, -7 };
             SVItem = mbVM.SVItem;
@@ -159,7 +164,7 @@ namespace PopnTouchi2.ViewModel.Animation
         {
             ScatterViewItem bubble = new ScatterViewItem();
             bubble = e.Source as ScatterViewItem;
-            Point bubbleCenter = bubble.ActualCenter;
+            bubbleCenter = bubble.ActualCenter;
 
             // int width = int.Parse(GetWidth.Text);
             // int height = int.Parse(GetHeight.Text);
@@ -178,6 +183,7 @@ namespace PopnTouchi2.ViewModel.Animation
             int offset = ManipulationGrid[((long)bubbleCenter.X / 60)];
             bubbleCenter.Y += offset;
 
+            int positionMelody = (int)(bubbleCenter.X - 120) / 60;
 
             //Y dans le cadre portée ?
             //Si oui, animation
@@ -189,11 +195,14 @@ namespace PopnTouchi2.ViewModel.Animation
                     if (bubbleCenter.Y >= 335) bubbleCenter.Y = 335;
                     bubbleCenter.Y = Math.Floor((bubbleCenter.Y - 20) / 25) * 25 + 35; //-20 et 35 pour 50
 
+                    sessionVM.Session.StaveTop.AddMelody(melodyBubbleVM.MelodyBubble, positionMelody);
                 }
                 else
                 {
                     if (bubbleCenter.Y <= 405) bubbleCenter.Y = 405;
                     bubbleCenter.Y = Math.Floor((bubbleCenter.Y + 10) / 25) * 25 + 5; //20 et 5 pour 50
+
+                    sessionVM.Session.StaveBottom.AddMelody(melodyBubbleVM.MelodyBubble, positionMelody);
                 }
 
                 bubbleCenter.Y -= offset;
@@ -201,6 +210,7 @@ namespace PopnTouchi2.ViewModel.Animation
                 bubbleCenter.X = bubbleCenter.X * width / 1920;
                 bubbleCenter.Y = bubbleCenter.Y * height / 1080;
 
+                #region STB
                 Storyboard stb = new Storyboard();
                 PointAnimation moveCenter = new PointAnimation();
 
@@ -214,17 +224,30 @@ namespace PopnTouchi2.ViewModel.Animation
 
                 Storyboard.SetTarget(moveCenter, bubble);
                 Storyboard.SetTargetProperty(moveCenter, new PropertyPath(ScatterViewItem.CenterProperty));
+                #endregion
+          
+                bubble.Center = bubbleCenter;
+                moveCenter.Completed += new EventHandler(moveCenter_Completed);
 
                 stb.Begin(SVItem);
 
-                bubble.Visibility = Visibility.Collapsed;
-                bubble.Visibility = Visibility.Visible;
             }
             else
             {
                 canAnimate = true;
                 Animate();
             }
+        }
+
+        void moveCenter_Completed(object sender, EventArgs e)
+        {
+            List<NoteViewModel> ListOfNotes = melodyBubbleVM.melodyToListOfNote(bubbleCenter);
+            for (int i = 0; i < ListOfNotes.Count; i++)
+            {
+                sessionVM.Notes.Items.Add(ListOfNotes[i].SVItem);
+            }
+           
+            sessionVM.Bubbles.Items.Remove(melodyBubbleVM.SVItem);
         }
 
         /// <summary>
@@ -237,19 +260,17 @@ namespace PopnTouchi2.ViewModel.Animation
             StopAnimation();
             if (playUp)
             {
-                sessionVM.Session.StaveTop.melody = melody;
+                sessionVM.Session.StaveTop.melody = melodyBubbleVM.MelodyBubble.Melody;
                 playUp = false;
                 sessionVM.Session.StaveTop.StopMelody();
-                sessionVM.Session.StaveTop.PlayMelody();
-               
+                sessionVM.Session.StaveTop.PlayMelody(); 
             }
             else
             {
-                sessionVM.Session.StaveBottom.melody = melody;
+                sessionVM.Session.StaveBottom.melody = melodyBubbleVM.MelodyBubble.Melody;
                 playUp = true;
                 sessionVM.Session.StaveBottom.StopMelody();
                 sessionVM.Session.StaveBottom.PlayMelody();
-
             }
 
         }

@@ -107,9 +107,12 @@ namespace PopnTouchi2
                 mb.Melody.Notes[i].Position += position;
                 int posArray = 0;
                 while ((posArray < Notes.Count) && (Notes[posArray].Position < mb.Melody.Notes[i].Position))
+                {
                     posArray++;
+                }
 
                 Notes.Insert(posArray, mb.Melody.Notes[i]);
+       
             }
 
             MaxPosition = Math.Max(MaxPosition, mb.Melody.Notes[i-1].Position);
