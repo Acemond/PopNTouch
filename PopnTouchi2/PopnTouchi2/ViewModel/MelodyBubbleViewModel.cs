@@ -121,5 +121,22 @@ namespace PopnTouchi2.ViewModel
 
             Animation = new MelodyBubbleAnimation(this, SessionVM);
         }
+
+        public List<NoteViewModel> melodyToListOfNote(Point center)
+        {
+            int width = (int)SessionVM.Grid.ActualWidth;
+            int height = (int)SessionVM.Grid.ActualHeight;
+            List<NoteViewModel> notes = new List<NoteViewModel>();
+            for(int i = 0; i< melodyBubble.Melody.Notes.Count; i++)
+            {
+                double x = (melodyBubble.Melody.Notes[i].Position * 60 + 120) * width / 1920;
+                //TODO Galérer à gerer le Y, avec l'offset de la portée + la hauteur des notes.
+                double y = center.Y;
+                Point p = new Point(x, y);
+                notes.Add(new NoteViewModel(p,melodyBubble.Melody.Notes[i], SessionVM.Notes, SessionVM));
+            }
+
+            return notes;
+        }
     }
 }

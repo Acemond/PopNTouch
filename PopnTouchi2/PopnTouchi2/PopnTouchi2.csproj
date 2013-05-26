@@ -165,6 +165,7 @@
     <Content Include="PopnTouchi2.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Resource Include="Resources\Images\Theme1\Bubbles\Notes\bullenoire.png" />
     <Resource Include="Resources\Images\Theme4\Bubbles\Melodies\infinite.png" />
     <Resource Include="Resources\Images\Theme3\Bubbles\Melodies\infinite.png" />
     <Resource Include="Resources\Images\Theme2\Bubbles\Melodies\infinite.png" />
@@ -189,7 +190,6 @@
     <Resource Include="Resources\Images\Theme1\Bubbles\Notes\bemol.png" />
     <Resource Include="Resources\Images\Theme1\Bubbles\Notes\bulleblanche.png" />
     <Resource Include="Resources\Images\Theme1\Bubbles\Notes\bullecroche.png" />
-    <Resource Include="Resources\Images\Theme1\Bubbles\Notes\bullenoire.png" />
     <Resource Include="Resources\Images\Theme1\Bubbles\Notes\diese.png" />
     <Resource Include="Resources\Images\UI_items\Notes\black\crotchet.png" />
     <Resource Include="Resources\Images\UI_items\Notes\black\minim.png" />
