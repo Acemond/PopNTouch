@@ -105,6 +105,12 @@ namespace PopnTouchi2.ViewModel
         public bool Reduced { get; set; }
 
         /// <summary>
+        /// Parameter.
+        /// Session's number.
+        /// </summary>
+        public int SessionID { get; set; }
+
+        /// <summary>
         /// SessionViewModel Construtor.
         /// Initializes all SessionViewModel components.
         /// </summary>
@@ -123,10 +129,14 @@ namespace PopnTouchi2.ViewModel
             Bubbles.Visibility = Visibility.Visible;
             Notes.Visibility = Visibility.Visible;
             Grid.Children.Add(Bubbles);
+            Grid.SetZIndex(Bubbles, 2);
             Grid.Children.Add(Notes);
+            Grid.SetZIndex(Notes, 1);
 
             Grid.Children.Add(NbgVM.Grid);
+            Grid.SetZIndex(NbgVM.Grid, 0);
             Grid.Children.Add(MbgVM.Grid);
+            Grid.SetZIndex(MbgVM.Grid, 0);
 
             switch (Session.ThemeID)
             {
@@ -182,6 +192,14 @@ namespace PopnTouchi2.ViewModel
 
             Stop.Click += new RoutedEventHandler(Stop_Click);          
 
+        }
+
+        public SessionViewModel(Session s, List<int> IDs) : this(s)
+        {
+            int i = 1;
+            while (IDs.Contains(i)) i++;
+            SessionID = i;
+            IDs.Add(i);
         }
 
         private void Play_Click(object sender, RoutedEventArgs e)
