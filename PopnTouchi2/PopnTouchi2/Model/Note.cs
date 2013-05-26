@@ -9,6 +9,7 @@ using System.Threading;
 
 namespace PopnTouchi2
 {
+    [Serializable]
     /// <summary>
     /// Sets and defines all attributes and methods needed to manage a music Note.
     /// </summary>

@@ -2,8 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.IO;
+using System.Runtime.Serialization.Formatters.Binary;
 using PopnTouchi2.Model.Enums;
 using Microsoft.Xna.Framework.Audio;
+using PopnTouchi2.Model;
 
 namespace PopnTouchi2
 {
@@ -18,32 +21,36 @@ namespace PopnTouchi2
         /// Session's MelodyBubbleGenerator instance.
         /// </summary>
         public MelodyBubbleGenerator MelodyBubbleGenerator { get; set; }
+        
         /// <summary>
         /// Property.
         /// Session's NoteBubbleGenerator instance.
         /// </summary>
         public NoteBubbleGenerator NoteBubbleGenerator { get; set; }
+
         /// <summary>
         /// Property.
         /// Session's upper Stave instance.
         /// </summary>
         public Stave StaveTop { get; set; }
+
         /// <summary>
         /// Property.
         /// Session's lower Stave instance.
         /// </summary>
         public Stave StaveBottom { get; set; }
+
         /// <summary>
         /// Property.
         /// Session's Theme instance.
         /// </summary>
         public Theme Theme { get; set; }
+
         /// <summary>
         /// Property.
         /// The Theme number.
         /// </summary>
         public int ThemeID { get; set; }
-    
         #endregion
 
         #region Constructors

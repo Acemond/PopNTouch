@@ -10,6 +10,10 @@ using PopnTouchi2.ViewModel.Animation;
 using System.Windows;
 using System.Windows.Controls;
 using System.Threading;
+using System.IO;
+using System.Runtime.Serialization.Formatters.Binary;
+using PopnTouchi2.Model;
+using System.Windows.Media.Imaging;
 using Microsoft.Xna.Framework.Audio;
 
 namespace PopnTouchi2.ViewModel
@@ -101,6 +105,12 @@ namespace PopnTouchi2.ViewModel
         public bool Reduced { get; set; }
 
         /// <summary>
+        /// Parameter.
+        /// Session's number.
+        /// </summary>
+        public int SessionID { get; set; }
+
+        /// <summary>
         /// SessionViewModel Construtor.
         /// Initializes all SessionViewModel components.
         /// </summary>
@@ -119,11 +129,15 @@ namespace PopnTouchi2.ViewModel
             Bubbles.Visibility = Visibility.Visible;
             Notes.Visibility = Visibility.Visible;
             Grid.Children.Add(Bubbles);
+            Grid.SetZIndex(Bubbles, 2);
             Grid.Children.Add(Notes);
+            Grid.SetZIndex(Notes, 1);
 
 
             Grid.Children.Add(NbgVM.Grid);
+            Grid.SetZIndex(NbgVM.Grid, 0);
             Grid.Children.Add(MbgVM.Grid);
+            Grid.SetZIndex(MbgVM.Grid, 0);
 
             switch (Session.ThemeID)
             {
@@ -191,7 +205,14 @@ namespace PopnTouchi2.ViewModel
 
             TreeViewModel treeDown = new TreeViewModel(false, down, session, session.Theme);
             Grid.Children.Add(treeDown.Grid);
+        }
 
+        public SessionViewModel(Session s, List<int> IDs) : this(s)
+        {
+            int i = 1;
+            while (IDs.Contains(i)) i++;
+            SessionID = i;
+            IDs.Add(i);
         }
 
         private void Play_Click(object sender, RoutedEventArgs e)
@@ -212,6 +233,46 @@ namespace PopnTouchi2.ViewModel
             session.StaveBottom.StopMusic();
             Stop.Visibility = Visibility.Hidden;
             Play.Visibility = Visibility.Visible;
+        }
+
+        /// <summary>
+        /// Saves current session into binary file
+        /// </summary>
+        /// <param name="newBpm">Path of the savefile</param>
+        public void SaveSession(string path)
+        {
+            Stream stream = File.Open(path, FileMode.Create);
+            BinaryFormatter formatter = new BinaryFormatter();
+
+            SessionData sd = new SessionData(this);
+            formatter.Serialize(stream, sd);
+            stream.Close();
+        }
+
+        /// <summary>
+        /// Loads a session from a binary file
+        /// </summary>
+        /// <param name="newBpm">Path of the savefile</param>
+        public void LoadSession(string path)
+        {
+            BinaryFormatter formatter = new BinaryFormatter();
+            FileStream stream = File.Open(path, FileMode.Open);
+            SessionData sd = (SessionData)formatter.Deserialize(stream);
+            stream.Close();
+            switch (Session.ThemeID)
+            {
+                case 2: Session.Theme = new Theme2(); break;
+                case 3: Session.Theme = new Theme3(); break;
+                case 4: Session.Theme = new Theme4(); break;
+                default: Session.Theme = new Theme1(); break;
+            }
+
+            Session.StaveTop = new Stave(true, Session.Theme.InstrumentsTop[0], Session.Theme);
+            Session.StaveBottom = new Stave(false, Session.Theme.InstrumentsBottom[0], Session.Theme);
+            Session.StaveTop.Notes = sd.StaveTopNotes;
+            Session.StaveBottom.Notes = sd.StaveBottomNotes;
+            //Notes = sd.NotesSV;
+            Session.ThemeID = sd.ThemeID;
         }
     }
 }

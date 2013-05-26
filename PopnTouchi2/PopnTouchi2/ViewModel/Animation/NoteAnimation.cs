@@ -210,19 +210,25 @@ namespace PopnTouchi2.ViewModel.Animation
         {
             StopAnimation();
 
-            ////Si la bulle est sur la portée et qu'on la touche, elle s'enleve de la portee
+            ScatterViewItem note = new ScatterViewItem();
+            note = e.Source as ScatterViewItem;
+            Point noteCenter = note.ActualCenter;
 
+            ////Si la bulle est sur la portée et qu'on la touche, elle s'enleve de la portee
 
             sessionVM.Session.StaveTop.RemoveNote(noteVM.Note);
             sessionVM.Session.StaveBottom.RemoveNote(noteVM.Note);
 
-            
+            NoteBubble nb = new NoteBubble(noteVM.Note.Duration);
+            NoteBubbleViewModel noteBubbleVM = new NoteBubbleViewModel(noteCenter, nb, sessionVM.Notes, sessionVM);
+            sessionVM.Bubbles.Items.Add(noteBubbleVM.SVItem);
+            sessionVM.Notes.Items.Remove(noteVM.SVItem);
 
-            String effect = "discovery";
+            /*String effect = "discovery";
             Random r = new Random();
             int nb = r.Next(1, 5);
             effect += nb.ToString();
-            AudioController.PlaySoundWithString(effect);
+            AudioController.PlaySoundWithString(effect);*/
         }
         #endregion
     }

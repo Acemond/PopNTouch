@@ -33,6 +33,13 @@ namespace PopnTouchi2.ViewModel.Animation
         /// The NoteBubbleViewModel associated
         /// </summary>
         private NoteBubbleViewModel noteBubbleVM { get; set; }
+
+        /// <summary>
+        /// Property.
+        /// Center of the given bubble to animate
+        /// </summary>
+        private Point bubbleCenter;
+
         #endregion
 
         #region Constructors
@@ -150,10 +157,8 @@ namespace PopnTouchi2.ViewModel.Animation
         {
             ScatterViewItem bubble = new ScatterViewItem();
             bubble = e.Source as ScatterViewItem;
-            Point bubbleCenter = bubble.ActualCenter;
+            bubbleCenter = bubble.ActualCenter;
 
-            // int width = int.Parse(GetWidth.Text);
-            // int height = int.Parse(GetHeight.Text);
             int width = (int)sessionVM.Grid.ActualWidth;
             int height = (int)sessionVM.Grid.ActualHeight;
             bubbleCenter.X = bubbleCenter.X * 1920 / width;
@@ -169,7 +174,6 @@ namespace PopnTouchi2.ViewModel.Animation
             int offset = ManipulationGrid[((long)bubbleCenter.X / 60)];
             bubbleCenter.Y += offset;
 
-         //   MessageBox.Show(bubbleCenter.X.ToString() + "," + bubbleCenter.Y.ToString());
             int positionNote = (int)(bubbleCenter.X - 120) / 60;
 
             //Y dans le cadre portée ?
@@ -198,35 +202,39 @@ namespace PopnTouchi2.ViewModel.Animation
                 bubbleCenter.X = bubbleCenter.X * width / 1920;
                 bubbleCenter.Y = bubbleCenter.Y * height / 1080;
 
+                #region STB
                 Storyboard stb = new Storyboard();
                 PointAnimation moveCenter = new PointAnimation();
 
                 moveCenter.From = bubble.ActualCenter;
                 moveCenter.To = bubbleCenter;
                 moveCenter.Duration = new Duration(TimeSpan.FromSeconds(0.15));
-                bubble.Center = bubbleCenter;
+
                 moveCenter.FillBehavior = FillBehavior.Stop;
 
                 stb.Children.Add(moveCenter);
 
                 Storyboard.SetTarget(moveCenter, bubble);
                 Storyboard.SetTargetProperty(moveCenter, new PropertyPath(ScatterViewItem.CenterProperty));
+                #endregion
+
+                bubble.Center = bubbleCenter;
+                moveCenter.Completed += new EventHandler(moveCenter_Completed);
 
                 stb.Begin(SVItem);
-
-                bubble.Visibility = Visibility.Collapsed;
-                bubble.Visibility = Visibility.Visible;
-
-                NoteViewModel noteVM = new NoteViewModel(bubbleCenter, noteBubbleVM.NoteBubble.Note, sessionVM.Notes, sessionVM);
-                sessionVM.Notes.Items.Add(noteVM.SVItem);
-                sessionVM.Bubbles.Items.Remove(noteBubbleVM.SVItem);
-                
             }
             else
             {
                 canAnimate = true;
                 Animate();
             }
+        }
+
+        void moveCenter_Completed(object sender, EventArgs e)
+        {
+            NoteViewModel noteVM = new NoteViewModel(bubbleCenter, noteBubbleVM.NoteBubble.Note, sessionVM.Notes, sessionVM);
+            sessionVM.Notes.Items.Add(noteVM.SVItem);
+            sessionVM.Bubbles.Items.Remove(noteBubbleVM.SVItem);
         }
 
         /// <summary>
