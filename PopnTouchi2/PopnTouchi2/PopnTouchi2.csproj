@@ -108,6 +108,7 @@
     <Compile Include="Model\Stave.cs" />
     <Compile Include="ViewModel\NoteViewModel.cs" />
     <Compile Include="ViewModel\Theme1ViewModel.cs" />
+    <Compile Include="ViewModel\TreeViewModel.cs" />
     <Page Include="DesktopWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -164,6 +165,11 @@
     <Content Include="PopnTouchi2.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Resource Include="Resources\Images\UI_items\lower_branch.png" />
+    <Resource Include="Resources\Images\UI_items\ocarina.png" />
+    <Resource Include="Resources\Images\UI_items\piano.png" />
+    <Resource Include="Resources\Images\UI_items\root.png" />
+    <Resource Include="Resources\Images\UI_items\upper_branch.png" />
     <Resource Include="Resources\Images\Theme1\background.png" />
     <Resource Include="Resources\Images\Theme1\Bubbles\Melodies\8.png" />
     <Resource Include="Resources\Images\Theme1\Bubbles\Melodies\s.png" />

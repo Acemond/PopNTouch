@@ -133,6 +133,7 @@ namespace PopnTouchi2.ViewModel
             Grid.Children.Add(Notes);
             Grid.SetZIndex(Notes, 1);
 
+
             Grid.Children.Add(NbgVM.Grid);
             Grid.SetZIndex(NbgVM.Grid, 0);
             Grid.Children.Add(MbgVM.Grid);
@@ -153,6 +154,9 @@ namespace PopnTouchi2.ViewModel
                     Grid.Background = (new Theme4ViewModel(Session.Theme, this)).BackgroundImage;
                     break;
             }
+
+            //TODO changer thickness bottom et top avec les résolutions plus grandes
+            displayTrees(new Thickness(10, 50, 200, 90), new Thickness(10,10,200,400));
 
             Reducer = new SurfaceButton();
             Reduced = false;
@@ -192,6 +196,15 @@ namespace PopnTouchi2.ViewModel
 
             Stop.Click += new RoutedEventHandler(Stop_Click);          
 
+        }
+
+        private void displayTrees(Thickness up, Thickness down)
+        {
+            TreeViewModel treeUp = new TreeViewModel(true, up, session, session.Theme);
+            Grid.Children.Add(treeUp.Grid);
+
+            TreeViewModel treeDown = new TreeViewModel(false, down, session, session.Theme);
+            Grid.Children.Add(treeDown.Grid);
         }
 
         public SessionViewModel(Session s, List<int> IDs) : this(s)

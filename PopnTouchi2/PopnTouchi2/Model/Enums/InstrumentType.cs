@@ -17,7 +17,7 @@ namespace PopnTouchi2
         piano = 5,
         saxo = 6,
         vibraphone = 7,
-        violon = 8
+        violon = 8,
 
     }
 }
