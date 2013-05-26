@@ -105,7 +105,7 @@ namespace PopnTouchi2.ViewModel
         public ImageBrush getImageBrush(String path)
         {
             ImageBrush img = new ImageBrush();
-            img.ImageSource = new BitmapImage(new Uri(@"../../Resources/Images/UI_items/"+path+".png", UriKind.Relative));
+            img.ImageSource = new BitmapImage(new Uri(@"../../Resources/Images/UI_items/Instruments/"+path+".png", UriKind.Relative));
             return img;
         }
 
