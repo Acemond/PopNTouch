@@ -107,6 +107,41 @@ namespace PopnTouchi2.ViewModel.Animation
 
             SessionVM.Session.StopBackgroundSound();
             stopAllBubblesAnimations();
+        }
+
+        private void ReplaceGridWithSnapShot(ImageBrush ss)
+        {
+            SessionVM.Grid.Children.Remove(SessionVM.Notes);
+            SessionVM.Grid.Children.Remove(SessionVM.NbgVM.Grid);
+            SessionVM.Grid.Children.Remove(SessionVM.MbgVM.Grid);
+            SessionVM.Grid.Children.Remove(SessionVM.TreeUp.Grid);
+            SessionVM.Grid.Children.Remove(SessionVM.TreeDown.Grid);
+
+            System.Windows.Shapes.Rectangle rect = new System.Windows.Shapes.Rectangle();
+            rect.Fill = Brushes.White;
+            rect.Opacity = 1;
+            SessionVM.Grid.Children.Add(rect);
+            rect.Margin = new Thickness(0);
+
+            Storyboard stb = new Storyboard();
+            DoubleAnimation da = new DoubleAnimation();
+
+            da.From = 1;
+            da.To = 0;
+            da.Duration = new Duration(TimeSpan.FromSeconds(1));
+            da.FillBehavior = FillBehavior.HoldEnd;
+            stb.Children.Add(da);
+            Storyboard.SetTarget(da, rect);
+            Storyboard.SetTargetProperty(da, new PropertyPath(System.Windows.Shapes.Rectangle.OpacityProperty));
+
+            da.Completed += new EventHandler(flash_Completed);
+            stb.Begin();
+
+            SessionVM.Grid.Background = ss;
+        }
+
+        void flash_Completed(object sender, EventArgs e)
+        {
 
             #region Animation Settings
             Storyboard stb = new Storyboard();
@@ -150,36 +185,6 @@ namespace PopnTouchi2.ViewModel.Animation
             SessionVM.NbgVM.Grid.Height = SessionVM.NbgVM.Grid.ActualHeight / 4;
             SessionVM.MbgVM.Grid.Width = SessionVM.MbgVM.Grid.ActualWidth / 4;
             SessionVM.MbgVM.Grid.Height = SessionVM.MbgVM.Grid.ActualHeight / 4;
-        }
-
-        private void ReplaceGridWithSnapShot(ImageBrush ss)
-        {
-            SessionVM.Grid.Children.Remove(SessionVM.Notes);
-            SessionVM.Grid.Children.Remove(SessionVM.NbgVM.Grid);
-            SessionVM.Grid.Children.Remove(SessionVM.MbgVM.Grid);
-            SessionVM.Grid.Children.Remove(SessionVM.TreeUp.Grid);
-            SessionVM.Grid.Children.Remove(SessionVM.TreeDown.Grid);
-
-            System.Windows.Shapes.Rectangle rect = new System.Windows.Shapes.Rectangle();
-            rect.Fill = Brushes.White;
-            rect.Opacity = 1;
-            SessionVM.Grid.Children.Add(rect);
-            rect.Margin = new Thickness(0);
-
-            Storyboard stb = new Storyboard();
-            DoubleAnimation da = new DoubleAnimation();
-
-            da.From = 1;
-            da.To = 0;
-            da.Duration = new Duration(TimeSpan.FromSeconds(1));
-            da.FillBehavior = FillBehavior.HoldEnd;
-            stb.Children.Add(da);
-            Storyboard.SetTarget(da, rect);
-            Storyboard.SetTargetProperty(da, new PropertyPath(System.Windows.Shapes.Rectangle.OpacityProperty));
-
-            stb.Begin();
-
-            SessionVM.Grid.Background = ss;
         }
 
         private void MakeReadyForSnapShot(Grid grid)
