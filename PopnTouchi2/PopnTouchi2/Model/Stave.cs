@@ -57,6 +57,12 @@ namespace PopnTouchi2
 
         /// <summary>
         /// Parameter.
+        /// A Timer object needed to play the Melody sound.
+        /// </summary>
+        private Timer TimerMelody;
+
+        /// <summary>
+        /// Parameter.
         /// Used to play a MelodyBubble
         /// </summary>
         public Melody melody { get; set; }
@@ -81,6 +87,7 @@ namespace PopnTouchi2
             Notes = new ObservableCollection<Note>();
             CurrentInstrument = instru;
             Timer = new Timer();
+            TimerMelody = new Timer();
             IteratorNotes = 0;
             IteratorMelody = 0;
             isUp = up;
@@ -138,9 +145,9 @@ namespace PopnTouchi2
         /// </summary>
         public void PlayMelody()
         {
-            Timer.Interval = 30000 / GlobalVariables.bpm;
-            Timer.Start();
-            Timer.Elapsed += new ElapsedEventHandler(PlayMelody);
+            TimerMelody.Interval = 30000 / GlobalVariables.bpm;
+            TimerMelody.Start();
+            TimerMelody.Elapsed += new ElapsedEventHandler(PlayMelody);
         }
 
         /// <summary>
@@ -255,9 +262,9 @@ namespace PopnTouchi2
         /// </summary>
         public void StopMelody()
         {
-            Timer.Stop();
-            Timer.EndInit();
-            Timer.Elapsed -= new ElapsedEventHandler(PlayMelody);
+            TimerMelody.Stop();
+            TimerMelody.EndInit();
+            TimerMelody.Elapsed -= new ElapsedEventHandler(PlayMelody);
             GlobalVariables.position_Melody = 0;
             IteratorMelody = 0;
         }

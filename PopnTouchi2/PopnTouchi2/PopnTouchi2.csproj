@@ -169,14 +169,9 @@
     <Resource Include="Resources\Images\Theme3\Bubbles\Melodies\infinite.png" />
     <Resource Include="Resources\Images\Theme2\Bubbles\Melodies\infinite.png" />
     <Resource Include="Resources\Images\Theme1\Bubbles\Melodies\infinite.png" />
-    <Resource Include="Resources\Images\UI_items\lower_branch.png" />
-    <Resource Include="Resources\Images\UI_items\ocarina.png" />
-    <Resource Include="Resources\Images\UI_items\piano.png" />
-    <Resource Include="Resources\Images\UI_items\root.png" />
-    <Resource Include="Resources\Images\UI_items\upper_branch.png" />
     <Resource Include="Resources\Images\UI_items\Instruments\bass.png" />
     <Resource Include="Resources\Images\UI_items\Instruments\clarinet.png" />
-    <Resource Include="Resources\Images\UI_items\Instruments\double_bass.png" />
+    <Resource Include="Resources\Images\UI_items\Instruments\contrebass.png" />
     <Resource Include="Resources\Images\UI_items\Instruments\flute.png" />
     <Resource Include="Resources\Images\UI_items\Instruments\guitar.png" />
     <Resource Include="Resources\Images\UI_items\Instruments\piano.png" />

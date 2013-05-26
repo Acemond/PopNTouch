@@ -238,16 +238,18 @@ namespace PopnTouchi2.ViewModel.Animation
             if (playUp)
             {
                 sessionVM.Session.StaveTop.melody = melody;
+                playUp = false;
                 sessionVM.Session.StaveTop.StopMelody();
                 sessionVM.Session.StaveTop.PlayMelody();
-                playUp = false;
+               
             }
             else
             {
                 sessionVM.Session.StaveBottom.melody = melody;
+                playUp = true;
                 sessionVM.Session.StaveBottom.StopMelody();
                 sessionVM.Session.StaveBottom.PlayMelody();
-                playUp = true;
+
             }
 
         }

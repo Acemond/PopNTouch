@@ -19,9 +19,9 @@ namespace PopnTouchi2
         public Theme1() : base()
         {
             InstrumentsTop[0] = new Instrument(InstrumentType.piano);
-            InstrumentsTop[1] = new Instrument(InstrumentType.piano);
-            InstrumentsBottom[0] = new Instrument(InstrumentType.piano);
-            InstrumentsBottom[1] = new Instrument(InstrumentType.piano);
+            InstrumentsTop[1] = new Instrument(InstrumentType.flute);
+            InstrumentsBottom[0] = new Instrument(InstrumentType.bass);
+            InstrumentsBottom[1] = new Instrument(InstrumentType.contrebass);
 
             sound = AudioController.INSTANCE.SoundBank.GetCue("loop_eveningWater");
         }
