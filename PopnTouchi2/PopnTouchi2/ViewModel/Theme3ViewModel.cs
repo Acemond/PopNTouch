@@ -57,7 +57,7 @@ namespace PopnTouchi2.ViewModel
         /// Property.
         /// Theme defines Elements' aspect.
         /// </summary>
-        protected Dictionary<Melody, BitmapImage> MelodyBubbleImages { get; set; }
+        protected Dictionary<Gesture, BitmapImage> MelodyBubbleImages { get; set; }
 
         /// <summary>
         /// Property.
@@ -80,7 +80,7 @@ namespace PopnTouchi2.ViewModel
             : base(s)
         {
             NoteBubbleImages = new Dictionary<NoteValue, BitmapImage>();
-            MelodyBubbleImages = new Dictionary<Melody, BitmapImage>();
+            MelodyBubbleImages = new Dictionary<Gesture, BitmapImage>();
             Theme = t;
 
            //TODO Define Images
@@ -111,9 +111,9 @@ namespace PopnTouchi2.ViewModel
         /// </summary>
         /// <param name="melody">The Melody needed to find the Bubble Image</param>
         /// <returns>A BitmapImage linked to the Bubble</returns>
-        public BitmapImage GetMelodyBubbleImageSource(Melody melody)
+        public BitmapImage GetMelodyBubbleImageSource(Gesture gesture)
         {
-            return MelodyBubbleImages[melody];
+            return MelodyBubbleImages[gesture];
         }
     }
 }

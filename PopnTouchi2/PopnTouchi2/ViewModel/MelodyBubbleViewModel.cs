@@ -87,16 +87,16 @@ namespace PopnTouchi2.ViewModel
             switch (SessionVM.Session.ThemeID)
             {
                 case 1:
-                    bubbleImage.SetValue(Image.SourceProperty, new Theme1ViewModel(SessionVM.Session.Theme, SessionVM).GetMelodyBubbleImageSource(mb.Melody));
+                    bubbleImage.SetValue(Image.SourceProperty, new Theme1ViewModel(SessionVM.Session.Theme, SessionVM).GetMelodyBubbleImageSource(mb.Melody.gesture));
                     break;
                 case 2:
-                    bubbleImage.SetValue(Image.SourceProperty, new Theme2ViewModel(SessionVM.Session.Theme, SessionVM).GetMelodyBubbleImageSource(mb.Melody));
+                    bubbleImage.SetValue(Image.SourceProperty, new Theme2ViewModel(SessionVM.Session.Theme, SessionVM).GetMelodyBubbleImageSource(mb.Melody.gesture));
                     break;
                 case 3:
-                    bubbleImage.SetValue(Image.SourceProperty, new Theme3ViewModel(SessionVM.Session.Theme, SessionVM).GetMelodyBubbleImageSource(mb.Melody));
+                    bubbleImage.SetValue(Image.SourceProperty, new Theme3ViewModel(SessionVM.Session.Theme, SessionVM).GetMelodyBubbleImageSource(mb.Melody.gesture));
                     break;
                 case 4:
-                    bubbleImage.SetValue(Image.SourceProperty, new Theme4ViewModel(SessionVM.Session.Theme, SessionVM).GetMelodyBubbleImageSource(mb.Melody));
+                    bubbleImage.SetValue(Image.SourceProperty, new Theme4ViewModel(SessionVM.Session.Theme, SessionVM).GetMelodyBubbleImageSource(mb.Melody.gesture));
                     break;
             }
 

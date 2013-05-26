@@ -33,7 +33,9 @@ namespace PopnTouchi2
         /// </summary>
         public MelodyBubble CreateMelodyBubble()
         {
-            throw new System.NotImplementedException();
+            MelodyBubble mb = new MelodyBubble();
+            MelodyBubbles.Add(mb);
+            return mb;
         }
 
         /// <summary>
@@ -42,7 +44,10 @@ namespace PopnTouchi2
         /// <param name="melody"></param>
         public void RemoveFromGenerator(MelodyBubble melody)
         {
-            throw new System.NotImplementedException();
+            if (MelodyBubbles.Contains(melody))
+            {
+                MelodyBubbles.Remove(melody);
+            }
         }
     }
 }

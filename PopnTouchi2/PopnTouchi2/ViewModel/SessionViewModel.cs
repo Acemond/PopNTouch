@@ -194,8 +194,7 @@ namespace PopnTouchi2.ViewModel
             Grid.Children.Add(Stop);
             Stop.Visibility = Visibility.Hidden;
 
-            Stop.Click += new RoutedEventHandler(Stop_Click);          
-
+            Stop.Click += new RoutedEventHandler(Stop_Click);
         }
 
         private void displayTrees(Thickness up, Thickness down)

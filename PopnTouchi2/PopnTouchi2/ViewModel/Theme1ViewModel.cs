@@ -57,7 +57,7 @@ namespace PopnTouchi2.ViewModel
         /// Property.
         /// Theme defines Elements' aspect.
         /// </summary>
-        protected Dictionary<Melody, BitmapImage> MelodyBubbleImages { get; set; }
+        protected Dictionary<Gesture, BitmapImage> MelodyBubbleImages { get; set; }
 
         /// <summary>
         /// Property.
@@ -80,7 +80,7 @@ namespace PopnTouchi2.ViewModel
             : base(s)
         {
             NoteBubbleImages = new Dictionary<NoteValue, BitmapImage>();
-            MelodyBubbleImages = new Dictionary<Melody, BitmapImage>();
+            MelodyBubbleImages = new Dictionary<Gesture, BitmapImage>();
             Theme = t;
 
             BackgroundImage = new ImageBrush();
@@ -99,21 +99,28 @@ namespace PopnTouchi2.ViewModel
                     new Uri(@"../../Resources/Images/Theme1/melodyfactory.png", UriKind.Relative)
                 );
             PlayImage = new ImageBrush();
-            PlayImage.ImageSource = GetBitmapImage("playdrop");
+            PlayImage.ImageSource = new BitmapImage(new Uri(@"../../Resources/Images/Theme1/Bubbles/playdrop.png", UriKind.Relative));
 
-            BitmapImage crotchetImageSource = GetBitmapImage("bullenoire");
+            BitmapImage crotchetImageSource = GetNoteBitmapImage("bullenoire");
 
-            BitmapImage minimImageSource = GetBitmapImage("bulleblanche");
+            BitmapImage minimImageSource = GetNoteBitmapImage("bulleblanche");
 
             /*BitmapImage quaverImageSource = new BitmapImage(
                 new Uri(@"../../Resources/Images/Theme1/Bubbles/Notes/bullecroche.png", UriKind.Relative)
             );*/
 
-            BitmapImage quaverImageSource = GetBitmapImage("bullecroche");
+            BitmapImage quaverImageSource = GetNoteBitmapImage("bullecroche");
 
             NoteBubbleImages.Add(NoteValue.crotchet, crotchetImageSource);
             NoteBubbleImages.Add(NoteValue.minim, minimImageSource);
             NoteBubbleImages.Add(NoteValue.quaver, quaverImageSource);
+
+            MelodyBubbleImages.Add(Gesture.infinite , GetMelodyBitmapImage("infinite"));
+            MelodyBubbleImages.Add(Gesture.s, GetMelodyBitmapImage("s"));
+            MelodyBubbleImages.Add(Gesture.t, GetMelodyBitmapImage("t"));
+            MelodyBubbleImages.Add(Gesture.wave, GetMelodyBitmapImage("wave"));
+            MelodyBubbleImages.Add(Gesture.zigzag, GetMelodyBitmapImage("zigzag"));
+
         }
 
         /// <summary>
@@ -121,9 +128,19 @@ namespace PopnTouchi2.ViewModel
         /// </summary>
         /// <param name="img">Image name</param>
         /// <returns>BitmapImage corresponding</returns>
-        public BitmapImage GetBitmapImage(String img)
+        public BitmapImage GetNoteBitmapImage(String img)
         {
-            return new BitmapImage(new Uri(@"../../Resources/Images/Theme1/Bubbles/Notes/" + img + ".png", UriKind.Relative));
+            return new BitmapImage(new Uri(@"../../Resources/Images/Theme" + SessionVM.Session.ThemeID +"/Bubbles/Notes/" + img + ".png", UriKind.Relative));
+        }
+
+        /// <summary>
+        /// Retrieves the bubble bitmap image with the given name.
+        /// </summary>
+        /// <param name="img">Image name</param>
+        /// <returns>BitmapImage corresponding</returns>
+        public BitmapImage GetMelodyBitmapImage(String img)
+        {
+            return new BitmapImage(new Uri(@"../../Resources/Images/Theme" + SessionVM.Session.ThemeID + "/Bubbles/Melodies/" + img + ".png", UriKind.Relative));
         }
 
         /// <summary>
@@ -141,9 +158,9 @@ namespace PopnTouchi2.ViewModel
         /// </summary>
         /// <param name="melody">The Melody needed to find the Bubble Image</param>
         /// <returns>A BitmapImage linked to the Bubble</returns>
-        public BitmapImage GetMelodyBubbleImageSource(Melody melody)
+        public BitmapImage GetMelodyBubbleImageSource(Gesture gesture)
         {
-            return MelodyBubbleImages[melody];
+            return MelodyBubbleImages[gesture];
         }
     }
 }

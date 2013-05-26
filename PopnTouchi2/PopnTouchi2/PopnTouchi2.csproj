@@ -165,13 +165,16 @@
     <Content Include="PopnTouchi2.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Resource Include="Resources\Images\Theme4\Bubbles\Melodies\infinite.png" />
+    <Resource Include="Resources\Images\Theme3\Bubbles\Melodies\infinite.png" />
+    <Resource Include="Resources\Images\Theme2\Bubbles\Melodies\infinite.png" />
+    <Resource Include="Resources\Images\Theme1\Bubbles\Melodies\infinite.png" />
     <Resource Include="Resources\Images\UI_items\lower_branch.png" />
     <Resource Include="Resources\Images\UI_items\ocarina.png" />
     <Resource Include="Resources\Images\UI_items\piano.png" />
     <Resource Include="Resources\Images\UI_items\root.png" />
     <Resource Include="Resources\Images\UI_items\upper_branch.png" />
     <Resource Include="Resources\Images\Theme1\background.png" />
-    <Resource Include="Resources\Images\Theme1\Bubbles\Melodies\8.png" />
     <Resource Include="Resources\Images\Theme1\Bubbles\Melodies\s.png" />
     <Resource Include="Resources\Images\Theme1\Bubbles\Melodies\t.png" />
     <Resource Include="Resources\Images\Theme1\Bubbles\Melodies\wave.png" />
@@ -197,7 +200,6 @@
     <Resource Include="Resources\images\desktop.png" />
     <Resource Include="Resources\Images\UI_items\players.png" />
     <Resource Include="Resources\Images\Theme2\background.png" />
-    <Resource Include="Resources\Images\Theme2\Bubbles\Melodies\8.png" />
     <Resource Include="Resources\Images\Theme2\Bubbles\Melodies\s.png" />
     <Resource Include="Resources\Images\Theme2\Bubbles\Melodies\t.png" />
     <Resource Include="Resources\Images\Theme2\Bubbles\Melodies\wave.png" />
@@ -213,7 +215,6 @@
     <Resource Include="Resources\Images\Theme2\soundpointdisable.png" />
     <Resource Include="Resources\Images\Theme2\soundpointenable.png" />
     <Resource Include="Resources\Images\Theme3\background.png" />
-    <Resource Include="Resources\Images\Theme3\Bubbles\Melodies\8.png" />
     <Resource Include="Resources\Images\Theme3\Bubbles\Melodies\s.png" />
     <Resource Include="Resources\Images\Theme3\Bubbles\Melodies\t.png" />
     <Resource Include="Resources\Images\Theme3\Bubbles\Melodies\wave.png" />
@@ -229,7 +230,6 @@
     <Resource Include="Resources\Images\Theme3\soundpointdisable.png" />
     <Resource Include="Resources\Images\Theme3\soundpointenable.png" />
     <Resource Include="Resources\Images\Theme4\background.png" />
-    <Resource Include="Resources\Images\Theme4\Bubbles\Melodies\8.png" />
     <Resource Include="Resources\Images\Theme4\Bubbles\Melodies\s.png" />
     <Resource Include="Resources\Images\Theme4\Bubbles\Melodies\t.png" />
     <Resource Include="Resources\Images\Theme4\Bubbles\Melodies\wave.png" />

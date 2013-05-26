@@ -10,8 +10,10 @@ namespace PopnTouchi2
     /// </summary>
     public enum Gesture
     {
-        Wave,
-        infinite,
-        circle
+        infinite = 1,
+        s = 2,
+        t = 3,
+        wave = 4,
+        zigzag = 5
     }
 }

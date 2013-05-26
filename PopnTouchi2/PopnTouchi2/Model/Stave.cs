@@ -56,6 +56,19 @@ namespace PopnTouchi2
         private Timer Timer;
 
         /// <summary>
+        /// Parameter.
+        /// Used to play a MelodyBubble
+        /// </summary>
+        public Melody melody { get; set; }
+
+        /// <summary>
+        /// Property.
+        /// Iterator of the Melody list
+        /// </summary>
+        public int IteratorMelody { get; set; }
+
+
+        /// <summary>
         /// Stave Constructor.
         /// Initializes a new empty list of Notes, a Timer, the MaxPosition to 0 and the instrument
         /// </summary>
@@ -69,6 +82,7 @@ namespace PopnTouchi2
             CurrentInstrument = instru;
             Timer = new Timer();
             IteratorNotes = 0;
+            IteratorMelody = 0;
             isUp = up;
         }
 
@@ -117,6 +131,47 @@ namespace PopnTouchi2
         /// </summary>
         /// <param name="note">The note to remove</param>
         public void RemoveNote(Note note) { Notes.Remove(note); }
+
+        /// <summary>
+        /// Plays the melody contained by the MelodyBubble.
+        /// Calls the specific Event "PlayMelody"
+        /// </summary>
+        public void PlayMelody()
+        {
+            Timer.Interval = 30000 / GlobalVariables.bpm;
+            Timer.Start();
+            Timer.Elapsed += new ElapsedEventHandler(PlayMelody);
+        }
+
+        /// <summary>
+        /// Event triggered when the MelodyBubble is touched.
+        /// </summary>
+        /// <param name="source"></param>
+        /// <param name="e"></param>
+        private void PlayMelody(object source, ElapsedEventArgs e)
+        {
+            bool play = true;
+
+            if (GlobalVariables.position_Melody <= melody.Notes.Last().Position + 1)
+            {
+                while (play && (IteratorMelody < melody.Notes.Count))
+                {
+                    if (melody.Notes[IteratorMelody].Position == GlobalVariables.position_Melody)
+                    {
+                        CurrentInstrument.PlayNote(melody.Notes[IteratorMelody]);
+                        IteratorMelody++;
+                    }
+                    else play = false;
+                }
+
+                GlobalVariables.position_Melody++;
+
+            }
+            else
+            {
+                StopMelody();
+            }
+        }
 
         /// <summary>
         /// Plays all the notes contained by the stave.
@@ -193,6 +248,18 @@ namespace PopnTouchi2
                 theme.refreshSound();
                 theme.sound.Play();
             }
+        }
+
+        /// <summary>
+        /// Stops the melody currently playing.
+        /// </summary>
+        public void StopMelody()
+        {
+            Timer.Stop();
+            Timer.EndInit();
+            Timer.Elapsed -= new ElapsedEventHandler(PlayMelody);
+            GlobalVariables.position_Melody = 0;
+            IteratorMelody = 0;
         }
     }
 }
