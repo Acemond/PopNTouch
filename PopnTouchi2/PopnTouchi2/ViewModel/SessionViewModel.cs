@@ -105,6 +105,12 @@ namespace PopnTouchi2.ViewModel
         public bool Reduced { get; set; }
 
         /// <summary>
+        /// Sets Current session's orientation
+        /// Top, Bottom, Right, Left.
+        /// </summary>
+        public string Orientation { get; set; }
+
+        /// <summary>
         /// Parameter.
         /// Session's number.
         /// </summary>
