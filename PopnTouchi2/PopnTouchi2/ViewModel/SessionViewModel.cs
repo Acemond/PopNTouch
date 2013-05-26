@@ -213,7 +213,7 @@ namespace PopnTouchi2.ViewModel
             Stream stream = File.Open(path, FileMode.Create);
             BinaryFormatter formatter = new BinaryFormatter();
 
-            SessionData sd = new SessionData(this.Session);
+            SessionData sd = new SessionData(this);
             formatter.Serialize(stream, sd);
             stream.Close();
         }
@@ -240,6 +240,7 @@ namespace PopnTouchi2.ViewModel
             Session.StaveBottom = new Stave(false, Session.Theme.InstrumentsBottom[0], Session.Theme);
             Session.StaveTop.Notes = sd.StaveTopNotes;
             Session.StaveBottom.Notes = sd.StaveBottomNotes;
+            //Notes = sd.NotesSV;
             Session.ThemeID = sd.ThemeID;
         }
     }

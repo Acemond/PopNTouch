@@ -23,7 +23,17 @@ namespace PopnTouchi2.ViewModel.Animation
         /// 
         /// </summary>
         public SessionViewModel SessionVM { get; set; }
-        
+
+        /// <summary>
+        /// 
+        /// </summary>
+        private ScatterViewItem Svi { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        private DesktopView MainDesktop { get; set; }
+
         /// <summary>
         /// 
         /// </summary>
@@ -70,14 +80,11 @@ namespace PopnTouchi2.ViewModel.Animation
         {
             if (SessionVM.Reduced)
             {
-                SessionVM.LoadSession("test.bin");
-                SessionVM.Session.StopBackgroundSound();
-
                 SessionVM.Reducer.Content = "Reduce !";
                 SessionVM.Reducer.Background = System.Windows.Media.Brushes.Red;
                 
-                ScatterViewItem svi = (ScatterViewItem)SessionVM.Grid.Parent;
-                DesktopView mainDesktop = (DesktopView)((ScatterView)svi.Parent).Parent;
+                Svi = (ScatterViewItem)SessionVM.Grid.Parent;
+                MainDesktop = (DesktopView)((ScatterView)Svi.Parent).Parent;
 
                 #region Animation Settings
                 Storyboard stb = new Storyboard();
@@ -89,43 +96,43 @@ namespace PopnTouchi2.ViewModel.Animation
                 DoubleAnimation orientationAnimation = new DoubleAnimation();
                 ThicknessAnimation borderAnimation = new ThicknessAnimation();
 
-                centerPosAnimation.From = svi.ActualCenter;
-                centerPosAnimation.To = new System.Windows.Point(mainDesktop.ActualWidth / 2, mainDesktop.ActualHeight / 2);
+                centerPosAnimation.From = Svi.ActualCenter;
+                centerPosAnimation.To = new System.Windows.Point(MainDesktop.ActualWidth / 2, MainDesktop.ActualHeight / 2);
                 centerPosAnimation.Duration = new Duration(TimeSpan.FromSeconds(.75));
                 centerPosAnimation.FillBehavior = FillBehavior.HoldEnd;
                 stb.Children.Add(centerPosAnimation);
-                Storyboard.SetTarget(centerPosAnimation, svi);
+                Storyboard.SetTarget(centerPosAnimation, Svi);
                 Storyboard.SetTargetProperty(centerPosAnimation, new PropertyPath(ScatterViewItem.CenterProperty));
 
-                orientationAnimation.From = svi.ActualOrientation;
-                if (svi.ActualOrientation <= 180)
+                orientationAnimation.From = Svi.ActualOrientation;
+                if (Svi.ActualOrientation <= 180)
                     orientationAnimation.To = 0;
                 else
                     orientationAnimation.To = 360;
                 orientationAnimation.Duration = new Duration(TimeSpan.FromSeconds(.75));
                 orientationAnimation.FillBehavior = FillBehavior.HoldEnd;
                 stb.Children.Add(orientationAnimation);
-                Storyboard.SetTarget(orientationAnimation, svi);
+                Storyboard.SetTarget(orientationAnimation, Svi);
                 Storyboard.SetTargetProperty(orientationAnimation, new PropertyPath(ScatterViewItem.OrientationProperty));
 
-                heightAnimation.From = svi.ActualHeight;
-                heightAnimation.To = svi.ActualHeight * 4;
+                heightAnimation.From = Svi.ActualHeight;
+                heightAnimation.To = Svi.ActualHeight * 4;
                 heightAnimation.Duration = new Duration(TimeSpan.FromSeconds(1));
                 heightAnimation.EasingFunction = new ExponentialEase();
                 heightAnimation.AccelerationRatio = 1;
                 heightAnimation.FillBehavior = FillBehavior.HoldEnd;
                 stb.Children.Add(heightAnimation);
-                Storyboard.SetTarget(heightAnimation, svi);
+                Storyboard.SetTarget(heightAnimation, Svi);
                 Storyboard.SetTargetProperty(heightAnimation, new PropertyPath(ScatterViewItem.HeightProperty));
 
-                widthAnimation.From = svi.ActualWidth;
-                widthAnimation.To = svi.ActualWidth * 4;
+                widthAnimation.From = Svi.ActualWidth;
+                widthAnimation.To = Svi.ActualWidth * 4;
                 widthAnimation.Duration = new Duration(TimeSpan.FromSeconds(1));
                 widthAnimation.EasingFunction = new ExponentialEase();
                 widthAnimation.AccelerationRatio = 1;
                 widthAnimation.FillBehavior = FillBehavior.HoldEnd;
                 stb.Children.Add(widthAnimation);
-                Storyboard.SetTarget(widthAnimation, svi);
+                Storyboard.SetTarget(widthAnimation, Svi);
                 Storyboard.SetTargetProperty(widthAnimation, new PropertyPath(ScatterViewItem.WidthProperty));
 
                 borderAnimation.From = new Thickness(15);
@@ -133,7 +140,7 @@ namespace PopnTouchi2.ViewModel.Animation
                 borderAnimation.Duration = new Duration(TimeSpan.FromSeconds(1));
                 borderAnimation.FillBehavior = FillBehavior.HoldEnd;
                 stb.Children.Add(borderAnimation);
-                Storyboard.SetTarget(borderAnimation, svi);
+                Storyboard.SetTarget(borderAnimation, Svi);
                 Storyboard.SetTargetProperty(borderAnimation, new PropertyPath(ScatterViewItem.BorderThicknessProperty));
 
                 gridHeightAnimation.From = SessionVM.Grid.ActualHeight;
@@ -170,15 +177,24 @@ namespace PopnTouchi2.ViewModel.Animation
             }
             else
             {
+                MainDesktop = (DesktopView)SessionVM.Grid.Parent;
+
                 SessionVM.SaveSession("test.bin");
 
-                SessionVM.Grid.Children.Remove(SessionVM.Bubbles);
-                ScatterViewItem svii = new ScatterViewItem();
+                MakeReadyForSnapShot(SessionVM.Grid);
                 MemoryStream ms = new MemoryStream(Screenshot.GetSnapshot(SessionVM.Grid, .5, 100));
                 System.Drawing.Image sc = System.Drawing.Image.FromStream(ms);
                 sc.Save("sc.jpg");
-                //Graphics.DrawImage(sc);
 
+                #region Sets the SnapShot as SVI content
+                //ss for snapshot
+                ImageBrush ss = new ImageBrush();
+                ss.ImageSource = new BitmapImage(new Uri(@"./sc.jpg", UriKind.Relative));
+
+                ReplaceGridWithSnapShot(ss);
+                #endregion
+
+                //SessionVM.Grid.Children.Remove(SessionVM.Notes);
                 SessionVM.Session.StopBackgroundSound();
 
                 stopAllBubblesAnimations();
@@ -218,10 +234,9 @@ namespace PopnTouchi2.ViewModel.Animation
 
                 SessionVM.Grid.Height = SessionVM.Grid.ActualHeight / 4;
                 SessionVM.Grid.Width = SessionVM.Grid.ActualWidth / 4;
-
-                widthAnimation.Completed += new EventHandler(stb_Completed);
                 #endregion
 
+                widthAnimation.Completed += new EventHandler(stb_Completed);
                 stb.Begin(SessionVM.Grid);
 
                 SessionVM.NbgVM.Grid.Width = SessionVM.NbgVM.Grid.ActualWidth / 4;
@@ -229,6 +244,31 @@ namespace PopnTouchi2.ViewModel.Animation
                 SessionVM.MbgVM.Grid.Width = SessionVM.MbgVM.Grid.ActualWidth / 4;
                 SessionVM.MbgVM.Grid.Height = SessionVM.MbgVM.Grid.ActualHeight / 4;
             }
+        }
+
+        private void ReplaceGridWithSnapShot(ImageBrush ss)
+        {
+            SessionVM.Grid.Background = ss;
+            SessionVM.Grid.Children.Remove(SessionVM.Notes);
+            SessionVM.Grid.Children.Remove(SessionVM.NbgVM.Grid);
+            SessionVM.Grid.Children.Remove(SessionVM.MbgVM.Grid);
+        }
+
+        private void MakeReadyForSnapShot(Grid grid)
+        {
+            grid.Children.Remove(SessionVM.Bubbles);
+            grid.Children.Remove(SessionVM.Reducer);
+            grid.Children.Remove(SessionVM.Play);
+            grid.Children.Remove(SessionVM.Stop);
+        }
+
+        private void MakeReadyForDisplay(Grid grid)
+        {
+            grid.Children.Add(SessionVM.Bubbles);
+            grid.Children.Add(SessionVM.Notes);
+            grid.Children.Add(SessionVM.Reducer);
+            grid.Children.Add(SessionVM.Play);
+            grid.Children.Add(SessionVM.Stop);
         }
 
         /// <summary>
@@ -247,12 +287,16 @@ namespace PopnTouchi2.ViewModel.Animation
         /// <param name="e"></param>
         public void stb_enlarge_Completed(object sender, EventArgs e)
         {
-            ScatterViewItem svi = (ScatterViewItem)SessionVM.Grid.Parent;
-            DesktopView mainDesktop = (DesktopView)((ScatterView)svi.Parent).Parent;
-            svi.Content = null;
+            SessionVM.LoadSession("test.bin");
+            SessionVM.Session.PlayBackgroundSound();
 
-            ((ScatterView)svi.Parent).Items.Remove(svi);
-            mainDesktop.Children.Add(SessionVM.Grid);
+            MakeReadyForDisplay(SessionVM.Grid);
+            Svi = (ScatterViewItem)SessionVM.Grid.Parent;
+            MainDesktop = (DesktopView)((ScatterView)Svi.Parent).Parent;
+            Svi.Content = null;
+
+            ((ScatterView)Svi.Parent).Items.Remove(Svi);
+            MainDesktop.Children.Add(SessionVM.Grid);
         }
 
         /// <summary>
@@ -262,17 +306,18 @@ namespace PopnTouchi2.ViewModel.Animation
         /// <param name="e"></param>
         public void stb_Completed(object sender, EventArgs e)
         {
-            ScatterViewItem svi = new ScatterViewItem();
-            DesktopView mainDesktop = (DesktopView)SessionVM.Grid.Parent;
-            mainDesktop.Children.Remove(SessionVM.Grid);
-            svi.Width = SessionVM.Grid.Width;
-            svi.Height = SessionVM.Grid.Height;
-            svi.CanScale = false;
-            svi.Content = SessionVM.Grid;
-            svi.BorderBrush = System.Windows.Media.Brushes.White;
-            svi.Orientation = 0;
-            svi.Center = new System.Windows.Point(mainDesktop.ActualWidth / 2, mainDesktop.ActualHeight / 2);
-            mainDesktop.Photos.Items.Add(svi);
+            Svi = new ScatterViewItem();
+            MainDesktop = (DesktopView)SessionVM.Grid.Parent;
+            MainDesktop.Children.Remove(SessionVM.Grid);
+            Svi.Width = SessionVM.Grid.Width;
+            Svi.Height = SessionVM.Grid.Height;
+            Svi.CanScale = false;
+            Svi.Content = SessionVM.Grid;
+            
+            Svi.BorderBrush = System.Windows.Media.Brushes.White;
+            Svi.Orientation = 0;
+            Svi.Center = new System.Windows.Point(MainDesktop.ActualWidth / 2, MainDesktop.ActualHeight / 2);
+            MainDesktop.Photos.Items.Add(Svi);
 
 
             Storyboard stb = new Storyboard();
@@ -285,7 +330,7 @@ namespace PopnTouchi2.ViewModel.Animation
             borderAnimation.Duration = new Duration(TimeSpan.FromSeconds(.5));
             borderAnimation.FillBehavior = FillBehavior.Stop;
             stb.Children.Add(borderAnimation);
-            Storyboard.SetTarget(borderAnimation, svi);
+            Storyboard.SetTarget(borderAnimation, Svi);
             Storyboard.SetTargetProperty(borderAnimation, new PropertyPath(ScatterViewItem.BorderThicknessProperty));
 
             heightAnimation.From = SessionVM.Grid.Height;
@@ -293,7 +338,7 @@ namespace PopnTouchi2.ViewModel.Animation
             heightAnimation.Duration = new Duration(TimeSpan.FromSeconds(.5));
             heightAnimation.FillBehavior = FillBehavior.Stop;
             stb.Children.Add(heightAnimation);
-            Storyboard.SetTarget(heightAnimation, svi);
+            Storyboard.SetTarget(heightAnimation, Svi);
             Storyboard.SetTargetProperty(heightAnimation, new PropertyPath(ScatterViewItem.HeightProperty));
 
             widthAnimation.From = SessionVM.Grid.Width;
@@ -301,12 +346,12 @@ namespace PopnTouchi2.ViewModel.Animation
             widthAnimation.Duration = new Duration(TimeSpan.FromSeconds(.5));
             widthAnimation.FillBehavior = FillBehavior.Stop;
             stb.Children.Add(widthAnimation);
-            Storyboard.SetTarget(widthAnimation, svi);
+            Storyboard.SetTarget(widthAnimation, Svi);
             Storyboard.SetTargetProperty(widthAnimation, new PropertyPath(ScatterViewItem.WidthProperty));
 
-            svi.BorderThickness = new Thickness(15);
-            svi.Width += 30;
-            svi.Height += 30;
+            Svi.BorderThickness = new Thickness(15);
+            Svi.Width += 30;
+            Svi.Height += 30;
 
             widthAnimation.Completed += new EventHandler(stb_border_Completed);
 
@@ -315,15 +360,12 @@ namespace PopnTouchi2.ViewModel.Animation
         }
 
         /// <summary>
-        /// TODO
+        /// Event launched when ScatterViewItem's white borders are fully visible.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         public void stb_border_Completed(object sender, EventArgs e)
         {
-            ScatterViewItem svi = (ScatterViewItem)SessionVM.Grid.Parent;
-            DesktopView mainDesktop = (DesktopView)((ScatterView)svi.Parent).Parent;
-
             Storyboard = new Storyboard();
             PointAnimation centerPosAnimation = new PointAnimation();
             DoubleAnimation orientationAnimation = new DoubleAnimation();
@@ -334,34 +376,34 @@ namespace PopnTouchi2.ViewModel.Animation
             ease.Exponent = 1.5;
 
             Random r = new Random();
-            System.Windows.Point newCenter = new System.Windows.Point(r.Next((int)mainDesktop.ActualWidth), r.Next((int)mainDesktop.ActualHeight));
+            System.Windows.Point newCenter = new System.Windows.Point(r.Next((int)MainDesktop.ActualWidth), r.Next((int)MainDesktop.ActualHeight));
             Double newOrientation = r.Next(-180, 180);
 
-            centerPosAnimation.From = svi.ActualCenter;
+            centerPosAnimation.From = Svi.ActualCenter;
             centerPosAnimation.To = newCenter;
             centerPosAnimation.Duration = new Duration(TimeSpan.FromSeconds(5));
             centerPosAnimation.DecelerationRatio = .9;
             centerPosAnimation.EasingFunction = ease;
             centerPosAnimation.FillBehavior = FillBehavior.Stop;
             Storyboard.Children.Add(centerPosAnimation);
-            Storyboard.SetTarget(centerPosAnimation, svi);
+            Storyboard.SetTarget(centerPosAnimation, Svi);
             Storyboard.SetTargetProperty(centerPosAnimation, new PropertyPath(ScatterViewItem.CenterProperty));
 
-            orientationAnimation.From = svi.ActualOrientation;
+            orientationAnimation.From = Svi.ActualOrientation;
             orientationAnimation.To = newOrientation;
             orientationAnimation.Duration = new Duration(TimeSpan.FromSeconds(5));
             orientationAnimation.DecelerationRatio = .9;
             orientationAnimation.EasingFunction = ease;
             orientationAnimation.FillBehavior = FillBehavior.Stop;
             Storyboard.Children.Add(orientationAnimation);
-            Storyboard.SetTarget(orientationAnimation, svi);
+            Storyboard.SetTarget(orientationAnimation, Svi);
             Storyboard.SetTargetProperty(orientationAnimation, new PropertyPath(ScatterViewItem.OrientationProperty));
 
-            svi.Center = newCenter;
-            svi.Orientation = newOrientation;
+            Svi.Center = newCenter;
+            Svi.Orientation = newOrientation;
 
             Storyboard.Begin();
-            svi.PreviewTouchDown += new EventHandler<System.Windows.Input.TouchEventArgs>(Session_TouchDown);
+            Svi.PreviewTouchDown += new EventHandler<System.Windows.Input.TouchEventArgs>(Session_TouchDown);
         }
 
         /// <summary>
@@ -372,11 +414,9 @@ namespace PopnTouchi2.ViewModel.Animation
         public void Session_TouchDown(object sender, System.Windows.Input.TouchEventArgs e)
         {
             Storyboard.Pause();
-            ScatterViewItem svi = (ScatterViewItem)SessionVM.Grid.Parent;
-            DesktopView mainDesktop = (DesktopView)((ScatterView)svi.Parent).Parent;
 
-            svi.Center = svi.ActualCenter;
-            svi.Orientation = svi.ActualOrientation;
+            Svi.Center = Svi.ActualCenter;
+            Svi.Orientation = Svi.ActualOrientation;
             Storyboard.Remove();
         }
     }
