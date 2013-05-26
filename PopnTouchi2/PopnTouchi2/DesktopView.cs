@@ -22,11 +22,15 @@ namespace PopnTouchi2
         /// The current SessionVM.
         /// </summary>
         public SessionViewModel SessionVM { get; set; }
+
         /// <summary>
         /// Property.
         /// TODO
         /// </summary>
         public ScatterView Photos { get; set; }
+
+        public List<int> IDs { get; set; }
+
         /// <summary>
         /// temporary
         /// </summary>
@@ -37,6 +41,8 @@ namespace PopnTouchi2
         /// </summary>
         public DesktopView()
         {
+            IDs = new List<int>();
+
             CreateSession_Button = new SurfaceButton();
             CreateSession_Button.Width = 200;
             CreateSession_Button.Height = 75;
@@ -60,7 +66,7 @@ namespace PopnTouchi2
         /// <param name="e"></param>
         void CreateSession_Button_Click(object sender, RoutedEventArgs e)
         {
-            SessionVM = new SessionViewModel(new Session());
+            SessionVM = new SessionViewModel(new Session(), IDs);
             Children.Add(SessionVM.Grid);
         }
 

@@ -10,7 +10,7 @@ using System.Windows.Media.Animation;
 using System.Threading;
 using System.IO;
 using System.Windows.Media.Imaging;
-using System.Drawing;
+using System.Drawing.Imaging;
 
 namespace PopnTouchi2.ViewModel.Animation
 {
@@ -178,18 +178,20 @@ namespace PopnTouchi2.ViewModel.Animation
             else
             {
                 MainDesktop = (DesktopView)SessionVM.Grid.Parent;
-
                 SessionVM.SaveSession("test.bin");
+                SessionVM.Session.StopBackgroundSound();
 
                 MakeReadyForSnapShot(SessionVM.Grid);
                 MemoryStream ms = new MemoryStream(Screenshot.GetSnapshot(SessionVM.Grid, .5, 100));
                 System.Drawing.Image sc = System.Drawing.Image.FromStream(ms);
-                sc.Save("sc.jpg");
+                FileStream fs = File.Create(@"./SnapShots/sc" + SessionVM.SessionID.ToString() + ".jpg");
+                sc.Save(fs, ImageFormat.Jpeg);
+                fs.Close();
 
                 #region Sets the SnapShot as SVI content
                 //ss for snapshot
                 ImageBrush ss = new ImageBrush();
-                ss.ImageSource = new BitmapImage(new Uri(@"./sc.jpg", UriKind.Relative));
+                ss.ImageSource = new BitmapImage(new Uri(@"./SnapShots/sc" + SessionVM.SessionID.ToString() + ".jpg", UriKind.Relative));
 
                 ReplaceGridWithSnapShot(ss);
                 #endregion
@@ -248,10 +250,30 @@ namespace PopnTouchi2.ViewModel.Animation
 
         private void ReplaceGridWithSnapShot(ImageBrush ss)
         {
-            SessionVM.Grid.Background = ss;
             SessionVM.Grid.Children.Remove(SessionVM.Notes);
             SessionVM.Grid.Children.Remove(SessionVM.NbgVM.Grid);
             SessionVM.Grid.Children.Remove(SessionVM.MbgVM.Grid);
+
+            System.Windows.Shapes.Rectangle rect = new System.Windows.Shapes.Rectangle();
+            rect.Fill = Brushes.White;
+            rect.Opacity = 1;
+            SessionVM.Grid.Children.Add(rect);
+            rect.Margin = new Thickness(0);
+
+            Storyboard stb = new Storyboard();
+            DoubleAnimation da = new DoubleAnimation();
+
+            da.From = 1;
+            da.To = 0;
+            da.Duration = new Duration(TimeSpan.FromSeconds(1));
+            da.FillBehavior = FillBehavior.HoldEnd;
+            stb.Children.Add(da);
+            Storyboard.SetTarget(da, rect);
+            Storyboard.SetTargetProperty(da, new PropertyPath(System.Windows.Shapes.Rectangle.OpacityProperty));
+
+            stb.Begin();
+
+            SessionVM.Grid.Background = ss;
         }
 
         private void MakeReadyForSnapShot(Grid grid)
