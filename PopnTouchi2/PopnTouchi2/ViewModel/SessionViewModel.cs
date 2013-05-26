@@ -176,9 +176,9 @@ namespace PopnTouchi2.ViewModel
             Reducer.VerticalAlignment = System.Windows.VerticalAlignment.Top;
             Reducer.Background = Brushes.Red;
             Reducer.Content = "Reduce !";
-            Grid.Children.Add(Reducer);
 
             Animation = new SessionAnimation(this);
+            Orientation = "bottom";
 
             Reducer.Click += new RoutedEventHandler(Animation.Reducer_Click);
 

@@ -74,7 +74,14 @@ namespace PopnTouchi2.ViewModel.Animation
             Storyboard.SetTarget(marginAnimation, SessionVM.Grid);
             Storyboard.SetTargetProperty(marginAnimation, new PropertyPath(Grid.MarginProperty));
 
+            marginAnimation.Completed += new EventHandler(marginAnimation_Completed);
+
             stb.Begin();
+        }
+
+        void marginAnimation_Completed(object sender, EventArgs e)
+        {
+            SessionVM.Grid.Children.Add(SessionVM.Reducer);
         }
 
         
@@ -92,7 +99,9 @@ namespace PopnTouchi2.ViewModel.Animation
             SessionVM.Session.StopBackgroundSound();
 
             MakeReadyForSnapShot(SessionVM.Grid);
-            MemoryStream ms = new MemoryStream(Screenshot.GetSnapshot(SessionVM.Grid, .5, 100));
+            MemoryStream ms;
+            if(SessionVM.Orientation == "left" || SessionVM.Orientation == "right") ms = new MemoryStream(Screenshot.GetSideSnapshot(SessionVM.Grid, .5, 100));
+            else ms = new MemoryStream(Screenshot.GetSnapshot(SessionVM.Grid, .5, 100));
             System.Drawing.Image sc = System.Drawing.Image.FromStream(ms);
 
             string path = @"./SnapShots/sc" + SessionVM.SessionID.ToString() + ".jpg";
@@ -164,7 +173,9 @@ namespace PopnTouchi2.ViewModel.Animation
             ease.Exponent = 1.5;
 
             heightAnimation.From = SessionVM.Grid.ActualHeight;
-            heightAnimation.To = SessionVM.Grid.ActualHeight / 4;
+            if (SessionVM.Orientation == "left" || SessionVM.Orientation == "right")
+                heightAnimation.To = SessionVM.Grid.ActualHeight / 4 /0.5625;
+            else heightAnimation.To = SessionVM.Grid.ActualHeight / 4;
             heightAnimation.Duration = new Duration(TimeSpan.FromSeconds(1));
             heightAnimation.EasingFunction = ease;
             heightAnimation.AccelerationRatio = .4;
@@ -175,7 +186,9 @@ namespace PopnTouchi2.ViewModel.Animation
             Storyboard.SetTargetProperty(heightAnimation, new PropertyPath(Grid.HeightProperty));
 
             widthAnimation.From = SessionVM.Grid.ActualWidth;
-            widthAnimation.To = SessionVM.Grid.ActualWidth / 4;
+            if (SessionVM.Orientation == "left" || SessionVM.Orientation == "right")
+                heightAnimation.To = SessionVM.Grid.ActualWidth / 4 / 0.5625;
+            else widthAnimation.To = SessionVM.Grid.ActualWidth / 4;
             widthAnimation.Duration = new Duration(TimeSpan.FromSeconds(1));
             widthAnimation.EasingFunction = ease;
             widthAnimation.AccelerationRatio = .4;
@@ -185,17 +198,25 @@ namespace PopnTouchi2.ViewModel.Animation
             Storyboard.SetTarget(widthAnimation, SessionVM.Grid);
             Storyboard.SetTargetProperty(widthAnimation, new PropertyPath(Grid.WidthProperty));
 
-            SessionVM.Grid.Height = SessionVM.Grid.ActualHeight / 4;
-            SessionVM.Grid.Width = SessionVM.Grid.ActualWidth / 4;
+            if (SessionVM.Orientation == "left" || SessionVM.Orientation == "right")
+            {
+                SessionVM.Grid.Height = SessionVM.Grid.ActualHeight / 4 / 0.5625;
+                SessionVM.Grid.Width = SessionVM.Grid.ActualWidth / 4 / 0.5625;
+            }
+            else
+            {
+                SessionVM.Grid.Height = SessionVM.Grid.ActualHeight / 4;
+                SessionVM.Grid.Width = SessionVM.Grid.ActualWidth / 4;
+            }
             #endregion
 
             widthAnimation.Completed += new EventHandler(stb_Completed);
             stb.Begin(SessionVM.Grid);
 
-            SessionVM.NbgVM.Grid.Width = SessionVM.NbgVM.Grid.ActualWidth / 4;
+            /*SessionVM.NbgVM.Grid.Width = SessionVM.NbgVM.Grid.ActualWidth / 4;
             SessionVM.NbgVM.Grid.Height = SessionVM.NbgVM.Grid.ActualHeight / 4;
             SessionVM.MbgVM.Grid.Width = SessionVM.MbgVM.Grid.ActualWidth / 4;
-            SessionVM.MbgVM.Grid.Height = SessionVM.MbgVM.Grid.ActualHeight / 4;
+            SessionVM.MbgVM.Grid.Height = SessionVM.MbgVM.Grid.ActualHeight / 4;*/
         }
 
         private void MakeReadyForSnapShot(Grid grid)
@@ -262,24 +283,51 @@ namespace PopnTouchi2.ViewModel.Animation
             SessionVM.LoadSession("test.bin");
             SessionVM.Session.PlayBackgroundSound();
 
-            RotateTransform st;
+            RotateTransform rt;
+            TranslateTransform tt;
+            HorizontalAlignment ha;
+
             switch (SessionVM.Orientation)
             {
                 case "top":
-                    st = new RotateTransform(180, MainDesktop.ActualWidth / 2.0, MainDesktop.ActualHeight / 2.0);
-                    SessionVM.Grid.RenderTransform = st;
+                    rt = new RotateTransform(180, SessionVM.Grid.Width / 2.0, SessionVM.Grid.Height / 2.0);
+                    tt = new TranslateTransform(0.0, 0.0);
+                    ha = HorizontalAlignment.Center;
+                    break;
+                case "left":
+                    rt = new RotateTransform(90, SessionVM.Grid.Width / 2.0, SessionVM.Grid.Height / 2.0);
+                    tt = new TranslateTransform(-236.25, 0.0);
+                    ha = HorizontalAlignment.Left;
+                    break;
+                case "right":
+                    rt = new RotateTransform(-90, SessionVM.Grid.Width / 2.0, SessionVM.Grid.Height / 2.0);
+                    tt = new TranslateTransform(236.25, 0.0);
+                    ha = HorizontalAlignment.Right;
                     break;
                 default:
-                    st = new RotateTransform(0, MainDesktop.ActualWidth / 2.0, MainDesktop.ActualHeight / 2.0);
-                    SessionVM.Grid.RenderTransform = st;
+                    rt = new RotateTransform(0, SessionVM.Grid.Width / 2.0, SessionVM.Grid.Height / 2.0);
+                    tt = new TranslateTransform(0.0, 0.0);
+                    ha = HorizontalAlignment.Center;
                     break;
             }
+            TransformGroup group = new TransformGroup();
+            group.Children.Add(rt);
+            group.Children.Add(tt);
+            SessionVM.Grid.RenderTransform = group;
 
             MakeReadyForDisplay();
             Svi.Content = null;
-
             ((ScatterView)Svi.Parent).Items.Remove(Svi);
             MainDesktop.Children.Add(SessionVM.Grid);
+            SessionVM.Grid.HorizontalAlignment = ha;
+            if (SessionVM.Orientation == "left" || SessionVM.Orientation == "right")
+            {
+                SessionVM.NbgVM.Grid.Width = SessionVM.NbgVM.Grid.Width * 0.5625;
+                SessionVM.NbgVM.Grid.Height = SessionVM.NbgVM.Grid.Height * 0.5625;
+                SessionVM.MbgVM.Grid.Width = SessionVM.MbgVM.Grid.Width * 0.5625;
+                SessionVM.MbgVM.Grid.Height = SessionVM.MbgVM.Grid.Height * 0.5625;
+            }
+
         }
 
         /// <summary>
@@ -353,11 +401,17 @@ namespace PopnTouchi2.ViewModel.Animation
             double Xpos = e.GetTouchPoint(MainDesktop).Position.X;
             double Ypos = e.GetTouchPoint(MainDesktop).Position.Y;
 
-            if ((Xpos > 0 && Xpos < 3.0 / 32.0 * Width) || (Xpos > 29.0 && Xpos < Width))
+            if (Ypos > 4.0 / 18.0 * Height && Ypos < 14.0 / 18.0 * Height)
             {
-                if (Ypos > 4.0 / 18.0 * Height && Ypos < 14.0 / 18.0 * Height)
+                if (Xpos > 0 && Xpos < 3.0 / 32.0 * Width)
                 {
-
+                    EnlargeForSide(true);
+                    SessionVM.Orientation = "left";
+                }
+                else if (Xpos > 29.0 / 32.0 * Width && Xpos < Width)
+                {
+                    EnlargeForSide(false);
+                    SessionVM.Orientation = "right";
                 }
             }
 
@@ -365,196 +419,210 @@ namespace PopnTouchi2.ViewModel.Animation
             {
                 if (Ypos > 0 && Ypos < 3.0 / 18.0 * Height)
                 {
-                    SessionVM.Reducer.Content = "Reduce !";
-                    SessionVM.Reducer.Background = System.Windows.Media.Brushes.Red;
-
-                    #region Animation Settings
-                    Storyboard stb = new Storyboard();
-                    PointAnimation centerPosAnimation = new PointAnimation();
-                    DoubleAnimation heightAnimation = new DoubleAnimation();
-                    DoubleAnimation widthAnimation = new DoubleAnimation();
-                    DoubleAnimation gridHeightAnimation = new DoubleAnimation();
-                    DoubleAnimation gridWidthAnimation = new DoubleAnimation();
-                    DoubleAnimation orientationAnimation = new DoubleAnimation();
-                    ThicknessAnimation borderAnimation = new ThicknessAnimation();
-
-                    centerPosAnimation.From = Svi.ActualCenter;
-                    centerPosAnimation.To = new System.Windows.Point(MainDesktop.ActualWidth / 2, MainDesktop.ActualHeight / 2);
-                    centerPosAnimation.Duration = new Duration(TimeSpan.FromSeconds(.75));
-                    centerPosAnimation.FillBehavior = FillBehavior.HoldEnd;
-                    stb.Children.Add(centerPosAnimation);
-                    Storyboard.SetTarget(centerPosAnimation, Svi);
-                    Storyboard.SetTargetProperty(centerPosAnimation, new PropertyPath(ScatterViewItem.CenterProperty));
-
-                    orientationAnimation.From = Svi.ActualOrientation;
-                    if (Svi.ActualOrientation <= 180)
-                        orientationAnimation.To = -180;
-                    else
-                        orientationAnimation.To = 180;
-                    orientationAnimation.Duration = new Duration(TimeSpan.FromSeconds(.75));
-                    orientationAnimation.FillBehavior = FillBehavior.HoldEnd;
-                    stb.Children.Add(orientationAnimation);
-                    Storyboard.SetTarget(orientationAnimation, Svi);
-                    Storyboard.SetTargetProperty(orientationAnimation, new PropertyPath(ScatterViewItem.OrientationProperty));
-
-                    heightAnimation.From = Svi.ActualHeight;
-                    heightAnimation.To = Svi.ActualHeight * 4;
-                    heightAnimation.Duration = new Duration(TimeSpan.FromSeconds(1));
-                    heightAnimation.EasingFunction = new ExponentialEase();
-                    heightAnimation.AccelerationRatio = 1;
-                    heightAnimation.FillBehavior = FillBehavior.HoldEnd;
-                    stb.Children.Add(heightAnimation);
-                    Storyboard.SetTarget(heightAnimation, Svi);
-                    Storyboard.SetTargetProperty(heightAnimation, new PropertyPath(ScatterViewItem.HeightProperty));
-
-                    widthAnimation.From = Svi.ActualWidth;
-                    widthAnimation.To = Svi.ActualWidth * 4;
-                    widthAnimation.Duration = new Duration(TimeSpan.FromSeconds(1));
-                    widthAnimation.EasingFunction = new ExponentialEase();
-                    widthAnimation.AccelerationRatio = 1;
-                    widthAnimation.FillBehavior = FillBehavior.HoldEnd;
-                    stb.Children.Add(widthAnimation);
-                    Storyboard.SetTarget(widthAnimation, Svi);
-                    Storyboard.SetTargetProperty(widthAnimation, new PropertyPath(ScatterViewItem.WidthProperty));
-
-                    borderAnimation.From = new Thickness(15);
-                    borderAnimation.To = new Thickness(60);
-                    borderAnimation.Duration = new Duration(TimeSpan.FromSeconds(1));
-                    borderAnimation.FillBehavior = FillBehavior.HoldEnd;
-                    stb.Children.Add(borderAnimation);
-                    Storyboard.SetTarget(borderAnimation, Svi);
-                    Storyboard.SetTargetProperty(borderAnimation, new PropertyPath(ScatterViewItem.BorderThicknessProperty));
-
-                    gridHeightAnimation.From = SessionVM.Grid.ActualHeight;
-                    gridHeightAnimation.To = SessionVM.Grid.ActualHeight * 4;
-                    gridHeightAnimation.Duration = new Duration(TimeSpan.FromSeconds(1));
-                    gridHeightAnimation.EasingFunction = new ExponentialEase();
-                    gridHeightAnimation.AccelerationRatio = 1;
-                    gridHeightAnimation.FillBehavior = FillBehavior.HoldEnd;
-                    stb.Children.Add(gridHeightAnimation);
-                    Storyboard.SetTarget(gridHeightAnimation, SessionVM.Grid);
-                    Storyboard.SetTargetProperty(gridHeightAnimation, new PropertyPath(Grid.HeightProperty));
-
-                    gridWidthAnimation.From = SessionVM.Grid.ActualWidth;
-                    gridWidthAnimation.To = SessionVM.Grid.ActualWidth * 4;
-                    gridWidthAnimation.Duration = new Duration(TimeSpan.FromSeconds(1));
-                    gridWidthAnimation.EasingFunction = new ExponentialEase();
-                    gridWidthAnimation.AccelerationRatio = 1;
-                    gridWidthAnimation.FillBehavior = FillBehavior.HoldEnd;
-                    stb.Children.Add(gridWidthAnimation);
-                    Storyboard.SetTarget(gridWidthAnimation, SessionVM.Grid);
-                    Storyboard.SetTargetProperty(gridWidthAnimation, new PropertyPath(Grid.WidthProperty));
-
-                    widthAnimation.Completed += new EventHandler(stb_enlarge_Completed);
-                    #endregion
-
-                    stb.Begin(SessionVM.Grid);
-
-                    SessionVM.NbgVM.Grid.Width = SessionVM.NbgVM.Grid.ActualWidth * 4;
-                    SessionVM.NbgVM.Grid.Height = SessionVM.NbgVM.Grid.ActualHeight * 4;
-                    SessionVM.MbgVM.Grid.Width = SessionVM.MbgVM.Grid.ActualWidth * 4;
-                    SessionVM.MbgVM.Grid.Height = SessionVM.MbgVM.Grid.ActualHeight * 4;
-
+                    if (SessionVM.Orientation == "bottom") Enlarge(-180.0);
+                    if (SessionVM.Orientation == "top") Enlarge(0.0);
                     SessionVM.Orientation = "top";
-                    SessionVM.Reduced = false;
                 }
 
                 else if (Ypos > 15.0/18.0*Height && Ypos < Height)
                 {
-                    SessionVM.Reducer.Content = "Reduce !";
-                    SessionVM.Reducer.Background = System.Windows.Media.Brushes.Red;
-
-                    #region Animation Settings
-                    Storyboard stb = new Storyboard();
-                    PointAnimation centerPosAnimation = new PointAnimation();
-                    DoubleAnimation heightAnimation = new DoubleAnimation();
-                    DoubleAnimation widthAnimation = new DoubleAnimation();
-                    DoubleAnimation gridHeightAnimation = new DoubleAnimation();
-                    DoubleAnimation gridWidthAnimation = new DoubleAnimation();
-                    DoubleAnimation orientationAnimation = new DoubleAnimation();
-                    ThicknessAnimation borderAnimation = new ThicknessAnimation();
-
-                    centerPosAnimation.From = Svi.ActualCenter;
-                    centerPosAnimation.To = new System.Windows.Point(MainDesktop.ActualWidth / 2, MainDesktop.ActualHeight / 2);
-                    centerPosAnimation.Duration = new Duration(TimeSpan.FromSeconds(.75));
-                    centerPosAnimation.FillBehavior = FillBehavior.HoldEnd;
-                    stb.Children.Add(centerPosAnimation);
-                    Storyboard.SetTarget(centerPosAnimation, Svi);
-                    Storyboard.SetTargetProperty(centerPosAnimation, new PropertyPath(ScatterViewItem.CenterProperty));
-
-                    orientationAnimation.From = Svi.ActualOrientation;
-                    if (Svi.ActualOrientation <= 180)
-                        orientationAnimation.To = 0;
-                    else
-                        orientationAnimation.To = 360;
-                    orientationAnimation.Duration = new Duration(TimeSpan.FromSeconds(.75));
-                    orientationAnimation.FillBehavior = FillBehavior.HoldEnd;
-                    stb.Children.Add(orientationAnimation);
-                    Storyboard.SetTarget(orientationAnimation, Svi);
-                    Storyboard.SetTargetProperty(orientationAnimation, new PropertyPath(ScatterViewItem.OrientationProperty));
-
-                    heightAnimation.From = Svi.ActualHeight;
-                    heightAnimation.To = Svi.ActualHeight * 4;
-                    heightAnimation.Duration = new Duration(TimeSpan.FromSeconds(1));
-                    heightAnimation.EasingFunction = new ExponentialEase();
-                    heightAnimation.AccelerationRatio = 1;
-                    heightAnimation.FillBehavior = FillBehavior.HoldEnd;
-                    stb.Children.Add(heightAnimation);
-                    Storyboard.SetTarget(heightAnimation, Svi);
-                    Storyboard.SetTargetProperty(heightAnimation, new PropertyPath(ScatterViewItem.HeightProperty));
-
-                    widthAnimation.From = Svi.ActualWidth;
-                    widthAnimation.To = Svi.ActualWidth * 4;
-                    widthAnimation.Duration = new Duration(TimeSpan.FromSeconds(1));
-                    widthAnimation.EasingFunction = new ExponentialEase();
-                    widthAnimation.AccelerationRatio = 1;
-                    widthAnimation.FillBehavior = FillBehavior.HoldEnd;
-                    stb.Children.Add(widthAnimation);
-                    Storyboard.SetTarget(widthAnimation, Svi);
-                    Storyboard.SetTargetProperty(widthAnimation, new PropertyPath(ScatterViewItem.WidthProperty));
-
-                    borderAnimation.From = new Thickness(15);
-                    borderAnimation.To = new Thickness(60);
-                    borderAnimation.Duration = new Duration(TimeSpan.FromSeconds(1));
-                    borderAnimation.FillBehavior = FillBehavior.HoldEnd;
-                    stb.Children.Add(borderAnimation);
-                    Storyboard.SetTarget(borderAnimation, Svi);
-                    Storyboard.SetTargetProperty(borderAnimation, new PropertyPath(ScatterViewItem.BorderThicknessProperty));
-
-                    gridHeightAnimation.From = SessionVM.Grid.ActualHeight;
-                    gridHeightAnimation.To = SessionVM.Grid.ActualHeight * 4;
-                    gridHeightAnimation.Duration = new Duration(TimeSpan.FromSeconds(1));
-                    gridHeightAnimation.EasingFunction = new ExponentialEase();
-                    gridHeightAnimation.AccelerationRatio = 1;
-                    gridHeightAnimation.FillBehavior = FillBehavior.HoldEnd;
-                    stb.Children.Add(gridHeightAnimation);
-                    Storyboard.SetTarget(gridHeightAnimation, SessionVM.Grid);
-                    Storyboard.SetTargetProperty(gridHeightAnimation, new PropertyPath(Grid.HeightProperty));
-
-                    gridWidthAnimation.From = SessionVM.Grid.ActualWidth;
-                    gridWidthAnimation.To = SessionVM.Grid.ActualWidth * 4;
-                    gridWidthAnimation.Duration = new Duration(TimeSpan.FromSeconds(1));
-                    gridWidthAnimation.EasingFunction = new ExponentialEase();
-                    gridWidthAnimation.AccelerationRatio = 1;
-                    gridWidthAnimation.FillBehavior = FillBehavior.HoldEnd;
-                    stb.Children.Add(gridWidthAnimation);
-                    Storyboard.SetTarget(gridWidthAnimation, SessionVM.Grid);
-                    Storyboard.SetTargetProperty(gridWidthAnimation, new PropertyPath(Grid.WidthProperty));
-
-                    widthAnimation.Completed += new EventHandler(stb_enlarge_Completed);
-                    #endregion
-
-                    stb.Begin(SessionVM.Grid);
-
-                    SessionVM.NbgVM.Grid.Width = SessionVM.NbgVM.Grid.ActualWidth * 4;
-                    SessionVM.NbgVM.Grid.Height = SessionVM.NbgVM.Grid.ActualHeight * 4;
-                    SessionVM.MbgVM.Grid.Width = SessionVM.MbgVM.Grid.ActualWidth * 4;
-                    SessionVM.MbgVM.Grid.Height = SessionVM.MbgVM.Grid.ActualHeight * 4;
-
+                    if (SessionVM.Orientation == "top") Enlarge(-180.0);
+                    if (SessionVM.Orientation == "bottom") Enlarge(0.0);
                     SessionVM.Orientation = "bottom";
-                    SessionVM.Reduced = false;
                 }
             }
+        }
+
+        private void EnlargeForSide(Boolean left)
+        {
+            #region Animation Settings
+            Storyboard stb = new Storyboard();
+            PointAnimation centerPosAnimation = new PointAnimation();
+            DoubleAnimation heightAnimation = new DoubleAnimation();
+            DoubleAnimation widthAnimation = new DoubleAnimation();
+            DoubleAnimation gridHeightAnimation = new DoubleAnimation();
+            DoubleAnimation gridWidthAnimation = new DoubleAnimation();
+            DoubleAnimation orientationAnimation = new DoubleAnimation();
+            ThicknessAnimation borderAnimation = new ThicknessAnimation();
+
+            centerPosAnimation.From = Svi.ActualCenter;
+            if(left) centerPosAnimation.To = new System.Windows.Point(MainDesktop.ActualWidth / 6.0 - 16.875, MainDesktop.ActualHeight / 2.0);
+            else centerPosAnimation.To = new System.Windows.Point(5.0 * MainDesktop.ActualWidth / 6.0 + 16.875, MainDesktop.ActualHeight / 2.0);
+            centerPosAnimation.Duration = new Duration(TimeSpan.FromSeconds(.75));
+            centerPosAnimation.FillBehavior = FillBehavior.HoldEnd;
+            stb.Children.Add(centerPosAnimation);
+            Storyboard.SetTarget(centerPosAnimation, Svi);
+            Storyboard.SetTargetProperty(centerPosAnimation, new PropertyPath(ScatterViewItem.CenterProperty));
+
+            if (left)
+            {
+                orientationAnimation.From = Svi.ActualOrientation;
+                if (Svi.ActualOrientation <= 180)
+                    orientationAnimation.To = 90;
+                else
+                    orientationAnimation.To = 90 + 360;
+            }
+            else
+            {
+                orientationAnimation.From = Svi.ActualOrientation;
+                if (Svi.ActualOrientation <= 180)
+                    orientationAnimation.To = -90;
+                else
+                    orientationAnimation.To = -90 + 360;
+            }
+            orientationAnimation.Duration = new Duration(TimeSpan.FromSeconds(.75));
+            orientationAnimation.FillBehavior = FillBehavior.HoldEnd;
+            stb.Children.Add(orientationAnimation);
+            Storyboard.SetTarget(orientationAnimation, Svi);
+            Storyboard.SetTargetProperty(orientationAnimation, new PropertyPath(ScatterViewItem.OrientationProperty));
+
+            heightAnimation.From = Svi.ActualHeight;
+            heightAnimation.To = Svi.ActualHeight * 4 * 0.5625;
+            heightAnimation.Duration = new Duration(TimeSpan.FromSeconds(1));
+            heightAnimation.EasingFunction = new ExponentialEase();
+            heightAnimation.AccelerationRatio = 1;
+            heightAnimation.FillBehavior = FillBehavior.HoldEnd;
+            stb.Children.Add(heightAnimation);
+            Storyboard.SetTarget(heightAnimation, Svi);
+            Storyboard.SetTargetProperty(heightAnimation, new PropertyPath(ScatterViewItem.HeightProperty));
+
+            widthAnimation.From = Svi.ActualWidth;
+            widthAnimation.To = Svi.ActualWidth * 4 * 0.5625;
+            widthAnimation.Duration = new Duration(TimeSpan.FromSeconds(1));
+            widthAnimation.EasingFunction = new ExponentialEase();
+            widthAnimation.AccelerationRatio = 1;
+            widthAnimation.FillBehavior = FillBehavior.HoldEnd;
+            stb.Children.Add(widthAnimation);
+            Storyboard.SetTarget(widthAnimation, Svi);
+            Storyboard.SetTargetProperty(widthAnimation, new PropertyPath(ScatterViewItem.WidthProperty));
+
+            borderAnimation.From = new Thickness(15.0);
+            borderAnimation.To = new Thickness(60.0 * 0.5625);
+            borderAnimation.Duration = new Duration(TimeSpan.FromSeconds(1));
+            borderAnimation.FillBehavior = FillBehavior.HoldEnd;
+            stb.Children.Add(borderAnimation);
+            Storyboard.SetTarget(borderAnimation, Svi);
+            Storyboard.SetTargetProperty(borderAnimation, new PropertyPath(ScatterViewItem.BorderThicknessProperty));
+
+            gridHeightAnimation.From = SessionVM.Grid.ActualHeight;
+            gridHeightAnimation.To = SessionVM.Grid.ActualHeight * 4 * 0.5625;
+            gridHeightAnimation.Duration = new Duration(TimeSpan.FromSeconds(1));
+            gridHeightAnimation.EasingFunction = new ExponentialEase();
+            gridHeightAnimation.AccelerationRatio = 1;
+            gridHeightAnimation.FillBehavior = FillBehavior.HoldEnd;
+            stb.Children.Add(gridHeightAnimation);
+            Storyboard.SetTarget(gridHeightAnimation, SessionVM.Grid);
+            Storyboard.SetTargetProperty(gridHeightAnimation, new PropertyPath(Grid.HeightProperty));
+
+            gridWidthAnimation.From = SessionVM.Grid.ActualWidth;
+            gridWidthAnimation.To = SessionVM.Grid.ActualWidth * 4 * 0.5625;
+            gridWidthAnimation.Duration = new Duration(TimeSpan.FromSeconds(1));
+            gridWidthAnimation.EasingFunction = new ExponentialEase();
+            gridWidthAnimation.AccelerationRatio = 1;
+            gridWidthAnimation.FillBehavior = FillBehavior.HoldEnd;
+            stb.Children.Add(gridWidthAnimation);
+            Storyboard.SetTarget(gridWidthAnimation, SessionVM.Grid);
+            Storyboard.SetTargetProperty(gridWidthAnimation, new PropertyPath(Grid.WidthProperty));
+
+            widthAnimation.Completed += new EventHandler(stb_enlarge_Completed);
+            #endregion
+
+            stb.Begin(SessionVM.Grid);
+
+            SessionVM.Reduced = false;
+        }
+
+        private void Enlarge(double orientation)
+        {
+
+            #region Animation Settings
+            Storyboard stb = new Storyboard();
+            PointAnimation centerPosAnimation = new PointAnimation();
+            DoubleAnimation heightAnimation = new DoubleAnimation();
+            DoubleAnimation widthAnimation = new DoubleAnimation();
+            DoubleAnimation gridHeightAnimation = new DoubleAnimation();
+            DoubleAnimation gridWidthAnimation = new DoubleAnimation();
+            DoubleAnimation orientationAnimation = new DoubleAnimation();
+            ThicknessAnimation borderAnimation = new ThicknessAnimation();
+
+            centerPosAnimation.From = Svi.ActualCenter;
+            centerPosAnimation.To = new System.Windows.Point(MainDesktop.ActualWidth / 2, MainDesktop.ActualHeight / 2);
+            centerPosAnimation.Duration = new Duration(TimeSpan.FromSeconds(.75));
+            centerPosAnimation.FillBehavior = FillBehavior.HoldEnd;
+            stb.Children.Add(centerPosAnimation);
+            Storyboard.SetTarget(centerPosAnimation, Svi);
+            Storyboard.SetTargetProperty(centerPosAnimation, new PropertyPath(ScatterViewItem.CenterProperty));
+
+            orientationAnimation.From = Svi.ActualOrientation;
+            if (Svi.ActualOrientation <= 180)
+                orientationAnimation.To = orientation;
+            else
+                orientationAnimation.To = orientation + 360;
+            orientationAnimation.Duration = new Duration(TimeSpan.FromSeconds(.75));
+            orientationAnimation.FillBehavior = FillBehavior.HoldEnd;
+            stb.Children.Add(orientationAnimation);
+            Storyboard.SetTarget(orientationAnimation, Svi);
+            Storyboard.SetTargetProperty(orientationAnimation, new PropertyPath(ScatterViewItem.OrientationProperty));
+
+            heightAnimation.From = Svi.ActualHeight;
+            heightAnimation.To = Svi.ActualHeight * 4;
+            heightAnimation.Duration = new Duration(TimeSpan.FromSeconds(1));
+            heightAnimation.EasingFunction = new ExponentialEase();
+            heightAnimation.AccelerationRatio = 1;
+            heightAnimation.FillBehavior = FillBehavior.HoldEnd;
+            stb.Children.Add(heightAnimation);
+            Storyboard.SetTarget(heightAnimation, Svi);
+            Storyboard.SetTargetProperty(heightAnimation, new PropertyPath(ScatterViewItem.HeightProperty));
+
+            widthAnimation.From = Svi.ActualWidth;
+            widthAnimation.To = Svi.ActualWidth * 4;
+            widthAnimation.Duration = new Duration(TimeSpan.FromSeconds(1));
+            widthAnimation.EasingFunction = new ExponentialEase();
+            widthAnimation.AccelerationRatio = 1;
+            widthAnimation.FillBehavior = FillBehavior.HoldEnd;
+            stb.Children.Add(widthAnimation);
+            Storyboard.SetTarget(widthAnimation, Svi);
+            Storyboard.SetTargetProperty(widthAnimation, new PropertyPath(ScatterViewItem.WidthProperty));
+
+            borderAnimation.From = new Thickness(15);
+            borderAnimation.To = new Thickness(60);
+            borderAnimation.Duration = new Duration(TimeSpan.FromSeconds(1));
+            borderAnimation.FillBehavior = FillBehavior.HoldEnd;
+            stb.Children.Add(borderAnimation);
+            Storyboard.SetTarget(borderAnimation, Svi);
+            Storyboard.SetTargetProperty(borderAnimation, new PropertyPath(ScatterViewItem.BorderThicknessProperty));
+
+            gridHeightAnimation.From = SessionVM.Grid.ActualHeight;
+            gridHeightAnimation.To = SessionVM.Grid.ActualHeight * 4;
+            gridHeightAnimation.Duration = new Duration(TimeSpan.FromSeconds(1));
+            gridHeightAnimation.EasingFunction = new ExponentialEase();
+            gridHeightAnimation.AccelerationRatio = 1;
+            gridHeightAnimation.FillBehavior = FillBehavior.HoldEnd;
+            stb.Children.Add(gridHeightAnimation);
+            Storyboard.SetTarget(gridHeightAnimation, SessionVM.Grid);
+            Storyboard.SetTargetProperty(gridHeightAnimation, new PropertyPath(Grid.HeightProperty));
+
+            gridWidthAnimation.From = SessionVM.Grid.ActualWidth;
+            gridWidthAnimation.To = SessionVM.Grid.ActualWidth * 4;
+            gridWidthAnimation.Duration = new Duration(TimeSpan.FromSeconds(1));
+            gridWidthAnimation.EasingFunction = new ExponentialEase();
+            gridWidthAnimation.AccelerationRatio = 1;
+            gridWidthAnimation.FillBehavior = FillBehavior.HoldEnd;
+            stb.Children.Add(gridWidthAnimation);
+            Storyboard.SetTarget(gridWidthAnimation, SessionVM.Grid);
+            Storyboard.SetTargetProperty(gridWidthAnimation, new PropertyPath(Grid.WidthProperty));
+
+            widthAnimation.Completed += new EventHandler(stb_enlarge_Completed);
+            #endregion
+
+            stb.Begin(SessionVM.Grid);
+
+            SessionVM.NbgVM.Grid.Width = SessionVM.NbgVM.Grid.ActualWidth * 4;
+            SessionVM.NbgVM.Grid.Height = SessionVM.NbgVM.Grid.ActualHeight * 4;
+            SessionVM.MbgVM.Grid.Width = SessionVM.MbgVM.Grid.ActualWidth * 4;
+            SessionVM.MbgVM.Grid.Height = SessionVM.MbgVM.Grid.ActualHeight * 4;
+
+            SessionVM.Reduced = false;
         }
 
         /// <summary>
