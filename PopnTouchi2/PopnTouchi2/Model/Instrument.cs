@@ -52,7 +52,7 @@ namespace PopnTouchi2
         public void ActionPlay(object n)
         {
             Note note = n as Note;
-            TimeSpan t = new TimeSpan(0, 0, 0, 0, (note.Duration.GetHashCode() * 31000) / GlobalVariables.bpm);
+            TimeSpan t = new TimeSpan(0, 0, 0, 0, (note.Duration.GetHashCode() * 30000) / GlobalVariables.bpm);
             Cue cue = AudioController.INSTANCE.SoundBank.GetCue(Name.ToString() + "_" + note.GetCue());
             AudioController.PlaySound(cue);
             Thread.Sleep(t);

@@ -108,6 +108,7 @@
     <Compile Include="Model\Stave.cs" />
     <Compile Include="ViewModel\NoteViewModel.cs" />
     <Compile Include="ViewModel\Theme1ViewModel.cs" />
+    <Compile Include="ViewModel\TreeViewModel.cs" />
     <Page Include="DesktopWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -164,8 +165,23 @@
     <Content Include="PopnTouchi2.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Resource Include="Resources\Images\Theme4\Bubbles\Melodies\infinite.png" />
+    <Resource Include="Resources\Images\Theme3\Bubbles\Melodies\infinite.png" />
+    <Resource Include="Resources\Images\Theme2\Bubbles\Melodies\infinite.png" />
+    <Resource Include="Resources\Images\Theme1\Bubbles\Melodies\infinite.png" />
+    <Resource Include="Resources\Images\UI_items\Instruments\bass.png" />
+    <Resource Include="Resources\Images\UI_items\Instruments\clarinet.png" />
+    <Resource Include="Resources\Images\UI_items\Instruments\contrebass.png" />
+    <Resource Include="Resources\Images\UI_items\Instruments\flute.png" />
+    <Resource Include="Resources\Images\UI_items\Instruments\guitar.png" />
+    <Resource Include="Resources\Images\UI_items\Instruments\piano.png" />
+    <Resource Include="Resources\Images\UI_items\Instruments\saxo.png" />
+    <Resource Include="Resources\Images\UI_items\Instruments\vibra.png" />
+    <Resource Include="Resources\Images\UI_items\Instruments\violin.png" />
+    <Resource Include="Resources\Images\UI_items\Instruments\lower_branch.png" />
+    <Resource Include="Resources\Images\UI_items\Instruments\root.png" />
+    <Resource Include="Resources\Images\UI_items\Instruments\upper_branch.png" />
     <Resource Include="Resources\Images\Theme1\background.png" />
-    <Resource Include="Resources\Images\Theme1\Bubbles\Melodies\8.png" />
     <Resource Include="Resources\Images\Theme1\Bubbles\Melodies\s.png" />
     <Resource Include="Resources\Images\Theme1\Bubbles\Melodies\t.png" />
     <Resource Include="Resources\Images\Theme1\Bubbles\Melodies\wave.png" />
@@ -191,7 +207,6 @@
     <Resource Include="Resources\images\desktop.png" />
     <Resource Include="Resources\Images\UI_items\players.png" />
     <Resource Include="Resources\Images\Theme2\background.png" />
-    <Resource Include="Resources\Images\Theme2\Bubbles\Melodies\8.png" />
     <Resource Include="Resources\Images\Theme2\Bubbles\Melodies\s.png" />
     <Resource Include="Resources\Images\Theme2\Bubbles\Melodies\t.png" />
     <Resource Include="Resources\Images\Theme2\Bubbles\Melodies\wave.png" />
@@ -207,7 +222,6 @@
     <Resource Include="Resources\Images\Theme2\soundpointdisable.png" />
     <Resource Include="Resources\Images\Theme2\soundpointenable.png" />
     <Resource Include="Resources\Images\Theme3\background.png" />
-    <Resource Include="Resources\Images\Theme3\Bubbles\Melodies\8.png" />
     <Resource Include="Resources\Images\Theme3\Bubbles\Melodies\s.png" />
     <Resource Include="Resources\Images\Theme3\Bubbles\Melodies\t.png" />
     <Resource Include="Resources\Images\Theme3\Bubbles\Melodies\wave.png" />
@@ -223,7 +237,6 @@
     <Resource Include="Resources\Images\Theme3\soundpointdisable.png" />
     <Resource Include="Resources\Images\Theme3\soundpointenable.png" />
     <Resource Include="Resources\Images\Theme4\background.png" />
-    <Resource Include="Resources\Images\Theme4\Bubbles\Melodies\8.png" />
     <Resource Include="Resources\Images\Theme4\Bubbles\Melodies\s.png" />
     <Resource Include="Resources\Images\Theme4\Bubbles\Melodies\t.png" />
     <Resource Include="Resources\Images\Theme4\Bubbles\Melodies\wave.png" />

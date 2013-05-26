@@ -29,11 +29,34 @@ namespace PopnTouchi2
             //minim = Blanche
 
             List<Note> l = new List<Note>();
-            l.Add(new Note(6,NoteValue.crotchet, "fa", 0));
-            l.Add(new Note(6,NoteValue.quaver, "fa", 1));
-            l.Add(new Note(6, NoteValue.minim, "la", 3));
+            l.Add(new Note(1,NoteValue.crotchet, "fa", 0));
+            l.Add(new Note(1,NoteValue.quaver, "do", 2));
+            l.Add(new Note(1, NoteValue.minim, "la", 3));
+            Melodies.Add(Gesture.infinite, new Melody(l, Gesture.infinite));
 
-            Melodies.Add(Gesture.infinite, new Melody(l));
+            List<Note> l1 = new List<Note>();
+            l1.Add(new Note(2,NoteValue.crotchet, "mi", 0));
+            l1.Add(new Note(2,NoteValue.quaver, "re", 2));
+            l1.Add(new Note(2, NoteValue.minim, "sol", 3));
+            Melodies.Add(Gesture.wave, new Melody(l1, Gesture.wave));
+
+            List<Note> l2 = new List<Note>();
+            l2.Add(new Note(2,NoteValue.crotchet, "re", 0));
+            l2.Add(new Note(2,NoteValue.quaver, "la", 2));
+            l2.Add(new Note(2, NoteValue.minim, "fa", 3));
+            Melodies.Add(Gesture.s, new Melody(l2, Gesture.s));
+
+            List<Note> l3 = new List<Note>();
+            l3.Add(new Note(2, NoteValue.crotchet, "re", 0));
+            l3.Add(new Note(2, NoteValue.quaver, "la", 2));
+            l3.Add(new Note(2, NoteValue.minim, "fa", 3));
+            Melodies.Add(Gesture.t, new Melody(l3, Gesture.t));
+
+            List<Note> l4 = new List<Note>();
+            l4.Add(new Note(2, NoteValue.crotchet, "re", 0));
+            l4.Add(new Note(2, NoteValue.quaver, "la", 2));
+            l4.Add(new Note(2, NoteValue.minim, "fa", 3));
+            Melodies.Add(Gesture.zigzag, new Melody(l4, Gesture.zigzag));
         }
 
         /// <summary>
@@ -53,7 +76,11 @@ namespace PopnTouchi2
         /// <returns>The random melody</returns>
         public Melody GetMelody()
         {
-            return Melodies[Gesture.infinite];
+            Random r = new Random();
+            int rand = r.Next(Melodies.Count);
+            string[] names = Enum.GetNames(typeof(Gesture));
+            var ret = Enum.Parse(typeof(Gesture), names[rand]);
+            return Melodies[(Gesture)ret];
         }
     }
 }

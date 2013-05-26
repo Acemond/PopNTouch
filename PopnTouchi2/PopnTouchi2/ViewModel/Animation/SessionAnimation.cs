@@ -157,6 +157,8 @@ namespace PopnTouchi2.ViewModel.Animation
             SessionVM.Grid.Children.Remove(SessionVM.Notes);
             SessionVM.Grid.Children.Remove(SessionVM.NbgVM.Grid);
             SessionVM.Grid.Children.Remove(SessionVM.MbgVM.Grid);
+            SessionVM.Grid.Children.Remove(SessionVM.TreeUp.Grid);
+            SessionVM.Grid.Children.Remove(SessionVM.TreeDown.Grid);
 
             System.Windows.Shapes.Rectangle rect = new System.Windows.Shapes.Rectangle();
             rect.Fill = Brushes.White;
@@ -211,6 +213,8 @@ namespace PopnTouchi2.ViewModel.Animation
             SessionVM.Grid.Children.Add(SessionVM.Reducer);
             SessionVM.Grid.Children.Add(SessionVM.Play);
             SessionVM.Grid.Children.Add(SessionVM.Stop);
+            SessionVM.Grid.Children.Add(SessionVM.TreeUp.Grid);
+            SessionVM.Grid.Children.Add(SessionVM.TreeDown.Grid);
             SessionVM.NbgVM = new NoteBubbleGeneratorViewModel(SessionVM.Session.NoteBubbleGenerator, SessionVM);
             SessionVM.MbgVM = new MelodyBubbleGeneratorViewModel(SessionVM.Session.MelodyBubbleGenerator, SessionVM);
 

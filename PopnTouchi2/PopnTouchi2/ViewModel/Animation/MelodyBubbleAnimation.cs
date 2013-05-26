@@ -26,7 +26,21 @@ namespace PopnTouchi2.ViewModel.Animation
         /// Parameter.
         /// Private attribute of current sessionVM.
         /// </summary>
-        private SessionViewModel sessionVM; 
+        private SessionViewModel sessionVM;
+
+        /// <summary>
+        /// Parameter.
+        /// Private melody in the MelodyBubbleViewModel
+        /// </summary>
+        private Melody melody;
+
+        /// <summary>
+        /// Property
+        /// True if the melody is played with the upper instrument
+        /// </summary>
+        public Boolean playUp;
+
+
         #endregion
 
          #region Constructors
@@ -38,11 +52,13 @@ namespace PopnTouchi2.ViewModel.Animation
         public MelodyBubbleAnimation(MelodyBubbleViewModel mbVM, SessionViewModel s) 
             : base()
         {
+            melody = mbVM.MelodyBubble.Melody;
             sessionVM = s;
             ManipulationGrid = new int[] { 0, 0, 0, 14, 25, 37, 47, 56, 64, 71, 76, 80, 83, 85, 85, 84, 80, 75, 68, 60, 50, 38, 26, 15, 4, -3, -9, -11, -12, -11, -7 };
             SVItem = mbVM.SVItem;
             ParentSV = mbVM.ParentSV;
             canAnimate = true;
+            playUp = true;
 
             DispatcherTimer.Tick += new EventHandler(t_Tick);
 
@@ -92,6 +108,19 @@ namespace PopnTouchi2.ViewModel.Animation
 
                 Storyboard.Begin();
             }
+        }
+
+        /// <summary>
+        /// Stops a current animation performing.
+        /// </summary>
+        public void StopAnimation()
+        {
+            canAnimate = false;
+            DispatcherTimer.Stop();
+            Storyboard.Pause();
+            SVItem.Center = SVItem.ActualCenter;
+            SVItem.Orientation = SVItem.Orientation;
+            Storyboard.Remove();
         }
         #endregion
 
@@ -205,8 +234,24 @@ namespace PopnTouchi2.ViewModel.Animation
         /// <param name="e"></param>
         private void touchDown(object sender, TouchEventArgs e)
         {
-            
-            // TODO lecture du theme contenu dans la bulle
+            StopAnimation();
+            if (playUp)
+            {
+                sessionVM.Session.StaveTop.melody = melody;
+                playUp = false;
+                sessionVM.Session.StaveTop.StopMelody();
+                sessionVM.Session.StaveTop.PlayMelody();
+               
+            }
+            else
+            {
+                sessionVM.Session.StaveBottom.melody = melody;
+                playUp = true;
+                sessionVM.Session.StaveBottom.StopMelody();
+                sessionVM.Session.StaveBottom.PlayMelody();
+
+            }
+
         }
         #endregion
     }

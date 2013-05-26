@@ -17,13 +17,20 @@ namespace PopnTouchi2
         public List<Note> Notes { get; set; }
 
         /// <summary>
+        /// Property
+        /// Gesture links to the melody
+        /// </summary>
+        public Gesture gesture { get; set; }
+
+        /// <summary>
         /// Melody Constructor.
         /// Generates an object of class Melody with a given list of notes.
         /// </summary>
         /// <param name="listnote">The notes list to copy</param>
-        public Melody(List<Note> listnote)
+        public Melody(List<Note> listnote, Gesture g)
         {
             Notes = listnote;
+            gesture = g;
         }
     }
 }

@@ -110,6 +110,10 @@ namespace PopnTouchi2.ViewModel
         /// </summary>
         public int SessionID { get; set; }
 
+        public TreeViewModel TreeUp { get; set; }
+
+        public TreeViewModel TreeDown { get; set; }
+
         /// <summary>
         /// SessionViewModel Construtor.
         /// Initializes all SessionViewModel components.
@@ -155,6 +159,9 @@ namespace PopnTouchi2.ViewModel
                     break;
             }
 
+            //TODO changer thickness bottom et top avec les résolutions plus grandes
+            displayTrees(new Thickness(10, 50, 200, 90), new Thickness(10,10,200,400));
+
             Reducer = new SurfaceButton();
             Reduced = false;
             Reducer.Width = 100;
@@ -191,8 +198,16 @@ namespace PopnTouchi2.ViewModel
             Grid.Children.Add(Stop);
             Stop.Visibility = Visibility.Hidden;
 
-            Stop.Click += new RoutedEventHandler(Stop_Click);          
+            Stop.Click += new RoutedEventHandler(Stop_Click);
+        }
 
+        private void displayTrees(Thickness up, Thickness down)
+        {
+            TreeUp = new TreeViewModel(true, up, session, session.Theme);
+            Grid.Children.Add(TreeUp.Grid);
+
+            TreeDown = new TreeViewModel(false, down, session, session.Theme);
+            Grid.Children.Add(TreeDown.Grid);
         }
 
         public SessionViewModel(Session s, List<int> IDs) : this(s)
