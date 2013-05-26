@@ -40,7 +40,7 @@ namespace PopnTouchi2.ViewModel
 
         /// <summary>
         /// Property.
-        /// The ScatterViewItem containing the notebubble.
+        /// The ScatterViewItem containing the note.
         /// </summary>
         public ScatterViewItem SVItem { get; set; }
 
@@ -73,7 +73,6 @@ namespace PopnTouchi2.ViewModel
             SVItem = new ScatterViewItem();
             ParentSV = sv;
 
-            Random r = new Random();
             SVItem.Center = center;
 
             SVItem.CanScale = false;
