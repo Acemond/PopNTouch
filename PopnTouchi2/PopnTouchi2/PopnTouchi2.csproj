@@ -74,6 +74,7 @@
     <Compile Include="ViewModel\Animation\NoteBubbleAnimation.cs" />
     <Compile Include="ViewModel\Animation\SessionAnimation.cs" />
     <Compile Include="ViewModel\Animation\StaveAnimation.cs" />
+    <Compile Include="ViewModel\Converter.cs" />
     <Compile Include="ViewModel\Screenshot.cs" />
     <Compile Include="ViewModel\Theme4ViewModel.cs" />
     <Compile Include="ViewModel\Theme3ViewModel.cs" />

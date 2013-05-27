@@ -101,8 +101,8 @@ namespace PopnTouchi2.ViewModel
             }
 
             bubbleImage.SetValue(Image.IsHitTestVisibleProperty, false);
-            bubbleImage.SetValue(Image.WidthProperty, 85.0);
-            bubbleImage.SetValue(Image.HeightProperty, 85.0);
+            bubbleImage.SetValue(Image.WidthProperty, 135.0);
+            bubbleImage.SetValue(Image.HeightProperty, 135.0);
 
             FrameworkElementFactory touchZone = new FrameworkElementFactory(typeof(Ellipse));
             touchZone.SetValue(Ellipse.FillProperty, Brushes.Transparent);
@@ -124,14 +124,20 @@ namespace PopnTouchi2.ViewModel
 
         public List<NoteViewModel> melodyToListOfNote(Point center)
         {
+         
             int width = (int)SessionVM.Grid.ActualWidth;
             int height = (int)SessionVM.Grid.ActualHeight;
+            int initialPosition = melodyBubble.Melody.Notes[0].Position;
+            String initialPitch = melodyBubble.Melody.Notes[0].Pitch;
+            int initialOctave = melodyBubble.Melody.Notes[0].Octave;
+            Converter c = new Converter();
+
             List<NoteViewModel> notes = new List<NoteViewModel>();
             for(int i = 0; i< melodyBubble.Melody.Notes.Count; i++)
             {
-                double x = (melodyBubble.Melody.Notes[i].Position * 60 + 120) * width / 1920;
-                //TODO Galérer à gerer le Y, avec l'offset de la portée + la hauteur des notes.
-                double y = center.Y;
+                double x = center.X + (melodyBubble.Melody.Notes[i].Position - initialPosition) * (60*width/1920);
+            //    double y = center.Y + ((initialOctave - melodyBubble.Melody.Notes[i].Octave) * 7 + (c.PositionToPitch.IndexOf(initialPitch) - c.PositionToPitch.IndexOf(melodyBubble.Melody.Notes[i].Pitch))) * 20 ;
+                double y = center.Y + ((initialOctave - melodyBubble.Melody.Notes[i].Octave) * 7 + (c.PositionToPitch.IndexOf(initialPitch) - c.PositionToPitch.IndexOf(melodyBubble.Melody.Notes[i].Pitch))) * 20;
                 Point p = new Point(x, y);
                 notes.Add(new NoteViewModel(p,melodyBubble.Melody.Notes[i], SessionVM.Notes, SessionVM));
             }

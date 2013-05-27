@@ -164,6 +164,8 @@ namespace PopnTouchi2.ViewModel.Animation
             bubbleCenter.X = bubbleCenter.X * 1920 / width;
             bubbleCenter.Y = bubbleCenter.Y * 1080 / height;
 
+          
+
 
 
             if (bubbleCenter.X <= 90) bubbleCenter.X = 120;
@@ -234,7 +236,15 @@ namespace PopnTouchi2.ViewModel.Animation
         {
             NoteViewModel noteVM = new NoteViewModel(bubbleCenter, noteBubbleVM.NoteBubble.Note, sessionVM.Notes, sessionVM);
             sessionVM.Notes.Items.Add(noteVM.SVItem);
-            sessionVM.Bubbles.Items.Remove(noteBubbleVM.SVItem);
+            if (bubbleCenter.Y < (370*(int)sessionVM.Grid.ActualHeight/1080))
+            {
+                sessionVM.Session.StaveTop.CurrentInstrument.PlayNote(noteBubbleVM.NoteBubble.Note);
+            }
+            else
+            {
+                sessionVM.Session.StaveBottom.CurrentInstrument.PlayNote(noteBubbleVM.NoteBubble.Note);
+            }
+            sessionVM.Bubbles.Items.Remove(noteBubbleVM.SVItem);            
         }
 
         /// <summary>
