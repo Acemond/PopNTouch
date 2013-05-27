@@ -63,6 +63,9 @@ namespace PopnTouchi2
             audioEngine = new AudioEngine(path + @"\sound.xgs");
             WaveBank = new WaveBank(audioEngine, path + @"\Wave Bank.xwb");
             SoundBank = new SoundBank(audioEngine, path + @"\Sound Bank.xsb");
+
+            AudioCategory category =  audioEngine.GetCategory("Notes");
+            category.SetVolume(4.0f);
         }
 
         /// <summary>

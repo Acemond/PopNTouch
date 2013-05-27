@@ -92,7 +92,11 @@ namespace PopnTouchi2.ViewModel.Animation
         {
             if (SessionVM.Reduced) return;
 
+
+            AudioController.PlaySoundWithString("flash");
+
             MainDesktop = (DesktopView)((ScatterView)(SessionVM.SessionSVI.Parent)).Parent;
+
             SessionVM.SaveSession("test.bin");
             SessionVM.Session.StopBackgroundSound();
 

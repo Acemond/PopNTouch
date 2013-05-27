@@ -234,21 +234,17 @@ namespace PopnTouchi2.ViewModel.Animation
             NoteViewModel noteVM = null;
             int positionNote = (int)(bubbleCenter.X - 120) / 60;
             Converter c = new Converter();
-
+           
             if (noteBubbleVM.NoteBubble.Note.Sharp || noteBubbleVM.NoteBubble.Note.Flat)
             {
                 bool goOn = true;
-                foreach (ScatterViewItem n in sessionVM.Notes.Items)
+                foreach (NoteViewModel n in sessionVM.NotesOnStave)
                 {
                     if (goOn)
                     {
-                        if (noteBubbleVM.SVItem.ActualCenter == n.ActualCenter)
+                        if (n.SVItem.ActualCenter == noteBubbleVM.SVItem.ActualCenter)
                         {
-                            foreach (NoteViewModel noteViewModel in sessionVM.NotesOnStave)
-                            {
-                                if (noteViewModel.SVItem.ActualCenter == n.ActualCenter)
-                                    noteVM = noteViewModel;
-                            }
+                            noteVM = n;
                             noteVM.Note.Flat = noteBubbleVM.NoteBubble.Note.Flat;
                             noteVM.Note.Sharp = noteBubbleVM.NoteBubble.Note.Sharp;
                             if (bubbleCenter.Y < (370 * (int)sessionVM.Grid.ActualHeight / 1080))
@@ -266,6 +262,7 @@ namespace PopnTouchi2.ViewModel.Animation
                     else break;
                 }
             }
+
             else
             {
 
