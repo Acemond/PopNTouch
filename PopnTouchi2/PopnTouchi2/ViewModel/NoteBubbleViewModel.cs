@@ -91,9 +91,7 @@ namespace PopnTouchi2.ViewModel
             }
             else
             {
-               
                 bubbleImage.SetValue(Image.SourceProperty, new ThemeViewModel(SessionVM.Session.Theme, SessionVM).GetNoteBubbleImageSource(nb.Note.Sharp));
-                 
             }
             
             bubbleImage.SetValue(Image.IsHitTestVisibleProperty, false);

@@ -16,8 +16,6 @@ namespace PopnTouchi2.Model.Enums
         public static int position_Melody = 0;
         public static int idNoteBubble = 0;
         public static int idMelodyBubble = 0;
-        public static float maxVolume = 0.7f;
-
         public static int StaveTopFirstDo = 335;
         public static int HeightOfOctave = 175;
         public static int StaveBottomFirstDo = 630;
