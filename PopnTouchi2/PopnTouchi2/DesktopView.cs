@@ -56,7 +56,16 @@ namespace PopnTouchi2
             Children.Add(Photos);
 
             SessionVM = new SessionViewModel(new Session(), IDs);
-            Children.Add(SessionVM.Grid);
+            Photos.Items.Add(SessionVM.SessionSVI);
+
+            this.Loaded += new RoutedEventHandler(DesktopView_Loaded);
+        }
+
+        void DesktopView_Loaded(object sender, RoutedEventArgs e)
+        {
+            SessionVM.SessionSVI.Width = ActualWidth;
+            SessionVM.SessionSVI.Height = ActualHeight;
+            SessionVM.SessionSVI.Center = new Point(ActualWidth / 2.0, ActualHeight / 2.0);
         }
 
         /// <summary>
@@ -67,7 +76,11 @@ namespace PopnTouchi2
         void CreateSession_Button_Click(object sender, RoutedEventArgs e)
         {
             SessionVM = new SessionViewModel(new Session(), IDs);
-            Children.Add(SessionVM.Grid);
+            Photos.Items.Add(SessionVM.SessionSVI);
+
+            SessionVM.SessionSVI.Width = ActualWidth;
+            SessionVM.SessionSVI.Height = ActualHeight;
+            SessionVM.SessionSVI.Center = new Point(ActualWidth / 2.0, ActualHeight / 2.0);
         }
 
     }
