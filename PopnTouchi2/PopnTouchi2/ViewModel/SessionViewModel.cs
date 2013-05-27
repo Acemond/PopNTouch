@@ -221,7 +221,25 @@ namespace PopnTouchi2.ViewModel
             SessionID = i;
             IDs.Add(i);
         }
-        
+
+        public SessionViewModel(Double width, Double height, Session s, List<int> IDs)
+            : this(s, IDs)
+        {
+            SetDimensions(width, height);
+        }
+
+        public void SetDimensions(Double width, Double height)
+        {
+            NbgVM.Grid.Width = width / 8.0;
+            NbgVM.Grid.Height = width * 0.07948;
+            MbgVM.Grid.Width = width / 8.0;
+            MbgVM.Grid.Height = width * 0.07948;
+
+            SessionSVI.Width = width;
+            SessionSVI.Height = height;
+            SessionSVI.Center = new Point(width / 2.0, height / 2.0);
+        }
+
         private void displayTrees(Thickness up, Thickness down)
         {
             TreeUp = new TreeViewModel(true, up, session, session.Theme);

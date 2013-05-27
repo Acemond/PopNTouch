@@ -231,27 +231,6 @@ namespace PopnTouchi2.ViewModel.Animation
             grid.Children.Remove(SessionVM.Stop);
         }
 
-        /*private void MakeReadyForDisplay()
-        {
-            Fs.Close();
-   
-            SessionVM.Grid.Background = (new ThemeViewModel(SessionVM.Session.Theme, SessionVM)).BackgroundImage;
-                  
-
-            SessionVM.Grid.Children.Add(SessionVM.Bubbles);
-            SessionVM.Grid.Children.Add(SessionVM.Notes);
-            SessionVM.Grid.Children.Add(SessionVM.Reducer);
-            SessionVM.Grid.Children.Add(SessionVM.Play);
-            SessionVM.Grid.Children.Add(SessionVM.Stop);
-            SessionVM.Grid.Children.Add(SessionVM.TreeUp.Grid);
-            SessionVM.Grid.Children.Add(SessionVM.TreeDown.Grid);
-            SessionVM.NbgVM = new NoteBubbleGeneratorViewModel(SessionVM.Session.NoteBubbleGenerator, SessionVM);
-            SessionVM.MbgVM = new MelodyBubbleGeneratorViewModel(SessionVM.Session.MelodyBubbleGenerator, SessionVM);
-
-            SessionVM.Grid.Children.Add(SessionVM.NbgVM.Grid);
-            SessionVM.Grid.Children.Add(SessionVM.MbgVM.Grid);
-        }*/
-
         /// <summary>
         /// Stops all bubbles animations
         /// </summary>
@@ -438,6 +417,8 @@ namespace PopnTouchi2.ViewModel.Animation
 
             SessionVM.Grid.Children.Add(SessionVM.NbgVM.Grid);
             SessionVM.Grid.Children.Add(SessionVM.MbgVM.Grid);
+
+            SessionVM.SetDimensions(SessionVM.Grid.ActualWidth, SessionVM.Grid.ActualHeight);
         }
         
         private void EnlargeForSide(Boolean left)
@@ -517,7 +498,6 @@ namespace PopnTouchi2.ViewModel.Animation
 
         private void Enlarge(double orientation)
         {
-
             #region Animation Settings
             Storyboard stb = new Storyboard();
             PointAnimation centerPosAnimation = new PointAnimation();
@@ -572,13 +552,10 @@ namespace PopnTouchi2.ViewModel.Animation
             stb.Children.Add(borderAnimation);
             Storyboard.SetTarget(borderAnimation, SessionVM.SessionSVI);
             Storyboard.SetTargetProperty(borderAnimation, new PropertyPath(ScatterViewItem.BorderThicknessProperty));
-            
-            widthAnimation.Completed += new EventHandler(stb_enlarge_Completed);
             #endregion
 
+            widthAnimation.Completed += new EventHandler(stb_enlarge_Completed);
             stb.Begin(SessionVM.SessionSVI);
-            
-            SessionVM.Reduced = false;
         }
 
         /// <summary>

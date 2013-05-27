@@ -57,7 +57,7 @@ namespace PopnTouchi2.ViewModel
             Grid = new Grid();
             NoteBubbleVMs = new List<NoteBubbleViewModel>();
             NoteBubbleGenerator = nbg;
-            //TODO : set relative to Grid size
+            //default, may change
             Grid.Width = 368;
             Grid.Height = 234;
             Grid.HorizontalAlignment = System.Windows.HorizontalAlignment.Left;

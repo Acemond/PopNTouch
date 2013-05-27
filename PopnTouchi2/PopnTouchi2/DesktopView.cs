@@ -54,18 +54,14 @@ namespace PopnTouchi2
 
             Photos = new ScatterView();
             Children.Add(Photos);
-
-            SessionVM = new SessionViewModel(new Session(), IDs);
-            Photos.Items.Add(SessionVM.SessionSVI);
-
+            
             this.Loaded += new RoutedEventHandler(DesktopView_Loaded);
         }
 
         void DesktopView_Loaded(object sender, RoutedEventArgs e)
         {
-            SessionVM.SessionSVI.Width = ActualWidth;
-            SessionVM.SessionSVI.Height = ActualHeight;
-            SessionVM.SessionSVI.Center = new Point(ActualWidth / 2.0, ActualHeight / 2.0);
+            SessionVM = new SessionViewModel(ActualWidth, ActualHeight, new Session(), IDs);
+            Photos.Items.Add(SessionVM.SessionSVI);
         }
 
         /// <summary>

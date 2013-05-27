@@ -56,7 +56,7 @@ namespace PopnTouchi2.ViewModel
             Grid = new Grid();
             MelodyBubbleVMs = new List<MelodyBubbleViewModel>();
             melodyBubbleGenerator = mbg;
-            //TODO : set relative to Grid size
+            //default, may change
             Grid.Width = 368;
             Grid.Height = 234;
             Grid.HorizontalAlignment = System.Windows.HorizontalAlignment.Right;
