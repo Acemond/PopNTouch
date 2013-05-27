@@ -7,6 +7,7 @@ using System.Windows.Media.Animation;
 using System.Windows.Threading;
 using Microsoft.Surface.Presentation.Controls;
 using System.Windows.Input;
+using PopnTouchi2.Model.Enums;
 
 namespace PopnTouchi2.ViewModel.Animation
 {
@@ -16,12 +17,6 @@ namespace PopnTouchi2.ViewModel.Animation
     public class MelodyBubbleAnimation : Animation
     {
         #region Properties
-        /// <summary>
-        /// Property.
-        /// Defines the vertical offset of the manipulation grid
-        /// </summary>
-        private int[] ManipulationGrid { get; set; }
-
         /// <summary>
         /// Parameter.
         /// Private attribute of current sessionVM.
@@ -59,7 +54,6 @@ namespace PopnTouchi2.ViewModel.Animation
         {
             melodyBubbleVM = mbVM;
             sessionVM = s;
-            ManipulationGrid = new int[] { 0, 0, 0, 14, 25, 37, 47, 56, 64, 71, 76, 80, 83, 85, 85, 84, 80, 75, 68, 60, 50, 38, 26, 15, 4, -3, -9, -11, -12, -11, -7 };
             SVItem = mbVM.SVItem;
             ParentSV = mbVM.ParentSV;
             canAnimate = true;
@@ -180,7 +174,7 @@ namespace PopnTouchi2.ViewModel.Animation
             else bubbleCenter.X = Math.Floor((bubbleCenter.X + 30) / 60) * 60;
 
             //"Applatissement" de la portée (MAJ : Switch -> Tableau !)
-            int offset = ManipulationGrid[((long)bubbleCenter.X / 60)];
+            int offset = GlobalVariables.ManipulationGrid[((long)bubbleCenter.X / 60)];
             bubbleCenter.Y += offset;
 
             int positionMelody = (int)(bubbleCenter.X - 120) / 60;

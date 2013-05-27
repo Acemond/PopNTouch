@@ -18,12 +18,6 @@ namespace PopnTouchi2.ViewModel.Animation
     {
         #region Properties
         /// <summary>
-        /// Property.
-        /// Defines the vertical offset of the manipulation grid
-        /// </summary>
-        private int[] ManipulationGrid { get; set; }
-
-        /// <summary>
         /// Parameter.
         /// Private
         /// </summary>
@@ -53,7 +47,6 @@ namespace PopnTouchi2.ViewModel.Animation
             : base()
         {
             sessionVM = s;
-            ManipulationGrid = new int[] { 0, 0, 0, 14, 25, 37, 47, 56, 64, 71, 76, 80, 83, 85, 85, 84, 80, 75, 68, 60, 50, 38, 26, 15, 4, -3, -9, -11, -12, -11, -7 };
             noteBubbleVM = nbVM;
             SVItem = nbVM.SVItem;
             ParentSV = nbVM.ParentSV;
@@ -170,7 +163,7 @@ namespace PopnTouchi2.ViewModel.Animation
             else bubbleCenter.X = Math.Floor((bubbleCenter.X + 30) / 60) * 60;
 
             //"Applatissement" de la portée (MAJ : Switch -> Tableau !)
-            int offset = ManipulationGrid[((long)bubbleCenter.X / 60)];
+            int offset = GlobalVariables.ManipulationGrid[((long)bubbleCenter.X / 60)];
             bubbleCenter.Y += offset;
 
           
