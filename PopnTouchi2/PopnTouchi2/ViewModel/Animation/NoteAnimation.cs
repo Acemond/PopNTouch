@@ -143,35 +143,35 @@ namespace PopnTouchi2.ViewModel.Animation
             int positionNote = (int)(NoteCenter.X - 120) / 60;
             Converter c = new Converter();
 
+            NoteCenter.Y = NoteCenter.Y * 1080 / sessionVM.SessionSVI.ActualHeight - GlobalVariables.ManipulationGrid[positionNote];
+
             if (NoteCenter.Y <= 160)
             {
                 noteVM.Note.Octave = 2;
-                String Pitch = c.PositionToPitch.ElementAt(((GlobalVariables.StaveTopFirstDo - GlobalVariables.HeightOfOctave) - (int)NoteCenter.Y) / 25);
+                String Pitch = c.PositionToPitch.ElementAtOrDefault(((GlobalVariables.StaveTopFirstDo - GlobalVariables.HeightOfOctave) - (int)NoteCenter.Y) / 25);
                 noteVM.Note.Pitch = Pitch;
                 sessionVM.Session.StaveTop.AddNote(noteVM.Note, positionNote);
             }
             else if (NoteCenter.Y <= GlobalVariables.StaveTopFirstDo)
             {
                 noteVM.Note.Octave = 1;
-                String Pitch = c.PositionToPitch.ElementAt((GlobalVariables.StaveTopFirstDo - (int)NoteCenter.Y) / 25);
+                String Pitch = c.PositionToPitch.ElementAtOrDefault((GlobalVariables.StaveTopFirstDo - (int)NoteCenter.Y) / 25);
                 noteVM.Note.Pitch = Pitch;
                 sessionVM.Session.StaveTop.AddNote(noteVM.Note, positionNote);
             }
 
             else if (NoteCenter.Y <= (GlobalVariables.StaveBottomFirstDo - GlobalVariables.HeightOfOctave))
             {
-                noteVM.Note.Octave = 1;
-                String Pitch = c.PositionToPitch.ElementAt(((GlobalVariables.StaveBottomFirstDo - GlobalVariables.HeightOfOctave) - (int)NoteCenter.Y) / 25);
-                MessageBox.Show(Pitch);
+                noteVM.Note.Octave = 2;
+                String Pitch = c.PositionToPitch.ElementAtOrDefault(((GlobalVariables.StaveBottomFirstDo - GlobalVariables.HeightOfOctave) - (int)NoteCenter.Y) / 25);
                 noteVM.Note.Pitch = Pitch;
                 sessionVM.Session.StaveBottom.AddNote(noteVM.Note, positionNote);
             }
 
             else if (NoteCenter.Y <= GlobalVariables.StaveBottomFirstDo)
             {
-                noteVM.Note.Octave = 2;
-                String Pitch = c.PositionToPitch.ElementAt((GlobalVariables.StaveBottomFirstDo - (int)NoteCenter.Y) / 25);
-                MessageBox.Show(Pitch);
+                noteVM.Note.Octave = 1;
+                String Pitch = c.PositionToPitch.ElementAtOrDefault((GlobalVariables.StaveBottomFirstDo - (int)NoteCenter.Y) / 25);
                 noteVM.Note.Pitch = Pitch;
                 sessionVM.Session.StaveBottom.AddNote(noteVM.Note, positionNote);
             }

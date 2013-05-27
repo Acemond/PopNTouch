@@ -209,11 +209,6 @@ namespace PopnTouchi2.ViewModel.Animation
                 moveCenter.Completed += new EventHandler(moveCenter_Completed);
 
                 stb.Begin(SVItem);
-
-         /*       Point p = bubbleCenter;
-                p.X = p.X * 1920 / width;
-                p.Y = p.Y * 1080 / height;
-                MessageBox.Show(p.ToString());*/
             }
             else
             {
@@ -227,7 +222,8 @@ namespace PopnTouchi2.ViewModel.Animation
             NoteViewModel noteVM = null;
             int positionNote = (int)(bubbleCenter.X - 120) / 60;
             Converter c = new Converter();
-           
+            bubbleCenter.Y = bubbleCenter.Y * 1080 / sessionVM.SessionSVI.ActualHeight - GlobalVariables.ManipulationGrid[positionNote];
+
             if (noteBubbleVM.NoteBubble.Note.Sharp || noteBubbleVM.NoteBubble.Note.Flat)
             {
                 bool goOn = true;
@@ -240,7 +236,7 @@ namespace PopnTouchi2.ViewModel.Animation
                             noteVM = n;
                             noteVM.Note.Flat = noteBubbleVM.NoteBubble.Note.Flat;
                             noteVM.Note.Sharp = noteBubbleVM.NoteBubble.Note.Sharp;
-                            if (bubbleCenter.Y < (370 * (int)sessionVM.Grid.ActualHeight / 1080))
+                            if (bubbleCenter.Y < 370)
                             {
                                 sessionVM.Session.StaveTop.CurrentInstrument.PlayNote(noteVM.Note);
                             }
@@ -258,39 +254,38 @@ namespace PopnTouchi2.ViewModel.Animation
 
             else
             {
-
                 if (bubbleCenter.Y <= 160)
                 {
                     noteBubbleVM.NoteBubble.Note.Octave = 2;
-                    String Pitch = c.PositionToPitch.ElementAt(((GlobalVariables.StaveTopFirstDo - GlobalVariables.HeightOfOctave) - (int)bubbleCenter.Y) / 25);
+                    String Pitch = c.PositionToPitch.ElementAtOrDefault(((GlobalVariables.StaveTopFirstDo - GlobalVariables.HeightOfOctave) - (int)bubbleCenter.Y) / 25);
                     noteBubbleVM.NoteBubble.Note.Pitch = Pitch;
                     sessionVM.Session.StaveTop.AddNote(noteBubbleVM.NoteBubble.Note, positionNote);
                 }
                 else if (bubbleCenter.Y <= GlobalVariables.StaveTopFirstDo)
                 {
                     noteBubbleVM.NoteBubble.Note.Octave = 1;
-                    String Pitch = c.PositionToPitch.ElementAt((GlobalVariables.StaveTopFirstDo - (int)bubbleCenter.Y) / 25);
+                    String Pitch = c.PositionToPitch.ElementAtOrDefault((GlobalVariables.StaveTopFirstDo - (int)bubbleCenter.Y) / 25);
                     noteBubbleVM.NoteBubble.Note.Pitch = Pitch;
                     sessionVM.Session.StaveTop.AddNote(noteBubbleVM.NoteBubble.Note, positionNote);
                 }
 
                 else if (bubbleCenter.Y <= (GlobalVariables.StaveBottomFirstDo - GlobalVariables.HeightOfOctave))
                 {
-                    noteBubbleVM.NoteBubble.Note.Octave = 1;
-                    String Pitch = c.PositionToPitch.ElementAt(((GlobalVariables.StaveBottomFirstDo - GlobalVariables.HeightOfOctave) - (int)bubbleCenter.Y) / 25);
+                    noteBubbleVM.NoteBubble.Note.Octave = 2;
+                    String Pitch = c.PositionToPitch.ElementAtOrDefault(((GlobalVariables.StaveBottomFirstDo - GlobalVariables.HeightOfOctave) - (int)bubbleCenter.Y) / 25);
                     noteBubbleVM.NoteBubble.Note.Pitch = Pitch;
                     sessionVM.Session.StaveBottom.AddNote(noteBubbleVM.NoteBubble.Note, positionNote);
                 }
 
                 else if (bubbleCenter.Y <= GlobalVariables.StaveBottomFirstDo)
                 {
-                    noteBubbleVM.NoteBubble.Note.Octave = 2;
-                    String Pitch = c.PositionToPitch.ElementAt((GlobalVariables.StaveBottomFirstDo - (int)bubbleCenter.Y) / 25);
+                    noteBubbleVM.NoteBubble.Note.Octave = 1;
+                    String Pitch = c.PositionToPitch.ElementAtOrDefault((GlobalVariables.StaveBottomFirstDo - (int)bubbleCenter.Y) / 25);
                     noteBubbleVM.NoteBubble.Note.Pitch = Pitch;
                     sessionVM.Session.StaveBottom.AddNote(noteBubbleVM.NoteBubble.Note, positionNote);
                 }
 
-
+                bubbleCenter.Y = (bubbleCenter.Y + GlobalVariables.ManipulationGrid[positionNote])* sessionVM.SessionSVI.ActualHeight /1080;
                 noteVM = new NoteViewModel(bubbleCenter, noteBubbleVM.NoteBubble.Note, sessionVM.Notes, sessionVM);
                 sessionVM.Notes.Items.Add(noteVM.SVItem);
                 sessionVM.NotesOnStave.Add(noteVM);
