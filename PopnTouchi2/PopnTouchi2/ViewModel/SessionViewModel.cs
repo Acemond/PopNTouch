@@ -64,6 +64,12 @@ namespace PopnTouchi2.ViewModel
 
         /// <summary>
         /// Property.
+        /// SVI containing the Grid that is containing the session.
+        /// </summary>
+        public ScatterViewItem SessionSVI { get; set; }
+
+        /// <summary>
+        /// Property.
         /// Grid containing the session.
         /// </summary>
         public Grid Grid { get; set; }
@@ -127,42 +133,24 @@ namespace PopnTouchi2.ViewModel
         /// <param name="s">The Session to link with its ViewModel</param>
         public SessionViewModel(Session s) : base()
         {
-            SessionVM = this;
             Session = s;
+            SessionSVI = new ScatterViewItem();
             Grid = new Grid();
             Bubbles = new ScatterView();
             Notes = new ScatterView();
             NbgVM = new NoteBubbleGeneratorViewModel(Session.NoteBubbleGenerator, this);
             MbgVM = new MelodyBubbleGeneratorViewModel(Session.MelodyBubbleGenerator, this);
 
-            Grid.Opacity = 0;
+            SessionSVI.Opacity = 0;
             Bubbles.Visibility = Visibility.Visible;
             Notes.Visibility = Visibility.Visible;
-
-            Grid.Children.Add(Bubbles);
-            Grid.Children.Add(Notes);
-            Grid.Children.Add(NbgVM.Grid);
-            Grid.Children.Add(MbgVM.Grid);
-
-            Grid.SetZIndex(Bubbles, 2);
-            Grid.SetZIndex(Notes, 1);
-            Grid.SetZIndex(NbgVM.Grid, 0);
-            Grid.SetZIndex(MbgVM.Grid, 0);
             
             switch (Session.ThemeID)
             {
-                case 1:
-                    Grid.Background = (new Theme1ViewModel(Session.Theme, this)).BackgroundImage;
-                    break;
-                case 2:
-                    Grid.Background = (new Theme2ViewModel(Session.Theme, this)).BackgroundImage;
-                    break;
-                case 3:
-                    Grid.Background = (new Theme3ViewModel(Session.Theme, this)).BackgroundImage;
-                    break;
-                case 4:
-                    Grid.Background = (new Theme4ViewModel(Session.Theme, this)).BackgroundImage;
-                    break;
+                default: Grid.SetValue(System.Windows.Controls.Grid.BackgroundProperty, (new Theme1ViewModel(Session.Theme, this)).BackgroundImage); break;
+                case 2: Grid.SetValue(System.Windows.Controls.Grid.BackgroundProperty, (new Theme2ViewModel(Session.Theme, this)).BackgroundImage); break;
+                case 3: Grid.SetValue(System.Windows.Controls.Grid.BackgroundProperty, (new Theme3ViewModel(Session.Theme, this)).BackgroundImage); break;
+                case 4: Grid.SetValue(System.Windows.Controls.Grid.BackgroundProperty, (new Theme4ViewModel(Session.Theme, this)).BackgroundImage); break;
             }
 
             //TODO changer thickness bottom et top avec les résolutions plus grandes
@@ -189,7 +177,6 @@ namespace PopnTouchi2.ViewModel
             Play.VerticalAlignment = System.Windows.VerticalAlignment.Top;
             Play.Background = Brushes.Red;
             Play.Content = "Play";
-            Grid.Children.Add(Play);
             Play.Visibility = Visibility.Visible;
 
             Play.Click+=new RoutedEventHandler(Play_Click);
@@ -201,12 +188,40 @@ namespace PopnTouchi2.ViewModel
             Stop.VerticalAlignment = System.Windows.VerticalAlignment.Top;
             Stop.Background = Brushes.Blue;
             Stop.Content = "Stop";
-            Grid.Children.Add(Stop);
             Stop.Visibility = Visibility.Hidden;
 
+
             Stop.Click += new RoutedEventHandler(Stop_Click);
+                        
+            SessionSVI.CanMove = false;
+            SessionSVI.CanRotate = false;
+            SessionSVI.CanScale = false;
+            SessionSVI.ShowsActivationEffects = false;
+
+            Grid.Children.Add(Bubbles);
+            Grid.Children.Add(Notes);
+            Grid.Children.Add(NbgVM.Grid);
+            Grid.Children.Add(MbgVM.Grid);
+            Grid.Children.Add(Play);
+            Grid.Children.Add(Stop);
+            
+            Grid.SetZIndex(Bubbles, 2);
+            Grid.SetZIndex(Notes, 1);
+            Grid.SetZIndex(NbgVM.Grid, 0);
+            Grid.SetZIndex(MbgVM.Grid, 0);
+
+            SessionSVI.Content = Grid;
         }
 
+        public SessionViewModel(Session s, List<int> IDs)
+            : this(s)
+        {
+            int i = 1;
+            while (IDs.Contains(i)) i++;
+            SessionID = i;
+            IDs.Add(i);
+        }
+        
         private void displayTrees(Thickness up, Thickness down)
         {
             TreeUp = new TreeViewModel(true, up, session, session.Theme);
@@ -216,13 +231,6 @@ namespace PopnTouchi2.ViewModel
             Grid.Children.Add(TreeDown.Grid);
         }
 
-        public SessionViewModel(Session s, List<int> IDs) : this(s)
-        {
-            int i = 1;
-            while (IDs.Contains(i)) i++;
-            SessionID = i;
-            IDs.Add(i);
-        }
 
         private void Play_Click(object sender, RoutedEventArgs e)
         {
