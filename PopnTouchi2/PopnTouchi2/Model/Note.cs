@@ -72,6 +72,20 @@ namespace PopnTouchi2
         }
 
         /// <summary>
+        /// Note Constructor.
+        /// Generates a new object of class Note, default Note
+        /// </summary>
+        public Note()
+        {
+            Octave = 1;
+            Duration = NoteValue.crotchet;
+            Pitch = "do";
+            Sharp = false;
+            Flat = false;
+            Position = -1;
+        }
+
+        /// <summary>
         /// Generates a string describing the note.
         /// </summary>
         /// <returns>The string newly created</returns>

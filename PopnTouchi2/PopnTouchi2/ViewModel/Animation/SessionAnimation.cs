@@ -231,6 +231,27 @@ namespace PopnTouchi2.ViewModel.Animation
             grid.Children.Remove(SessionVM.Stop);
         }
 
+        /*private void MakeReadyForDisplay()
+        {
+            Fs.Close();
+   
+            SessionVM.Grid.Background = (new ThemeViewModel(SessionVM.Session.Theme, SessionVM)).BackgroundImage;
+                  
+
+            SessionVM.Grid.Children.Add(SessionVM.Bubbles);
+            SessionVM.Grid.Children.Add(SessionVM.Notes);
+            SessionVM.Grid.Children.Add(SessionVM.Reducer);
+            SessionVM.Grid.Children.Add(SessionVM.Play);
+            SessionVM.Grid.Children.Add(SessionVM.Stop);
+            SessionVM.Grid.Children.Add(SessionVM.TreeUp.Grid);
+            SessionVM.Grid.Children.Add(SessionVM.TreeDown.Grid);
+            SessionVM.NbgVM = new NoteBubbleGeneratorViewModel(SessionVM.Session.NoteBubbleGenerator, SessionVM);
+            SessionVM.MbgVM = new MelodyBubbleGeneratorViewModel(SessionVM.Session.MelodyBubbleGenerator, SessionVM);
+
+            SessionVM.Grid.Children.Add(SessionVM.NbgVM.Grid);
+            SessionVM.Grid.Children.Add(SessionVM.MbgVM.Grid);
+        }*/
+
         /// <summary>
         /// Stops all bubbles animations
         /// </summary>
@@ -402,22 +423,9 @@ namespace PopnTouchi2.ViewModel.Animation
         private void MakeReadyForDisplay()
         {
             Fs.Close();
-            switch (SessionVM.Session.ThemeID)
-            {
-                default:
-                    SessionVM.Grid.Background = (new Theme1ViewModel(SessionVM.Session.Theme, SessionVM)).BackgroundImage;
-                    break;
-                case 2:
-                    SessionVM.Grid.Background = (new Theme2ViewModel(SessionVM.Session.Theme, SessionVM)).BackgroundImage;
-                    break;
-                case 3:
-                    SessionVM.Grid.Background = (new Theme3ViewModel(SessionVM.Session.Theme, SessionVM)).BackgroundImage;
-                    break;
-                case 4:
-                    SessionVM.Grid.Background = (new Theme4ViewModel(SessionVM.Session.Theme, SessionVM)).BackgroundImage;
-                    break;
-            }
 
+            SessionVM.Grid.Background = (new ThemeViewModel(SessionVM.Session.Theme, SessionVM)).BackgroundImage;
+            
             SessionVM.Grid.Children.Add(SessionVM.Bubbles);
             SessionVM.Grid.Children.Add(SessionVM.Notes);
             SessionVM.Grid.Children.Add(SessionVM.Reducer);

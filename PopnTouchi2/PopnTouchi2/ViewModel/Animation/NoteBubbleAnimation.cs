@@ -7,6 +7,7 @@ using System.Windows.Media.Animation;
 using System.Windows.Threading;
 using Microsoft.Surface.Presentation.Controls;
 using System.Windows.Input;
+using PopnTouchi2.Model.Enums;
 
 namespace PopnTouchi2.ViewModel.Animation
 {
@@ -164,8 +165,6 @@ namespace PopnTouchi2.ViewModel.Animation
             bubbleCenter.X = bubbleCenter.X * 1920 / width;
             bubbleCenter.Y = bubbleCenter.Y * 1080 / height;
 
-
-
             if (bubbleCenter.X <= 90) bubbleCenter.X = 120;
             else if (bubbleCenter.X >= 1830) bubbleCenter.X = 1800;
             else bubbleCenter.X = Math.Floor((bubbleCenter.X + 30) / 60) * 60;
@@ -174,7 +173,7 @@ namespace PopnTouchi2.ViewModel.Animation
             int offset = ManipulationGrid[((long)bubbleCenter.X / 60)];
             bubbleCenter.Y += offset;
 
-            int positionNote = (int)(bubbleCenter.X - 120) / 60;
+          
 
             //Y dans le cadre portée ?
             //Si oui, animation
@@ -185,16 +184,11 @@ namespace PopnTouchi2.ViewModel.Animation
                 {
                     if (bubbleCenter.Y >= 335) bubbleCenter.Y = 335;
                     bubbleCenter.Y = Math.Floor((bubbleCenter.Y - 20) / 25) * 25 + 35; //-20 et 35 pour 50
-
-                    sessionVM.Session.StaveTop.AddNote(noteBubbleVM.NoteBubble.Note, positionNote);
-
                 }
                 else
                 {
                     if (bubbleCenter.Y <= 405) bubbleCenter.Y = 405;
                     bubbleCenter.Y = Math.Floor((bubbleCenter.Y + 10) / 25) * 25 + 5; //20 et 5 pour 50
-
-                    sessionVM.Session.StaveBottom.AddNote(noteBubbleVM.NoteBubble.Note, positionNote);
                 }
 
                 bubbleCenter.Y -= offset;
@@ -222,6 +216,11 @@ namespace PopnTouchi2.ViewModel.Animation
                 moveCenter.Completed += new EventHandler(moveCenter_Completed);
 
                 stb.Begin(SVItem);
+
+         /*       Point p = bubbleCenter;
+                p.X = p.X * 1920 / width;
+                p.Y = p.Y * 1080 / height;
+                MessageBox.Show(p.ToString());*/
             }
             else
             {
@@ -232,9 +231,91 @@ namespace PopnTouchi2.ViewModel.Animation
 
         void moveCenter_Completed(object sender, EventArgs e)
         {
-            NoteViewModel noteVM = new NoteViewModel(bubbleCenter, noteBubbleVM.NoteBubble.Note, sessionVM.Notes, sessionVM);
-            sessionVM.Notes.Items.Add(noteVM.SVItem);
-            sessionVM.Bubbles.Items.Remove(noteBubbleVM.SVItem);
+            NoteViewModel noteVM = null;
+            int positionNote = (int)(bubbleCenter.X - 120) / 60;
+            Converter c = new Converter();
+
+            if (noteBubbleVM.NoteBubble.Note.Sharp || noteBubbleVM.NoteBubble.Note.Flat)
+            {
+                bool goOn = true;
+                foreach (ScatterViewItem n in sessionVM.Notes.Items)
+                {
+                    if (goOn)
+                    {
+                        if (noteBubbleVM.SVItem.ActualCenter == n.ActualCenter)
+                        {
+                            foreach (NoteViewModel noteViewModel in sessionVM.NotesOnStave)
+                            {
+                                if (noteViewModel.SVItem.ActualCenter == n.ActualCenter)
+                                    noteVM = noteViewModel;
+                            }
+                            noteVM.Note.Flat = noteBubbleVM.NoteBubble.Note.Flat;
+                            noteVM.Note.Sharp = noteBubbleVM.NoteBubble.Note.Sharp;
+                            if (bubbleCenter.Y < (370 * (int)sessionVM.Grid.ActualHeight / 1080))
+                            {
+                                sessionVM.Session.StaveTop.CurrentInstrument.PlayNote(noteVM.Note);
+                            }
+                            else
+                            {
+                                sessionVM.Session.StaveBottom.CurrentInstrument.PlayNote(noteVM.Note);
+                            }
+                            sessionVM.Bubbles.Items.Remove(noteBubbleVM.SVItem);
+                            goOn = false;
+                        }
+                    }
+                    else break;
+                }
+            }
+            else
+            {
+
+                if (bubbleCenter.Y <= 160)
+                {
+                    noteBubbleVM.NoteBubble.Note.Octave = 2;
+                    String Pitch = c.PositionToPitch.ElementAt(((GlobalVariables.StaveTopFirstDo - GlobalVariables.HeightOfOctave) - (int)bubbleCenter.Y) / 25);
+                    noteBubbleVM.NoteBubble.Note.Pitch = Pitch;
+                    sessionVM.Session.StaveTop.AddNote(noteBubbleVM.NoteBubble.Note, positionNote);
+                }
+                else if (bubbleCenter.Y <= GlobalVariables.StaveTopFirstDo)
+                {
+                    noteBubbleVM.NoteBubble.Note.Octave = 1;
+                    String Pitch = c.PositionToPitch.ElementAt((GlobalVariables.StaveTopFirstDo - (int)bubbleCenter.Y) / 25);
+                    noteBubbleVM.NoteBubble.Note.Pitch = Pitch;
+                    sessionVM.Session.StaveTop.AddNote(noteBubbleVM.NoteBubble.Note, positionNote);
+                }
+
+                else if (bubbleCenter.Y <= (GlobalVariables.StaveBottomFirstDo - GlobalVariables.HeightOfOctave))
+                {
+                    noteBubbleVM.NoteBubble.Note.Octave = 2;
+                    String Pitch = c.PositionToPitch.ElementAt(((GlobalVariables.StaveBottomFirstDo - GlobalVariables.HeightOfOctave) - (int)bubbleCenter.Y) / 25);
+                    noteBubbleVM.NoteBubble.Note.Pitch = Pitch;
+                    sessionVM.Session.StaveBottom.AddNote(noteBubbleVM.NoteBubble.Note, positionNote);
+                }
+
+                else if (bubbleCenter.Y <= GlobalVariables.StaveBottomFirstDo)
+                {
+                    noteBubbleVM.NoteBubble.Note.Octave = 1;
+                    String Pitch = c.PositionToPitch.ElementAt((GlobalVariables.StaveBottomFirstDo - (int)bubbleCenter.Y) / 25);
+                    noteBubbleVM.NoteBubble.Note.Pitch = Pitch;
+                    sessionVM.Session.StaveBottom.AddNote(noteBubbleVM.NoteBubble.Note, positionNote);
+                }
+
+
+                noteVM = new NoteViewModel(bubbleCenter, noteBubbleVM.NoteBubble.Note, sessionVM.Notes, sessionVM);
+                sessionVM.Notes.Items.Add(noteVM.SVItem);
+                sessionVM.NotesOnStave.Add(noteVM);
+                if (bubbleCenter.Y < (370 * (int)sessionVM.Grid.ActualHeight / 1080))
+                {
+                    sessionVM.Session.StaveTop.CurrentInstrument.PlayNote(noteBubbleVM.NoteBubble.Note);
+                }
+                else
+                {
+                    sessionVM.Session.StaveBottom.CurrentInstrument.PlayNote(noteBubbleVM.NoteBubble.Note);
+                }
+                sessionVM.Bubbles.Items.Remove(noteBubbleVM.SVItem);
+
+            }
+
         }
 
         /// <summary>

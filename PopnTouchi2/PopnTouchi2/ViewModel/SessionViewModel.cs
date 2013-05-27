@@ -57,6 +57,11 @@ namespace PopnTouchi2.ViewModel
         public ScatterView Notes { get; set; }
 
         /// <summary>
+        /// TODO
+        /// </summary>
+        public List<NoteViewModel> NotesOnStave { get; set; }
+
+        /// <summary>
         /// Parameter.
         /// The SessionAnimation instance handling all animations related to the session.
         /// </summary>
@@ -138,6 +143,7 @@ namespace PopnTouchi2.ViewModel
             Grid = new Grid();
             Bubbles = new ScatterView();
             Notes = new ScatterView();
+            NotesOnStave = new List<NoteViewModel>();
             NbgVM = new NoteBubbleGeneratorViewModel(Session.NoteBubbleGenerator, this);
             MbgVM = new MelodyBubbleGeneratorViewModel(Session.MelodyBubbleGenerator, this);
 
@@ -145,14 +151,8 @@ namespace PopnTouchi2.ViewModel
             Bubbles.Visibility = Visibility.Visible;
             Notes.Visibility = Visibility.Visible;
             
-            switch (Session.ThemeID)
-            {
-                default: Grid.SetValue(System.Windows.Controls.Grid.BackgroundProperty, (new Theme1ViewModel(Session.Theme, this)).BackgroundImage); break;
-                case 2: Grid.SetValue(System.Windows.Controls.Grid.BackgroundProperty, (new Theme2ViewModel(Session.Theme, this)).BackgroundImage); break;
-                case 3: Grid.SetValue(System.Windows.Controls.Grid.BackgroundProperty, (new Theme3ViewModel(Session.Theme, this)).BackgroundImage); break;
-                case 4: Grid.SetValue(System.Windows.Controls.Grid.BackgroundProperty, (new Theme4ViewModel(Session.Theme, this)).BackgroundImage); break;
-            }
-
+            Grid.Background = (new ThemeViewModel(Session.Theme, this)).BackgroundImage;
+                 
             //TODO changer thickness bottom et top avec les résolutions plus grandes
             displayTrees(new Thickness(10, 50, 200, 90), new Thickness(10,10,200,400));
 
