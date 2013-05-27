@@ -101,7 +101,6 @@ namespace PopnTouchi2.ViewModel
 
         public List<NoteViewModel> melodyToListOfNote(Point center)
         {
-            MessageBox.Show(center.ToString());
             int initialPosition = melodyBubble.Melody.Notes[0].Position;
             bool up = (center.Y < 370);
             Converter c = new Converter();

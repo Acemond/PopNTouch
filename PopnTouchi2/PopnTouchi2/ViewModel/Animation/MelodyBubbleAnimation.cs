@@ -244,12 +244,6 @@ namespace PopnTouchi2.ViewModel.Animation
 
             sessionVM.Bubbles.Items.Remove(melodyBubbleVM.SVItem);
 
-         /*   String s = "";
-            for (int i = 0; i < sessionVM.Session.StaveTop.Notes.Count; i++)
-            {
-                s += sessionVM.Session.StaveTop.Notes[i].Position+" ";
-            }
-            MessageBox.Show(s);*/
         }
 
         /// <summary>
