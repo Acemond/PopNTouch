@@ -222,6 +222,23 @@ namespace PopnTouchi2.ViewModel
             Animation = new SessionAnimation(this);
             Reducer.Click += new RoutedEventHandler(Animation.Reducer_Click);
         }
+
+        public SessionViewModel(Boolean left, Double width, Double height, Session s, List<int> IDs)
+            : this(width * 0.5625, height * 0.5625, s, IDs)
+        {
+            if (left)
+            {
+                Orientation = "left";
+                SessionSVI.Orientation = 90;
+                SessionSVI.Center = new Point( width / 6.0 - 16.875, height / 2.0);
+            }
+            else
+            {
+                Orientation = "right";
+                SessionSVI.Orientation = -90;
+                SessionSVI.Center = new Point(width - (width / 6.0 - 16.875), height / 2.0);
+            }
+        }
         
         public void SetDimensions(Double width, Double height)
         {

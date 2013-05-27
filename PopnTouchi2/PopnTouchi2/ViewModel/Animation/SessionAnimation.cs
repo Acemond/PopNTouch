@@ -169,18 +169,6 @@ namespace PopnTouchi2.ViewModel.Animation
             OpacityAnimation.Completed += new EventHandler(flash_Completed);
 
             stb.Begin();
-
-            RotateTransform rt = new RotateTransform();
-            rt.CenterX = 0.5;
-            rt.CenterY = 0.5;
-            switch (SessionVM.Orientation)
-            {
-                case "top": rt.Angle = 0; break;
-                case "left": rt.Angle = 0; break;
-                case "right": rt.Angle = 0; break;
-                default: rt.Angle = 0; break;
-            }
-            ss.RelativeTransform = rt;
             SessionVM.Grid.Background = ss;
         }
 
@@ -262,8 +250,8 @@ namespace PopnTouchi2.ViewModel.Animation
         /// <param name="e"></param>
         public void stb_Completed(object sender, EventArgs e)
         {
-
             MainDesktop = (DesktopView)((ScatterView)(SessionVM.SessionSVI.Parent)).Parent;
+            MainDesktop.UnhidePhotos();
 
             SessionVM.SessionSVI.BorderBrush = System.Windows.Media.Brushes.White;
 
@@ -309,6 +297,12 @@ namespace PopnTouchi2.ViewModel.Animation
         /// <param name="e"></param>
         public void stb_border_Completed(object sender, EventArgs e)
         {
+            MainDesktop.Sessions.Items.Remove(SessionVM.SessionSVI);
+            MainDesktop.Photos.Items.Add(SessionVM.SessionSVI);
+
+            if (MainDesktop.Sessions.Items.Count <= 1) MainDesktop.CreateSession_Button.Visibility = Visibility.Visible;
+            if (MainDesktop.Sessions.Items.Count == 0) MainDesktop.CreateDoubleSession_Button.Visibility = Visibility.Visible;
+
             Storyboard = new Storyboard();
             PointAnimation centerPosAnimation = new PointAnimation();
             DoubleAnimation orientationAnimation = new DoubleAnimation();
@@ -438,6 +432,12 @@ namespace PopnTouchi2.ViewModel.Animation
         
         private void EnlargeForSide(Boolean left)
         {
+            MainDesktop.Photos.Items.Remove(SessionVM.SessionSVI);
+            MainDesktop.Sessions.Items.Add(SessionVM.SessionSVI);
+            if (SessionVM.Orientation == "left") MainDesktop.LeftSessionActive = true;
+            if (MainDesktop.Sessions.Items.Count >= 2) MainDesktop.HidePhotos();
+            MainDesktop.CreateDoubleSession_Button.Visibility = Visibility.Hidden;
+
             #region Animation Settings
             Storyboard stb = new Storyboard();
             PointAnimation centerPosAnimation = new PointAnimation();
@@ -513,6 +513,10 @@ namespace PopnTouchi2.ViewModel.Animation
 
         private void Enlarge(double orientation)
         {
+            MainDesktop.Photos.Items.Remove(SessionVM.SessionSVI);
+            MainDesktop.Sessions.Items.Add(SessionVM.SessionSVI);
+            MainDesktop.HidePhotos();
+
             #region Animation Settings
             Storyboard stb = new Storyboard();
             PointAnimation centerPosAnimation = new PointAnimation();
