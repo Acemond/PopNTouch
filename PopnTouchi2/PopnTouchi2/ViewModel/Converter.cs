@@ -9,10 +9,6 @@ namespace PopnTouchi2.ViewModel
     {
         public List<String> PositionToPitch { get; set; }
 
-        public int StaveTopFirstDo = 280;
-
-        public int StaveBottomFirstDo = 630;
-
         public Converter()
         {
             PositionToPitch = new List<String>();

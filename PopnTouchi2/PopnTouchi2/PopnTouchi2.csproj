@@ -76,9 +76,6 @@
     <Compile Include="ViewModel\Animation\StaveAnimation.cs" />
     <Compile Include="ViewModel\Converter.cs" />
     <Compile Include="ViewModel\Screenshot.cs" />
-    <Compile Include="ViewModel\Theme4ViewModel.cs" />
-    <Compile Include="ViewModel\Theme3ViewModel.cs" />
-    <Compile Include="ViewModel\Theme2ViewModel.cs" />
     <Compile Include="ViewModel\MelodyBubbleGeneratorViewModel.cs" />
     <Compile Include="ViewModel\MelodyBubbleViewModel.cs" />
     <Compile Include="ViewModel\NoteBubbleGeneratorViewModel.cs" />
@@ -108,7 +105,7 @@
     <Compile Include="Model\Enums\NoteValue.cs" />
     <Compile Include="Model\Stave.cs" />
     <Compile Include="ViewModel\NoteViewModel.cs" />
-    <Compile Include="ViewModel\Theme1ViewModel.cs" />
+    <Compile Include="ViewModel\ThemeViewModel.cs" />
     <Compile Include="ViewModel\TreeViewModel.cs" />
     <Page Include="DesktopWindow.xaml">
       <SubType>Designer</SubType>

@@ -31,6 +31,12 @@ namespace PopnTouchi2
         public Dictionary<NoteValue, int> WildBubbles { get; set; }
 
         /// <summary>
+        /// Parameter.
+        /// Used to create 1/4 bubble of alteration
+        /// </summary>
+        private int counterOfNote;
+
+        /// <summary>
         /// NoteBubbleGenerator Constructor.
         /// Initializes a new Observable collection for its NoteBubbles.
         /// Defines the Generator Image and its position.
@@ -42,6 +48,7 @@ namespace PopnTouchi2
             WildBubbles.Add(NoteValue.crotchet, 0);
             WildBubbles.Add(NoteValue.minim, 0);
             WildBubbles.Add(NoteValue.quaver, 0);
+            counterOfNote = 1;
         }
 
         /// <summary>
@@ -50,7 +57,23 @@ namespace PopnTouchi2
         /// <returns>A newly created NoteBubble</returns>
         public NoteBubble CreateNoteBubble()
         {
-            NoteBubble newBubble = new NoteBubble(MostNeeded());
+            NoteBubble newBubble = null;
+            if ((counterOfNote % 4) != 0)
+            {
+                newBubble = new NoteBubble(MostNeeded());
+            }
+            else
+            {
+                if ((counterOfNote % 8) == 0)
+                {
+                    newBubble = new NoteBubble(true, false);
+                }
+                else
+                {
+                    newBubble = new NoteBubble(false, true);
+                }
+            }
+            counterOfNote++;
             NoteBubbles.Add(newBubble);
             return newBubble;
         }

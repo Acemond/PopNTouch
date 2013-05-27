@@ -62,22 +62,9 @@ namespace PopnTouchi2.ViewModel
             Grid.Height = 234;
             Grid.HorizontalAlignment = System.Windows.HorizontalAlignment.Left;
             Grid.VerticalAlignment = System.Windows.VerticalAlignment.Bottom;
-            switch (SessionVM.Session.ThemeID)
-            {
-                case 1:
-                    Grid.Background = (new Theme1ViewModel(SessionVM.Session.Theme, SessionVM)).NoteGeneratorImage;
-                    break;
-                case 2:
-                    Grid.Background = (new Theme2ViewModel(SessionVM.Session.Theme, SessionVM)).NoteGeneratorImage;
-                    break;
-                case 3:
-                    Grid.Background = (new Theme3ViewModel(SessionVM.Session.Theme, SessionVM)).NoteGeneratorImage;
-                    break;
-                case 4:
-                    Grid.Background = (new Theme4ViewModel(SessionVM.Session.Theme, SessionVM)).NoteGeneratorImage;
-                    break;
-            }
-
+ 
+            Grid.Background = (new ThemeViewModel(SessionVM.Session.Theme, SessionVM)).NoteGeneratorImage;
+              
             Grid.TouchDown += new EventHandler<System.Windows.Input.TouchEventArgs>(touchDown);
         }
 

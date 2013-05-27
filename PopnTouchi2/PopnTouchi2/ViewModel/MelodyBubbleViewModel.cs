@@ -84,21 +84,8 @@ namespace PopnTouchi2.ViewModel
             SVItem.HorizontalAlignment = HorizontalAlignment.Center;
 
             FrameworkElementFactory bubbleImage = new FrameworkElementFactory(typeof(Image));
-            switch (SessionVM.Session.ThemeID)
-            {
-                case 1:
-                    bubbleImage.SetValue(Image.SourceProperty, new Theme1ViewModel(SessionVM.Session.Theme, SessionVM).GetMelodyBubbleImageSource(mb.Melody.gesture));
-                    break;
-                case 2:
-                    bubbleImage.SetValue(Image.SourceProperty, new Theme2ViewModel(SessionVM.Session.Theme, SessionVM).GetMelodyBubbleImageSource(mb.Melody.gesture));
-                    break;
-                case 3:
-                    bubbleImage.SetValue(Image.SourceProperty, new Theme3ViewModel(SessionVM.Session.Theme, SessionVM).GetMelodyBubbleImageSource(mb.Melody.gesture));
-                    break;
-                case 4:
-                    bubbleImage.SetValue(Image.SourceProperty, new Theme4ViewModel(SessionVM.Session.Theme, SessionVM).GetMelodyBubbleImageSource(mb.Melody.gesture));
-                    break;
-            }
+ 
+            bubbleImage.SetValue(Image.SourceProperty, new ThemeViewModel(SessionVM.Session.Theme, SessionVM).GetMelodyBubbleImageSource(mb.Melody.gesture));
 
             bubbleImage.SetValue(Image.IsHitTestVisibleProperty, false);
             bubbleImage.SetValue(Image.WidthProperty, 135.0);
@@ -136,8 +123,7 @@ namespace PopnTouchi2.ViewModel
             for(int i = 0; i< melodyBubble.Melody.Notes.Count; i++)
             {
                 double x = center.X + (melodyBubble.Melody.Notes[i].Position - initialPosition) * (60*width/1920);
-            //    double y = center.Y + ((initialOctave - melodyBubble.Melody.Notes[i].Octave) * 7 + (c.PositionToPitch.IndexOf(initialPitch) - c.PositionToPitch.IndexOf(melodyBubble.Melody.Notes[i].Pitch))) * 20 ;
-                double y = center.Y + ((initialOctave - melodyBubble.Melody.Notes[i].Octave) * 7 + (c.PositionToPitch.IndexOf(initialPitch) - c.PositionToPitch.IndexOf(melodyBubble.Melody.Notes[i].Pitch))) * 20;
+                double y = center.Y + ((initialOctave - melodyBubble.Melody.Notes[i].Octave) * 7 + (c.PositionToPitch.IndexOf(initialPitch) - c.PositionToPitch.IndexOf(melodyBubble.Melody.Notes[i].Pitch))) * 25;
                 Point p = new Point(x, y);
                 notes.Add(new NoteViewModel(p,melodyBubble.Melody.Notes[i], SessionVM.Notes, SessionVM));
             }

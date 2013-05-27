@@ -33,5 +33,20 @@ namespace PopnTouchi2
             Note = new Note(1, noteValue, "la", -1);
             Id = GlobalVariables.idNoteBubble++;
         }
+
+        
+        /// <summary>
+        /// NoteBubble Constructor.
+        /// Creates a new NoteBubble object and its Note with its alteration
+        /// </summary>
+        /// <param name="sharp">sharp (#)</param>
+        /// <param name="flat">flat (b)</param>
+        public NoteBubble(bool sharp, bool flat)
+        {
+            Note = new Note();
+            Note.Flat = flat;
+            Note.Sharp = sharp;
+            Id = GlobalVariables.idNoteBubble++;
+        }
     }
 }

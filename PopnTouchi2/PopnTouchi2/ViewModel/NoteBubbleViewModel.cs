@@ -85,21 +85,17 @@ namespace PopnTouchi2.ViewModel
             SVItem.HorizontalAlignment = HorizontalAlignment.Center;
 
             FrameworkElementFactory bubbleImage = new FrameworkElementFactory(typeof(Image));
-            switch (SessionVM.Session.ThemeID)
-            {
-                case 1:
-                    bubbleImage.SetValue(Image.SourceProperty, new Theme1ViewModel(SessionVM.Session.Theme, SessionVM).GetNoteBubbleImageSource(nb.Note.Duration));
-                    break;
-                case 2:
-                    bubbleImage.SetValue(Image.SourceProperty, new Theme2ViewModel(SessionVM.Session.Theme, SessionVM).GetNoteBubbleImageSource(nb.Note.Duration));
-                    break;
-                case 3:
-                    bubbleImage.SetValue(Image.SourceProperty, new Theme3ViewModel(SessionVM.Session.Theme, SessionVM).GetNoteBubbleImageSource(nb.Note.Duration));
-                    break;
-                case 4:
-                    bubbleImage.SetValue(Image.SourceProperty, new Theme4ViewModel(SessionVM.Session.Theme, SessionVM).GetNoteBubbleImageSource(nb.Note.Duration));
-                    break;
+            if (!noteBubble.Note.Sharp && !noteBubble.Note.Flat)
+            {    
+                bubbleImage.SetValue(Image.SourceProperty, new ThemeViewModel(SessionVM.Session.Theme, SessionVM).GetNoteBubbleImageSource(nb.Note.Duration));                  
             }
+            else
+            {
+               
+                bubbleImage.SetValue(Image.SourceProperty, new ThemeViewModel(SessionVM.Session.Theme, SessionVM).GetNoteBubbleImageSource(nb.Note.Sharp));
+                 
+            }
+            
             bubbleImage.SetValue(Image.IsHitTestVisibleProperty, false);
             bubbleImage.SetValue(Image.WidthProperty, 85.0);
             bubbleImage.SetValue(Image.HeightProperty, 85.0);
@@ -144,21 +140,9 @@ namespace PopnTouchi2.ViewModel
             SVItem.HorizontalAlignment = HorizontalAlignment.Center;
 
             FrameworkElementFactory bubbleImage = new FrameworkElementFactory(typeof(Image));
-            switch (SessionVM.Session.ThemeID)
-            {
-                case 1:
-                    bubbleImage.SetValue(Image.SourceProperty, new Theme1ViewModel(SessionVM.Session.Theme, SessionVM).GetNoteBubbleImageSource(nb.Note.Duration));
-                    break;
-                case 2:
-                    bubbleImage.SetValue(Image.SourceProperty, new Theme2ViewModel(SessionVM.Session.Theme, SessionVM).GetNoteBubbleImageSource(nb.Note.Duration));
-                    break;
-                case 3:
-                    bubbleImage.SetValue(Image.SourceProperty, new Theme3ViewModel(SessionVM.Session.Theme, SessionVM).GetNoteBubbleImageSource(nb.Note.Duration));
-                    break;
-                case 4:
-                    bubbleImage.SetValue(Image.SourceProperty, new Theme4ViewModel(SessionVM.Session.Theme, SessionVM).GetNoteBubbleImageSource(nb.Note.Duration));
-                    break;
-            }
+
+            bubbleImage.SetValue(Image.SourceProperty, new ThemeViewModel(SessionVM.Session.Theme, SessionVM).GetNoteBubbleImageSource(nb.Note.Duration));
+                 
             bubbleImage.SetValue(Image.IsHitTestVisibleProperty, false);
             bubbleImage.SetValue(Image.WidthProperty, 85.0);
             bubbleImage.SetValue(Image.HeightProperty, 85.0);
