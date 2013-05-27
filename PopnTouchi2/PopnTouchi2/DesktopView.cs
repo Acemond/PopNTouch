@@ -37,8 +37,12 @@ namespace PopnTouchi2
         public ScatterView Sessions { get; set; }
 
         public Boolean LeftSessionActive { get; set; }
+        public Boolean RightSessionActive { get; set; }
 
         public List<int> IDs { get; set; }
+
+        Image MiddleCache { get; set; }
+        System.Windows.Shapes.Rectangle BlackBG { get; set; } 
 
         /// <summary>
         /// temporary
@@ -56,6 +60,16 @@ namespace PopnTouchi2
         public DesktopView()
         {
             IDs = new List<int>();
+
+            MiddleCache = new Image();
+            MiddleCache.Source = new BitmapImage(new Uri(@"../../Resources/Images/desktopSmall.jpg", UriKind.Relative));
+            MiddleCache.Visibility = Visibility.Hidden;
+            MiddleCache.Margin = new Thickness(607.5, 0.0, 607.5, 0.0);
+
+            BlackBG = new System.Windows.Shapes.Rectangle();
+            BlackBG.Fill = Brushes.Black;
+            BlackBG.Visibility = Visibility.Hidden;
+            BlackBG.Margin = new Thickness(0.0);
 
             CreateSession_Button = new SurfaceButton();
             CreateSession_Button.Width = 85;
@@ -86,6 +100,16 @@ namespace PopnTouchi2
             Sessions = new ScatterView();
             Children.Add(Photos);
             Children.Add(Sessions);
+            Children.Add(MiddleCache);
+            Children.Add(BlackBG);
+
+            Grid.SetZIndex(BlackBG, 0);
+            Grid.SetZIndex(MiddleCache, 1);
+            Grid.SetZIndex(CreateSession_Button, 2);
+            Grid.SetZIndex(CreateDoubleSession_Button, 2);
+            Grid.SetZIndex(Photos, 3);
+            Grid.SetZIndex(Sessions, 4);
+
         }
 
         /// <summary>
@@ -95,9 +119,6 @@ namespace PopnTouchi2
         /// <param name="e"></param>
         void CreateSession_Button_Click(object sender, RoutedEventArgs e)
         {
-            CreateSession_Button.Visibility = Visibility.Hidden;
-            CreateDoubleSession_Button.Visibility = Visibility.Hidden;
-
             if (Sessions.Items.Count == 0)
             {
                 SessionVM = new SessionViewModel(ActualWidth, ActualHeight, new Session(), IDs);
@@ -109,6 +130,7 @@ namespace PopnTouchi2
                 {
                     SessionVM = new SessionViewModel(false, ActualWidth, ActualHeight, new Session(), IDs);
                     Sessions.Items.Add(SessionVM.SessionSVI);
+                    RightSessionActive = true;
                 }
                 else
                 {
@@ -117,6 +139,8 @@ namespace PopnTouchi2
                     LeftSessionActive = true;
                 }
             }
+
+            CheckDesktopToDisplay();
         }
 
         /// <summary>
@@ -126,9 +150,7 @@ namespace PopnTouchi2
         /// <param name="e"></param>
         void CreateDoubleSession_Button_Click(object sender, RoutedEventArgs e)
         {
-            CreateSession_Button.Visibility = Visibility.Hidden;
-            CreateDoubleSession_Button.Visibility = Visibility.Hidden;
-
+            HideDesktop();
             SessionVM = new SessionViewModel(true, ActualWidth, ActualHeight, new Session(), IDs);
             Sessions.Items.Add(SessionVM.SessionSVI);
 
@@ -136,20 +158,77 @@ namespace PopnTouchi2
             Sessions.Items.Add(SessionVM.SessionSVI);
 
             LeftSessionActive = true;
+            RightSessionActive = true;
         }
 
-        public void CheckDesktopToDisplay(Boolean left)
+        public void CheckDesktopToDisplay()
         {
+            if (Sessions.Items.Count == 0)
+                DisplayFullDesktop();
+            else if (Sessions.Items.Count == 1 && LeftSessionActive)
+            {
+                DisplayRightDesktop();
+            }
+            else if (Sessions.Items.Count == 1 && RightSessionActive)
+            {
+                DisplayLeftDesktop();
+            }
+            else
+            {
+                HideDesktop();
+            }
+        }
 
+        private void HideDesktop()
+        {
+            CreateSession_Button.Visibility = Visibility.Hidden;
+            CreateDoubleSession_Button.Visibility = Visibility.Hidden;
+            HidePhotos();
+
+            MiddleCache.Visibility = Visibility.Visible;
+            BlackBG.Visibility = Visibility.Visible;
+        }
+
+        private void DisplayFullDesktop()
+        {
+            CreateSession_Button.Visibility = Visibility.Visible;
+            CreateDoubleSession_Button.Visibility = Visibility.Visible;
+            UnhidePhotos();
+
+            Photos.Margin = new Thickness(0.0, 0.0, 0.0, 0.0);
+
+            MiddleCache.Visibility = Visibility.Hidden;
+            BlackBG.Visibility = Visibility.Hidden;
+        }
+
+        private void DisplayRightDesktop()
+        {
+            CreateSession_Button.Visibility = Visibility.Visible;
+            CreateDoubleSession_Button.Visibility = Visibility.Hidden;
+            UnhidePhotos();
+
+            MiddleCache.Visibility = Visibility.Visible;
+            BlackBG.Visibility = Visibility.Visible;
+
+            Photos.Margin = new Thickness(607.5, 0.0, 0.0, 0.0);
+        }
+        
+        private void DisplayLeftDesktop()
+        {
+            CreateSession_Button.Visibility = Visibility.Visible;
+            CreateDoubleSession_Button.Visibility = Visibility.Hidden;
+            UnhidePhotos();
+
+            MiddleCache.Visibility = Visibility.Visible;
+            BlackBG.Visibility = Visibility.Visible;
+
+            Photos.Margin = new Thickness(0.0, 0.0, 607.5, 0.0);
         }
 
         public void HidePhotos()
         {
             if (Photos.Opacity != 1.0) return;
-
-            CreateDoubleSession_Button.Visibility = Visibility.Hidden;
-            CreateSession_Button.Visibility = Visibility.Hidden;
-
+            
             Storyboard OpacitySTB = new Storyboard();
             DoubleAnimation OpacityAnimation = new DoubleAnimation();
 
@@ -167,10 +246,7 @@ namespace PopnTouchi2
         public void UnhidePhotos()
         {
             if (Photos.Opacity != 0.0) return;
-
-            CreateDoubleSession_Button.Visibility = Visibility.Visible;
-            CreateSession_Button.Visibility = Visibility.Visible;
-
+            
             Storyboard OpacitySTB = new Storyboard();
             DoubleAnimation OpacityAnimation = new DoubleAnimation();
 

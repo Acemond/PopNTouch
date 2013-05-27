@@ -11,6 +11,6 @@
         WindowStyle="None">
     
     <Window.Background>
-        <ImageBrush ImageSource=".\Resources\images\desktop.png"></ImageBrush>
+        <ImageBrush ImageSource=".\Resources\images\desktop.jpg"></ImageBrush>
     </Window.Background>
 </s:SurfaceWindow>

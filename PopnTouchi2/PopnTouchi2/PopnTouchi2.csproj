@@ -163,6 +163,8 @@
     <Content Include="PopnTouchi2.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Resource Include="Resources\Images\desktop.jpg" />
+    <Resource Include="Resources\Images\desktopSmall.jpg" />
     <Resource Include="Resources\Images\UI_items\one_player.png" />
     <Resource Include="Resources\Images\UI_items\two_players.png" />
     <Resource Include="Resources\Images\Theme1\Bubbles\Notes\bullenoire.png" />
@@ -204,7 +206,6 @@
     <Resource Include="Resources\Images\Theme1\playdrop.png" />
     <Resource Include="Resources\Images\Theme1\soundpointdisable.png" />
     <Resource Include="Resources\Images\Theme1\soundpointenable.png" />
-    <Resource Include="Resources\images\desktop.png" />
     <Resource Include="Resources\Images\Theme2\background.png" />
     <Resource Include="Resources\Images\Theme2\Bubbles\Melodies\s.png" />
     <Resource Include="Resources\Images\Theme2\Bubbles\Melodies\t.png" />

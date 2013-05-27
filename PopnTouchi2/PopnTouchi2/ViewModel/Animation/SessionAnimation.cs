@@ -300,9 +300,9 @@ namespace PopnTouchi2.ViewModel.Animation
             MainDesktop.Sessions.Items.Remove(SessionVM.SessionSVI);
             MainDesktop.Photos.Items.Add(SessionVM.SessionSVI);
 
-            if (MainDesktop.Sessions.Items.Count <= 1) MainDesktop.CreateSession_Button.Visibility = Visibility.Visible;
-            if (MainDesktop.Sessions.Items.Count == 0) MainDesktop.CreateDoubleSession_Button.Visibility = Visibility.Visible;
-
+            if (SessionVM.Orientation == "left") MainDesktop.LeftSessionActive = false;
+            if (SessionVM.Orientation == "right") MainDesktop.RightSessionActive = false;
+            
             Storyboard = new Storyboard();
             PointAnimation centerPosAnimation = new PointAnimation();
             DoubleAnimation orientationAnimation = new DoubleAnimation();
@@ -312,10 +312,12 @@ namespace PopnTouchi2.ViewModel.Animation
             ease.Exponent = 1.5;
 
             Random r = new Random();
-            System.Windows.Point newCenter = new System.Windows.Point(r.Next((int)MainDesktop.ActualWidth), r.Next((int)MainDesktop.ActualHeight));
+            Point newCenter = new Point(r.Next((int)MainDesktop.Photos.ActualWidth), r.Next((int)MainDesktop.Photos.ActualHeight));
             Double newOrientation = r.Next(-180, 180);
 
-            centerPosAnimation.From = SessionVM.SessionSVI.ActualCenter;
+            if (SessionVM.Orientation == "right" && MainDesktop.LeftSessionActive)
+                centerPosAnimation.From = new Point(SessionVM.SessionSVI.ActualCenter.X - 607.5, SessionVM.SessionSVI.ActualCenter.Y);
+            else centerPosAnimation.From = SessionVM.SessionSVI.ActualCenter;
             centerPosAnimation.To = newCenter;
             centerPosAnimation.Duration = new Duration(TimeSpan.FromSeconds(5));
             centerPosAnimation.DecelerationRatio = .9;
@@ -339,6 +341,8 @@ namespace PopnTouchi2.ViewModel.Animation
             SessionVM.SessionSVI.Orientation = newOrientation;
 
             Storyboard.Begin();
+            MainDesktop.CheckDesktopToDisplay();
+
             SessionVM.SessionSVI.CanMove = true;
             SessionVM.SessionSVI.CanRotate = true;
 
@@ -435,8 +439,8 @@ namespace PopnTouchi2.ViewModel.Animation
             MainDesktop.Photos.Items.Remove(SessionVM.SessionSVI);
             MainDesktop.Sessions.Items.Add(SessionVM.SessionSVI);
             if (SessionVM.Orientation == "left") MainDesktop.LeftSessionActive = true;
-            if (MainDesktop.Sessions.Items.Count >= 2) MainDesktop.HidePhotos();
-            MainDesktop.CreateDoubleSession_Button.Visibility = Visibility.Hidden;
+            else MainDesktop.RightSessionActive = true;
+            MainDesktop.CheckDesktopToDisplay();
 
             #region Animation Settings
             Storyboard stb = new Storyboard();
@@ -446,7 +450,10 @@ namespace PopnTouchi2.ViewModel.Animation
             DoubleAnimation orientationAnimation = new DoubleAnimation();
             ThicknessAnimation borderAnimation = new ThicknessAnimation();
 
-            centerPosAnimation.From = SessionVM.SessionSVI.ActualCenter;
+            if (MainDesktop.LeftSessionActive && SessionVM.Orientation == "right")
+                centerPosAnimation.From = new Point(SessionVM.SessionSVI.ActualCenter.X + 607.5, SessionVM.SessionSVI.ActualCenter.Y);
+            else
+                centerPosAnimation.From = SessionVM.SessionSVI.ActualCenter;
             if(left) centerPosAnimation.To = new System.Windows.Point(MainDesktop.ActualWidth / 6.0 - 16.875, MainDesktop.ActualHeight / 2.0);
             else centerPosAnimation.To = new System.Windows.Point(5.0 * MainDesktop.ActualWidth / 6.0 + 16.875, MainDesktop.ActualHeight / 2.0);
             centerPosAnimation.Duration = new Duration(TimeSpan.FromSeconds(.75));
@@ -515,7 +522,7 @@ namespace PopnTouchi2.ViewModel.Animation
         {
             MainDesktop.Photos.Items.Remove(SessionVM.SessionSVI);
             MainDesktop.Sessions.Items.Add(SessionVM.SessionSVI);
-            MainDesktop.HidePhotos();
+            MainDesktop.CheckDesktopToDisplay();
 
             #region Animation Settings
             Storyboard stb = new Storyboard();
