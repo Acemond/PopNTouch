@@ -105,6 +105,12 @@ namespace PopnTouchi2.ViewModel
         public bool Reduced { get; set; }
 
         /// <summary>
+        /// Sets Current session's orientation
+        /// Top, Bottom, Right, Left.
+        /// </summary>
+        public string Orientation { get; set; }
+
+        /// <summary>
         /// Parameter.
         /// Session's number.
         /// </summary>
@@ -170,9 +176,9 @@ namespace PopnTouchi2.ViewModel
             Reducer.VerticalAlignment = System.Windows.VerticalAlignment.Top;
             Reducer.Background = Brushes.Red;
             Reducer.Content = "Reduce !";
-            Grid.Children.Add(Reducer);
 
             Animation = new SessionAnimation(this);
+            Orientation = "bottom";
 
             Reducer.Click += new RoutedEventHandler(Animation.Reducer_Click);
 
