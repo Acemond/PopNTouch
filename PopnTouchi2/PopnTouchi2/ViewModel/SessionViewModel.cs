@@ -136,7 +136,7 @@ namespace PopnTouchi2.ViewModel
         /// Initializes all SessionViewModel components.
         /// </summary>
         /// <param name="s">The Session to link with its ViewModel</param>
-        public SessionViewModel(Session s) : base()
+        private SessionViewModel(Session s) : base()
         {
             Session = s;
             SessionSVI = new ScatterViewItem();
@@ -147,6 +147,7 @@ namespace PopnTouchi2.ViewModel
             NbgVM = new NoteBubbleGeneratorViewModel(Session.NoteBubbleGenerator, this);
             MbgVM = new MelodyBubbleGeneratorViewModel(Session.MelodyBubbleGenerator, this);
 
+            Orientation = "bottom";
             SessionSVI.Opacity = 0;
             Bubbles.Visibility = Visibility.Visible;
             Notes.Visibility = Visibility.Visible;
@@ -164,12 +165,7 @@ namespace PopnTouchi2.ViewModel
             Reducer.VerticalAlignment = System.Windows.VerticalAlignment.Top;
             Reducer.Background = Brushes.Red;
             Reducer.Content = "Reduce !";
-
-            Animation = new SessionAnimation(this);
-            Orientation = "bottom";
-
-            Reducer.Click += new RoutedEventHandler(Animation.Reducer_Click);
-
+            
             Play = new SurfaceButton();
             Play.Width = 100;
             Play.Height = 25;
@@ -213,21 +209,20 @@ namespace PopnTouchi2.ViewModel
             SessionSVI.Content = Grid;
         }
 
-        public SessionViewModel(Session s, List<int> IDs)
+        public SessionViewModel(Double width, Double height, Session s, List<int> IDs)
             : this(s)
         {
             int i = 1;
             while (IDs.Contains(i)) i++;
             SessionID = i;
             IDs.Add(i);
-        }
 
-        public SessionViewModel(Double width, Double height, Session s, List<int> IDs)
-            : this(s, IDs)
-        {
             SetDimensions(width, height);
-        }
 
+            Animation = new SessionAnimation(this);
+            Reducer.Click += new RoutedEventHandler(Animation.Reducer_Click);
+        }
+        
         public void SetDimensions(Double width, Double height)
         {
             NbgVM.Grid.Width = width / 8.0;
