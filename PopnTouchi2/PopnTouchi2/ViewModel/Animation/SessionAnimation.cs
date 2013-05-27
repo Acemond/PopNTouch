@@ -98,8 +98,8 @@ namespace PopnTouchi2.ViewModel.Animation
 
             MakeReadyForSnapShot(SessionVM.Grid);
             MemoryStream ms;
-            if (SessionVM.Orientation == "left" || SessionVM.Orientation == "right") ms = new MemoryStream(Screenshot.GetSideSnapshot(SessionVM.Grid, .5, 100));
-            else ms = new MemoryStream(Screenshot.GetSnapshot(SessionVM.Grid, .5, 100));
+            if (SessionVM.Orientation == "left" || SessionVM.Orientation == "right") ms = new MemoryStream(Screenshot.GetSnapshot(SessionVM.Grid, 1, 100));
+            else ms = new MemoryStream(Screenshot.GetSnapshot(SessionVM.Grid, 1, 100));
             System.Drawing.Image sc = System.Drawing.Image.FromStream(ms);
 
             string path = @"./SnapShots/sc" + SessionVM.SessionID.ToString() + ".jpg";
@@ -160,9 +160,9 @@ namespace PopnTouchi2.ViewModel.Animation
             rt.CenterY = 0.5;
             switch (SessionVM.Orientation)
             {
-                case "top": rt.Angle = 180; break;
-                case "left": rt.Angle = -90; break;
-                case "right": rt.Angle = 90; break;
+                case "top": rt.Angle = 0; break;
+                case "left": rt.Angle = 0; break;
+                case "right": rt.Angle = 0; break;
                 default: rt.Angle = 0; break;
             }
             ss.RelativeTransform = rt;
