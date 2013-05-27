@@ -11,6 +11,7 @@ using Microsoft.Surface.Presentation.Controls;
 using PopnTouchi2.ViewModel;
 using System.Windows.Media.Imaging;
 using System.Windows.Media;
+using System.Windows.Media.Animation;
 
 namespace PopnTouchi2
 {
@@ -26,10 +27,16 @@ namespace PopnTouchi2
         public SessionViewModel SessionVM { get; set; }
 
         /// <summary>
-        /// Property.
-        /// TODO
+        /// Idle Pictures
         /// </summary>
         public ScatterView Photos { get; set; }
+
+        /// <summary>
+        /// Active Sessions
+        /// </summary>
+        public ScatterView Sessions { get; set; }
+
+        public Boolean LeftSessionActive { get; set; }
 
         public List<int> IDs { get; set; }
 
@@ -42,7 +49,7 @@ namespace PopnTouchi2
         /// temporary
         /// </summary>
         public SurfaceButton CreateSession_Button { get; set; }
-
+        
         /// <summary>
         /// Initializes few components including the session.
         /// </summary>
@@ -76,7 +83,9 @@ namespace PopnTouchi2
             Children.Add(CreateDoubleSession_Button);
 
             Photos = new ScatterView();
+            Sessions = new ScatterView();
             Children.Add(Photos);
+            Children.Add(Sessions);
         }
 
         /// <summary>
@@ -86,8 +95,28 @@ namespace PopnTouchi2
         /// <param name="e"></param>
         void CreateSession_Button_Click(object sender, RoutedEventArgs e)
         {
-            SessionVM = new SessionViewModel(ActualWidth, ActualHeight, new Session(), IDs);
-            Photos.Items.Add(SessionVM.SessionSVI);
+            CreateSession_Button.Visibility = Visibility.Hidden;
+            CreateDoubleSession_Button.Visibility = Visibility.Hidden;
+
+            if (Sessions.Items.Count == 0)
+            {
+                SessionVM = new SessionViewModel(ActualWidth, ActualHeight, new Session(), IDs);
+                Sessions.Items.Add(SessionVM.SessionSVI);
+            }
+            else if (Sessions.Items.Count == 1)
+            {
+                if (LeftSessionActive)
+                {
+                    SessionVM = new SessionViewModel(false, ActualWidth, ActualHeight, new Session(), IDs);
+                    Sessions.Items.Add(SessionVM.SessionSVI);
+                }
+                else
+                {
+                    SessionVM = new SessionViewModel(true, ActualWidth, ActualHeight, new Session(), IDs);
+                    Sessions.Items.Add(SessionVM.SessionSVI);
+                    LeftSessionActive = true;
+                }
+            }
         }
 
         /// <summary>
@@ -97,9 +126,63 @@ namespace PopnTouchi2
         /// <param name="e"></param>
         void CreateDoubleSession_Button_Click(object sender, RoutedEventArgs e)
         {
-            SessionVM = new SessionViewModel(ActualWidth, ActualHeight, new Session(), IDs);
-            Photos.Items.Add(SessionVM.SessionSVI);
+            CreateSession_Button.Visibility = Visibility.Hidden;
+            CreateDoubleSession_Button.Visibility = Visibility.Hidden;
+
+            SessionVM = new SessionViewModel(true, ActualWidth, ActualHeight, new Session(), IDs);
+            Sessions.Items.Add(SessionVM.SessionSVI);
+
+            SessionVM = new SessionViewModel(false, ActualWidth, ActualHeight, new Session(), IDs);
+            Sessions.Items.Add(SessionVM.SessionSVI);
+
+            LeftSessionActive = true;
         }
 
+        public void CheckDesktopToDisplay(Boolean left)
+        {
+
+        }
+
+        public void HidePhotos()
+        {
+            if (Photos.Opacity != 1.0) return;
+
+            CreateDoubleSession_Button.Visibility = Visibility.Hidden;
+            CreateSession_Button.Visibility = Visibility.Hidden;
+
+            Storyboard OpacitySTB = new Storyboard();
+            DoubleAnimation OpacityAnimation = new DoubleAnimation();
+
+            OpacityAnimation.From = 1;
+            OpacityAnimation.To = 0;
+            OpacityAnimation.Duration = new Duration(TimeSpan.FromSeconds(.2));
+            OpacityAnimation.FillBehavior = FillBehavior.HoldEnd;
+            OpacitySTB.Children.Add(OpacityAnimation);
+            Storyboard.SetTarget(OpacityAnimation, Photos);
+            Storyboard.SetTargetProperty(OpacityAnimation, new PropertyPath(ScatterView.OpacityProperty));
+
+            OpacitySTB.Begin();
+        }
+
+        public void UnhidePhotos()
+        {
+            if (Photos.Opacity != 0.0) return;
+
+            CreateDoubleSession_Button.Visibility = Visibility.Visible;
+            CreateSession_Button.Visibility = Visibility.Visible;
+
+            Storyboard OpacitySTB = new Storyboard();
+            DoubleAnimation OpacityAnimation = new DoubleAnimation();
+
+            OpacityAnimation.From = 0;
+            OpacityAnimation.To = 1;
+            OpacityAnimation.Duration = new Duration(TimeSpan.FromSeconds(.2));
+            OpacityAnimation.FillBehavior = FillBehavior.HoldEnd;
+            OpacitySTB.Children.Add(OpacityAnimation);
+            Storyboard.SetTarget(OpacityAnimation, Photos);
+            Storyboard.SetTargetProperty(OpacityAnimation, new PropertyPath(ScatterView.OpacityProperty));
+
+            OpacitySTB.Begin();
+        }
     }
 }
