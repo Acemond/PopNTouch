@@ -41,8 +41,7 @@ namespace PopnTouchi2
 
         public List<int> IDs { get; set; }
 
-        Image MiddleCache { get; set; }
-        System.Windows.Shapes.Rectangle BlackBG { get; set; } 
+        Grid MiddleCacheGrid { get; set; }
 
         /// <summary>
         /// temporary
@@ -61,15 +60,18 @@ namespace PopnTouchi2
         {
             IDs = new List<int>();
 
-            MiddleCache = new Image();
+            Image MiddleCache = new Image();
             MiddleCache.Source = new BitmapImage(new Uri(@"../../Resources/Images/desktopSmall.jpg", UriKind.Relative));
-            MiddleCache.Visibility = Visibility.Hidden;
             MiddleCache.Margin = new Thickness(607.5, 0.0, 607.5, 0.0);
 
-            BlackBG = new System.Windows.Shapes.Rectangle();
+            System.Windows.Shapes.Rectangle BlackBG = new System.Windows.Shapes.Rectangle();
             BlackBG.Fill = Brushes.Black;
-            BlackBG.Visibility = Visibility.Hidden;
             BlackBG.Margin = new Thickness(0.0);
+
+            MiddleCacheGrid = new Grid();
+            MiddleCacheGrid.Children.Add(MiddleCache);
+            MiddleCacheGrid.Children.Add(BlackBG);
+            MiddleCacheGrid.Opacity = 0;
 
             CreateSession_Button = new SurfaceButton();
             CreateSession_Button.Width = 85;
@@ -100,8 +102,7 @@ namespace PopnTouchi2
             Sessions = new ScatterView();
             Children.Add(Photos);
             Children.Add(Sessions);
-            Children.Add(MiddleCache);
-            Children.Add(BlackBG);
+            Children.Add(MiddleCacheGrid);
 
             Grid.SetZIndex(BlackBG, 0);
             Grid.SetZIndex(MiddleCache, 1);
@@ -184,9 +185,7 @@ namespace PopnTouchi2
             CreateSession_Button.Visibility = Visibility.Hidden;
             CreateDoubleSession_Button.Visibility = Visibility.Hidden;
             HidePhotos();
-
-            MiddleCache.Visibility = Visibility.Visible;
-            BlackBG.Visibility = Visibility.Visible;
+            UnhideCache();
         }
 
         private void DisplayFullDesktop()
@@ -194,11 +193,9 @@ namespace PopnTouchi2
             CreateSession_Button.Visibility = Visibility.Visible;
             CreateDoubleSession_Button.Visibility = Visibility.Visible;
             UnhidePhotos();
+            HideCache();
 
             Photos.Margin = new Thickness(0.0, 0.0, 0.0, 0.0);
-
-            MiddleCache.Visibility = Visibility.Hidden;
-            BlackBG.Visibility = Visibility.Hidden;
         }
 
         private void DisplayRightDesktop()
@@ -206,9 +203,7 @@ namespace PopnTouchi2
             CreateSession_Button.Visibility = Visibility.Visible;
             CreateDoubleSession_Button.Visibility = Visibility.Hidden;
             UnhidePhotos();
-
-            MiddleCache.Visibility = Visibility.Visible;
-            BlackBG.Visibility = Visibility.Visible;
+            UnhideCache();
 
             Photos.Margin = new Thickness(607.5, 0.0, 0.0, 0.0);
         }
@@ -218,9 +213,7 @@ namespace PopnTouchi2
             CreateSession_Button.Visibility = Visibility.Visible;
             CreateDoubleSession_Button.Visibility = Visibility.Hidden;
             UnhidePhotos();
-
-            MiddleCache.Visibility = Visibility.Visible;
-            BlackBG.Visibility = Visibility.Visible;
+            UnhideCache();
 
             Photos.Margin = new Thickness(0.0, 0.0, 607.5, 0.0);
         }
@@ -228,7 +221,7 @@ namespace PopnTouchi2
         public void HidePhotos()
         {
             if (Photos.Opacity != 1.0) return;
-            
+
             Storyboard OpacitySTB = new Storyboard();
             DoubleAnimation OpacityAnimation = new DoubleAnimation();
 
@@ -257,6 +250,42 @@ namespace PopnTouchi2
             OpacitySTB.Children.Add(OpacityAnimation);
             Storyboard.SetTarget(OpacityAnimation, Photos);
             Storyboard.SetTargetProperty(OpacityAnimation, new PropertyPath(ScatterView.OpacityProperty));
+
+            OpacitySTB.Begin();
+        }
+
+        public void HideCache()
+        {
+            if (MiddleCacheGrid.Opacity != 1.0) return;
+
+            Storyboard OpacitySTB = new Storyboard();
+            DoubleAnimation OpacityAnimation = new DoubleAnimation();
+
+            OpacityAnimation.From = 1;
+            OpacityAnimation.To = 0;
+            OpacityAnimation.Duration = new Duration(TimeSpan.FromSeconds(.2));
+            OpacityAnimation.FillBehavior = FillBehavior.HoldEnd;
+            OpacitySTB.Children.Add(OpacityAnimation);
+            Storyboard.SetTarget(OpacityAnimation, MiddleCacheGrid);
+            Storyboard.SetTargetProperty(OpacityAnimation, new PropertyPath(Grid.OpacityProperty));
+
+            OpacitySTB.Begin();
+        }
+
+        public void UnhideCache()
+        {
+            if (MiddleCacheGrid.Opacity != 0.0) return;
+
+            Storyboard OpacitySTB = new Storyboard();
+            DoubleAnimation OpacityAnimation = new DoubleAnimation();
+
+            OpacityAnimation.From = 0;
+            OpacityAnimation.To = 1;
+            OpacityAnimation.Duration = new Duration(TimeSpan.FromSeconds(.2));
+            OpacityAnimation.FillBehavior = FillBehavior.HoldEnd;
+            OpacitySTB.Children.Add(OpacityAnimation);
+            Storyboard.SetTarget(OpacityAnimation, MiddleCacheGrid);
+            Storyboard.SetTargetProperty(OpacityAnimation, new PropertyPath(Grid.OpacityProperty));
 
             OpacitySTB.Begin();
         }

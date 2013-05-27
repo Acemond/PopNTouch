@@ -438,7 +438,7 @@ namespace PopnTouchi2.ViewModel.Animation
         {
             MainDesktop.Photos.Items.Remove(SessionVM.SessionSVI);
             MainDesktop.Sessions.Items.Add(SessionVM.SessionSVI);
-            if (SessionVM.Orientation == "left") MainDesktop.LeftSessionActive = true;
+            if (left) MainDesktop.LeftSessionActive = true;
             else MainDesktop.RightSessionActive = true;
             MainDesktop.CheckDesktopToDisplay();
 
