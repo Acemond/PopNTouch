@@ -53,16 +53,7 @@ namespace PopnTouchi2.ViewModel
         /// The MelodyBubbleAnimation item handling all animations for the melodyBubble.
         /// </summary>
         public MelodyBubbleAnimation Animation { get; set; }
-        /// <summary>
-        /// Parameter.
-        /// True if the center of the Bubble is located on the stave.
-        /// </summary>
-        private bool isOnStave;
-        /// <summary>
-        /// Parameter.
-        /// Event triggered when a NoteBubble is dropped on the stave.
-        /// </summary>
-        public event EventHandler dropBubble;
+
 
          /// <summary>
         /// NoteBubbleViewModel Constructor.
@@ -73,7 +64,6 @@ namespace PopnTouchi2.ViewModel
             MelodyBubble = mb;
             SVItem = new ScatterViewItem();
             ParentSV = sv;
-            isOnStave = false;
             
             Random r = new Random();
             SVItem.Center = new Point(r.Next((int)sv.ActualWidth), r.Next((int)(635 * sv.ActualHeight / 1080), (int)sv.ActualHeight));
@@ -111,19 +101,16 @@ namespace PopnTouchi2.ViewModel
 
         public List<NoteViewModel> melodyToListOfNote(Point center)
         {
-         
-            int width = (int)SessionVM.Grid.ActualWidth;
-            int height = (int)SessionVM.Grid.ActualHeight;
+            MessageBox.Show(center.ToString());
             int initialPosition = melodyBubble.Melody.Notes[0].Position;
-            String initialPitch = melodyBubble.Melody.Notes[0].Pitch;
-            int initialOctave = melodyBubble.Melody.Notes[0].Octave;
+            bool up = (center.Y < 370);
             Converter c = new Converter();
 
             List<NoteViewModel> notes = new List<NoteViewModel>();
             for(int i = 0; i< melodyBubble.Melody.Notes.Count; i++)
             {
-                double x = center.X + (melodyBubble.Melody.Notes[i].Position - initialPosition) * (60*width/1920);
-                double y = center.Y + ((initialOctave - melodyBubble.Melody.Notes[i].Octave) * 7 + (c.PositionToPitch.IndexOf(initialPitch) - c.PositionToPitch.IndexOf(melodyBubble.Melody.Notes[i].Pitch))) * 25;
+                double x = center.X + (melodyBubble.Melody.Notes[i].Position - initialPosition) * 60;
+                double y = c.getCenterY(up, melodyBubble.Melody.Notes[i], x);
                 Point p = new Point(x, y);
                 notes.Add(new NoteViewModel(p,melodyBubble.Melody.Notes[i], SessionVM.Notes, SessionVM));
             }

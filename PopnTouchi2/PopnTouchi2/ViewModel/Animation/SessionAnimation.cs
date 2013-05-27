@@ -231,7 +231,6 @@ namespace PopnTouchi2.ViewModel.Animation
             grid.Children.Remove(SessionVM.Bubbles);
             grid.Children.Remove(SessionVM.Reducer);
             grid.Children.Remove(SessionVM.Play);
-            grid.Children.Remove(SessionVM.Stop);
         }
 
         /// <summary>
@@ -418,7 +417,6 @@ namespace PopnTouchi2.ViewModel.Animation
             SessionVM.Grid.Children.Add(SessionVM.Notes);
             SessionVM.Grid.Children.Add(SessionVM.Reducer);
             SessionVM.Grid.Children.Add(SessionVM.Play);
-            SessionVM.Grid.Children.Add(SessionVM.Stop);
             SessionVM.Grid.Children.Add(SessionVM.TreeUp.Grid);
             SessionVM.Grid.Children.Add(SessionVM.TreeDown.Grid);
             SessionVM.NbgVM = new NoteBubbleGeneratorViewModel(SessionVM.Session.NoteBubbleGenerator, SessionVM);

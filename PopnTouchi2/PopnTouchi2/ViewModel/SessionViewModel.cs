@@ -104,10 +104,10 @@ namespace PopnTouchi2.ViewModel
         public SurfaceButton Play { get; set; }
 
         /// <summary>
-        /// Property.
-        /// Stop Button.
+        /// Property
+        /// Boolean true if the stave is playing
         /// </summary>
-        public SurfaceButton Stop { get; set; }
+        public Boolean IsPlaying { get; set; }
 
         /// <summary>
         /// Parameter.
@@ -127,9 +127,22 @@ namespace PopnTouchi2.ViewModel
         /// </summary>
         public int SessionID { get; set; }
 
+        /// <summary>
+        /// Property
+        /// The Tree on the StaveTop
+        /// </summary>
         public TreeViewModel TreeUp { get; set; }
 
+        /// <summary>
+        /// Property
+        /// The Tree on the StaveBottom
+        /// </summary>
         public TreeViewModel TreeDown { get; set; }
+
+        /// <summary>
+        /// The Grid containing the circles for sound changing
+        /// </summary>
+        public ChangeSoundViewModel UpdateSound { get; set; }
 
         /// <summary>
         /// SessionViewModel Construtor.
@@ -141,6 +154,7 @@ namespace PopnTouchi2.ViewModel
             Session = s;
             SessionSVI = new ScatterViewItem();
             Grid = new Grid();
+            UpdateSound = new ChangeSoundViewModel(s);
             Bubbles = new ScatterView();
             Notes = new ScatterView();
             NotesOnStave = new List<NoteViewModel>();
@@ -167,28 +181,18 @@ namespace PopnTouchi2.ViewModel
             Reducer.Content = "Reduce !";
             
             Play = new SurfaceButton();
-            Play.Width = 100;
-            Play.Height = 25;
+            Play.Width = 140;
+            Play.Height = 150;
             Play.HorizontalAlignment = System.Windows.HorizontalAlignment.Left;
             Play.VerticalAlignment = System.Windows.VerticalAlignment.Top;
-            Play.Background = Brushes.Red;
-            Play.Content = "Play";
+            ImageBrush img = new ImageBrush();
+            img.ImageSource = new BitmapImage(new Uri(@"../../Resources/Images/Theme" + session.ThemeID + "/playdrop.png", UriKind.Relative));
+            Play.Background = img;
             Play.Visibility = Visibility.Visible;
+            IsPlaying = false;
 
             Play.Click+=new RoutedEventHandler(Play_Click);
-
-            Stop = new SurfaceButton();
-            Stop.Width = 100;
-            Stop.Height = 25;
-            Stop.HorizontalAlignment = System.Windows.HorizontalAlignment.Center;
-            Stop.VerticalAlignment = System.Windows.VerticalAlignment.Top;
-            Stop.Background = Brushes.Blue;
-            Stop.Content = "Stop";
-            Stop.Visibility = Visibility.Hidden;
-
-
-            Stop.Click += new RoutedEventHandler(Stop_Click);
-                        
+            
             SessionSVI.CanMove = false;
             SessionSVI.CanRotate = false;
             SessionSVI.CanScale = false;
@@ -199,8 +203,11 @@ namespace PopnTouchi2.ViewModel
             Grid.Children.Add(NbgVM.Grid);
             Grid.Children.Add(MbgVM.Grid);
             Grid.Children.Add(Play);
-            Grid.Children.Add(Stop);
-            
+            Grid.Children.Add(UpdateSound.Grid1);
+            Grid.Children.Add(UpdateSound.Grid2);
+
+            Grid.SetZIndex(TreeUp.Grid, 3);
+            Grid.SetZIndex(TreeDown.Grid, 3);
             Grid.SetZIndex(Bubbles, 2);
             Grid.SetZIndex(Notes, 1);
             Grid.SetZIndex(NbgVM.Grid, 0);
@@ -264,22 +271,24 @@ namespace PopnTouchi2.ViewModel
 
         private void Play_Click(object sender, RoutedEventArgs e)
         {
-            session.StopBackgroundSound();
+            if (!IsPlaying)
+            {
+                session.StopBackgroundSound();
 
-            session.StaveTop.PlayAllNotes();
-            session.StaveBottom.PlayAllNotes();
-            Play.Visibility = Visibility.Hidden;
-            Stop.Visibility = Visibility.Visible;
-        }
+                session.StaveTop.PlayAllNotes();
+                session.StaveBottom.PlayAllNotes();
+                Play.Opacity = 0.5;
+                IsPlaying = true;
+            }
+            else
+            {
+                session.PlayBackgroundSound();
 
-        private void Stop_Click(object sender, RoutedEventArgs e)
-        {
-            session.PlayBackgroundSound();
-
-            session.StaveTop.StopMusic();
-            session.StaveBottom.StopMusic();
-            Stop.Visibility = Visibility.Hidden;
-            Play.Visibility = Visibility.Visible;
+                session.StaveTop.StopMusic();
+                session.StaveBottom.StopMusic();
+                Play.Opacity = 1;
+                IsPlaying = false;
+            }
         }
 
         /// <summary>
@@ -322,5 +331,7 @@ namespace PopnTouchi2.ViewModel
             //Notes = sd.NotesSV;
             Session.ThemeID = sd.ThemeID;
         }
+
+
     }
 }

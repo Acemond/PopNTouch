@@ -46,12 +46,6 @@ namespace PopnTouchi2
         public AudioCategory NoteCategory;
 
         /// <summary>
-        /// Parameter
-        /// The background Sound's volume
-        /// </summary>
-        public float backgroundVolume;
-
-        /// <summary>
         /// AudioController Constructor.
         /// Initializes AudioEngine, SoundBank and WaveBank.
         /// </summary>
@@ -65,7 +59,7 @@ namespace PopnTouchi2
             SoundBank = new SoundBank(audioEngine, path + @"\Sound Bank.xsb");
 
             NoteCategory = audioEngine.GetCategory("Notes");
-            NoteCategory.SetVolume(4.0f);
+            NoteCategory.SetVolume(3.0f);
         }
 
         /// <summary>
@@ -101,7 +95,6 @@ namespace PopnTouchi2
         /// <param name="volume">the Volume to change</param>
         public static void UpdateVolume(float volume)
         {
-            AudioController.INSTANCE.backgroundVolume = volume;
             AudioController.INSTANCE.NoteCategory.SetVolume(volume);
         }
     }
