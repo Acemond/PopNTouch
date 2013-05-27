@@ -31,7 +31,7 @@ namespace PopnTouchi2.ViewModel.Animation
         /// </summary>
         private DesktopView MainDesktop { get; set; }
 
-        private ThicknessAnimation marginAnimation;
+        private DoubleAnimation initWidthAnimation;
         private DoubleAnimation OpacityAnimation;
         private DoubleAnimation ReduceWidthAnimation;
         private DoubleAnimation ReduceWidthAnimation2;
@@ -52,34 +52,45 @@ namespace PopnTouchi2.ViewModel.Animation
         {
             SessionVM = s;
 
-            Storyboard stb = new Storyboard();
+            Storyboard InitStb = new Storyboard();
             DoubleAnimation openingAnimation = new DoubleAnimation();
-            marginAnimation = new ThicknessAnimation();
+            initWidthAnimation = new DoubleAnimation();
+            DoubleAnimation initHeightAnimation = new DoubleAnimation();
+
             ExponentialEase ease = new ExponentialEase();
             ease.EasingMode = EasingMode.EaseOut;
             ease.Exponent = 2;
 
             openingAnimation.From = 0;
             openingAnimation.To = 1;
-            openingAnimation.Duration = new Duration(TimeSpan.FromSeconds(.8));
+            openingAnimation.Duration = new Duration(TimeSpan.FromSeconds(.5));
             openingAnimation.FillBehavior = FillBehavior.HoldEnd;
-            stb.Children.Add(openingAnimation);
+            InitStb.Children.Add(openingAnimation);
             Storyboard.SetTarget(openingAnimation, SessionVM.SessionSVI);
             Storyboard.SetTargetProperty(openingAnimation, new PropertyPath(ScatterViewItem.OpacityProperty));
 
-            marginAnimation.From = new Thickness(50);
-            marginAnimation.To = new Thickness(0);
-            marginAnimation.Duration = new Duration(TimeSpan.FromSeconds(.8));
-            marginAnimation.EasingFunction = ease;
-            marginAnimation.FillBehavior = FillBehavior.Stop;
-            stb.Children.Add(marginAnimation);
-            Storyboard.SetTarget(marginAnimation, SessionVM.SessionSVI);
-            Storyboard.SetTargetProperty(marginAnimation, new PropertyPath(ScatterViewItem.MarginProperty));
-            
-            marginAnimation.Completed += new EventHandler(marginAnimation_Completed);
+            initWidthAnimation.From = s.SessionSVI.Width * 0.8;
+            initWidthAnimation.To = s.SessionSVI.Width;
+            initWidthAnimation.Duration = new Duration(TimeSpan.FromSeconds(.6));
+            initWidthAnimation.EasingFunction = ease;
+            initWidthAnimation.FillBehavior = FillBehavior.Stop;
+            InitStb.Children.Add(initWidthAnimation);
+            Storyboard.SetTarget(initWidthAnimation, SessionVM.SessionSVI);
+            Storyboard.SetTargetProperty(initWidthAnimation, new PropertyPath(ScatterViewItem.WidthProperty));
+
+            initHeightAnimation.From = s.SessionSVI.Height * 0.8;
+            initHeightAnimation.To = s.SessionSVI.Height;
+            initHeightAnimation.Duration = new Duration(TimeSpan.FromSeconds(.6));
+            initHeightAnimation.EasingFunction = ease;
+            initHeightAnimation.FillBehavior = FillBehavior.Stop;
+            InitStb.Children.Add(initHeightAnimation);
+            Storyboard.SetTarget(initHeightAnimation, SessionVM.SessionSVI);
+            Storyboard.SetTargetProperty(initHeightAnimation, new PropertyPath(ScatterViewItem.HeightProperty));
+
+            initWidthAnimation.Completed += new EventHandler(marginAnimation_Completed);
             SessionVM.SessionSVI.TouchLeave += new EventHandler<System.Windows.Input.TouchEventArgs>(svi_TouchLeave);
 
-            stb.Begin();
+            InitStb.Begin();
         }
 
         #region REDUCTION
