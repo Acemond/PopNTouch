@@ -43,7 +43,7 @@ namespace PopnTouchi2
         /// Parameter
         /// Music Category of the waveBank
         /// </summary>
-        public AudioCategory BackgroundCategory;
+        public AudioCategory NoteCategory;
 
         /// <summary>
         /// Parameter
@@ -64,8 +64,8 @@ namespace PopnTouchi2
             WaveBank = new WaveBank(audioEngine, path + @"\Wave Bank.xwb");
             SoundBank = new SoundBank(audioEngine, path + @"\Sound Bank.xsb");
 
-            AudioCategory category =  audioEngine.GetCategory("Notes");
-            category.SetVolume(4.0f);
+            NoteCategory = audioEngine.GetCategory("Notes");
+            NoteCategory.SetVolume(4.0f);
         }
 
         /// <summary>
@@ -102,7 +102,7 @@ namespace PopnTouchi2
         public static void UpdateVolume(float volume)
         {
             AudioController.INSTANCE.backgroundVolume = volume;
-            AudioController.INSTANCE.BackgroundCategory.SetVolume(volume);
+            AudioController.INSTANCE.NoteCategory.SetVolume(volume);
         }
     }
 }

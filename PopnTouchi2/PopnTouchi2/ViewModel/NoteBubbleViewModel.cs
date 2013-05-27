@@ -59,12 +59,6 @@ namespace PopnTouchi2.ViewModel
         public NoteBubbleAnimation Animation { get; set; }
 
         /// <summary>
-        /// Parameter.
-        /// Event triggered when a NoteBubble is dropped on the stave.
-        /// </summary>
-        public event EventHandler dropBubble;
-
-        /// <summary>
         /// NoteBubbleViewModel theme specific constructor.
         /// </summary>
         /// <param name="nb">The NoteBubble to link with its ViewModel</param>
