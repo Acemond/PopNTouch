@@ -53,7 +53,15 @@ namespace PopnTouchi2
         {
             Note note = n as Note;
             TimeSpan t = new TimeSpan(0, 0, 0, 0, (note.Duration.GetHashCode() * 30000) / GlobalVariables.bpm);
-            Cue cue = AudioController.INSTANCE.SoundBank.GetCue(Name.ToString() + "_" + note.GetCue());
+            Cue cue = AudioController.INSTANCE.SoundBank.GetCue("silence");
+            try
+            {
+                cue = AudioController.INSTANCE.SoundBank.GetCue(Name.ToString() + "_" + note.GetCue());
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("Exception with the note placed on the stave");
+            }
             AudioController.PlaySound(cue);
             Thread.Sleep(t);
             AudioController.StopSound(cue);

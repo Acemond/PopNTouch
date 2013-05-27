@@ -28,13 +28,19 @@ namespace PopnTouchi2.ViewModel.Animation
         /// The NoteBubbleViewModel associated
         /// </summary>
         private NoteViewModel noteVM { get; set; }
+
+        /// <summary>
+        /// Property.
+        /// Center of the given Note to animate
+        /// </summary>
+        private Point NoteCenter;
         #endregion
 
         #region Constructors
         /// <summary>
         /// NoteBubbleAnimation Constructor.
         /// </summary>
-        /// <param name="nbVM">Linked with the NoteBubbleVM</param>
+        /// <param name="nVM">Linked with the NoteViewModel</param>
         /// <param name="s">The current SessionViewModel</param>
         public NoteAnimation(NoteViewModel nVM, SessionViewModel s)
             : base()
@@ -43,69 +49,14 @@ namespace PopnTouchi2.ViewModel.Animation
             noteVM = nVM;
             SVItem = nVM.SVItem;
             ParentSV = nVM.ParentSV;
-            canAnimate = true;
-
-            DispatcherTimer.Tick += new EventHandler(t_Tick);
 
             SVItem.ContainerManipulationCompleted += touchLeave;
 
             SVItem.PreviewTouchDown += touchDown;
-            Animate();
-        }
-        #endregion
-
-        #region Methods
-        /// <summary>
-        /// Note Bubble Animation 
-        /// Moves the NoteBubble randomly on the screen.
-        /// </summary>
-        private void Animate()
-        {
-            
-        
-        }    
-
-        /// <summary>
-        /// Stops a current animation performing.
-        /// </summary>
-        public void StopAnimation()
-        {
-            canAnimate = false;
-            DispatcherTimer.Stop();
-            Storyboard.Pause();
-            SVItem.Center = SVItem.ActualCenter;
-            SVItem.Orientation = SVItem.Orientation;
-            Storyboard.Remove();
         }
         #endregion
 
         #region Events
-        /// <summary>
-        /// TODO
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        public void t_Tick(object sender, EventArgs e)
-        {
-            DispatcherTimer.Stop();
-            Animate();
-        }
-
-        /// <summary>
-        /// TODO
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        public void centerAnimation_Completed(object sender, EventArgs e)
-        {
-            SVItem.Center = SVItem.ActualCenter;
-            Storyboard.Remove();
-            Storyboard.Children = new TimelineCollection();
-            Random r = new Random();
-            DispatcherTimer.Interval = TimeSpan.FromMilliseconds(r.Next(3000, 9000));
-            DispatcherTimer.Start();
-        }
-
 
         /// <summary>
         /// TODO Description détaillée de ce que fait cette méthode
@@ -116,61 +67,53 @@ namespace PopnTouchi2.ViewModel.Animation
         {
             ScatterViewItem bubble = new ScatterViewItem();
             bubble = e.Source as ScatterViewItem;
-            Point bubbleCenter = bubble.ActualCenter;
+            NoteCenter = bubble.ActualCenter;
 
             // int width = int.Parse(GetWidth.Text);
             // int height = int.Parse(GetHeight.Text);
             int width = (int)sessionVM.Grid.ActualWidth;
             int height = (int)sessionVM.Grid.ActualHeight;
-            bubbleCenter.X = bubbleCenter.X * 1920 / width;
-            bubbleCenter.Y = bubbleCenter.Y * 1080 / height;
+            NoteCenter.X = NoteCenter.X * 1920 / width;
+            NoteCenter.Y = NoteCenter.Y * 1080 / height;
 
-
-
-            if (bubbleCenter.X <= 90) bubbleCenter.X = 120;
-            else if (bubbleCenter.X >= 1830) bubbleCenter.X = 1800;
-            else bubbleCenter.X = Math.Floor((bubbleCenter.X + 30) / 60) * 60;
+            if (NoteCenter.X <= 90) NoteCenter.X = 120;
+            else if (NoteCenter.X >= 1830) NoteCenter.X = 1800;
+            else NoteCenter.X = Math.Floor((NoteCenter.X + 30) / 60) * 60;
 
             //"Applatissement" de la portée (MAJ : Switch -> Tableau !)
-            int offset = GlobalVariables.ManipulationGrid[((long)bubbleCenter.X / 60)];
-            bubbleCenter.Y += offset;
+            int offset = GlobalVariables.ManipulationGrid[((long)NoteCenter.X / 60)];
+            NoteCenter.Y += offset;
 
-            //   MessageBox.Show(bubbleCenter.X.ToString() + "," + bubbleCenter.Y.ToString());
-            int positionNote = (int)(bubbleCenter.X - 120) / 60;
-
+           
             //Y dans le cadre portée ?
             //Si oui, animation
             //pas de else
-            if (bubbleCenter.Y < 630 && bubbleCenter.Y > 105)
+            if (NoteCenter.Y < 630 && NoteCenter.Y > 105)
             {
-                if (bubbleCenter.Y < 370)
+                if (NoteCenter.Y < 370)
                 {
-                    if (bubbleCenter.Y >= 335) bubbleCenter.Y = 335;
-                    bubbleCenter.Y = Math.Floor((bubbleCenter.Y - 20) / 25) * 25 + 35; //-20 et 35 pour 50
-
-                    sessionVM.Session.StaveTop.AddNote(noteVM.Note, positionNote);
-
+                    if (NoteCenter.Y >= 335) NoteCenter.Y = 335;
+                    NoteCenter.Y = Math.Floor((NoteCenter.Y - 20) / 25) * 25 + 35; //-20 et 35 pour 50
                 }
                 else
                 {
-                    if (bubbleCenter.Y <= 405) bubbleCenter.Y = 405;
-                    bubbleCenter.Y = Math.Floor((bubbleCenter.Y + 10) / 25) * 25 + 5; //20 et 5 pour 50
-
-                    sessionVM.Session.StaveBottom.AddNote(noteVM.Note, positionNote);
+                    if (NoteCenter.Y <= 405) NoteCenter.Y = 405;
+                    NoteCenter.Y = Math.Floor((NoteCenter.Y + 10) / 25) * 25 + 5; //20 et 5 pour 50
                 }
 
-                bubbleCenter.Y -= offset;
+                NoteCenter.Y -= offset;
 
-                bubbleCenter.X = bubbleCenter.X * width / 1920;
-                bubbleCenter.Y = bubbleCenter.Y * height / 1080;
+                NoteCenter.X = NoteCenter.X * width / 1920;
+                NoteCenter.Y = NoteCenter.Y * height / 1080;
 
+                #region STB
                 Storyboard stb = new Storyboard();
                 PointAnimation moveCenter = new PointAnimation();
 
                 moveCenter.From = bubble.ActualCenter;
-                moveCenter.To = bubbleCenter;
+                moveCenter.To = NoteCenter;
                 moveCenter.Duration = new Duration(TimeSpan.FromSeconds(0.15));
-                bubble.Center = bubbleCenter;
+                bubble.Center = NoteCenter;
                 moveCenter.FillBehavior = FillBehavior.Stop;
 
                 stb.Children.Add(moveCenter);
@@ -178,20 +121,69 @@ namespace PopnTouchi2.ViewModel.Animation
                 Storyboard.SetTarget(moveCenter, bubble);
                 Storyboard.SetTargetProperty(moveCenter, new PropertyPath(ScatterViewItem.CenterProperty));
 
+                #endregion
+
+                moveCenter.Completed += new EventHandler(moveCenter_Completed);
                 stb.Begin(SVItem);
-
-                bubble.Visibility = Visibility.Collapsed;
-                bubble.Visibility = Visibility.Visible;
-
-                //sessionVM.Grid.Children.Remove(noteBubbleVM.SVItem);
-                //sessionVM.Grid.Children.Add(noteVM.ParentSV);
-
-
             }
             else
             {
-                canAnimate = true;
-                Animate();
+                Point center = new Point();
+                center = noteVM.SVItem.ActualCenter;
+                sessionVM.NotesOnStave.Remove(noteVM);
+                sessionVM.Notes.Items.Remove(noteVM.SVItem);
+
+                NoteBubbleViewModel nbVM = new NoteBubbleViewModel(center, new NoteBubble(noteVM.Note), sessionVM.Bubbles, sessionVM);
+                sessionVM.Bubbles.Items.Add(nbVM.SVItem);
+            }
+        }
+
+        void moveCenter_Completed(object sender, EventArgs e)
+        {
+            int positionNote = (int)(NoteCenter.X - 120) / 60;
+            Converter c = new Converter();
+
+            if (NoteCenter.Y <= 160)
+            {
+                noteVM.Note.Octave = 2;
+                String Pitch = c.PositionToPitch.ElementAt(((GlobalVariables.StaveTopFirstDo - GlobalVariables.HeightOfOctave) - (int)NoteCenter.Y) / 25);
+                noteVM.Note.Pitch = Pitch;
+                sessionVM.Session.StaveTop.AddNote(noteVM.Note, positionNote);
+            }
+            else if (NoteCenter.Y <= GlobalVariables.StaveTopFirstDo)
+            {
+                noteVM.Note.Octave = 1;
+                String Pitch = c.PositionToPitch.ElementAt((GlobalVariables.StaveTopFirstDo - (int)NoteCenter.Y) / 25);
+                noteVM.Note.Pitch = Pitch;
+                sessionVM.Session.StaveTop.AddNote(noteVM.Note, positionNote);
+            }
+
+            else if (NoteCenter.Y <= (GlobalVariables.StaveBottomFirstDo - GlobalVariables.HeightOfOctave))
+            {
+                noteVM.Note.Octave = 1;
+                String Pitch = c.PositionToPitch.ElementAt(((GlobalVariables.StaveBottomFirstDo - GlobalVariables.HeightOfOctave) - (int)NoteCenter.Y) / 25);
+                MessageBox.Show(Pitch);
+                noteVM.Note.Pitch = Pitch;
+                sessionVM.Session.StaveBottom.AddNote(noteVM.Note, positionNote);
+            }
+
+            else if (NoteCenter.Y <= GlobalVariables.StaveBottomFirstDo)
+            {
+                noteVM.Note.Octave = 2;
+                String Pitch = c.PositionToPitch.ElementAt((GlobalVariables.StaveBottomFirstDo - (int)NoteCenter.Y) / 25);
+                MessageBox.Show(Pitch);
+                noteVM.Note.Pitch = Pitch;
+                sessionVM.Session.StaveBottom.AddNote(noteVM.Note, positionNote);
+            }
+
+            sessionVM.NotesOnStave.Add(noteVM);
+            if (NoteCenter.Y < (370 * (int)sessionVM.Grid.ActualHeight / 1080))
+            {
+                sessionVM.Session.StaveTop.CurrentInstrument.PlayNote(noteVM.Note);
+            }
+            else
+            {
+                sessionVM.Session.StaveBottom.CurrentInstrument.PlayNote(noteVM.Note);
             }
         }
 
@@ -202,27 +194,10 @@ namespace PopnTouchi2.ViewModel.Animation
         /// <param name="e"></param>
         public void touchDown(object sender, TouchEventArgs e)
         {
-            StopAnimation();
-
-            ScatterViewItem note = new ScatterViewItem();
-            note = e.Source as ScatterViewItem;
-            Point noteCenter = note.ActualCenter;
-
             ////Si la bulle est sur la portée et qu'on la touche, elle s'enleve de la portee
-
             sessionVM.Session.StaveTop.RemoveNote(noteVM.Note);
             sessionVM.Session.StaveBottom.RemoveNote(noteVM.Note);
-
-            NoteBubble nb = new NoteBubble(noteVM.Note.Duration);
-            NoteBubbleViewModel noteBubbleVM = new NoteBubbleViewModel(noteCenter, nb, sessionVM.Notes, sessionVM);
-            sessionVM.Bubbles.Items.Add(noteBubbleVM.SVItem);
-            sessionVM.Notes.Items.Remove(noteVM.SVItem);
-
-            /*String effect = "discovery";
-            Random r = new Random();
-            int nb = r.Next(1, 5);
-            effect += nb.ToString();
-            AudioController.PlaySoundWithString(effect);*/
+            sessionVM.NotesOnStave.Remove(noteVM);
         }
         #endregion
     }

@@ -276,7 +276,7 @@ namespace PopnTouchi2.ViewModel.Animation
 
                 else if (bubbleCenter.Y <= (GlobalVariables.StaveBottomFirstDo - GlobalVariables.HeightOfOctave))
                 {
-                    noteBubbleVM.NoteBubble.Note.Octave = 2;
+                    noteBubbleVM.NoteBubble.Note.Octave = 1;
                     String Pitch = c.PositionToPitch.ElementAt(((GlobalVariables.StaveBottomFirstDo - GlobalVariables.HeightOfOctave) - (int)bubbleCenter.Y) / 25);
                     noteBubbleVM.NoteBubble.Note.Pitch = Pitch;
                     sessionVM.Session.StaveBottom.AddNote(noteBubbleVM.NoteBubble.Note, positionNote);
@@ -284,7 +284,7 @@ namespace PopnTouchi2.ViewModel.Animation
 
                 else if (bubbleCenter.Y <= GlobalVariables.StaveBottomFirstDo)
                 {
-                    noteBubbleVM.NoteBubble.Note.Octave = 1;
+                    noteBubbleVM.NoteBubble.Note.Octave = 2;
                     String Pitch = c.PositionToPitch.ElementAt((GlobalVariables.StaveBottomFirstDo - (int)bubbleCenter.Y) / 25);
                     noteBubbleVM.NoteBubble.Note.Pitch = Pitch;
                     sessionVM.Session.StaveBottom.AddNote(noteBubbleVM.NoteBubble.Note, positionNote);

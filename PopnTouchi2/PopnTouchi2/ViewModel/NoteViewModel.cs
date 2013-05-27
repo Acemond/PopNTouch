@@ -51,18 +51,6 @@ namespace PopnTouchi2.ViewModel
         public NoteAnimation Animation { get; set; }
 
         /// <summary>
-        /// Parameter.
-        /// Event triggered when the Note is tapped.
-        /// </summary>
-        public event EventHandler tap;
-
-        /// <summary>
-        /// Parameter.
-        /// Event triggered when the Note is dropped on the stave.
-        /// </summary>
-        public event EventHandler dropNote;
-
-        /// <summary>
         /// NoteViewModel Constructor.
         /// TODO
         /// </summary>

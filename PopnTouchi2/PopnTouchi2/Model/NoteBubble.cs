@@ -34,6 +34,17 @@ namespace PopnTouchi2
             Id = GlobalVariables.idNoteBubble++;
         }
 
+        /// <summary>
+        /// NoteBubble Constructor.
+        /// Creates a new NoteBubble object and its Note.
+        /// </summary>
+        /// <param name="Note">The note</param>
+        public NoteBubble(Note note)
+        {
+            Note = note;
+            Id = GlobalVariables.idNoteBubble++;
+        }
+
         
         /// <summary>
         /// NoteBubble Constructor.
