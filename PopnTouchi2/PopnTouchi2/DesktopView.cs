@@ -185,7 +185,7 @@ namespace PopnTouchi2
             CreateSession_Button.Visibility = Visibility.Hidden;
             CreateDoubleSession_Button.Visibility = Visibility.Hidden;
             HidePhotos();
-            UnhideCache();
+            if(LeftSessionActive) UnhideCache();
         }
 
         private void DisplayFullDesktop()
