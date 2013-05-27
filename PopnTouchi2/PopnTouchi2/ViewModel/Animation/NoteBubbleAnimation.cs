@@ -278,7 +278,6 @@ namespace PopnTouchi2.ViewModel.Animation
                 {
                     noteBubbleVM.NoteBubble.Note.Octave = 1;
                     String Pitch = c.PositionToPitch.ElementAt(((GlobalVariables.StaveBottomFirstDo - GlobalVariables.HeightOfOctave) - (int)bubbleCenter.Y) / 25);
-                    MessageBox.Show(Pitch);
                     noteBubbleVM.NoteBubble.Note.Pitch = Pitch;
                     sessionVM.Session.StaveBottom.AddNote(noteBubbleVM.NoteBubble.Note, positionNote);
                 }
@@ -287,7 +286,6 @@ namespace PopnTouchi2.ViewModel.Animation
                 {
                     noteBubbleVM.NoteBubble.Note.Octave = 2;
                     String Pitch = c.PositionToPitch.ElementAt((GlobalVariables.StaveBottomFirstDo - (int)bubbleCenter.Y) / 25);
-                    MessageBox.Show(Pitch);
                     noteBubbleVM.NoteBubble.Note.Pitch = Pitch;
                     sessionVM.Session.StaveBottom.AddNote(noteBubbleVM.NoteBubble.Note, positionNote);
                 }
