@@ -302,7 +302,9 @@ namespace PopnTouchi2.ViewModel.Animation
 
             if (SessionVM.Orientation == "left") MainDesktop.LeftSessionActive = false;
             if (SessionVM.Orientation == "right") MainDesktop.RightSessionActive = false;
-            
+
+            MainDesktop.CheckDesktopToDisplay();
+
             Storyboard = new Storyboard();
             PointAnimation centerPosAnimation = new PointAnimation();
             DoubleAnimation orientationAnimation = new DoubleAnimation();
@@ -341,7 +343,6 @@ namespace PopnTouchi2.ViewModel.Animation
             SessionVM.SessionSVI.Orientation = newOrientation;
 
             Storyboard.Begin();
-            MainDesktop.CheckDesktopToDisplay();
 
             SessionVM.SessionSVI.CanMove = true;
             SessionVM.SessionSVI.CanRotate = true;
