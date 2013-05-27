@@ -394,6 +394,7 @@ namespace PopnTouchi2.ViewModel.Animation
                 }
             }
 
+            if (MainDesktop.LeftSessionActive || MainDesktop.RightSessionActive) return;
             if (Xpos > 4.0 / 32.0 * Width && Xpos < 28.0 / 32.0 * Width)
             {
                 if (Ypos > 0 && Ypos < 3.0 / 18.0 * Height)
