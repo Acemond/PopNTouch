@@ -72,7 +72,7 @@ namespace PopnTouchi2.ViewModel.Animation
         /// Note Bubble Animation 
         /// Moves the NoteBubble randomly on the screen.
         /// </summary>
-        private void Animate()
+        public void Animate()
         {
             if (canAnimate)
             {
