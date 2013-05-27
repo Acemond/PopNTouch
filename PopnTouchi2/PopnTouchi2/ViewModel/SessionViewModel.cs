@@ -266,6 +266,9 @@ namespace PopnTouchi2.ViewModel
 
             TreeDown = new TreeViewModel(false, down, session, session.Theme);
             Grid.Children.Add(TreeDown.Grid);
+
+            Grid.SetZIndex(TreeUp.Grid, 4);
+            Grid.SetZIndex(TreeDown.Grid, 3);
         }
 
 
