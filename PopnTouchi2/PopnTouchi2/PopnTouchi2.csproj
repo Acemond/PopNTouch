@@ -184,7 +184,6 @@
     <Resource Include="Resources\Images\UI_items\Instruments\lower_branch.png" />
     <Resource Include="Resources\Images\UI_items\Instruments\root.png" />
     <Resource Include="Resources\Images\UI_items\Instruments\upper_branch.png" />
-    <Resource Include="Resources\Images\Theme1\background.png" />
     <Resource Include="Resources\Images\Theme1\Bubbles\Melodies\s.png" />
     <Resource Include="Resources\Images\Theme1\Bubbles\Melodies\t.png" />
     <Resource Include="Resources\Images\Theme1\Bubbles\Melodies\wave.png" />
@@ -206,7 +205,6 @@
     <Resource Include="Resources\Images\Theme1\playdrop.png" />
     <Resource Include="Resources\Images\Theme1\soundpointdisable.png" />
     <Resource Include="Resources\Images\Theme1\soundpointenable.png" />
-    <Resource Include="Resources\Images\Theme2\background.png" />
     <Resource Include="Resources\Images\Theme2\Bubbles\Melodies\s.png" />
     <Resource Include="Resources\Images\Theme2\Bubbles\Melodies\t.png" />
     <Resource Include="Resources\Images\Theme2\Bubbles\Melodies\wave.png" />

@@ -86,7 +86,7 @@ namespace PopnTouchi2.ViewModel
             BackgroundImage = new ImageBrush();
             BackgroundImage.ImageSource =
                 new BitmapImage(
-                    new Uri(@"../../Resources/Images/Theme" + SessionVM.Session.ThemeID +"/background.png", UriKind.Relative)
+                    new Uri(@"../../Resources/Images/Theme" + SessionVM.Session.ThemeID +"/background.jpg", UriKind.Relative)
                 );
             NoteGeneratorImage = new ImageBrush();
             NoteGeneratorImage.ImageSource =
