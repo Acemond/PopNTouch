@@ -27,6 +27,10 @@ namespace PopnTouchi2.Model
         /// </summary>
         public List<Note> StaveBottomNotes { get; set; }
 
+        public Instrument TopInstrument { get; set; }
+
+        public Instrument BottomInstrument { get; set; }
+
         /// <summary>
         /// Property.
         /// Session's ScatterView.
@@ -49,6 +53,9 @@ namespace PopnTouchi2.Model
                 StaveTopNotes.Add(note);
             foreach (Note note in sessionVM.Session.StaveBottom.Notes)
                 StaveBottomNotes.Add(note);
+
+            TopInstrument = sessionVM.Session.StaveTop.CurrentInstrument;
+            BottomInstrument = sessionVM.Session.StaveBottom.CurrentInstrument;
 
             ThemeID = sessionVM.Session.ThemeID;
         }

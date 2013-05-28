@@ -426,6 +426,10 @@ namespace PopnTouchi2.ViewModel
                 Notes.Items.Add(noteVM.SVItem);
                 NotesOnStave.Add(noteVM);
             }
+
+            TreeDown.SetInstrument(sd.TopInstrument);
+            TreeUp.SetInstrument(sd.BottomInstrument);
+
             SetDimensions(Grid.ActualWidth, Grid.ActualHeight);
         }
 

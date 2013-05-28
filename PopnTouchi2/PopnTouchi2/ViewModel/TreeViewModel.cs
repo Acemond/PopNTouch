@@ -105,6 +105,12 @@ namespace PopnTouchi2.ViewModel
             Images[3].TouchDown += new EventHandler<TouchEventArgs>(touchDown1);
         }
 
+        public void SetInstrument(Instrument instru)
+        {
+            if (instru.Name == Instrument1.Name) SwitchToInstru1();
+            else if (instru.Name == Instrument2.Name) SwitchToInstru2();
+        }
+
         /// <summary>
         /// Returns the ImageBrush from
         /// the path (name) of the image
@@ -184,13 +190,7 @@ namespace PopnTouchi2.ViewModel
         /// <param name="e"></param>
         private void touchDown1(object sender, TouchEventArgs e)
         {
-            Images[0].Visibility = Visibility.Hidden;
-            Images[0].Background = getImageBrush(Instrument1.Name.ToString());
-            Images[0].Visibility = Visibility.Visible;
-            for (int i = 1; i < Images.Count; i++) { Images[i].Visibility = Visibility.Hidden; }
-
-            if (Up) SessionVM.Session.StaveTop.CurrentInstrument = Instrument1;
-            else SessionVM.Session.StaveBottom.CurrentInstrument = Instrument1;
+            SwitchToInstru1();
         }
 
         /// <summary>
@@ -200,6 +200,22 @@ namespace PopnTouchi2.ViewModel
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void touchDown2(object sender, TouchEventArgs e)
+        {
+            SwitchToInstru2();
+        }
+
+        private void SwitchToInstru1()
+        {
+            Images[0].Visibility = Visibility.Hidden;
+            Images[0].Background = getImageBrush(Instrument1.Name.ToString());
+            Images[0].Visibility = Visibility.Visible;
+            for (int i = 1; i < Images.Count; i++) { Images[i].Visibility = Visibility.Hidden; }
+
+            if (Up) SessionVM.Session.StaveTop.CurrentInstrument = Instrument1;
+            else SessionVM.Session.StaveBottom.CurrentInstrument = Instrument1;
+        }
+
+        private void SwitchToInstru2()
         {
             Images[0].Visibility = Visibility.Hidden;
             Images[0].Background = getImageBrush(Instrument2.Name.ToString());
