@@ -206,6 +206,8 @@ namespace PopnTouchi2.ViewModel
             Grid.Children.Add(UpdateSound.Grid1);
             Grid.Children.Add(UpdateSound.Grid2);
 
+            Grid.SetZIndex(UpdateSound.Grid1, 4);
+            Grid.SetZIndex(UpdateSound.Grid2, 4);
             Grid.SetZIndex(TreeUp.Grid, 3);
             Grid.SetZIndex(TreeDown.Grid, 3);
             Grid.SetZIndex(Bubbles, 2);
