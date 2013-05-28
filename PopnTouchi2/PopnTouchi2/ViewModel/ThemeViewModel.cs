@@ -72,6 +72,24 @@ namespace PopnTouchi2.ViewModel
         public ImageBrush PlayImage { get; set; }
 
         /// <summary>
+        /// Property.
+        /// Theme defines Themes button aspect.
+        /// </summary>
+        public ImageBrush ThemesImage { get; set; }
+
+        /// <summary>
+        /// Property.
+        /// Theme defines SoundPointEnable button aspect.
+        /// </summary>
+        public ImageBrush SoundPointEnableImage { get; set; }
+
+        /// <summary>
+        /// Property.
+        /// Theme defines SoundPointDisable button aspect.
+        /// </summary>
+        public ImageBrush SoundPointDisableImage { get; set; }
+
+        /// <summary>
         /// Theme1ViewModel Constructor.
         /// </summary>
         /// <param name="t">The Theme</param>
@@ -99,7 +117,17 @@ namespace PopnTouchi2.ViewModel
                     new Uri(@"../../Resources/Images/Theme" + SessionVM.Session.ThemeID + "/melodyfactory.png", UriKind.Relative)
                 );
             PlayImage = new ImageBrush();
-            PlayImage.ImageSource = new BitmapImage(new Uri(@"../../Resources/Images/Theme" + SessionVM.Session.ThemeID + "/Bubbles/playdrop.png", UriKind.Relative));
+            PlayImage.ImageSource = new BitmapImage(new Uri(@"../../Resources/Images/Theme" + SessionVM.Session.ThemeID + "/playdrop.png", UriKind.Relative));
+
+            SoundPointEnableImage = new ImageBrush();
+            SoundPointEnableImage.ImageSource = new BitmapImage(new Uri(@"../../Resources/Images/Theme" + SessionVM.Session.ThemeID + "/soundpointenable.png", UriKind.Relative));
+
+            SoundPointDisableImage = new ImageBrush();
+            SoundPointDisableImage.ImageSource = new BitmapImage(new Uri(@"../../Resources/Images/Theme" + SessionVM.Session.ThemeID + "/soundpointdisable.png", UriKind.Relative));
+            
+            ThemesImage = new ImageBrush();
+            ThemesImage.ImageSource = new BitmapImage(new Uri(@"../../Resources/Images/UI_items/themes.png", UriKind.Relative));
+
 
             NoteBubbleImages.Add(NoteValue.crotchet, GetNoteBitmapImage("bullenoire"));
             NoteBubbleImages.Add(NoteValue.minim, GetNoteBitmapImage("bulleblanche"));

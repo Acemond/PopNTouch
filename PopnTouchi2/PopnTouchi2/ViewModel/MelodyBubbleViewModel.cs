@@ -79,16 +79,9 @@ namespace PopnTouchi2.ViewModel
             bubbleImage.SetValue(Image.SourceProperty, new ThemeViewModel(SessionVM.Session.Theme, SessionVM).GetMelodyBubbleImageSource(mb.Melody.gesture));
 
             bubbleImage.SetValue(Image.IsHitTestVisibleProperty, false);
-            if (SessionVM.Session.OnePlayer)
-            {
-                bubbleImage.SetValue(Image.WidthProperty, 135.0);
-                bubbleImage.SetValue(Image.HeightProperty, 135.0);
-            }
-            else
-            {
-                bubbleImage.SetValue(Image.WidthProperty, 80.0);
-                bubbleImage.SetValue(Image.HeightProperty, 80.0);
-            }
+
+            bubbleImage.SetValue(Image.WidthProperty, (135.0 / 1920.0) * SessionVM.SessionSVI.ActualWidth);
+            bubbleImage.SetValue(Image.HeightProperty, (135.0 / 1920.0) * SessionVM.SessionSVI.ActualHeight);
 
             FrameworkElementFactory touchZone = new FrameworkElementFactory(typeof(Ellipse));
             touchZone.SetValue(Ellipse.FillProperty, Brushes.Transparent);

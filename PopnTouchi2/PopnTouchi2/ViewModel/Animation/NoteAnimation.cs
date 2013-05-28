@@ -68,23 +68,21 @@ namespace PopnTouchi2.ViewModel.Animation
         /// <param name="e"></param>
         public void touchLeave(object sender, ContainerManipulationCompletedEventArgs e)
         {
-            ScatterViewItem bubble = new ScatterViewItem();
-            bubble = e.Source as ScatterViewItem;
-            NoteCenter = bubble.ActualCenter;
+            ScatterViewItem Note = new ScatterViewItem();
+            Note = e.Source as ScatterViewItem;
+            NoteCenter = Note.ActualCenter;
 
-            // int width = int.Parse(GetWidth.Text);
-            // int height = int.Parse(GetHeight.Text);
             int width = (int)sessionVM.Grid.ActualWidth;
             int height = (int)sessionVM.Grid.ActualHeight;
-            NoteCenter.X = NoteCenter.X * 1920 / width;
-            NoteCenter.Y = NoteCenter.Y * 1080 / height;
+            NoteCenter.X = NoteCenter.X * 1920.0 / width;
+            NoteCenter.Y = NoteCenter.Y * 1080.0 / height;
 
-            if (NoteCenter.X <= 90) NoteCenter.X = 120;
-            else if (NoteCenter.X >= 1830) NoteCenter.X = 1800;
-            else NoteCenter.X = Math.Floor((NoteCenter.X + 30) / 60) * 60;
+            if (NoteCenter.X <= 90.0) NoteCenter.X = 120.0;
+            else if (NoteCenter.X >= 1830.0) NoteCenter.X = 1800.0;
+            else NoteCenter.X = Math.Floor((NoteCenter.X + 30.0) / 60.0) * 60.0;
 
             //"Applatissement" de la portée (MAJ : Switch -> Tableau !)
-            int offset = GlobalVariables.ManipulationGrid[((long)NoteCenter.X / 60)];
+            int offset = GlobalVariables.ManipulationGrid[(int)(NoteCenter.X / 60.0)];
             NoteCenter.Y += offset;
 
             int positionNote = (int)(NoteCenter.X - 120) / 60;
@@ -93,9 +91,9 @@ namespace PopnTouchi2.ViewModel.Animation
             //Y dans le cadre portée ?
             //Si oui, animation
             //pas de else
-            if (NoteCenter.Y < 576 && NoteCenter.Y > 165)
+            if (NoteCenter.Y < 576.0 && NoteCenter.Y > 165.0)
             {
-                if (NoteCenter.Y < 370)
+                if (NoteCenter.Y < 370.0)
                 {
                     if (NoteCenter.Y >= 344) NoteCenter.Y = 344;
                     NoteCenter.Y = Math.Floor((NoteCenter.Y + 6.0) / 20.0) * 20.0 + 4.0;
@@ -114,27 +112,28 @@ namespace PopnTouchi2.ViewModel.Animation
 
                 NoteCenter.Y -= offset;
 
-                NoteCenter.X = NoteCenter.X * width / 1920;
-                NoteCenter.Y = NoteCenter.Y * height / 1080;
+                NoteCenter.X = NoteCenter.X * width / 1920.0;
+                NoteCenter.Y = NoteCenter.Y * height / 1080.0;
 
                 #region STB
                 Storyboard stb = new Storyboard();
                 PointAnimation moveCenter = new PointAnimation();
 
-                moveCenter.From = bubble.ActualCenter;
+                moveCenter.From = Note.ActualCenter;
                 moveCenter.To = NoteCenter;
                 moveCenter.Duration = new Duration(TimeSpan.FromSeconds(0.15));
-                bubble.Center = NoteCenter;
+
                 moveCenter.FillBehavior = FillBehavior.Stop;
 
                 stb.Children.Add(moveCenter);
 
-                Storyboard.SetTarget(moveCenter, bubble);
+                Storyboard.SetTarget(moveCenter, Note);
                 Storyboard.SetTargetProperty(moveCenter, new PropertyPath(ScatterViewItem.CenterProperty));
-
                 #endregion
 
+                Note.Center = NoteCenter;
                 moveCenter.Completed += new EventHandler(moveCenter_Completed);
+
                 stb.Begin(SVItem);
             }
             else

@@ -158,12 +158,12 @@ namespace PopnTouchi2.ViewModel.Animation
 
             int width = (int)sessionVM.Grid.ActualWidth;
             int height = (int)sessionVM.Grid.ActualHeight;
-            bubbleCenter.X = bubbleCenter.X * 1920 / width;
-            bubbleCenter.Y = bubbleCenter.Y * 1080 / height;
+            bubbleCenter.X = bubbleCenter.X * 1920.0 / width;
+            bubbleCenter.Y = bubbleCenter.Y * 1080.0 / height;
 
-            if (bubbleCenter.X <= 90) bubbleCenter.X = 120;
-            else if (bubbleCenter.X >= 1830) bubbleCenter.X = 1800;
-            else bubbleCenter.X = Math.Floor((bubbleCenter.X + 30) / 60) * 60;
+            if (bubbleCenter.X <= 90.0) bubbleCenter.X = 120.0;
+            else if (bubbleCenter.X >= 1830.0) bubbleCenter.X = 1800.0;
+            else bubbleCenter.X = Math.Floor((bubbleCenter.X + 30.0) / 60.0) * 60.0;
 
             //"Applatissement" de la portée (MAJ : Switch -> Tableau !)
             int offset = GlobalVariables.ManipulationGrid[(int)(bubbleCenter.X / 60.0)];
@@ -175,11 +175,11 @@ namespace PopnTouchi2.ViewModel.Animation
             //Y dans le cadre portée ?
             //Si oui, animation
             //pas de else
-            if (bubbleCenter.Y < 576 && bubbleCenter.Y > 165)
+            if (bubbleCenter.Y < 576.0 && bubbleCenter.Y > 165.0)
             {
-                if (bubbleCenter.Y < 370)
+                if (bubbleCenter.Y < 370.0)
                 {
-                    if (bubbleCenter.Y >= 344) bubbleCenter.Y = 344;
+                    if (bubbleCenter.Y >= 344.0) bubbleCenter.Y = 344.0;
                     bubbleCenter.Y = Math.Floor((bubbleCenter.Y + 6.0) / 20.0) * 20.0 + 4.0;
 
                     noteBubbleVM.NoteBubble.Note = new Note(converter.getOctave(bubbleCenter.Y), noteBubbleVM.NoteBubble.Note.Duration, converter.getPitch(bubbleCenter.Y), positionNote);
@@ -196,8 +196,8 @@ namespace PopnTouchi2.ViewModel.Animation
 
                 bubbleCenter.Y -= offset;
 
-                bubbleCenter.X = bubbleCenter.X * width / 1920;
-                bubbleCenter.Y = bubbleCenter.Y * height / 1080;
+                bubbleCenter.X = bubbleCenter.X * width / 1920.0;
+                bubbleCenter.Y = bubbleCenter.Y * height / 1080.0;
 
                 #region STB
                 Storyboard stb = new Storyboard();

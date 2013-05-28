@@ -24,11 +24,18 @@ namespace PopnTouchi2.Model.Enums
         /// identify the notebubble
         /// </summary>
         public static int idMelodyBubble = 0;
+<<<<<<< HEAD
 
         /// <summary>
         /// The array containing the offsets of the staves
         /// </summary>
         public static int[] ManipulationGrid = new int[] { 0, 0, 0, 11, 25, 35, 47, 55, 63, 70, 76, 80, 82, 84, 84, 83, 81, 76, 69, 61, 50, 39, 27, 15, 5, -3, -8, -11, -10, -6 };
+=======
+        public static int StaveTopFirstDo = 335;
+        public static int HeightOfOctave = 175;
+        public static int StaveBottomFirstDo = 630;
+        public static int[] ManipulationGrid = new int[] { 0, 0, 0, 11, 25, 35, 47, 55, 63, 70, 76, 80, 82, 84, 84, 83, 81, 76, 69, 61, 50, 39, 27, 15, 5, -3, -8, -11, -11, -10, -6 };
+>>>>>>> 6f2ae5c6a6f89a3d77ea67244e040f740dd493cc
             
     }
 }

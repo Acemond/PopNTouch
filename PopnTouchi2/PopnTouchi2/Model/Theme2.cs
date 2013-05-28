@@ -32,7 +32,7 @@ namespace PopnTouchi2
         /// </summary>
         public override void refreshSound()
         {
-            sound = AudioController.INSTANCE.SoundBank.GetCue("loop_eveningWater");
+            sound = AudioController.INSTANCE.SoundBank.GetCue("loop_superbirds");
         }
     }
 }

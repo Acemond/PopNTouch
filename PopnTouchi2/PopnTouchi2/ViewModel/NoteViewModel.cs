@@ -81,17 +81,10 @@ namespace PopnTouchi2.ViewModel
                 bubbleImage.SetValue(Image.SourceProperty, new BitmapImage(new Uri(@"../../Resources/Images/UI_items/Notes/white/" + noteValue + ".png", UriKind.Relative)));
 
             bubbleImage.SetValue(Image.IsHitTestVisibleProperty, false);
-            if (SessionVM.Session.OnePlayer)
-            {
-                bubbleImage.SetValue(Image.WidthProperty, 85.0);
-                bubbleImage.SetValue(Image.HeightProperty, 85.0);
-            }
-            else
-            {
-                bubbleImage.SetValue(Image.WidthProperty, 50.0);
-                bubbleImage.SetValue(Image.HeightProperty, 50.0);
-            }
 
+            bubbleImage.SetValue(Image.WidthProperty, (110.0 / 1920.0) * SessionVM.SessionSVI.ActualWidth);
+            bubbleImage.SetValue(Image.HeightProperty, (204.0 / 1080.0) * SessionVM.SessionSVI.ActualHeight);
+            
             FrameworkElementFactory touchZone = new FrameworkElementFactory(typeof(Ellipse));
             touchZone.SetValue(Ellipse.FillProperty, Brushes.Transparent);
             touchZone.SetValue(Ellipse.MarginProperty, new Thickness(20, 1, 12, 1));

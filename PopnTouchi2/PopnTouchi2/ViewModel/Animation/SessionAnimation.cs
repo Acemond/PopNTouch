@@ -108,7 +108,8 @@ namespace PopnTouchi2.ViewModel.Animation
 
             MainDesktop = (DesktopView)((ScatterView)(SessionVM.SessionSVI.Parent)).Parent;
 
-            SessionVM.SaveSession("test.bin");
+            stopAllBubblesAnimations();
+            SessionVM.SaveSession();
             SessionVM.Session.StopBackgroundSound();
 
             MakeReadyForSnapShot(SessionVM.Grid);
@@ -137,8 +138,6 @@ namespace PopnTouchi2.ViewModel.Animation
             ReplaceGridWithSnapShot(ss);
             #endregion
 
-            SessionVM.Session.StopBackgroundSound();
-            stopAllBubblesAnimations();
         }
 
         private void ReplaceGridWithSnapShot(ImageBrush ss)
@@ -148,6 +147,7 @@ namespace PopnTouchi2.ViewModel.Animation
             SessionVM.Grid.Children.Remove(SessionVM.MbgVM.Grid);
             SessionVM.Grid.Children.Remove(SessionVM.TreeUp.Grid);
             SessionVM.Grid.Children.Remove(SessionVM.TreeDown.Grid);
+            SessionVM.EraseSession();
 
             System.Windows.Shapes.Rectangle rect = new System.Windows.Shapes.Rectangle();
             rect.Fill = Brushes.White;
@@ -230,7 +230,7 @@ namespace PopnTouchi2.ViewModel.Animation
         {
             grid.Children.Remove(SessionVM.Bubbles);
             grid.Children.Remove(SessionVM.Reducer);
-            grid.Children.Remove(SessionVM.Play);
+            grid.Children.Remove(SessionVM.Play_Button);
             grid.Children.Remove(SessionVM.UpdateSound.Grid1);
             grid.Children.Remove(SessionVM.UpdateSound.Grid2);
         }
@@ -382,13 +382,13 @@ namespace PopnTouchi2.ViewModel.Animation
 
             if (Ypos > 4.0 / 18.0 * Height && Ypos < 14.0 / 18.0 * Height)
             {
-                if (Xpos > 0 && Xpos < 3.0 / 32.0 * Width)
+                if (Xpos > 0 && Xpos < 3.0 / 32.0 * Width && !MainDesktop.LeftSessionActive)
                 {
                     SessionVM.Reduced = false;
                     EnlargeForSide(true);
                     SessionVM.Orientation = "left";
                 }
-                else if (Xpos > 29.0 / 32.0 * Width && Xpos < Width)
+                else if (Xpos > 29.0 / 32.0 * Width && Xpos < Width && !MainDesktop.RightSessionActive)
                 {
                     SessionVM.Reduced = false;
                     EnlargeForSide(false);
@@ -413,29 +413,6 @@ namespace PopnTouchi2.ViewModel.Animation
                     SessionVM.Orientation = "bottom";
                 }
             }
-        }
-
-        private void MakeReadyForDisplay()
-        {
-            Fs.Close();
-
-            SessionVM.Grid.Background = (new ThemeViewModel(SessionVM.Session.Theme, SessionVM)).BackgroundImage;
-            
-            SessionVM.Grid.Children.Add(SessionVM.Bubbles);
-            SessionVM.Grid.Children.Add(SessionVM.Notes);
-            SessionVM.Grid.Children.Add(SessionVM.Reducer);
-            SessionVM.Grid.Children.Add(SessionVM.Play);
-            SessionVM.Grid.Children.Add(SessionVM.UpdateSound.Grid1);
-            SessionVM.Grid.Children.Add(SessionVM.UpdateSound.Grid2);
-            SessionVM.Grid.Children.Add(SessionVM.TreeUp.Grid);
-            SessionVM.Grid.Children.Add(SessionVM.TreeDown.Grid);
-            SessionVM.NbgVM = new NoteBubbleGeneratorViewModel(SessionVM.Session.NoteBubbleGenerator, SessionVM);
-            SessionVM.MbgVM = new MelodyBubbleGeneratorViewModel(SessionVM.Session.MelodyBubbleGenerator, SessionVM);
-
-            SessionVM.Grid.Children.Add(SessionVM.NbgVM.Grid);
-            SessionVM.Grid.Children.Add(SessionVM.MbgVM.Grid);
-
-            SessionVM.SetDimensions(SessionVM.Grid.ActualWidth, SessionVM.Grid.ActualHeight);
         }
         
         private void EnlargeForSide(Boolean left)
@@ -598,11 +575,11 @@ namespace PopnTouchi2.ViewModel.Animation
 
             MainDesktop = (DesktopView)((ScatterView)SessionVM.SessionSVI.Parent).Parent;
 
-            SessionVM.LoadSession("test.bin");
-          
+            SessionVM.LoadSession();
+            Fs.Close();
+
             SessionVM.Session.PlayBackgroundSound();
 
-            MakeReadyForDisplay();
             RemoveWhiteBorder();
         }
 
