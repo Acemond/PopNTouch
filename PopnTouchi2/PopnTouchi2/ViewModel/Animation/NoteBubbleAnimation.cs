@@ -163,7 +163,7 @@ namespace PopnTouchi2.ViewModel.Animation
             else bubbleCenter.X = Math.Floor((bubbleCenter.X + 30) / 60) * 60;
 
             //"Applatissement" de la portée (MAJ : Switch -> Tableau !)
-            int offset = GlobalVariables.ManipulationGrid[((long)bubbleCenter.X / 60)];
+            int offset = GlobalVariables.ManipulationGrid[(int)(bubbleCenter.X / 60.0)];
             bubbleCenter.Y += offset;
 
           
@@ -171,17 +171,17 @@ namespace PopnTouchi2.ViewModel.Animation
             //Y dans le cadre portée ?
             //Si oui, animation
             //pas de else
-            if (bubbleCenter.Y < 630 && bubbleCenter.Y > 105)
+            if (bubbleCenter.Y < 576 && bubbleCenter.Y > 165)
             {
                 if (bubbleCenter.Y < 370)
                 {
-                    if (bubbleCenter.Y >= 335) bubbleCenter.Y = 335;
-                    bubbleCenter.Y = Math.Floor((bubbleCenter.Y - 20) / 25) * 25 + 35; //-20 et 35 pour 50
+                    if (bubbleCenter.Y >= 344) bubbleCenter.Y = 344;
+                    bubbleCenter.Y = Math.Floor((bubbleCenter.Y + 6.0) / 20.0) * 20.0 + 4.0;
                 }
                 else
                 {
-                    if (bubbleCenter.Y <= 405) bubbleCenter.Y = 405;
-                    bubbleCenter.Y = Math.Floor((bubbleCenter.Y + 10) / 25) * 25 + 5; //20 et 5 pour 50
+                    if (bubbleCenter.Y <= 395) bubbleCenter.Y = 395;
+                    bubbleCenter.Y = Math.Floor((bubbleCenter.Y + 15.0) / 20.0) * 20.0 - 5.0;
                 }
 
                 bubbleCenter.Y -= offset;
