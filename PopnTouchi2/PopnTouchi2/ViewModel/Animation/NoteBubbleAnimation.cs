@@ -289,7 +289,7 @@ namespace PopnTouchi2.ViewModel.Animation
                 noteVM = new NoteViewModel(bubbleCenter, noteBubbleVM.NoteBubble.Note, sessionVM.Notes, sessionVM);
                 sessionVM.Notes.Items.Add(noteVM.SVItem);
                 sessionVM.NotesOnStave.Add(noteVM);
-                if (bubbleCenter.Y < (370 * (int)sessionVM.Grid.ActualHeight / 1080))
+                if (bubbleCenter.Y < (370 * sessionVM.SessionSVI.ActualHeight / 1080))
                 {
                     sessionVM.Session.StaveTop.CurrentInstrument.PlayNote(noteBubbleVM.NoteBubble.Note);
                 }

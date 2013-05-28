@@ -67,7 +67,10 @@ namespace PopnTouchi2.ViewModel
 
             String noteValue = note.Duration.ToString();
 
-            bubbleImage.SetValue(Image.SourceProperty, new BitmapImage(new Uri(@"../../Resources/Images/UI_items/Notes/black/" + noteValue + ".png", UriKind.Relative)));
+            if (center.Y < (370 * SessionVM.SessionSVI.ActualHeight /1080))
+                bubbleImage.SetValue(Image.SourceProperty, new BitmapImage(new Uri(@"../../Resources/Images/UI_items/Notes/black/" + noteValue + ".png", UriKind.Relative)));
+            else
+                bubbleImage.SetValue(Image.SourceProperty, new BitmapImage(new Uri(@"../../Resources/Images/UI_items/Notes/white/" + noteValue + ".png", UriKind.Relative)));
 
             bubbleImage.SetValue(Image.IsHitTestVisibleProperty, false);
 

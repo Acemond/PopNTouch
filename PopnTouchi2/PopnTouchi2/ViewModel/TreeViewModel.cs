@@ -86,14 +86,14 @@ namespace PopnTouchi2.ViewModel
             if (session.OnePlayer)
             {
                 Images.Add(createGridForLinks("root", 50, 50, new Thickness(0, 0, 100, 0)));
-                Images.Add(createGridForLinks("lower_branch", 80, 80, new Thickness(50, 80, 50, 0)));
-                Images.Add(createGridForLinks("upper_branch", 80, 80, new Thickness(50, 0, 50, 80)));
+                Images.Add(createGridForLinks("lower_branch", 80, 120, new Thickness(50, 80, 50, 0)));
+                Images.Add(createGridForLinks("upper_branch", 80, 120, new Thickness(50, 0, 50, 80)));
             }
             else
             {
                 Images.Add(createGridForLinks("root", 35, 35, new Thickness(0, 0, 100, 0)));
-                Images.Add(createGridForLinks("lower_branch", 45, 45, new Thickness(50, 80, 50, 0)));
-                Images.Add(createGridForLinks("upper_branch", 45, 45, new Thickness(50, 0, 50, 80)));
+                Images.Add(createGridForLinks("lower_branch", 45, 70, new Thickness(50, 80, 50, 0)));
+                Images.Add(createGridForLinks("upper_branch", 45, 70, new Thickness(50, 0, 50, 80)));
             }
 
             Images[0].Visibility = Visibility.Visible;
