@@ -12,6 +12,7 @@ namespace PopnTouchi2
     {
         quaver = 1,
         crotchet = 2,
-        minim = 4
+        minim = 4,
+        alteration = 8
     }
 }

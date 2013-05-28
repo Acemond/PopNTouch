@@ -32,8 +32,8 @@ namespace PopnTouchi2.Model.Enums
         public static int StaveTopFirstDo = 335;
         public static int HeightOfOctave = 175;
         public static int StaveBottomFirstDo = 630;
-        public static int MaxNoteBubbles = 15;
-        public static int MaxMelodyBubbles = 9;
+        public static int MaxNoteBubbles = 14;
+        public static int MaxMelodyBubbles = 6;
 
     }
 }

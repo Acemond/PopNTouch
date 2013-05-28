@@ -23,18 +23,10 @@ namespace PopnTouchi2
         /// </summary>
         public ObservableCollection<NoteBubble> NoteBubbles;
 
-        /// <summary>
-        /// Property.
-        /// How many notes of each type are currently available on the screen.
-        /// Used in creation algorithm.
-        /// </summary>
-        public Dictionary<NoteValue, int> WildBubbles { get; set; }
-
-        /// <summary>
-        /// Parameter.
-        /// Used to create 1/4 bubble of alteration
-        /// </summary>
-        private int counterOfNote;
+        private Dictionary<NoteValue, int> WildBubbles;
+        private int SharpBubblesCount;
+        private int FlatBubblesCount;
+        private int NoteBubblesCount;
 
         /// <summary>
         /// NoteBubbleGenerator Constructor.
@@ -45,35 +37,48 @@ namespace PopnTouchi2
         {
             NoteBubbles = new ObservableCollection<NoteBubble>();
             WildBubbles = new Dictionary<NoteValue, int>();
+            WildBubbles.Add(NoteValue.quaver, 0);
             WildBubbles.Add(NoteValue.crotchet, 0);
             WildBubbles.Add(NoteValue.minim, 0);
-            WildBubbles.Add(NoteValue.quaver, 0);
-            counterOfNote = 1;
         }
 
         /// <summary>
         /// Creates a new NoteBubble with a given theme.
         /// </summary>
         /// <returns>A newly created NoteBubble</returns>
-        public NoteBubble CreateNoteBubble()
+        public NoteBubble CreateNoteBubble(List<NoteBubble> bubbles)
         {
-            NoteBubble newBubble = null;
-            if ((counterOfNote % 4) != 0)
+            WildBubbles[NoteValue.quaver] = 0;
+            WildBubbles[NoteValue.crotchet] = 0;
+            WildBubbles[NoteValue.minim] = 0;
+            SharpBubblesCount = 0;
+            FlatBubblesCount = 0;
+            NoteBubblesCount = 0;
+
+            foreach (NoteBubble nb in bubbles)
             {
-                newBubble = new NoteBubble(MostNeeded());
-            }
-            else
-            {
-                if ((counterOfNote % 8) == 0)
+                if (nb.Note.Duration != NoteValue.alteration)
                 {
-                    newBubble = new NoteBubble(true, false);
+                    WildBubbles[nb.Note.Duration]++;
+                    NoteBubblesCount++;
                 }
                 else
                 {
-                    newBubble = new NoteBubble(false, true);
+                    if (nb.Note.Sharp) SharpBubblesCount++;
+                    else FlatBubblesCount++;
                 }
             }
-            counterOfNote++;
+            NoteValue needed = MostNeeded();
+            NoteBubble newBubble;
+            if (needed == NoteValue.alteration)
+                if(SharpBubblesCount == FlatBubblesCount)
+                {
+                    Random rand = new Random();
+                    newBubble = (rand.Next(1) == 1)? new NoteBubble(false, true) : new NoteBubble(true, false);
+                }
+                else newBubble = (SharpBubblesCount > FlatBubblesCount) ? new NoteBubble(false, true) : new NoteBubble(true, false);
+            else newBubble = new NoteBubble(needed);
+
             NoteBubbles.Add(newBubble);
             return newBubble;
         }
@@ -87,6 +92,10 @@ namespace PopnTouchi2
         {
             NoteValue mostNeededNote = NoteValue.crotchet;
             Random rand = new Random();
+
+            if (rand.Next(3) == 0 && SharpBubblesCount + FlatBubblesCount < 4)
+                return NoteValue.alteration;
+
             try
             {
                 int min = WildBubbles.Values.Min();

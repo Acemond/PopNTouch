@@ -194,7 +194,7 @@ namespace PopnTouchi2.ViewModel
             Theme_Button.Height = 110;
             Theme_Button.HorizontalAlignment = System.Windows.HorizontalAlignment.Right;
             Theme_Button.VerticalAlignment = System.Windows.VerticalAlignment.Top;
-            Theme_Button.Margin = new Thickness(0, 0, 100, 0);
+            Theme_Button.Margin = new Thickness(0, 0, 100.0, 0);
             Theme_Button.Background = ThemeVM.ThemesImage;
             Theme_Button.Visibility = Visibility.Visible;
 
