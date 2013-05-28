@@ -399,7 +399,9 @@ namespace PopnTouchi2.ViewModel
             Grid.Children.Add(TreeDown.Grid);
             Grid.Children.Add(NbgVM.Grid);
             Grid.Children.Add(MbgVM.Grid);
+            Grid.Children.Add(Theme_Button);
 
+            Grid.SetZIndex(Theme_Button, 5);
             Grid.SetZIndex(UpdateSound.Grid1, 4);
             Grid.SetZIndex(UpdateSound.Grid2, 4);
             Grid.SetZIndex(TreeUp.Grid, 3);
