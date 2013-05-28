@@ -73,6 +73,25 @@ namespace PopnTouchi2
 
         /// <summary>
         /// Note Constructor.
+        /// Generates a new object of class Note with a given octave, duration, pitch,
+        /// sharp and flat
+        /// </summary>
+        /// <param name="oct">Octave</param>
+        /// <param name="d">NoteValue</param>
+        /// <param name="pitch">String representing the Pitch</param>
+        /// <param name="posit">Position</param>
+        public Note(int oct, NoteValue d, String pitch, int posit, Boolean sharp, Boolean flat)
+        {
+            Octave = oct;
+            Duration = d;
+            Pitch = pitch;
+            Sharp = sharp;
+            Flat = flat;
+            Position = posit;
+        }
+
+        /// <summary>
+        /// Note Constructor.
         /// Generates a new object of class Note, default Note
         /// </summary>
         public Note()
@@ -91,6 +110,7 @@ namespace PopnTouchi2
         /// <returns>The string newly created</returns>
         public String GetCue()
         {
+            String PitchTmp = Pitch;
             String alteration = "";
             if (Sharp)
             {
@@ -99,18 +119,18 @@ namespace PopnTouchi2
 
             if (Flat)
             {
-                switch(Pitch)
+                switch (PitchTmp)
                 {
-                    case "do" : Pitch = "si" ; break;
-                    case "re" : Pitch = "do" ; alteration = "_d"; break;
-                    case "mi" : Pitch = "re" ; alteration = "_d"; break;
-                    case "fa" : Pitch = "mi" ; break;
-                    case "sol": Pitch = "fa" ; alteration = "_d"; break;
-                    case "la" : Pitch = "sol"; alteration = "_d"; break;
-                    case "si" : Pitch = "la" ; alteration = "_d"; break;
+                    case "do": PitchTmp = "si"; break;
+                    case "re": PitchTmp = "do"; alteration = "_d"; break;
+                    case "mi": PitchTmp = "re"; alteration = "_d"; break;
+                    case "fa": PitchTmp = "mi"; break;
+                    case "sol": PitchTmp = "fa"; alteration = "_d"; break;
+                    case "la": PitchTmp = "sol"; alteration = "_d"; break;
+                    case "si": PitchTmp = "la"; alteration = "_d"; break;
                 }
             }
-            return Pitch + "_" + Octave.ToString() + alteration;
+            return PitchTmp + "_" + Octave.ToString() + alteration;
         }
 
         /// <summary>

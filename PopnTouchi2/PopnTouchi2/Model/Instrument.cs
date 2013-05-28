@@ -6,6 +6,7 @@ using Microsoft.Xna.Framework.Audio;
 using System.Threading;
 using System.Timers;
 using PopnTouchi2.Model.Enums;
+using System.Windows;
 
 namespace PopnTouchi2
 {
@@ -56,6 +57,7 @@ namespace PopnTouchi2
             Cue cue = AudioController.INSTANCE.SoundBank.GetCue("silence");
             try
             {
+                MessageBox.Show(Name.ToString() + "_" + note.GetCue());
                 cue = AudioController.INSTANCE.SoundBank.GetCue(Name.ToString() + "_" + note.GetCue());
             }
             catch (Exception e)

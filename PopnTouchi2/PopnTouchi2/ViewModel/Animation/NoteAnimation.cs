@@ -98,7 +98,8 @@ namespace PopnTouchi2.ViewModel.Animation
                     if (NoteCenter.Y >= 344) NoteCenter.Y = 344;
                     NoteCenter.Y = Math.Floor((NoteCenter.Y + 6.0) / 20.0) * 20.0 + 4.0;
 
-                    noteVM.Note = new Note(converter.getOctave(NoteCenter.Y), noteVM.Note.Duration, converter.getPitch(NoteCenter.Y), positionNote);
+                    noteVM.Note = new Note(converter.getOctave(NoteCenter.Y), noteVM.Note.Duration, converter.getPitch(NoteCenter.Y), positionNote, noteVM.Note.Sharp, noteVM.Note.Flat);
+                    MessageBox.Show(positionNote.ToString());
                     sessionVM.Session.StaveTop.AddNote(noteVM.Note, positionNote);
                 }
                 else
@@ -106,7 +107,7 @@ namespace PopnTouchi2.ViewModel.Animation
                     if (NoteCenter.Y <= 395) NoteCenter.Y = 395;
                     NoteCenter.Y = Math.Floor((NoteCenter.Y + 15.0) / 20.0) * 20.0 - 5.0;
 
-                    noteVM.Note = new Note(converter.getOctave(NoteCenter.Y), noteVM.Note.Duration, converter.getPitch(NoteCenter.Y), positionNote);
+                    noteVM.Note = new Note(converter.getOctave(NoteCenter.Y), noteVM.Note.Duration, converter.getPitch(NoteCenter.Y), positionNote, noteVM.Note.Sharp, noteVM.Note.Flat);
                     sessionVM.Session.StaveBottom.AddNote(noteVM.Note, positionNote);
                 }
 
@@ -144,6 +145,8 @@ namespace PopnTouchi2.ViewModel.Animation
                 sessionVM.Notes.Items.Remove(noteVM.SVItem);
 
                 NoteBubbleViewModel nbVM = new NoteBubbleViewModel(center, new NoteBubble(noteVM.Note), sessionVM.Bubbles, sessionVM);
+                nbVM.NoteBubble.Note.Sharp = false;
+                nbVM.NoteBubble.Note.Flat = false;
                 sessionVM.Bubbles.Items.Add(nbVM.SVItem);
             }
         }
