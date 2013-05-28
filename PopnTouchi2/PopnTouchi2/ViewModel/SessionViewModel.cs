@@ -105,6 +105,12 @@ namespace PopnTouchi2.ViewModel
         public Grid Play { get; set; }
 
         /// <summary>
+        /// Property.
+        /// Theme Button.
+        /// </summary>
+        public Grid Theme_Button { get; set; }
+
+        /// <summary>
         /// Property
         /// Boolean true if the stave is playing
         /// </summary>
@@ -171,7 +177,7 @@ namespace PopnTouchi2.ViewModel
                  
             //TODO changer thickness bottom et top avec les résolutions plus grandes
             if(session.OnePlayer)
-            displayTrees(new Thickness(10, 50, 200, 90), new Thickness(10,10,200,400));
+            displayTrees(new Thickness(0, 0, 0, 0), new Thickness(10,10,200,400));
             else displayTrees(new Thickness(10, 75, 200, 90), new Thickness(10, 30, 200, 200));
 
             Reducer = new SurfaceButton();
@@ -193,7 +199,19 @@ namespace PopnTouchi2.ViewModel
             IsPlaying = false;
 
             Play.PreviewTouchDown += new EventHandler<TouchEventArgs>(Play_TouchDown);
-            
+
+            Theme_Button = new Grid();
+            Theme_Button.Width = 351;
+            Theme_Button.Height = 110;
+            Theme_Button.HorizontalAlignment = System.Windows.HorizontalAlignment.Left;
+            Theme_Button.VerticalAlignment = System.Windows.VerticalAlignment.Top;
+            ImageBrush theme_img = new ImageBrush();
+            theme_img.ImageSource = new BitmapImage(new Uri(@"../../Resources/Images/UI_items/themes.png", UriKind.Relative));
+            Theme_Button.Background = theme_img;
+            Theme_Button.Visibility = Visibility.Visible;
+
+            Theme_Button.PreviewTouchDown += new EventHandler<TouchEventArgs>(Theme_Button_TouchDown);
+
             SessionSVI.CanMove = false;
             SessionSVI.CanRotate = false;
             SessionSVI.CanScale = false;
@@ -204,6 +222,7 @@ namespace PopnTouchi2.ViewModel
             Grid.Children.Add(NbgVM.Grid);
             Grid.Children.Add(MbgVM.Grid);
             Grid.Children.Add(Play);
+            Grid.Children.Add(Theme_Button);
             Grid.Children.Add(UpdateSound.Grid1);
             Grid.Children.Add(UpdateSound.Grid2);
 
@@ -213,6 +232,7 @@ namespace PopnTouchi2.ViewModel
             Grid.SetZIndex(TreeDown.Grid, 3);
             Grid.SetZIndex(Bubbles, 2);
             Grid.SetZIndex(Notes, 1);
+            Grid.SetZIndex(Theme_Button, 0);
             Grid.SetZIndex(NbgVM.Grid, 0);
             Grid.SetZIndex(MbgVM.Grid, 0);
 
@@ -289,6 +309,13 @@ namespace PopnTouchi2.ViewModel
             Grid.SetZIndex(TreeDown.Grid, 3);
         }
 
+        private void Theme_Button_TouchDown(object sender, RoutedEventArgs e)
+        {
+            Grid g = new Grid();
+            g.Background = new SolidColorBrush(Colors.Black);
+            g.Opacity = 0.3;
+            g.Visibility = Visibility.Visible;
+        }
 
         private void Play_TouchDown(object sender, RoutedEventArgs e)
         {
