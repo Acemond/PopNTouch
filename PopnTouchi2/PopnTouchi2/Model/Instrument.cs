@@ -6,6 +6,7 @@ using Microsoft.Xna.Framework.Audio;
 using System.Threading;
 using System.Timers;
 using PopnTouchi2.Model.Enums;
+using System.Windows;
 
 namespace PopnTouchi2
 {
