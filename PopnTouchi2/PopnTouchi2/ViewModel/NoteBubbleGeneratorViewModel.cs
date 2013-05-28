@@ -80,6 +80,9 @@ namespace PopnTouchi2.ViewModel
             NoteBubbleViewModel nbVM = new NoteBubbleViewModel(newBubble, SessionVM.Bubbles, SessionVM);
             NoteBubbleVMs.Add(nbVM);
             SessionVM.Bubbles.Items.Add(nbVM.SVItem);
+
+            String effect = "pop" + (new Random()).Next(1, 5).ToString();
+            AudioController.PlaySoundWithString(effect);
         }
     }
 }

@@ -183,7 +183,6 @@ namespace PopnTouchi2.ViewModel.Animation
                     bubbleCenter.Y = Math.Floor((bubbleCenter.Y + 6.0) / 20.0) * 20.0 + 4.0;
 
                     noteBubbleVM.NoteBubble.Note = new Note(converter.getOctave(bubbleCenter.Y), noteBubbleVM.NoteBubble.Note.Duration, converter.getPitch(bubbleCenter.Y), positionNote, noteBubbleVM.NoteBubble.Note.Sharp, noteBubbleVM.NoteBubble.Note.Flat);
-                //    sessionVM.Session.StaveTop.AddNote(noteBubbleVM.NoteBubble.Note, positionNote);
                 }
                 else
                 {
@@ -191,7 +190,6 @@ namespace PopnTouchi2.ViewModel.Animation
                     bubbleCenter.Y = Math.Floor((bubbleCenter.Y + 15.0) / 20.0) * 20.0 - 5.0;
 
                     noteBubbleVM.NoteBubble.Note = new Note(converter.getOctave(bubbleCenter.Y), noteBubbleVM.NoteBubble.Note.Duration, converter.getPitch(bubbleCenter.Y), positionNote, noteBubbleVM.NoteBubble.Note.Sharp, noteBubbleVM.NoteBubble.Note.Flat);
-                 //   sessionVM.Session.StaveBottom.AddNote(noteBubbleVM.NoteBubble.Note, positionNote);
                 }
 
                 bubbleCenter.Y -= offset;
@@ -297,10 +295,7 @@ namespace PopnTouchi2.ViewModel.Animation
         public void touchDown(object sender, TouchEventArgs e)
         {
             StopAnimation();
-            String effect = "discovery";
-            Random r = new Random();
-            int nb = r.Next(1, 5);
-            effect += nb.ToString();
+            String effect = "discovery" + (new Random()).Next(1, 5).ToString();
             AudioController.PlaySoundWithString(effect);
         }
         #endregion

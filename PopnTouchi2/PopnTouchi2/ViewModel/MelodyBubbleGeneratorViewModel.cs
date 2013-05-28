@@ -79,6 +79,9 @@ namespace PopnTouchi2.ViewModel
             MelodyBubbleViewModel mbVM = new MelodyBubbleViewModel(newBubble, SessionVM.Bubbles, SessionVM);
             MelodyBubbleVMs.Add(mbVM);
             SessionVM.Bubbles.Items.Add(mbVM.SVItem);
+
+            String effect = "pop" + (new Random()).Next(1, 5).ToString();
+            AudioController.PlaySoundWithString(effect);
         }
     }
 }
