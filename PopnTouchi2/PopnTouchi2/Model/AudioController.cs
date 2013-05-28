@@ -60,6 +60,8 @@ namespace PopnTouchi2
 
             NoteCategory = audioEngine.GetCategory("Notes");
             NoteCategory.SetVolume(3.0f);
+            AudioCategory BackgroundCategory = audioEngine.GetCategory("Background sound");
+            BackgroundCategory.SetVolume(2.0f);
         }
 
         /// <summary>
