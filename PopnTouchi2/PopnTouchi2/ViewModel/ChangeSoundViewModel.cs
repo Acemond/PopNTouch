@@ -50,6 +50,8 @@ namespace PopnTouchi2.ViewModel
             
             Grid1 = new Grid();
             Grid2 = new Grid();
+            Grid1.Width = 200;
+            Grid2.Width = 200;
             Grid1.VerticalAlignment = VerticalAlignment.Top;
             Grid2.VerticalAlignment = VerticalAlignment.Top;
 

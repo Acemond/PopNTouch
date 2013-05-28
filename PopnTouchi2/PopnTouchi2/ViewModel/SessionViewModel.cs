@@ -190,7 +190,7 @@ namespace PopnTouchi2.ViewModel
             Grid.Background = (new ThemeViewModel(Session.Theme, this)).BackgroundImage;
 
             //TODO mettre dans SetDimensions
-            displayTrees(new Thickness(0, 0, 0, 0), new Thickness(10,10,200,400));
+            displayTrees(new Thickness(20, 0, 0, 100), new Thickness(20,10,200,400));
             //else displayTrees(new Thickness(10, 75, 200, 90), new Thickness(10, 30, 200, 200));
 
             Reducer = new SurfaceButton();

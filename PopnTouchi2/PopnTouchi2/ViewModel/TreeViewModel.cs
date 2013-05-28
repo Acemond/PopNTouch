@@ -82,9 +82,9 @@ namespace PopnTouchi2.ViewModel
 
 
             Images = new List<Grid>();
-            Images.Add(createGridForImage(Instrument1.Name.ToString(), 80, 80, HorizontalAlignment.Left, VerticalAlignment.Center));
-            Images.Add(createGridForImage(Instrument1.Name.ToString(), 80, 80, HorizontalAlignment.Right, VerticalAlignment.Top));
-            Images.Add(createGridForImage(Instrument2.Name.ToString(), 80, 80, HorizontalAlignment.Right, VerticalAlignment.Bottom));
+            Images.Add(createGridForImage(Instrument1.Name.ToString(), 100, 100, HorizontalAlignment.Left, VerticalAlignment.Center));
+            Images.Add(createGridForImage(Instrument1.Name.ToString(), 100, 100, HorizontalAlignment.Right, VerticalAlignment.Top));
+            Images.Add(createGridForImage(Instrument2.Name.ToString(), 100, 100, HorizontalAlignment.Right, VerticalAlignment.Bottom));
 
             Images.Add(createGridForLinks("root", 50, 50, new Thickness(0, 0, 100, 0)));
             Images.Add(createGridForLinks("lower_branch", 80, 120, new Thickness(50, 80, 50, 0)));
@@ -132,8 +132,6 @@ namespace PopnTouchi2.ViewModel
             g.Background = getImageBrush(path);
             g.Height = height;
             g.Width = width;
-            g.Height /= 1.5;
-            g.Width /= 1.5;
             g.HorizontalAlignment = h;
             g.VerticalAlignment = v;
             g.Visibility = Visibility.Hidden;
