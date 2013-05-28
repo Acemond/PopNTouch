@@ -49,7 +49,7 @@ namespace PopnTouchi2
         /// Stop button
         /// </summary>
         /// <param name="name"></param>
-        public void refreshSound(String name)
+        public virtual void refreshSound(String name)
         {
             try
             {

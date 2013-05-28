@@ -22,6 +22,6 @@ namespace PopnTouchi2
             InstrumentsBottom[1] = new Instrument(InstrumentType.vibraphone);
 
             refreshSound("loop_superbirds");
-        }
+        }        
     }
 }
