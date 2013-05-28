@@ -230,7 +230,7 @@ namespace PopnTouchi2.ViewModel.Animation
         {
             grid.Children.Remove(SessionVM.Bubbles);
             grid.Children.Remove(SessionVM.Reducer);
-            grid.Children.Remove(SessionVM.Play);
+            grid.Children.Remove(SessionVM.Play_Button);
             grid.Children.Remove(SessionVM.UpdateSound.Grid1);
             grid.Children.Remove(SessionVM.UpdateSound.Grid2);
         }
@@ -414,6 +414,32 @@ namespace PopnTouchi2.ViewModel.Animation
                 }
             }
         }
+<<<<<<< HEAD
+=======
+
+        private void MakeReadyForDisplay()
+        {
+            Fs.Close();
+
+            SessionVM.Grid.Background = (new ThemeViewModel(SessionVM.Session.Theme, SessionVM)).BackgroundImage;
+            
+            SessionVM.Grid.Children.Add(SessionVM.Bubbles);
+            SessionVM.Grid.Children.Add(SessionVM.Notes);
+            SessionVM.Grid.Children.Add(SessionVM.Reducer);
+            SessionVM.Grid.Children.Add(SessionVM.Play_Button);
+            SessionVM.Grid.Children.Add(SessionVM.UpdateSound.Grid1);
+            SessionVM.Grid.Children.Add(SessionVM.UpdateSound.Grid2);
+            SessionVM.Grid.Children.Add(SessionVM.TreeUp.Grid);
+            SessionVM.Grid.Children.Add(SessionVM.TreeDown.Grid);
+            SessionVM.NbgVM = new NoteBubbleGeneratorViewModel(SessionVM.Session.NoteBubbleGenerator, SessionVM);
+            SessionVM.MbgVM = new MelodyBubbleGeneratorViewModel(SessionVM.Session.MelodyBubbleGenerator, SessionVM);
+
+            SessionVM.Grid.Children.Add(SessionVM.NbgVM.Grid);
+            SessionVM.Grid.Children.Add(SessionVM.MbgVM.Grid);
+
+            SessionVM.SetDimensions(SessionVM.Grid.ActualWidth, SessionVM.Grid.ActualHeight);
+        }
+>>>>>>> aceltis
         
         private void EnlargeForSide(Boolean left)
         {

@@ -94,6 +94,11 @@ namespace PopnTouchi2.ViewModel
 
         /// <summary>
         /// Property.
+        /// ThemeViewModel of the SessionViewModel
+        /// </summary>
+        public ThemeViewModel ThemeVM { get; set; }
+        /// <summary>
+        /// Property.
         /// Temporary Reduce Button.
         /// </summary>
         public SurfaceButton Reducer { get; set; }
@@ -102,7 +107,7 @@ namespace PopnTouchi2.ViewModel
         /// Property.
         /// Play Button.
         /// </summary>
-        public Grid Play { get; set; }
+        public Grid Play_Button { get; set; }
 
         /// <summary>
         /// Property.
@@ -152,6 +157,12 @@ namespace PopnTouchi2.ViewModel
         public ChangeSoundViewModel UpdateSound { get; set; }
 
         /// <summary>
+        /// Property.
+        /// Manager of Themes choice.
+        /// </summary>
+        public ThemeChooser ThemeChooser { get; set; }
+
+        /// <summary>
         /// SessionViewModel Construtor.
         /// Initializes all SessionViewModel components.
         /// </summary>
@@ -159,12 +170,14 @@ namespace PopnTouchi2.ViewModel
         private SessionViewModel(Session s) : base()
         {
             Session = s;
+            ThemeVM = new ThemeViewModel(Session.Theme, this);
             SessionSVI = new ScatterViewItem();
             Grid = new Grid();
-            UpdateSound = new ChangeSoundViewModel(s);
+            UpdateSound = new ChangeSoundViewModel(this);
             Bubbles = new ScatterView();
             Notes = new ScatterView();
             NotesOnStave = new List<NoteViewModel>();
+            ThemeChooser = new ThemeChooser(this);
             NbgVM = new NoteBubbleGeneratorViewModel(Session.NoteBubbleGenerator, this);
             MbgVM = new MelodyBubbleGeneratorViewModel(Session.MelodyBubbleGenerator, this);
 
@@ -188,28 +201,25 @@ namespace PopnTouchi2.ViewModel
             Reducer.Background = Brushes.Red;
             Reducer.Content = "Reduce !";
             
-            Play = new Grid();
-            Play.HorizontalAlignment = System.Windows.HorizontalAlignment.Left;
-            Play.VerticalAlignment = System.Windows.VerticalAlignment.Top;
-            ImageBrush img = new ImageBrush();
-            img.ImageSource = new BitmapImage(new Uri(@"../../Resources/Images/Theme" + session.ThemeID + "/playdrop.png", UriKind.Relative));
-            Play.Background = img;
-            Play.Visibility = Visibility.Visible;
+            Play_Button = new Grid();
+            Play_Button.HorizontalAlignment = System.Windows.HorizontalAlignment.Left;
+            Play_Button.VerticalAlignment = System.Windows.VerticalAlignment.Top;
+            Play_Button.Background = ThemeVM.PlayImage;
+            Play_Button.Visibility = Visibility.Visible;
             IsPlaying = false;
 
-            Play.PreviewTouchDown += new EventHandler<TouchEventArgs>(Play_TouchDown);
+            Play_Button.PreviewTouchDown += new EventHandler<TouchEventArgs>(Play_Button_TouchDown);
 
             Theme_Button = new Grid();
             Theme_Button.Width = 351;
             Theme_Button.Height = 110;
-            Theme_Button.HorizontalAlignment = System.Windows.HorizontalAlignment.Left;
+            Theme_Button.HorizontalAlignment = System.Windows.HorizontalAlignment.Right;
             Theme_Button.VerticalAlignment = System.Windows.VerticalAlignment.Top;
-            ImageBrush theme_img = new ImageBrush();
-            theme_img.ImageSource = new BitmapImage(new Uri(@"../../Resources/Images/UI_items/themes.png", UriKind.Relative));
-            Theme_Button.Background = theme_img;
+            Theme_Button.Margin = new Thickness(0, 0, 100, 0);
+            Theme_Button.Background = ThemeVM.ThemesImage;
             Theme_Button.Visibility = Visibility.Visible;
 
-            Theme_Button.PreviewTouchDown += new EventHandler<TouchEventArgs>(Theme_Button_TouchDown);
+            Theme_Button.PreviewTouchDown += new EventHandler<TouchEventArgs>(ThemeChooser.Theme_Button_TouchDown);
 
             SessionSVI.CanMove = false;
             SessionSVI.CanRotate = false;
@@ -220,7 +230,7 @@ namespace PopnTouchi2.ViewModel
             Grid.Children.Add(Notes);
             Grid.Children.Add(NbgVM.Grid);
             Grid.Children.Add(MbgVM.Grid);
-            Grid.Children.Add(Play);
+            Grid.Children.Add(Play_Button);
             Grid.Children.Add(Theme_Button);
             Grid.Children.Add(UpdateSound.Grid1);
             Grid.Children.Add(UpdateSound.Grid2);
@@ -277,8 +287,14 @@ namespace PopnTouchi2.ViewModel
             MbgVM.Grid.Height = width * 0.07948;
 
             //Size of SurfaceButton Play
+<<<<<<< HEAD
             Play.Width = width / 11.0;
             Play.Height = height / 7.0;
+=======
+            Play_Button.Width = width / 11;
+            Play_Button.Height = height / 7;
+
+>>>>>>> aceltis
    
             UpdateSound.Grid1.Width = width / 10;
             UpdateSound.Grid2.Width = width / 10;
@@ -295,7 +311,7 @@ namespace PopnTouchi2.ViewModel
             SessionSVI.Center = new Point(width / 2.0, height / 2.0);
         }
 
-        private void displayTrees(Thickness up, Thickness down)
+        public void displayTrees(Thickness up, Thickness down)
         {
             TreeUp = new TreeViewModel(true, up, session, session.Theme);
             Grid.Children.Add(TreeUp.Grid);
@@ -307,15 +323,7 @@ namespace PopnTouchi2.ViewModel
             Grid.SetZIndex(TreeDown.Grid, 3);
         }
 
-        private void Theme_Button_TouchDown(object sender, RoutedEventArgs e)
-        {
-            Grid g = new Grid();
-            g.Background = new SolidColorBrush(Colors.Black);
-            g.Opacity = 0.3;
-            g.Visibility = Visibility.Visible;
-        }
-
-        private void Play_TouchDown(object sender, RoutedEventArgs e)
+        private void Play_Button_TouchDown(object sender, RoutedEventArgs e)
         {
             if (!IsPlaying)
             {
@@ -323,7 +331,7 @@ namespace PopnTouchi2.ViewModel
 
                 session.StaveTop.PlayAllNotes();
                 session.StaveBottom.PlayAllNotes();
-                Play.Opacity = 0.5;
+                Play_Button.Opacity = 0.5;
                 IsPlaying = true;
             }
             else
@@ -332,7 +340,7 @@ namespace PopnTouchi2.ViewModel
 
                 session.StaveTop.StopMusic();
                 session.StaveBottom.StopMusic();
-                Play.Opacity = 1;
+                Play_Button.Opacity = 1;
                 IsPlaying = false;
             }
         }
