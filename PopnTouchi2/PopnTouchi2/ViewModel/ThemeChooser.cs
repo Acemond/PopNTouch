@@ -263,6 +263,47 @@ namespace PopnTouchi2.ViewModel
                 sessionVM.Grid.Children.Remove(Themes);
                 return;
             }
+            sessionVM.Session.StopBackgroundSound();
+            sessionVM.Session.Theme = new Theme3();
+            sessionVM.Session.ThemeID = 3;
+            sessionVM.ThemeVM = new ThemeViewModel(sessionVM.Session.Theme, sessionVM);
+            sessionVM.Grid.Background = sessionVM.ThemeVM.BackgroundImage;
+
+            sessionVM.Grid.Children.Remove(sessionVM.NbgVM.Grid);
+            sessionVM.Grid.Children.Remove(sessionVM.MbgVM.Grid);
+            sessionVM.Grid.Children.Remove(sessionVM.Bubbles);
+            sessionVM.Grid.Children.Remove(sessionVM.UpdateSound.Grid1);
+            sessionVM.Grid.Children.Remove(sessionVM.UpdateSound.Grid2);
+            sessionVM.Grid.Children.Remove(sessionVM.Play_Button);
+            sessionVM.Grid.Children.Remove(sessionVM.Theme_Button);
+            sessionVM.Grid.Children.Remove(sessionVM.TreeUp.Grid);
+            sessionVM.Grid.Children.Remove(sessionVM.TreeDown.Grid);
+
+
+            sessionVM.NbgVM = new NoteBubbleGeneratorViewModel(sessionVM.Session.NoteBubbleGenerator, sessionVM);
+            sessionVM.MbgVM = new MelodyBubbleGeneratorViewModel(sessionVM.Session.MelodyBubbleGenerator, sessionVM);
+            sessionVM.Bubbles = new ScatterView();
+            sessionVM.UpdateSound = new ChangeSoundViewModel(sessionVM);
+            sessionVM.Play_Button.Background = sessionVM.ThemeVM.PlayImage;
+            sessionVM.Theme_Button.Background = sessionVM.ThemeVM.ThemesImage;
+            sessionVM.Session.StaveTop.CurrentInstrument = sessionVM.Session.Theme.InstrumentsTop[0];
+            sessionVM.Session.StaveBottom.CurrentInstrument = sessionVM.Session.Theme.InstrumentsBottom[0];
+            sessionVM.displayTrees(new Thickness(20, 0, 0, 130), new Thickness(20, 0, 0, 580));
+
+            sessionVM.SetDimensions(sessionVM.SessionSVI.Width, sessionVM.SessionSVI.Height);
+            sessionVM.Session.PlayBackgroundSound();
+
+
+            sessionVM.Grid.Children.Add(sessionVM.NbgVM.Grid);
+            sessionVM.Grid.Children.Add(sessionVM.MbgVM.Grid);
+            sessionVM.Grid.Children.Add(sessionVM.Bubbles);
+            sessionVM.Grid.Children.Add(sessionVM.UpdateSound.Grid1);
+            sessionVM.Grid.Children.Add(sessionVM.UpdateSound.Grid2);
+            sessionVM.Grid.Children.Add(sessionVM.Play_Button);
+            sessionVM.Grid.Children.Add(sessionVM.Theme_Button);
+
+            sessionVM.Grid.Children.Remove(Grid);
+            sessionVM.Grid.Children.Remove(Themes);
         }
     }
 }
