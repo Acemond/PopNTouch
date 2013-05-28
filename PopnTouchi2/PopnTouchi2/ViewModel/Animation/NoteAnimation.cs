@@ -99,7 +99,6 @@ namespace PopnTouchi2.ViewModel.Animation
                     NoteCenter.Y = Math.Floor((NoteCenter.Y + 6.0) / 20.0) * 20.0 + 4.0;
 
                     noteVM.Note = new Note(converter.getOctave(NoteCenter.Y), noteVM.Note.Duration, converter.getPitch(NoteCenter.Y), positionNote, noteVM.Note.Sharp, noteVM.Note.Flat);
-                    MessageBox.Show(positionNote.ToString());
                     sessionVM.Session.StaveTop.AddNote(noteVM.Note, positionNote);
                 }
                 else

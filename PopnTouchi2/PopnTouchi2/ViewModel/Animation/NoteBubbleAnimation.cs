@@ -251,13 +251,11 @@ namespace PopnTouchi2.ViewModel.Animation
                         if (bubbleCenter.Y < betweenStave)
                         {
                             sessionVM.Session.StaveTop.CurrentInstrument.PlayNote(noteVM.Note);
-                            MessageBox.Show(positionNote.ToString());
                             sessionVM.Session.StaveTop.AddNote(noteVM.Note, positionNote);
                         }
                         else
                         {
                             sessionVM.Session.StaveBottom.CurrentInstrument.PlayNote(noteVM.Note);
-                            MessageBox.Show(positionNote.ToString());
                             sessionVM.Session.StaveBottom.AddNote(noteVM.Note, positionNote);
                                 
                         }

@@ -57,7 +57,6 @@ namespace PopnTouchi2
             Cue cue = AudioController.INSTANCE.SoundBank.GetCue("silence");
             try
             {
-                MessageBox.Show(Name.ToString() + "_" + note.GetCue());
                 cue = AudioController.INSTANCE.SoundBank.GetCue(Name.ToString() + "_" + note.GetCue());
             }
             catch (Exception e)
