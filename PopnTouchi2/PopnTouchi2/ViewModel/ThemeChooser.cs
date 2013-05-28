@@ -272,8 +272,7 @@ namespace PopnTouchi2.ViewModel
             sessionVM.Grid.Children.Remove(sessionVM.NbgVM.Grid);
             sessionVM.Grid.Children.Remove(sessionVM.MbgVM.Grid);
             sessionVM.Grid.Children.Remove(sessionVM.Bubbles);
-            sessionVM.Grid.Children.Remove(sessionVM.UpdateSound.Grid1);
-            sessionVM.Grid.Children.Remove(sessionVM.UpdateSound.Grid2);
+            sessionVM.Grid.Children.Remove(sessionVM.UpdateSound.Grid);
             sessionVM.Grid.Children.Remove(sessionVM.Play_Button);
             sessionVM.Grid.Children.Remove(sessionVM.Theme_Button);
             sessionVM.Grid.Children.Remove(sessionVM.TreeUp.Grid);
@@ -297,8 +296,7 @@ namespace PopnTouchi2.ViewModel
             sessionVM.Grid.Children.Add(sessionVM.NbgVM.Grid);
             sessionVM.Grid.Children.Add(sessionVM.MbgVM.Grid);
             sessionVM.Grid.Children.Add(sessionVM.Bubbles);
-            sessionVM.Grid.Children.Add(sessionVM.UpdateSound.Grid1);
-            sessionVM.Grid.Children.Add(sessionVM.UpdateSound.Grid2);
+            sessionVM.Grid.Children.Add(sessionVM.UpdateSound.Grid);
             sessionVM.Grid.Children.Add(sessionVM.Play_Button);
             sessionVM.Grid.Children.Add(sessionVM.Theme_Button);
 
