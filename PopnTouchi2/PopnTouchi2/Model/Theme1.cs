@@ -26,6 +26,12 @@ namespace PopnTouchi2
             refreshSound();
         }
 
+        /// <summary>
+        /// refreshSound()
+        /// Used to activated the sound 
+        /// of the background after the 
+        /// Stop button
+        /// </summary>
         public override void refreshSound()
         {
             try

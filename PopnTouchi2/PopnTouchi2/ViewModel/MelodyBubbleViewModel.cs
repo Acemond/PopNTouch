@@ -108,6 +108,13 @@ namespace PopnTouchi2.ViewModel
             Animation = new MelodyBubbleAnimation(this, SessionVM);
         }
 
+        /// <summary>
+        /// Transforms the MelodyBubble into a list of 
+        /// NoteViewModel objects
+        /// Used to put them on the staves
+        /// </summary>
+        /// <param name="positionMelody">The point where the user released his finger</param>
+        /// <returns>The list of NoteViewModel</returns>
         public List<NoteViewModel> melodyToListOfNote(Point positionMelody)
         {
             int initPos = melodyBubble.Melody.Notes[0].Position;

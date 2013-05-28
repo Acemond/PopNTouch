@@ -12,6 +12,9 @@ using System.Windows.Input;
 
 namespace PopnTouchi2.ViewModel
 {
+    /// <summary>
+    /// Object of the view used to change the sound of the notes
+    /// </summary>
     public class ChangeSoundViewModel
     {
         /// <summary>
@@ -84,6 +87,14 @@ namespace PopnTouchi2.ViewModel
             }
         }
 
+        /// <summary>
+        /// createButtonForImage(String path, HorizontalAlignment h)
+        /// Create a grid used as a button
+        /// With the image from path
+        /// </summary>
+        /// <param name="path">The path of the image</param>
+        /// <param name="h">The position of the button</param>
+        /// <returns>The Grid used as a button</returns>
         public Grid createButtonForImage(String path, HorizontalAlignment h)
         {
             Grid g = new Grid();
@@ -106,6 +117,12 @@ namespace PopnTouchi2.ViewModel
 
         }
 
+        /// <summary>
+        /// getImageBrush(String path)
+        /// Returns the ImageBrush from the path given
+        /// </summary>
+        /// <param name="path">The path (name) of the image</param>
+        /// <returns>The ImageBrush</returns>
         public ImageBrush getImageBrush(String path)
         {
             ImageBrush img = new ImageBrush();
@@ -113,6 +130,13 @@ namespace PopnTouchi2.ViewModel
             return img;
         }
 
+        /// <summary>
+        /// Event TouchDown 
+        /// Used when a Grid is touched
+        /// Change the sound of notes
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void TouchDown(object sender, TouchEventArgs e)
         {
             Grid button = new Grid();

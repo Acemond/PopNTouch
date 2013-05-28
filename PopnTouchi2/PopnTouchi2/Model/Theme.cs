@@ -42,6 +42,12 @@ namespace PopnTouchi2
             InstrumentsBottom = new Instrument[2];
         }
 
+        /// <summary>
+        /// refreshSound()
+        /// Used to activated the sound 
+        /// of the background after the 
+        /// Stop button
+        /// </summary>
         public abstract void refreshSound();
         
     }

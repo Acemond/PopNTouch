@@ -45,10 +45,15 @@ namespace PopnTouchi2.ViewModel
         /// </summary>
         public NoteAnimation Animation { get; set; }
 
+        
         /// <summary>
-        /// NoteViewModel Constructor.
-        /// TODO
+        /// Constructor
+        /// Create un NoteViewModel
         /// </summary>
+        /// <param name="center">The center point of the ScatterViewItem </param>
+        /// <param name="n">The note in the NoteViewModel</param>
+        /// <param name="sv">The ScatterView Parent (here, SessionVM.Notes)</param>
+        /// <param name="s">The current SessionViewModel</param>
         public NoteViewModel(Point center, Note n, ScatterView sv, SessionViewModel s)
             : base(s)
         {

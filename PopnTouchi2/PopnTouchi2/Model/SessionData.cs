@@ -8,6 +8,9 @@ using PopnTouchi2.ViewModel;
 
 namespace PopnTouchi2.Model
 {
+    /// <summary>
+    /// Save the data of the session
+    /// </summary>
     [Serializable]
     public class SessionData
     {

@@ -143,7 +143,10 @@ namespace PopnTouchi2.ViewModel.Animation
             DispatcherTimer.Start();
         }
         /// <summary>
-        /// TODO Description détaillée de ce que fait cette méthode
+        /// Event occured when a Bubble is released
+        /// Magnetise the current bubble
+        /// Add the note in the right stave
+        /// Move the bubble to its final place
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>

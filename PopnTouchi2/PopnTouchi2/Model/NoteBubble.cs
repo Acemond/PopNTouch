@@ -38,7 +38,7 @@ namespace PopnTouchi2
         /// NoteBubble Constructor.
         /// Creates a new NoteBubble object and its Note.
         /// </summary>
-        /// <param name="Note">The note</param>
+        /// <param name="note">The note</param>
         public NoteBubble(Note note)
         {
             Note = note;

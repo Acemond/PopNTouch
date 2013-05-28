@@ -19,7 +19,6 @@ namespace PopnTouchi2
         /// <summary>
         /// MelodyFactory Constructor.
         /// Defines and creates all known melodies.
-        /// TODO Add DataBase from Cedrick Alexandre
         /// </summary>
         public MelodyFactory()
         {
@@ -71,7 +70,6 @@ namespace PopnTouchi2
 
         /// <summary>
         /// Randomly returns a melody known in the Dictionary.
-        /// TODO Faire un algo qui détermine quelle mélodie extraire du générateur
         /// </summary>
         /// <returns>The random melody</returns>
         public Melody GetMelody()

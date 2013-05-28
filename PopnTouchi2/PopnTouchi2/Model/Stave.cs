@@ -84,8 +84,8 @@ namespace PopnTouchi2
         /// Stave Constructor.
         /// Initializes a new empty list of Notes, a Timer, the MaxPosition to 0 and the instrument
         /// </summary>
-        /// <param name="up">True if the current instance is the upper stave</param>
         /// <param name="instru">The instrument to be used</param>
+        /// <param name="theme">The theme</param>
         public Stave(Instrument instru, Theme theme)
         {
             this.theme = theme;
@@ -203,7 +203,7 @@ namespace PopnTouchi2
 
         /// <summary>
         /// Event triggered when the play button is touched.
-        /// TODO Plus de détails
+        /// Play all the notes on the current stave
         /// </summary>
         /// <param name="source"></param>
         /// <param name="e"></param>

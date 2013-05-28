@@ -245,7 +245,7 @@ namespace PopnTouchi2.ViewModel.Animation
         }
 
         /// <summary>
-        /// TODO
+        /// Event occured when the reducing storyboard is completed
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>

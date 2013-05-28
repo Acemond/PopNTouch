@@ -24,6 +24,12 @@ namespace PopnTouchi2
             sound = AudioController.INSTANCE.SoundBank.GetCue("loop_superbirds");
         }
 
+        /// <summary>
+        /// refreshSound()
+        /// Used to activated the sound 
+        /// of the background after the 
+        /// Stop button
+        /// </summary>
         public override void refreshSound()
         {
             sound = AudioController.INSTANCE.SoundBank.GetCue("loop_eveningWater");

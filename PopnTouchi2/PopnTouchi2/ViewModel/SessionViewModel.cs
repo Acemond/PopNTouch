@@ -58,7 +58,8 @@ namespace PopnTouchi2.ViewModel
         public ScatterView Notes { get; set; }
 
         /// <summary>
-        /// TODO
+        /// List of NoteViewModel
+        /// Contains all the NoteViewModel's on the screen
         /// </summary>
         public List<NoteViewModel> NotesOnStave { get; set; }
 
@@ -239,6 +240,13 @@ namespace PopnTouchi2.ViewModel
             SessionSVI.Content = Grid;
         }
 
+        /// <summary>
+        /// TODO
+        /// </summary>
+        /// <param name="width"></param>
+        /// <param name="height"></param>
+        /// <param name="s"></param>
+        /// <param name="IDs"></param>
         public SessionViewModel(Double width, Double height, Session s, List<int> IDs)
             : this(s)
         {
@@ -253,6 +261,14 @@ namespace PopnTouchi2.ViewModel
             Reducer.Click += new RoutedEventHandler(Animation.Reducer_Click);
         }
 
+        /// <summary>
+        /// TODO
+        /// </summary>
+        /// <param name="left"></param>
+        /// <param name="width"></param>
+        /// <param name="height"></param>
+        /// <param name="s"></param>
+        /// <param name="IDs"></param>
         public SessionViewModel(Boolean left, Double width, Double height, Session s, List<int> IDs)
             : this(width * 0.5625, height * 0.5625, s, IDs)
         {
@@ -270,6 +286,11 @@ namespace PopnTouchi2.ViewModel
             }
         }
         
+        /// <summary>
+        /// TODO
+        /// </summary>
+        /// <param name="width"></param>
+        /// <param name="height"></param>
         public void SetDimensions(Double width, Double height)
         {
             NbgVM.Grid.Width = width / 8.0;
@@ -342,7 +363,7 @@ namespace PopnTouchi2.ViewModel
         /// <summary>
         /// Saves current session into binary file
         /// </summary>
-        /// <param name="newBpm">Path of the savefile</param>
+        /// <param name="path">Path of the savefile</param>
         public void SaveSession(string path)
         {
             Stream stream = File.Open(path, FileMode.Create);
@@ -356,7 +377,7 @@ namespace PopnTouchi2.ViewModel
         /// <summary>
         /// Loads a session from a binary file
         /// </summary>
-        /// <param name="newBpm">Path of the savefile</param>
+        /// <param name="path">Path of the savefile</param>
         public void LoadSession(string path)
         {
             BinaryFormatter formatter = new BinaryFormatter();

@@ -7,10 +7,21 @@ using System.Windows;
 
 namespace PopnTouchi2.ViewModel
 {
+    /// <summary>
+    /// Class used to convert Positions to Pitch and vice versa
+    /// </summary>
     public class Converter
     {
+        /// <summary>
+        /// Dictionary(double,String)
+        /// A link between positions and pitches
+        /// </summary>
         public Dictionary<double, String> PositionToPitch { get; set; }
 
+        /// <summary>
+        /// Constructor.
+        /// Create the dictionary
+        /// </summary>
         public Converter()
         {
             PositionToPitch = new Dictionary<double, String>();
@@ -39,6 +50,14 @@ namespace PopnTouchi2.ViewModel
             PositionToPitch.Add(575, "bottom_re_1");
         }
 
+        /// <summary>
+        /// getCenterY(bool up, Note note)
+        /// Return the positionY of a note 
+        /// which is on the staveTop or the staveBottom
+        /// </summary>
+        /// <param name="up">up = staveTop , !up = staveBottom</param>
+        /// <param name="note">The note</param>
+        /// <returns>The positionY of the note</returns>
         public double getCenterY (bool up, Note note)
         {
             String Pitch = "";
@@ -57,6 +76,13 @@ namespace PopnTouchi2.ViewModel
 
         }
 
+        /// <summary>
+        /// getStave(double positionY)
+        /// Return the "top" or "bottom" 
+        /// with the dictionary
+        /// </summary>
+        /// <param name="positionY">The positionY of the object</param>
+        /// <returns>The stave "top" or "bottom"</returns>
         public String getStave(double positionY)
         {
             String res = PositionToPitch[positionY];
@@ -64,6 +90,13 @@ namespace PopnTouchi2.ViewModel
             return split[0];
         }
 
+        /// <summary>
+        /// getPitch(double positionY)
+        /// Returns the Pitch corresponding 
+        /// with the dictionary
+        /// </summary>
+        /// <param name="positionY">The positionY</param>
+        /// <returns>The pitch of the note , "do", "re",...</returns>
         public String getPitch(double positionY)
         {
             String res = PositionToPitch[positionY];
@@ -71,6 +104,13 @@ namespace PopnTouchi2.ViewModel
             return split[1];
         }
 
+        /// <summary>
+        /// getOctave(double positionY)
+        /// Returns the Octave corresponding 
+        /// with the dictionary
+        /// </summary>
+        /// <param name="positionY">The PositionY</param>
+        /// <returns>Return the Octave : {1,2}</returns>
         public int getOctave(double positionY)
         {
             String res = PositionToPitch[positionY];

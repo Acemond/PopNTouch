@@ -7,6 +7,9 @@ using System.Windows.Controls;
 
 namespace PopnTouchi2.ViewModel
 {
+    /// <summary>
+    /// Create a Screenshot when the reducing is starting
+    /// </summary>
     public static class Screenshot
     {
         /// <summary>
