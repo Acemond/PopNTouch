@@ -64,8 +64,6 @@ namespace PopnTouchi2.ViewModel
             this.Up = !up;
             session = s;
             Grid = new Grid();
-            Grid.Width = 200;
-            Grid.Height = 200;
             Grid.HorizontalAlignment = System.Windows.HorizontalAlignment.Left;
             Grid.Margin = t;
 
@@ -82,12 +80,21 @@ namespace PopnTouchi2.ViewModel
 
 
             Images = new List<Grid>();
-            Images.Add(createGridForImage(Instrument1.Name.ToString(), 80, 80, HorizontalAlignment.Left, VerticalAlignment.Center));
-            Images.Add(createGridForImage(Instrument1.Name.ToString(), 80, 80, HorizontalAlignment.Right, VerticalAlignment.Top));
-            Images.Add(createGridForImage(Instrument2.Name.ToString(), 80, 80, HorizontalAlignment.Right, VerticalAlignment.Bottom));
-            Images.Add(createGridForLinks("root", 50, 50, new Thickness(0, 0, 100, 0)));
-            Images.Add(createGridForLinks("lower_branch", 80, 80, new Thickness(50, 80, 50, 0)));
-            Images.Add(createGridForLinks("upper_branch", 80, 80, new Thickness(50, 0, 50, 80)));
+            Images.Add(createGridForImage(Instrument1.Name.ToString(), 80, 80, HorizontalAlignment.Left, VerticalAlignment.Center, session.OnePlayer));
+            Images.Add(createGridForImage(Instrument1.Name.ToString(), 80, 80, HorizontalAlignment.Right, VerticalAlignment.Top, session.OnePlayer));
+            Images.Add(createGridForImage(Instrument2.Name.ToString(), 80, 80, HorizontalAlignment.Right, VerticalAlignment.Bottom, session.OnePlayer));
+            if (session.OnePlayer)
+            {
+                Images.Add(createGridForLinks("root", 50, 50, new Thickness(0, 0, 100, 0)));
+                Images.Add(createGridForLinks("lower_branch", 80, 80, new Thickness(50, 80, 50, 0)));
+                Images.Add(createGridForLinks("upper_branch", 80, 80, new Thickness(50, 0, 50, 80)));
+            }
+            else
+            {
+                Images.Add(createGridForLinks("root", 35, 35, new Thickness(0, 0, 100, 0)));
+                Images.Add(createGridForLinks("lower_branch", 45, 45, new Thickness(50, 80, 50, 0)));
+                Images.Add(createGridForLinks("upper_branch", 45, 45, new Thickness(50, 0, 50, 80)));
+            }
 
             Images[0].Visibility = Visibility.Visible;
 
@@ -109,12 +116,18 @@ namespace PopnTouchi2.ViewModel
             return img;
         }
 
-        public Grid createGridForImage(String path, int height, int width, HorizontalAlignment h, VerticalAlignment v)
+        public Grid createGridForImage(String path, int height, int width, HorizontalAlignment h, VerticalAlignment v, Boolean onePlayer)
         {
             Grid g = new Grid();
             g.Background = getImageBrush(path);
             g.Height = height;
             g.Width = width;
+            if (!onePlayer)
+            {
+                g.Height /= 1.5;
+                g.Width /= 1.5;
+
+            }
             g.HorizontalAlignment = h;
             g.VerticalAlignment = v;
             g.Visibility = Visibility.Hidden;

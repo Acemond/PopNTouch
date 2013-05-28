@@ -51,6 +51,7 @@ namespace PopnTouchi2
         /// The Theme number.
         /// </summary>
         public int ThemeID { get; set; }
+        
         #endregion
 
         #region Constructors
@@ -66,8 +67,8 @@ namespace PopnTouchi2
             NoteBubbleGenerator = new NoteBubbleGenerator();
             MelodyBubbleGenerator = new MelodyBubbleGenerator();
 
-            StaveTop = new Stave(true, Theme.InstrumentsTop[0], Theme);
-            StaveBottom = new Stave(false, Theme.InstrumentsBottom[0], Theme);
+            StaveTop = new Stave(Theme.InstrumentsTop[0], Theme);
+            StaveBottom = new Stave(Theme.InstrumentsBottom[0], Theme);
             
             //sound methods
             Theme.sound.Play();

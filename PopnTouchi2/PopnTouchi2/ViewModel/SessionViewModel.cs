@@ -168,8 +168,10 @@ namespace PopnTouchi2.ViewModel
             
             Grid.Background = (new ThemeViewModel(Session.Theme, this)).BackgroundImage;
                  
-            //TODO changer thickness bottom et top avec les résolutions plus grandes
+            //TODO mettre dans SetDimensions
+            if(session.OnePlayer)
             displayTrees(new Thickness(10, 50, 200, 90), new Thickness(10,10,200,400));
+            else displayTrees(new Thickness(10, 75, 200, 90), new Thickness(10, 30, 200, 200));
 
             Reducer = new SurfaceButton();
             Reduced = false;
@@ -181,8 +183,8 @@ namespace PopnTouchi2.ViewModel
             Reducer.Content = "Reduce !";
             
             Play = new SurfaceButton();
-            Play.Width = 140;
-            Play.Height = 150;
+           // Play.Width = 140;
+           // Play.Height = 150;
             Play.HorizontalAlignment = System.Windows.HorizontalAlignment.Left;
             Play.VerticalAlignment = System.Windows.VerticalAlignment.Top;
             ImageBrush img = new ImageBrush();
@@ -256,6 +258,28 @@ namespace PopnTouchi2.ViewModel
             MbgVM.Grid.Width = width / 8.0;
             MbgVM.Grid.Height = width * 0.07948;
 
+            //Size of SurfaceButton Play
+            Play.Width = width / 11.0;
+            Play.Height = height / 7.0;
+
+            if (session.OnePlayer)
+            {
+                UpdateSound.Grid1.Width = width / 8.5;
+                UpdateSound.Grid2.Width = width / 8.5;
+            }
+            else
+            {
+                UpdateSound.Grid1.Width = width / 6;
+                UpdateSound.Grid2.Width = width / 6;
+            }
+            UpdateSound.Grid1.Height = height / 11;
+            UpdateSound.Grid2.Height = height / 11;
+
+            TreeUp.Grid.Width = width / 7;
+            TreeUp.Grid.Height = width / 5;
+            TreeDown.Grid.Width = width / 7;
+            TreeDown.Grid.Height = width / 5;
+
             SessionSVI.Width = width;
             SessionSVI.Height = height;
             SessionSVI.Center = new Point(width / 2.0, height / 2.0);
@@ -321,6 +345,9 @@ namespace PopnTouchi2.ViewModel
             SessionData sd = (SessionData)formatter.Deserialize(stream);
             stream.Close();
 
+            Session = new Session(false);
+            Session.ThemeID = sd.ThemeID;
+
             switch (Session.ThemeID)
             {
                 case 2: Session.Theme = new Theme2(); break;
@@ -328,15 +355,57 @@ namespace PopnTouchi2.ViewModel
                 case 4: Session.Theme = new Theme4(); break;
                 default: Session.Theme = new Theme1(); break;
             }
+            Converter conv = new Converter();
+            Session.StaveTop = new Stave(Session.Theme.InstrumentsTop[0], Session.Theme);
+            Session.StaveBottom = new Stave(Session.Theme.InstrumentsBottom[0], Session.Theme);
+            double XCenter;
+            foreach (Note note in sd.StaveTopNotes)
+            {
+                XCenter = note.Position * 60.0 + 120.0;
+                NoteViewModel noteVM = new NoteViewModel(new Point(XCenter, conv.getCenterY(true, note, XCenter)), note, Notes, this);
+                Session.StaveTop.AddNote(note, note.Position);
+                Notes.Items.Add(noteVM.SVItem);
+                NotesOnStave.Add(noteVM);
+            }
 
-            Session.StaveTop = new Stave(true, Session.Theme.InstrumentsTop[0], Session.Theme);
-            Session.StaveBottom = new Stave(false, Session.Theme.InstrumentsBottom[0], Session.Theme);
-            Session.StaveTop.Notes = sd.StaveTopNotes;
-            Session.StaveBottom.Notes = sd.StaveBottomNotes;
-            //Notes = sd.NotesSV;
+            foreach (Note note in sd.StaveBottomNotes)
+            {
+                XCenter = note.Position * 60.0 + 120.0;
+                NoteViewModel noteVM = new NoteViewModel(new Point(XCenter, conv.getCenterY(false, note, XCenter)), note, Notes, this);
+                Session.StaveBottom.AddNote(note, note.Position);
+                Notes.Items.Add(noteVM.SVItem);
+                NotesOnStave.Add(noteVM);
+            }
             Session.ThemeID = sd.ThemeID;
+
+            SessionVM.Grid.Background = (new ThemeViewModel(SessionVM.Session.Theme, SessionVM)).BackgroundImage;
+
+            SessionVM.Grid.Children.Add(SessionVM.Bubbles);
+            SessionVM.Grid.Children.Add(SessionVM.Notes);
+            SessionVM.Grid.Children.Add(SessionVM.Reducer);
+            SessionVM.Grid.Children.Add(SessionVM.Play);
+            SessionVM.Grid.Children.Add(SessionVM.UpdateSound.Grid1);
+            SessionVM.Grid.Children.Add(SessionVM.UpdateSound.Grid2);
+            SessionVM.Grid.Children.Add(SessionVM.TreeUp.Grid);
+            SessionVM.Grid.Children.Add(SessionVM.TreeDown.Grid);
+            SessionVM.NbgVM = new NoteBubbleGeneratorViewModel(SessionVM.Session.NoteBubbleGenerator, SessionVM);
+            SessionVM.MbgVM = new MelodyBubbleGeneratorViewModel(SessionVM.Session.MelodyBubbleGenerator, SessionVM);
+
+            SessionVM.Grid.Children.Add(SessionVM.NbgVM.Grid);
+            SessionVM.Grid.Children.Add(SessionVM.MbgVM.Grid);
+
+            SessionVM.SetDimensions(SessionVM.Grid.ActualWidth, SessionVM.Grid.ActualHeight);
         }
 
-
+        public void EraseSession()
+        {
+            Bubbles = null;
+            MbgVM = null;
+            NbgVM = null;
+            Notes = null;
+            NotesOnStave = null;
+            Session = null;
+            Animation = null;
+        }
     }
 }

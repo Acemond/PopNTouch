@@ -37,15 +37,6 @@ namespace PopnTouchi2.ViewModel
         public StaveViewModel(Stave stave, SessionViewModel s) : base(s)
         {
             this.stave = stave;
-            if (stave.isUp)
-            {
-                //TODO Image =
-            }
-            else
-            {
-                //TODO Image =
-            }
-
             Animation = new StaveAnimation(stave);
         }
 

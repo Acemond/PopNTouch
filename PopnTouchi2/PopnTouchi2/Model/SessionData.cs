@@ -16,13 +16,13 @@ namespace PopnTouchi2.Model
         /// Property.
         /// Session's upper Stave instance.
         /// </summary>
-        public ObservableCollection<Note> StaveTopNotes { get; set; }
+        public List<Note> StaveTopNotes { get; set; }
 
         /// <summary>
         /// Property.
         /// Session's lower Stave instance.
         /// </summary>
-        public ObservableCollection<Note> StaveBottomNotes { get; set; }
+        public List<Note> StaveBottomNotes { get; set; }
 
         /// <summary>
         /// Property.
@@ -39,9 +39,14 @@ namespace PopnTouchi2.Model
 
         public SessionData(SessionViewModel sessionVM)
         {
-            StaveTopNotes = sessionVM.Session.StaveTop.Notes;
-            StaveBottomNotes = sessionVM.Session.StaveBottom.Notes;
-            //NotesSV = sessionVM.Notes;
+            StaveTopNotes = new List<Note>();
+            StaveBottomNotes = new List<Note>();
+
+            foreach (Note note in sessionVM.Session.StaveTop.Notes)
+                StaveTopNotes.Add(note);
+            foreach (Note note in sessionVM.Session.StaveBottom.Notes)
+                StaveBottomNotes.Add(note);
+
             ThemeID = sessionVM.Session.ThemeID;
         }
     }

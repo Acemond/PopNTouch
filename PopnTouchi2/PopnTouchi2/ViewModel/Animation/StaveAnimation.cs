@@ -24,14 +24,7 @@ namespace PopnTouchi2.ViewModel.Animation
         public StaveAnimation(Stave s) 
             : base()
         {
-            if (s.isUp)
-            {
-                //Image =
-            }
-            else
-            {
-                //Image =
-            }
+           
         }
 
         /// <summary>

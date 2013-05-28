@@ -11,9 +11,6 @@ namespace PopnTouchi2.Model.Enums
     public class GlobalVariables
     {
         public static int bpm = 90;
-        public static int position_NoteUp = 0;
-        public static int position_NoteDown = 0;
-        public static int position_Melody = 0;
         public static int idNoteBubble = 0;
         public static int idMelodyBubble = 0;
         public static int StaveTopFirstDo = 335;

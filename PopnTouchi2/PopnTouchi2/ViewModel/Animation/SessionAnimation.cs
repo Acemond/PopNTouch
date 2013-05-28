@@ -108,6 +108,7 @@ namespace PopnTouchi2.ViewModel.Animation
 
             MainDesktop = (DesktopView)((ScatterView)(SessionVM.SessionSVI.Parent)).Parent;
 
+            stopAllBubblesAnimations();
             SessionVM.SaveSession("test.bin");
             SessionVM.Session.StopBackgroundSound();
 
@@ -137,8 +138,6 @@ namespace PopnTouchi2.ViewModel.Animation
             ReplaceGridWithSnapShot(ss);
             #endregion
 
-            SessionVM.Session.StopBackgroundSound();
-            stopAllBubblesAnimations();
         }
 
         private void ReplaceGridWithSnapShot(ImageBrush ss)
@@ -148,6 +147,7 @@ namespace PopnTouchi2.ViewModel.Animation
             SessionVM.Grid.Children.Remove(SessionVM.MbgVM.Grid);
             SessionVM.Grid.Children.Remove(SessionVM.TreeUp.Grid);
             SessionVM.Grid.Children.Remove(SessionVM.TreeDown.Grid);
+            SessionVM.EraseSession();
 
             System.Windows.Shapes.Rectangle rect = new System.Windows.Shapes.Rectangle();
             rect.Fill = Brushes.White;
@@ -414,29 +414,6 @@ namespace PopnTouchi2.ViewModel.Animation
                 }
             }
         }
-
-        private void MakeReadyForDisplay()
-        {
-            Fs.Close();
-
-            SessionVM.Grid.Background = (new ThemeViewModel(SessionVM.Session.Theme, SessionVM)).BackgroundImage;
-            
-            SessionVM.Grid.Children.Add(SessionVM.Bubbles);
-            SessionVM.Grid.Children.Add(SessionVM.Notes);
-            SessionVM.Grid.Children.Add(SessionVM.Reducer);
-            SessionVM.Grid.Children.Add(SessionVM.Play);
-            SessionVM.Grid.Children.Add(SessionVM.UpdateSound.Grid1);
-            SessionVM.Grid.Children.Add(SessionVM.UpdateSound.Grid2);
-            SessionVM.Grid.Children.Add(SessionVM.TreeUp.Grid);
-            SessionVM.Grid.Children.Add(SessionVM.TreeDown.Grid);
-            SessionVM.NbgVM = new NoteBubbleGeneratorViewModel(SessionVM.Session.NoteBubbleGenerator, SessionVM);
-            SessionVM.MbgVM = new MelodyBubbleGeneratorViewModel(SessionVM.Session.MelodyBubbleGenerator, SessionVM);
-
-            SessionVM.Grid.Children.Add(SessionVM.NbgVM.Grid);
-            SessionVM.Grid.Children.Add(SessionVM.MbgVM.Grid);
-
-            SessionVM.SetDimensions(SessionVM.Grid.ActualWidth, SessionVM.Grid.ActualHeight);
-        }
         
         private void EnlargeForSide(Boolean left)
         {
@@ -599,9 +576,9 @@ namespace PopnTouchi2.ViewModel.Animation
             MainDesktop = (DesktopView)((ScatterView)SessionVM.SessionSVI.Parent).Parent;
 
             SessionVM.LoadSession("test.bin");
+            Fs.Close();
             SessionVM.Session.PlayBackgroundSound();
 
-            MakeReadyForDisplay();
             RemoveWhiteBorder();
         }
 
