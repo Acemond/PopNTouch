@@ -170,9 +170,7 @@ namespace PopnTouchi2.ViewModel
             Grid.Background = (new ThemeViewModel(Session.Theme, this)).BackgroundImage;
                  
             //TODO mettre dans SetDimensions
-            if(session.OnePlayer)
             displayTrees(new Thickness(10, 50, 200, 90), new Thickness(10,10,200,400));
-            else displayTrees(new Thickness(10, 75, 200, 90), new Thickness(10, 30, 200, 200));
 
             Reducer = new SurfaceButton();
             Reduced = false;
@@ -337,7 +335,7 @@ namespace PopnTouchi2.ViewModel
             SessionData sd = (SessionData)formatter.Deserialize(stream);
             stream.Close();
 
-            Session = new Session(false);
+            Session = new Session();
             Session.ThemeID = sd.ThemeID;
 
             switch (Session.ThemeID)
@@ -350,6 +348,31 @@ namespace PopnTouchi2.ViewModel
             Converter conv = new Converter();
             Session.StaveTop = new Stave(Session.Theme.InstrumentsTop[0], Session.Theme);
             Session.StaveBottom = new Stave(Session.Theme.InstrumentsBottom[0], Session.Theme);
+            Session.ThemeID = sd.ThemeID;
+
+            Grid.Background = (new ThemeViewModel(Session.Theme, this)).BackgroundImage;
+
+            Bubbles = new ScatterView();
+            Notes = new ScatterView();
+            UpdateSound = new ChangeSoundViewModel(Session);
+            NotesOnStave = new List<NoteViewModel>();
+
+            Grid.Children.Add(Bubbles);
+            Grid.Children.Add(Notes);
+            Grid.Children.Add(Reducer);
+            Grid.Children.Add(Play);
+            Grid.Children.Add(UpdateSound.Grid1);
+            Grid.Children.Add(UpdateSound.Grid2);
+            Grid.Children.Add(TreeUp.Grid);
+            Grid.Children.Add(TreeDown.Grid);
+            NbgVM = new NoteBubbleGeneratorViewModel(Session.NoteBubbleGenerator, this);
+            MbgVM = new MelodyBubbleGeneratorViewModel(Session.MelodyBubbleGenerator, this);
+
+            Grid.Children.Add(NbgVM.Grid);
+            Grid.Children.Add(MbgVM.Grid);
+
+            SetDimensions(Grid.ActualWidth, Grid.ActualHeight);
+
             double XCenter;
             foreach (Note note in sd.StaveTopNotes)
             {
@@ -368,25 +391,6 @@ namespace PopnTouchi2.ViewModel
                 Notes.Items.Add(noteVM.SVItem);
                 NotesOnStave.Add(noteVM);
             }
-            Session.ThemeID = sd.ThemeID;
-
-            SessionVM.Grid.Background = (new ThemeViewModel(SessionVM.Session.Theme, SessionVM)).BackgroundImage;
-
-            SessionVM.Grid.Children.Add(SessionVM.Bubbles);
-            SessionVM.Grid.Children.Add(SessionVM.Notes);
-            SessionVM.Grid.Children.Add(SessionVM.Reducer);
-            SessionVM.Grid.Children.Add(SessionVM.Play);
-            SessionVM.Grid.Children.Add(SessionVM.UpdateSound.Grid1);
-            SessionVM.Grid.Children.Add(SessionVM.UpdateSound.Grid2);
-            SessionVM.Grid.Children.Add(SessionVM.TreeUp.Grid);
-            SessionVM.Grid.Children.Add(SessionVM.TreeDown.Grid);
-            SessionVM.NbgVM = new NoteBubbleGeneratorViewModel(SessionVM.Session.NoteBubbleGenerator, SessionVM);
-            SessionVM.MbgVM = new MelodyBubbleGeneratorViewModel(SessionVM.Session.MelodyBubbleGenerator, SessionVM);
-
-            SessionVM.Grid.Children.Add(SessionVM.NbgVM.Grid);
-            SessionVM.Grid.Children.Add(SessionVM.MbgVM.Grid);
-
-            SessionVM.SetDimensions(SessionVM.Grid.ActualWidth, SessionVM.Grid.ActualHeight);
         }
 
         public void EraseSession()
@@ -397,7 +401,6 @@ namespace PopnTouchi2.ViewModel
             Notes = null;
             NotesOnStave = null;
             Session = null;
-            Animation = null;
         }
     }
 }

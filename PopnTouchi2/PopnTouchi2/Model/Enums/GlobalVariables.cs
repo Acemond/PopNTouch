@@ -16,7 +16,7 @@ namespace PopnTouchi2.Model.Enums
         public static int StaveTopFirstDo = 335;
         public static int HeightOfOctave = 175;
         public static int StaveBottomFirstDo = 630;
-        public static int[] ManipulationGrid = new int[] { 0, 0, 0, 11, 25, 35, 47, 55, 63, 70, 76, 80, 82, 84, 84, 83, 81, 76, 69, 61, 50, 39, 27, 15, 5, -3, -8, -11, -10, -6 };
+        public static int[] ManipulationGrid = new int[] { 0, 0, 0, 11, 25, 35, 47, 55, 63, 70, 76, 80, 82, 84, 84, 83, 81, 76, 69, 61, 50, 39, 27, 15, 5, -3, -8, -11, -11, -10, -6 };
             
     }
 }

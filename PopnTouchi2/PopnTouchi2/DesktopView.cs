@@ -122,20 +122,20 @@ namespace PopnTouchi2
         {
             if (Sessions.Items.Count == 0)
             {
-                SessionVM = new SessionViewModel(ActualWidth, ActualHeight, new Session(true), IDs);
+                SessionVM = new SessionViewModel(ActualWidth, ActualHeight, new Session(), IDs);
                 Sessions.Items.Add(SessionVM.SessionSVI);
             }
             else if (Sessions.Items.Count == 1)
             {
                 if (LeftSessionActive)
                 {
-                    SessionVM = new SessionViewModel(false, ActualWidth, ActualHeight, new Session(false), IDs);
+                    SessionVM = new SessionViewModel(false, ActualWidth, ActualHeight, new Session(), IDs);
                     Sessions.Items.Add(SessionVM.SessionSVI);
                     RightSessionActive = true;
                 }
                 else
                 {
-                    SessionVM = new SessionViewModel(true, ActualWidth, ActualHeight, new Session(false), IDs);
+                    SessionVM = new SessionViewModel(true, ActualWidth, ActualHeight, new Session(), IDs);
                     Sessions.Items.Add(SessionVM.SessionSVI);
                     LeftSessionActive = true;
                 }
@@ -152,10 +152,10 @@ namespace PopnTouchi2
         void CreateDoubleSession_Button_Click(object sender, RoutedEventArgs e)
         {
             HideDesktop();
-            SessionVM = new SessionViewModel(true, ActualWidth, ActualHeight, new Session(false), IDs);
+            SessionVM = new SessionViewModel(true, ActualWidth, ActualHeight, new Session(), IDs);
             Sessions.Items.Add(SessionVM.SessionSVI);
 
-            SessionVM = new SessionViewModel(false, ActualWidth, ActualHeight, new Session(false), IDs);
+            SessionVM = new SessionViewModel(false, ActualWidth, ActualHeight, new Session(), IDs);
             Sessions.Items.Add(SessionVM.SessionSVI);
 
             LeftSessionActive = true;

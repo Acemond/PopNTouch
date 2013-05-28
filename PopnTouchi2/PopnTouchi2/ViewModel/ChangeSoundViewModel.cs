@@ -50,17 +50,8 @@ namespace PopnTouchi2.ViewModel
             Grid1.VerticalAlignment = VerticalAlignment.Top;
             Grid2.VerticalAlignment = VerticalAlignment.Top;
 
-            if (session.OnePlayer)
-            {
-                Grid1.Margin = new System.Windows.Thickness(10, 0, 1200, 0);
-                Grid2.Margin = new System.Windows.Thickness(10, 0, 690, 0);
-            }
-            else
-            {
-                Grid1.Margin = new System.Windows.Thickness(20, 0, 750, 0);
-                Grid2.Margin = new System.Windows.Thickness(20, 0, 470, 0);
-            }
-
+            Grid1.Margin = new System.Windows.Thickness(10, 0, 1200, 0);
+            Grid2.Margin = new System.Windows.Thickness(10, 0, 690, 0);
 
             Images = new List<Grid>();
 
@@ -88,16 +79,8 @@ namespace PopnTouchi2.ViewModel
         {
             Grid g = new Grid();
             g.Background = getImageBrush(path);
-            if (session.OnePlayer)
-            {
-                g.Height = 24;
-                g.Width = 24;
-            }
-            else
-            {
-                g.Height = 16;
-                g.Width = 16;
-            }
+            g.Height = 24;
+            g.Width = 24;
             g.VerticalAlignment = VerticalAlignment.Center;
             g.HorizontalAlignment = h;
 
