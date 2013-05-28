@@ -21,25 +21,11 @@ namespace PopnTouchi2.ViewModel
     public class NoteBubbleViewModel : ViewModelBase
     {
         /// <summary>
-        /// Parameter.
-        /// </summary>
-        private NoteBubble noteBubble;
-        /// <summary>
         /// Property.
         /// NoteBubble element from the Model.
         /// </summary>
-        public NoteBubble NoteBubble
-        {
-            get
-            {
-                return noteBubble;
-            }
-            set
-            {
-                noteBubble = value;
-                NotifyPropertyChanged("NoteBubble");
-            }
-        }
+        public NoteBubble NoteBubble { get; set; }
+
         /// <summary>
         /// Property.
         /// The parent ScatterView.
@@ -79,7 +65,7 @@ namespace PopnTouchi2.ViewModel
             SVItem.HorizontalAlignment = HorizontalAlignment.Center;
 
             FrameworkElementFactory bubbleImage = new FrameworkElementFactory(typeof(Image));
-            if (!noteBubble.Note.Sharp && !noteBubble.Note.Flat)
+            if (!NoteBubble.Note.Sharp && !NoteBubble.Note.Flat)
             {    
                 bubbleImage.SetValue(Image.SourceProperty, new ThemeViewModel(SessionVM.Session.Theme, SessionVM).GetNoteBubbleImageSource(nb.Note.Duration));                  
             }

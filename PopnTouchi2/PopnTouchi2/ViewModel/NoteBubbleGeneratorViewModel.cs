@@ -5,6 +5,8 @@ using System.Text;
 using PopnTouchi2.Infrastructure;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows;
+using PopnTouchi2.Model.Enums;
 
 namespace PopnTouchi2.ViewModel
 {
@@ -14,26 +16,11 @@ namespace PopnTouchi2.ViewModel
     public class NoteBubbleGeneratorViewModel : ViewModelBase
     {
         /// <summary>
-        /// Parameter.
-        /// </summary>
-        private NoteBubbleGenerator noteBubbleGenerator;
-        /// <summary>
         /// Property.
         /// NoteBubbleGenerator element from the Model.
         /// </summary>
-        public NoteBubbleGenerator NoteBubbleGenerator
-        {
-            get
-            {
-                return noteBubbleGenerator;
-            }
-            set
-            {
-                noteBubbleGenerator = value;
-                NotifyPropertyChanged("NoteBubbleGenerator");
-            }
-        }
-
+        public NoteBubbleGenerator NoteBubbleGenerator { get; set; }
+        
         /// <summary>
         /// Property.
         /// List Containing all NoteBubbleViewModel created until now.
@@ -65,7 +52,7 @@ namespace PopnTouchi2.ViewModel
  
             Grid.Background = SessionVM.ThemeVM.NoteGeneratorImage;
               
-            Grid.TouchDown += new EventHandler<System.Windows.Input.TouchEventArgs>(touchDown);
+            Grid.TouchDown += new EventHandler<TouchEventArgs>(touchDown);
         }
 
         /// <summary>
@@ -78,8 +65,11 @@ namespace PopnTouchi2.ViewModel
         {
             NoteBubble newBubble = NoteBubbleGenerator.CreateNoteBubble();
             NoteBubbleViewModel nbVM = new NoteBubbleViewModel(newBubble, SessionVM.Bubbles, SessionVM);
-            NoteBubbleVMs.Add(nbVM);
-            SessionVM.Bubbles.Items.Add(nbVM.SVItem);
+            if (NoteBubbleVMs.Count < GlobalVariables.MaxNoteBubbles)
+            {
+                NoteBubbleVMs.Add(nbVM);
+                SessionVM.Bubbles.Items.Add(nbVM.SVItem);
+            }
 
             String effect = "pop" + (new Random()).Next(1, 5).ToString();
             AudioController.PlaySoundWithString(effect);
