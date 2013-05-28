@@ -187,7 +187,7 @@ namespace PopnTouchi2.ViewModel
 
             //TODO mettre dans SetDimensions
 
-            displayTrees(new Thickness(20, 0, 0, 100), new Thickness(20,10,200,400));
+            displayTrees(new Thickness(20, 0, 0, 130), new Thickness(20,0,0,580));
 
             //else displayTrees(new Thickness(10, 75, 200, 90), new Thickness(10, 30, 200, 200));
 
@@ -324,10 +324,10 @@ namespace PopnTouchi2.ViewModel
 
         public void displayTrees(Thickness up, Thickness down)
         {
-            TreeUp = new TreeViewModel(true, up, session, session.Theme);
+            TreeUp = new TreeViewModel(true, up, this);
             Grid.Children.Add(TreeUp.Grid);
 
-            TreeDown = new TreeViewModel(false, down, session, session.Theme);
+            TreeDown = new TreeViewModel(false, down, this);
             Grid.Children.Add(TreeDown.Grid);
 
             Grid.SetZIndex(TreeUp.Grid, 4);
