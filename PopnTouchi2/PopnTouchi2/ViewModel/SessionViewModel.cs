@@ -105,6 +105,12 @@ namespace PopnTouchi2.ViewModel
         public Grid Play { get; set; }
 
         /// <summary>
+        /// Property.
+        /// Theme Button.
+        /// </summary>
+        public Grid Theme_Button { get; set; }
+
+        /// <summary>
         /// Property
         /// Boolean true if the stave is playing
         /// </summary>
@@ -168,9 +174,10 @@ namespace PopnTouchi2.ViewModel
             Notes.Visibility = Visibility.Visible;
             
             Grid.Background = (new ThemeViewModel(Session.Theme, this)).BackgroundImage;
-                 
+
             //TODO mettre dans SetDimensions
-            displayTrees(new Thickness(10, 50, 200, 90), new Thickness(10,10,200,400));
+            displayTrees(new Thickness(0, 0, 0, 0), new Thickness(10,10,200,400));
+            //else displayTrees(new Thickness(10, 75, 200, 90), new Thickness(10, 30, 200, 200));
 
             Reducer = new SurfaceButton();
             Reduced = false;
@@ -191,7 +198,19 @@ namespace PopnTouchi2.ViewModel
             IsPlaying = false;
 
             Play.PreviewTouchDown += new EventHandler<TouchEventArgs>(Play_TouchDown);
-            
+
+            Theme_Button = new Grid();
+            Theme_Button.Width = 351;
+            Theme_Button.Height = 110;
+            Theme_Button.HorizontalAlignment = System.Windows.HorizontalAlignment.Left;
+            Theme_Button.VerticalAlignment = System.Windows.VerticalAlignment.Top;
+            ImageBrush theme_img = new ImageBrush();
+            theme_img.ImageSource = new BitmapImage(new Uri(@"../../Resources/Images/UI_items/themes.png", UriKind.Relative));
+            Theme_Button.Background = theme_img;
+            Theme_Button.Visibility = Visibility.Visible;
+
+            Theme_Button.PreviewTouchDown += new EventHandler<TouchEventArgs>(Theme_Button_TouchDown);
+
             SessionSVI.CanMove = false;
             SessionSVI.CanRotate = false;
             SessionSVI.CanScale = false;
@@ -202,9 +221,11 @@ namespace PopnTouchi2.ViewModel
             Grid.Children.Add(NbgVM.Grid);
             Grid.Children.Add(MbgVM.Grid);
             Grid.Children.Add(Play);
+            Grid.Children.Add(Theme_Button);
             Grid.Children.Add(UpdateSound.Grid1);
             Grid.Children.Add(UpdateSound.Grid2);
 
+            Grid.SetZIndex(Theme_Button, 5);
             Grid.SetZIndex(UpdateSound.Grid1, 4);
             Grid.SetZIndex(UpdateSound.Grid2, 4);
             Grid.SetZIndex(TreeUp.Grid, 3);
@@ -258,7 +279,6 @@ namespace PopnTouchi2.ViewModel
             //Size of SurfaceButton Play
             Play.Width = width / 11.0;
             Play.Height = height / 7.0;
-
    
             UpdateSound.Grid1.Width = width / 10;
             UpdateSound.Grid2.Width = width / 10;
@@ -287,6 +307,13 @@ namespace PopnTouchi2.ViewModel
             Grid.SetZIndex(TreeDown.Grid, 3);
         }
 
+        private void Theme_Button_TouchDown(object sender, RoutedEventArgs e)
+        {
+            Grid g = new Grid();
+            g.Background = new SolidColorBrush(Colors.Black);
+            g.Opacity = 0.3;
+            g.Visibility = Visibility.Visible;
+        }
 
         private void Play_TouchDown(object sender, RoutedEventArgs e)
         {
@@ -314,8 +341,9 @@ namespace PopnTouchi2.ViewModel
         /// Saves current session into binary file
         /// </summary>
         /// <param name="newBpm">Path of the savefile</param>
-        public void SaveSession(string path)
+        public void SaveSession()
         {
+            string path = "Sessions/sess"+SessionID+".bin";
             Stream stream = File.Open(path, FileMode.Create);
             BinaryFormatter formatter = new BinaryFormatter();
 
@@ -328,8 +356,9 @@ namespace PopnTouchi2.ViewModel
         /// Loads a session from a binary file
         /// </summary>
         /// <param name="newBpm">Path of the savefile</param>
-        public void LoadSession(string path)
+        public void LoadSession()
         {
+            string path = "Sessions/sess" + SessionID + ".bin";
             BinaryFormatter formatter = new BinaryFormatter();
             FileStream stream = File.Open(path, FileMode.Open);
             SessionData sd = (SessionData)formatter.Deserialize(stream);
@@ -357,6 +386,9 @@ namespace PopnTouchi2.ViewModel
             UpdateSound = new ChangeSoundViewModel(Session);
             NotesOnStave = new List<NoteViewModel>();
 
+            NbgVM = new NoteBubbleGeneratorViewModel(Session.NoteBubbleGenerator, this);
+            MbgVM = new MelodyBubbleGeneratorViewModel(Session.MelodyBubbleGenerator, this);
+
             Grid.Children.Add(Bubbles);
             Grid.Children.Add(Notes);
             Grid.Children.Add(Reducer);
@@ -365,19 +397,23 @@ namespace PopnTouchi2.ViewModel
             Grid.Children.Add(UpdateSound.Grid2);
             Grid.Children.Add(TreeUp.Grid);
             Grid.Children.Add(TreeDown.Grid);
-            NbgVM = new NoteBubbleGeneratorViewModel(Session.NoteBubbleGenerator, this);
-            MbgVM = new MelodyBubbleGeneratorViewModel(Session.MelodyBubbleGenerator, this);
-
             Grid.Children.Add(NbgVM.Grid);
             Grid.Children.Add(MbgVM.Grid);
 
-            SetDimensions(Grid.ActualWidth, Grid.ActualHeight);
-
+            Grid.SetZIndex(UpdateSound.Grid1, 4);
+            Grid.SetZIndex(UpdateSound.Grid2, 4);
+            Grid.SetZIndex(TreeUp.Grid, 3);
+            Grid.SetZIndex(TreeDown.Grid, 3);
+            Grid.SetZIndex(Bubbles, 2);
+            Grid.SetZIndex(Notes, 1);
+            Grid.SetZIndex(NbgVM.Grid, 0);
+            Grid.SetZIndex(MbgVM.Grid, 0);
+            
             double XCenter;
             foreach (Note note in sd.StaveTopNotes)
             {
                 XCenter = note.Position * 60.0 + 120.0;
-                NoteViewModel noteVM = new NoteViewModel(new Point(XCenter, conv.getCenterY(true, note, XCenter)), note, Notes, this);
+                NoteViewModel noteVM = new NoteViewModel(new Point(XCenter, conv.getCenterY(true, note)), note, Notes, this);
                 Session.StaveTop.AddNote(note, note.Position);
                 Notes.Items.Add(noteVM.SVItem);
                 NotesOnStave.Add(noteVM);
@@ -386,11 +422,13 @@ namespace PopnTouchi2.ViewModel
             foreach (Note note in sd.StaveBottomNotes)
             {
                 XCenter = note.Position * 60.0 + 120.0;
-                NoteViewModel noteVM = new NoteViewModel(new Point(XCenter, conv.getCenterY(false, note, XCenter)), note, Notes, this);
+                NoteViewModel noteVM = new NoteViewModel(new Point(XCenter, conv.getCenterY(false, note)), note, Notes, this);
                 Session.StaveBottom.AddNote(note, note.Position);
                 Notes.Items.Add(noteVM.SVItem);
                 NotesOnStave.Add(noteVM);
             }
+
+            SetDimensions(Grid.ActualWidth, Grid.ActualHeight);
         }
 
         public void EraseSession()

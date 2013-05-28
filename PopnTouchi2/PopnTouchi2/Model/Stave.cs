@@ -239,7 +239,15 @@ namespace PopnTouchi2
             PositionNote = 0;
             IteratorNotes = 0;
             theme.refreshSound();
-            theme.sound.Play();
+            try
+            {
+                theme.sound.Play();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Limited number of sound instance");
+            }
+
         }
 
         /// <summary>

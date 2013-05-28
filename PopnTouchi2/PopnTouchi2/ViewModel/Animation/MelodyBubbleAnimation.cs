@@ -41,6 +41,12 @@ namespace PopnTouchi2.ViewModel.Animation
         /// </summary>
         private Point bubbleCenter;
 
+        /// <summary>
+        /// Property.
+        /// The position of the melody
+        /// </summary>
+        public Point PositionMelody { get; set; }
+
         #endregion
 
          #region Constructors
@@ -174,29 +180,32 @@ namespace PopnTouchi2.ViewModel.Animation
             else bubbleCenter.X = Math.Floor((bubbleCenter.X + 30) / 60) * 60;
 
             //"Applatissement" de la portée (MAJ : Switch -> Tableau !)
-            int offset = GlobalVariables.ManipulationGrid[((long)bubbleCenter.X / 60)];
+
+            int offset = GlobalVariables.ManipulationGrid.ElementAtOrDefault((int)((long)bubbleCenter.X / 60));
             bubbleCenter.Y += offset;
 
-            int positionMelody = (int)(bubbleCenter.X - 120) / 60;
+            PositionMelody = new Point(bubbleCenter.X, bubbleCenter.Y);
+            
 
             //Y dans le cadre portée ?
             //Si oui, animation
             //pas de else
-            if (bubbleCenter.Y < 630 && bubbleCenter.Y > 105)
+            if (bubbleCenter.Y < 576 && bubbleCenter.Y > 165)
             {
                 if (bubbleCenter.Y < 370)
                 {
-                    if (bubbleCenter.Y >= 335) bubbleCenter.Y = 335;
-                    bubbleCenter.Y = Math.Floor((bubbleCenter.Y - 20) / 25) * 25 + 35; //-20 et 35 pour 50
+                    if (bubbleCenter.Y >= 344) bubbleCenter.Y = 344;
+                    bubbleCenter.Y = Math.Floor((bubbleCenter.Y + 6.0) / 20.0) * 20.0 + 4.0;
 
-                    sessionVM.Session.StaveTop.AddMelody(melodyBubbleVM.MelodyBubble, positionMelody);
+                    sessionVM.Session.StaveTop.AddMelody(melodyBubbleVM.MelodyBubble, ((int)PositionMelody.X - 120) / 60);
+
                 }
                 else
                 {
-                    if (bubbleCenter.Y <= 405) bubbleCenter.Y = 405;
-                    bubbleCenter.Y = Math.Floor((bubbleCenter.Y + 10) / 25) * 25 + 5; //20 et 5 pour 50
+                    if (bubbleCenter.Y <= 395) bubbleCenter.Y = 395;
+                    bubbleCenter.Y = Math.Floor((bubbleCenter.Y + 15.0) / 20.0) * 20.0 - 5.0;
 
-                    sessionVM.Session.StaveBottom.AddMelody(melodyBubbleVM.MelodyBubble, positionMelody);
+                    sessionVM.Session.StaveBottom.AddMelody(melodyBubbleVM.MelodyBubble, ((int)PositionMelody.X - 120) / 60);
                 }
 
                 bubbleCenter.Y -= offset;
@@ -235,13 +244,11 @@ namespace PopnTouchi2.ViewModel.Animation
 
         void moveCenter_Completed(object sender, EventArgs e)
         {
-            List<NoteViewModel> ListOfNotes = melodyBubbleVM.melodyToListOfNote(bubbleCenter);
+            List<NoteViewModel> ListOfNotes = melodyBubbleVM.melodyToListOfNote(PositionMelody);
             for (int i = 0; i < ListOfNotes.Count; i++)
             {
                 sessionVM.Notes.Items.Add(ListOfNotes[i].SVItem);
             }
-           
-
             sessionVM.Bubbles.Items.Remove(melodyBubbleVM.SVItem);
 
         }

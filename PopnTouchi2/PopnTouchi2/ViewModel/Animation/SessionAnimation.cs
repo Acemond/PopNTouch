@@ -109,7 +109,7 @@ namespace PopnTouchi2.ViewModel.Animation
             MainDesktop = (DesktopView)((ScatterView)(SessionVM.SessionSVI.Parent)).Parent;
 
             stopAllBubblesAnimations();
-            SessionVM.SaveSession("test.bin");
+            SessionVM.SaveSession();
             SessionVM.Session.StopBackgroundSound();
 
             MakeReadyForSnapShot(SessionVM.Grid);
@@ -382,13 +382,13 @@ namespace PopnTouchi2.ViewModel.Animation
 
             if (Ypos > 4.0 / 18.0 * Height && Ypos < 14.0 / 18.0 * Height)
             {
-                if (Xpos > 0 && Xpos < 3.0 / 32.0 * Width)
+                if (Xpos > 0 && Xpos < 3.0 / 32.0 * Width && !MainDesktop.LeftSessionActive)
                 {
                     SessionVM.Reduced = false;
                     EnlargeForSide(true);
                     SessionVM.Orientation = "left";
                 }
-                else if (Xpos > 29.0 / 32.0 * Width && Xpos < Width)
+                else if (Xpos > 29.0 / 32.0 * Width && Xpos < Width && !MainDesktop.RightSessionActive)
                 {
                     SessionVM.Reduced = false;
                     EnlargeForSide(false);
@@ -575,8 +575,9 @@ namespace PopnTouchi2.ViewModel.Animation
 
             MainDesktop = (DesktopView)((ScatterView)SessionVM.SessionSVI.Parent).Parent;
 
-            SessionVM.LoadSession("test.bin");
+            SessionVM.LoadSession();
             Fs.Close();
+
             SessionVM.Session.PlayBackgroundSound();
 
             RemoveWhiteBorder();

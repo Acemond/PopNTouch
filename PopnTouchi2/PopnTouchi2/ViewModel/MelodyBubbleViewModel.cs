@@ -10,6 +10,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using PopnTouchi2.Infrastructure;
 using PopnTouchi2.ViewModel.Animation;
+using PopnTouchi2.Model.Enums;
 
 namespace PopnTouchi2.ViewModel
 {
@@ -100,17 +101,23 @@ namespace PopnTouchi2.ViewModel
             Animation = new MelodyBubbleAnimation(this, SessionVM);
         }
 
-        public List<NoteViewModel> melodyToListOfNote(Point center)
+        public List<NoteViewModel> melodyToListOfNote(Point positionMelody)
         {
-            int initialPosition = melodyBubble.Melody.Notes[0].Position;
-            bool up = (center.Y < 370);
+            int initPos = melodyBubble.Melody.Notes[0].Position;
+            bool up = (positionMelody.Y < 350);
             Converter c = new Converter();
+            double height = SessionVM.SessionSVI.ActualHeight;
 
             List<NoteViewModel> notes = new List<NoteViewModel>();
             for(int i = 0; i< melodyBubble.Melody.Notes.Count; i++)
             {
-                double x = center.X + (melodyBubble.Melody.Notes[i].Position - initialPosition) * 60;
-                double y = c.getCenterY(up, melodyBubble.Melody.Notes[i], x);
+                double x = (positionMelody.X + (melodyBubble.Melody.Notes[i].Position - initPos) * 60) * SessionVM.Grid.ActualWidth / 1920 ;
+                double y = c.getCenterY(up, melodyBubble.Melody.Notes[i]);
+                
+                double offset = GlobalVariables.ManipulationGrid[((long)positionMelody.X / 60)+melodyBubble.Melody.Notes[i].Position - initPos];
+                y -= offset;
+                y *= (height / 1080);
+
                 Point p = new Point(x, y);
                 notes.Add(new NoteViewModel(p,melodyBubble.Melody.Notes[i], SessionVM.Notes, SessionVM));
             }
