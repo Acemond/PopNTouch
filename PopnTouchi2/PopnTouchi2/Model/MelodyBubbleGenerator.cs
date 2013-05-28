@@ -29,7 +29,7 @@ namespace PopnTouchi2
         }
 
         /// <summary>
-        /// TODO
+        /// Create a random MelodyBubble
         /// </summary>
         public MelodyBubble CreateMelodyBubble()
         {
@@ -39,9 +39,9 @@ namespace PopnTouchi2
         }
 
         /// <summary>
-        /// TODO
+        /// Remove a melody from the Generator
         /// </summary>
-        /// <param name="melody"></param>
+        /// <param name="melody">The melody To remove</param>
         public void RemoveFromGenerator(MelodyBubble melody)
         {
             if (MelodyBubbles.Contains(melody))

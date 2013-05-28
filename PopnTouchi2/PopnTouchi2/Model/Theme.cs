@@ -42,7 +42,24 @@ namespace PopnTouchi2
             InstrumentsBottom = new Instrument[2];
         }
 
-        public abstract void refreshSound();
+        /// <summary>
+        /// refreshSound()
+        /// Used to activated the sound 
+        /// of the background after the 
+        /// Stop button
+        /// </summary>
+        /// <param name="name"></param>
+        public void refreshSound(String name)
+        {
+            try
+            {
+                sound = AudioController.INSTANCE.SoundBank.GetCue(name);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("Limited instance of background sound");
+            }
+        }
         
     }
 }

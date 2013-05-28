@@ -68,7 +68,6 @@
     <Compile Include="Model\SessionData.cs" />
     <Compile Include="ViewModel\Animation\Animation.cs" />
     <Compile Include="Model\Enums\GlobalVariables.cs" />
-    <Compile Include="Infrastructure\RelayCommand.cs" />
     <Compile Include="ViewModel\Animation\MelodyBubbleAnimation.cs" />
     <Compile Include="ViewModel\Animation\NoteAnimation.cs" />
     <Compile Include="ViewModel\Animation\NoteBubbleAnimation.cs" />
@@ -90,7 +89,6 @@
     <Compile Include="Model\Theme.cs" />
     <Compile Include="ViewModel\StaveViewModel.cs" />
     <Compile Include="Infrastructure\ViewModelBase.cs" />
-    <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="Model\AudioController.cs" />
     <Compile Include="Model\Enums\Gesture.cs" />
     <Compile Include="Model\Instrument.cs" />

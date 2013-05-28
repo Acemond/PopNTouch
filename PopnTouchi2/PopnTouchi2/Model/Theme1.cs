@@ -23,19 +23,7 @@ namespace PopnTouchi2
             InstrumentsBottom[0] = new Instrument(InstrumentType.bass);
             InstrumentsBottom[1] = new Instrument(InstrumentType.contrebass);
 
-            refreshSound();
-        }
-
-        public override void refreshSound()
-        {
-            try
-            {
-                sound = AudioController.INSTANCE.SoundBank.GetCue("loop_eveningWater");
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine("Limited Instance of background sound");
-            }
+            refreshSound("loop_eveningWater");
         }
     }
 }

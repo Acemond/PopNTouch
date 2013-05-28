@@ -131,7 +131,8 @@ namespace PopnTouchi2.ViewModel.Animation
 
         #region Events
         /// <summary>
-        /// TODO
+        /// Event used to animate bubbles
+        /// Used as a clock
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -156,7 +157,10 @@ namespace PopnTouchi2.ViewModel.Animation
             DispatcherTimer.Start();
         }
         /// <summary>
-        /// TODO Description détaillée de ce que fait cette méthode
+        /// Event occured when a MelodyBubble is released
+        /// Magnetise the current bubble
+        /// Add the melody in the right stave
+        /// Move the bubble to its final place
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>

@@ -103,7 +103,7 @@ namespace PopnTouchi2
         /// </summary>
         public void PlayBackgroundSound()
         {
-            Theme.refreshSound();
+            Theme.refreshSound(Theme.sound.ToString());
             try
             {
                 Theme.sound.Play();

@@ -27,6 +27,7 @@ namespace PopnTouchi2
         /// Generates an object of class Melody with a given list of notes.
         /// </summary>
         /// <param name="listnote">The notes list to copy</param>
+        /// /// <param name="g">The Gesture</param>
         public Melody(List<Note> listnote, Gesture g)
         {
             Notes = listnote;

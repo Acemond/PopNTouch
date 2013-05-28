@@ -21,12 +21,7 @@ namespace PopnTouchi2
             InstrumentsBottom[0] = new Instrument(InstrumentType.bass);
             InstrumentsBottom[1] = new Instrument(InstrumentType.vibraphone);
 
-            sound = AudioController.INSTANCE.SoundBank.GetCue("loop_superbirds");
-        }
-
-        public override void refreshSound()
-        {
-            sound = AudioController.INSTANCE.SoundBank.GetCue("loop_superbirds");
+            refreshSound("loop_superbirds");
         }
     }
 }

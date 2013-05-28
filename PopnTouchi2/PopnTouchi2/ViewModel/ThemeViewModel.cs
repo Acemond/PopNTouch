@@ -191,9 +191,9 @@ namespace PopnTouchi2.ViewModel
         }
 
         /// <summary>
-        /// Find the MelodyBubble's Image according to a melody.
+        /// Find the MelodyBubble's Image according to the gesture.
         /// </summary>
-        /// <param name="melody">The Melody needed to find the Bubble Image</param>
+        /// <param name="gesture">The gesture</param>
         /// <returns>A BitmapImage linked to the Bubble</returns>
         public BitmapImage GetMelodyBubbleImageSource(Gesture gesture)
         {

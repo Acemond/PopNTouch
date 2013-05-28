@@ -36,11 +36,24 @@ namespace PopnTouchi2
         /// </summary>
         public ScatterView Sessions { get; set; }
 
+        /// <summary>
+        /// TODO
+        /// </summary>
         public Boolean LeftSessionActive { get; set; }
+
+        /// <summary>
+        /// TODO
+        /// </summary>
         public Boolean RightSessionActive { get; set; }
 
+        /// <summary>
+        /// TODO
+        /// </summary>
         public List<int> IDs { get; set; }
 
+        /// <summary>
+        /// TODO
+        /// </summary>
         Grid MiddleCacheGrid { get; set; }
 
         /// <summary>
@@ -162,6 +175,9 @@ namespace PopnTouchi2
             RightSessionActive = true;
         }
 
+        /// <summary>
+        /// TODO
+        /// </summary>
         public void CheckDesktopToDisplay()
         {
             if (Sessions.Items.Count == 0)
@@ -180,6 +196,9 @@ namespace PopnTouchi2
             }
         }
 
+        /// <summary>
+        /// TODO
+        /// </summary>
         private void HideDesktop()
         {
             CreateSession_Button.Visibility = Visibility.Hidden;
@@ -188,6 +207,9 @@ namespace PopnTouchi2
             if(LeftSessionActive) UnhideCache();
         }
 
+        /// <summary>
+        /// TODO
+        /// </summary>
         private void DisplayFullDesktop()
         {
             CreateSession_Button.Visibility = Visibility.Visible;
@@ -198,6 +220,9 @@ namespace PopnTouchi2
             Photos.Margin = new Thickness(0.0, 0.0, 0.0, 0.0);
         }
 
+        /// <summary>
+        /// TODO
+        /// </summary>
         private void DisplayRightDesktop()
         {
             CreateSession_Button.Visibility = Visibility.Visible;
@@ -208,6 +233,9 @@ namespace PopnTouchi2
             Photos.Margin = new Thickness(607.5, 0.0, 0.0, 0.0);
         }
         
+        /// <summary>
+        /// TODO
+        /// </summary>
         private void DisplayLeftDesktop()
         {
             CreateSession_Button.Visibility = Visibility.Visible;
@@ -218,6 +246,9 @@ namespace PopnTouchi2
             Photos.Margin = new Thickness(0.0, 0.0, 607.5, 0.0);
         }
 
+        /// <summary>
+        /// TODO
+        /// </summary>
         public void HidePhotos()
         {
             if (Photos.Opacity != 1.0) return;
@@ -236,6 +267,9 @@ namespace PopnTouchi2
             OpacitySTB.Begin();
         }
 
+        /// <summary>
+        /// TODO
+        /// </summary>
         public void UnhidePhotos()
         {
             if (Photos.Opacity != 0.0) return;
@@ -254,6 +288,9 @@ namespace PopnTouchi2
             OpacitySTB.Begin();
         }
 
+        /// <summary>
+        /// TODO
+        /// </summary>
         public void HideCache()
         {
             if (MiddleCacheGrid.Opacity != 1.0) return;
@@ -272,6 +309,9 @@ namespace PopnTouchi2
             OpacitySTB.Begin();
         }
 
+        /// <summary>
+        /// TODO
+        /// </summary>
         public void UnhideCache()
         {
             if (MiddleCacheGrid.Opacity != 0.0) return;
