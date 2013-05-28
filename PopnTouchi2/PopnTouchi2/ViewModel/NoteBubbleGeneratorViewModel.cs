@@ -63,7 +63,7 @@ namespace PopnTouchi2.ViewModel
             Grid.HorizontalAlignment = System.Windows.HorizontalAlignment.Left;
             Grid.VerticalAlignment = System.Windows.VerticalAlignment.Bottom;
  
-            Grid.Background = (new ThemeViewModel(SessionVM.Session.Theme, SessionVM)).NoteGeneratorImage;
+            Grid.Background = SessionVM.ThemeVM.NoteGeneratorImage;
               
             Grid.TouchDown += new EventHandler<System.Windows.Input.TouchEventArgs>(touchDown);
         }

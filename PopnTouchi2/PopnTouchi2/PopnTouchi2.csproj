@@ -106,6 +106,7 @@
     <Compile Include="Model\Enums\NoteValue.cs" />
     <Compile Include="Model\Stave.cs" />
     <Compile Include="ViewModel\NoteViewModel.cs" />
+    <Compile Include="ViewModel\ThemeChooser.cs" />
     <Compile Include="ViewModel\ThemeViewModel.cs" />
     <Compile Include="ViewModel\TreeViewModel.cs" />
     <Page Include="DesktopWindow.xaml">
@@ -164,6 +165,7 @@
     <Content Include="PopnTouchi2.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Resource Include="Resources\Images\Theme3\background.jpg" />
     <Resource Include="Resources\Images\Theme2\background.jpg" />
     <Resource Include="Resources\Images\Theme1\background.jpg" />
     <Resource Include="Resources\Images\desktop.jpg" />
@@ -222,7 +224,6 @@
     <Resource Include="Resources\Images\Theme2\playdrop.png" />
     <Resource Include="Resources\Images\Theme2\soundpointdisable.png" />
     <Resource Include="Resources\Images\Theme2\soundpointenable.png" />
-    <Resource Include="Resources\Images\Theme3\background.png" />
     <Resource Include="Resources\Images\Theme3\Bubbles\Melodies\s.png" />
     <Resource Include="Resources\Images\Theme3\Bubbles\Melodies\t.png" />
     <Resource Include="Resources\Images\Theme3\Bubbles\Melodies\wave.png" />
@@ -233,7 +234,6 @@
     <Resource Include="Resources\Images\Theme3\Bubbles\Notes\bullenoire.png" />
     <Resource Include="Resources\Images\Theme3\Bubbles\Notes\diese.png" />
     <Resource Include="Resources\Images\Theme3\melodyfactory.png" />
-    <Resource Include="Resources\Images\Theme3\notefactory.png" />
     <Resource Include="Resources\Images\Theme3\playdrop.png" />
     <Resource Include="Resources\Images\Theme3\soundpointdisable.png" />
     <Resource Include="Resources\Images\Theme3\soundpointenable.png" />

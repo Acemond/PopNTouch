@@ -18,7 +18,7 @@ namespace PopnTouchi2.ViewModel
         /// Parameter.
         /// The current Session
         /// </summary>
-        private Session session;
+        private SessionViewModel sessionVM;
 
         /// <summary>
         /// Property.
@@ -41,9 +41,9 @@ namespace PopnTouchi2.ViewModel
         /// <summary>
         /// Constructor
         /// </summary>
-        public ChangeSoundViewModel(Session s)
+        public ChangeSoundViewModel(SessionViewModel s)
         {
-            session = s;
+            sessionVM = s;
             
             Grid1 = new Grid();
             Grid2 = new Grid();
@@ -55,12 +55,12 @@ namespace PopnTouchi2.ViewModel
 
             Images = new List<Grid>();
 
-            Images.Add(createButtonForImage("soundpointenable", HorizontalAlignment.Left));
-            Images.Add(createButtonForImage("soundpointenable", HorizontalAlignment.Center));
-            Images.Add(createButtonForImage("soundpointenable", HorizontalAlignment.Right));
-            Images.Add(createButtonForImage("soundpointdisable", HorizontalAlignment.Left));
-            Images.Add(createButtonForImage("soundpointdisable", HorizontalAlignment.Center));
-            Images.Add(createButtonForImage("soundpointdisable", HorizontalAlignment.Right));
+            Images.Add(createButtonForImage(true, HorizontalAlignment.Left));
+            Images.Add(createButtonForImage(true, HorizontalAlignment.Center));
+            Images.Add(createButtonForImage(true, HorizontalAlignment.Right));
+            Images.Add(createButtonForImage(false, HorizontalAlignment.Left));
+            Images.Add(createButtonForImage(false, HorizontalAlignment.Center));
+            Images.Add(createButtonForImage(false, HorizontalAlignment.Right));
 
             for(int i = 0; i< Images.Count/2 ; i++)
             {
@@ -75,25 +75,28 @@ namespace PopnTouchi2.ViewModel
             }
         }
 
-        public Grid createButtonForImage(String path, HorizontalAlignment h)
+        public Grid createButtonForImage(Boolean enabled, HorizontalAlignment h)
         {
             Grid g = new Grid();
-            g.Background = getImageBrush(path);
+
+            if (enabled)
+            {
+                g.Background = sessionVM.ThemeVM.SoundPointEnableImage;
+            }
+            else
+            {
+                g.Background = sessionVM.ThemeVM.SoundPointDisableImage;
+            }
+
             g.Height = 24;
             g.Width = 24;
+
             g.VerticalAlignment = VerticalAlignment.Center;
             g.HorizontalAlignment = h;
 
             g.Visibility = Visibility.Visible;
             return g;
 
-        }
-
-        public ImageBrush getImageBrush(String path)
-        {
-            ImageBrush img = new ImageBrush();
-            img.ImageSource = new BitmapImage(new Uri(@"../../Resources/Images/Theme" + session.ThemeID + "/" + path + ".png", UriKind.Relative));
-            return img;
         }
 
         private void TouchDown(object sender, TouchEventArgs e)
@@ -104,12 +107,12 @@ namespace PopnTouchi2.ViewModel
 
             for (int i = index; i >= 0; i--)
             {
-                Images[i].Background = getImageBrush("soundpointenable");
+                Images[i].Background = sessionVM.ThemeVM.SoundPointEnableImage;
             }
 
             for (int j = index + 1; j < Images.Count; j++)
             {
-                Images[j].Background = getImageBrush("soundpointdisable");
+                Images[j].Background = sessionVM.ThemeVM.SoundPointDisableImage;
             }
             AudioController.UpdateVolume((float)(index+1));
         }

@@ -230,7 +230,7 @@ namespace PopnTouchi2.ViewModel.Animation
         {
             grid.Children.Remove(SessionVM.Bubbles);
             grid.Children.Remove(SessionVM.Reducer);
-            grid.Children.Remove(SessionVM.Play);
+            grid.Children.Remove(SessionVM.Play_Button);
             grid.Children.Remove(SessionVM.UpdateSound.Grid1);
             grid.Children.Remove(SessionVM.UpdateSound.Grid2);
             grid.Children.Remove(SessionVM.Theme_Button);
