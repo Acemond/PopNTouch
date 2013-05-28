@@ -15,6 +15,7 @@ using System.Runtime.Serialization.Formatters.Binary;
 using PopnTouchi2.Model;
 using System.Windows.Media.Imaging;
 using Microsoft.Xna.Framework.Audio;
+using System.Windows.Input;
 
 namespace PopnTouchi2.ViewModel
 {
@@ -101,7 +102,7 @@ namespace PopnTouchi2.ViewModel
         /// Property.
         /// Play Button.
         /// </summary>
-        public SurfaceButton Play { get; set; }
+        public Grid Play { get; set; }
 
         /// <summary>
         /// Property
@@ -182,7 +183,7 @@ namespace PopnTouchi2.ViewModel
             Reducer.Background = Brushes.Red;
             Reducer.Content = "Reduce !";
             
-            Play = new SurfaceButton();
+            Play = new Grid();
            // Play.Width = 140;
            // Play.Height = 150;
             Play.HorizontalAlignment = System.Windows.HorizontalAlignment.Left;
@@ -193,7 +194,7 @@ namespace PopnTouchi2.ViewModel
             Play.Visibility = Visibility.Visible;
             IsPlaying = false;
 
-            Play.Click+=new RoutedEventHandler(Play_Click);
+            Play.PreviewTouchDown += new EventHandler<TouchEventArgs>(Play_TouchDown);
             
             SessionSVI.CanMove = false;
             SessionSVI.CanRotate = false;
@@ -262,16 +263,9 @@ namespace PopnTouchi2.ViewModel
             Play.Width = width / 11;
             Play.Height = height / 7;
 
-            if (session.OnePlayer)
-            {
-                UpdateSound.Grid1.Width = width / 8.5;
-                UpdateSound.Grid2.Width = width / 8.5;
-            }
-            else
-            {
-                UpdateSound.Grid1.Width = width / 6;
-                UpdateSound.Grid2.Width = width / 6;
-            }
+   
+            UpdateSound.Grid1.Width = width / 10;
+            UpdateSound.Grid2.Width = width / 10;
             UpdateSound.Grid1.Height = height / 11;
             UpdateSound.Grid2.Height = height / 11;
 
@@ -298,7 +292,7 @@ namespace PopnTouchi2.ViewModel
         }
 
 
-        private void Play_Click(object sender, RoutedEventArgs e)
+        private void Play_TouchDown(object sender, RoutedEventArgs e)
         {
             if (!IsPlaying)
             {

@@ -150,7 +150,9 @@ namespace PopnTouchi2.ViewModel.Animation
                 noteVM.Note.Octave = 2;
                 String Pitch = c.PositionToPitch.ElementAtOrDefault(((GlobalVariables.StaveTopFirstDo - GlobalVariables.HeightOfOctave) - (int)NoteCenter.Y) / 25);
                 noteVM.Note.Pitch = Pitch;
+                sessionVM.Notes.Items.Remove(noteVM.SVItem);
                 sessionVM.Session.StaveTop.AddNote(noteVM.Note, positionNote);
+                
             }
             else if (NoteCenter.Y <= GlobalVariables.StaveTopFirstDo)
             {
@@ -177,7 +179,7 @@ namespace PopnTouchi2.ViewModel.Animation
             }
 
             sessionVM.NotesOnStave.Add(noteVM);
-            if (NoteCenter.Y < (370 * (int)sessionVM.Grid.ActualHeight / 1080))
+            if (NoteCenter.Y < (370 * sessionVM.SessionSVI.ActualHeight / 1080))
             {
                 sessionVM.Session.StaveTop.CurrentInstrument.PlayNote(noteVM.Note);
             }

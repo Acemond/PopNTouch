@@ -36,7 +36,7 @@ namespace PopnTouchi2.ViewModel
         /// Property.
         /// The List of circles' image
         /// </summary>
-        public List<SurfaceButton> Images { get; set; }
+        public List<Grid> Images { get; set; }
 
         /// <summary>
         /// Constructor
@@ -52,17 +52,17 @@ namespace PopnTouchi2.ViewModel
 
             if (session.OnePlayer)
             {
-                Grid1.Margin = new System.Windows.Thickness(10, 0, 850, 150);
-                Grid2.Margin = new System.Windows.Thickness(10, 0, 520, 150);
+                Grid1.Margin = new System.Windows.Thickness(10, 0, 825, 0);
+                Grid2.Margin = new System.Windows.Thickness(10, 0, 520, 0);
             }
             else
             {
-                Grid1.Margin = new System.Windows.Thickness(20, 0, 500, 100);
-                Grid2.Margin = new System.Windows.Thickness(20, 0, 250, 100);
+                Grid1.Margin = new System.Windows.Thickness(20, 0, 500, 0);
+                Grid2.Margin = new System.Windows.Thickness(20, 0, 325, 0);
             }
 
 
-            Images = new List<SurfaceButton>();
+            Images = new List<Grid>();
 
             Images.Add(createButtonForImage("soundpointenable", HorizontalAlignment.Left));
             Images.Add(createButtonForImage("soundpointenable", HorizontalAlignment.Center));
@@ -84,25 +84,25 @@ namespace PopnTouchi2.ViewModel
             }
         }
 
-        public SurfaceButton createButtonForImage(String path, HorizontalAlignment h)
+        public Grid createButtonForImage(String path, HorizontalAlignment h)
         {
-            SurfaceButton b = new SurfaceButton();
-            b.Background = getImageBrush(path);
+            Grid g = new Grid();
+            g.Background = getImageBrush(path);
             if (session.OnePlayer)
             {
-                b.Height = 24;
-                b.Width = 24;
+                g.Height = 24;
+                g.Width = 24;
             }
             else
             {
-                b.MaxHeight = 5;
-                b.MaxWidth = 5;
+                g.Height = 16;
+                g.Width = 16;
             }
-            b.VerticalAlignment = VerticalAlignment.Center;
-            b.HorizontalAlignment = h;
+            g.VerticalAlignment = VerticalAlignment.Center;
+            g.HorizontalAlignment = h;
 
-            b.Visibility = Visibility.Visible;
-            return b;
+            g.Visibility = Visibility.Visible;
+            return g;
 
         }
 
@@ -115,8 +115,8 @@ namespace PopnTouchi2.ViewModel
 
         private void TouchDown(object sender, TouchEventArgs e)
         {
-            SurfaceButton button = new SurfaceButton();
-            button = e.Source as SurfaceButton;
+            Grid button = new Grid();
+            button = e.Source as Grid;
             int index = Images.IndexOf(button);
 
             for (int i = index; i >= 0; i--)
