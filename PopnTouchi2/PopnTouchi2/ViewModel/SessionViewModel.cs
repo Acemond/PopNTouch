@@ -162,12 +162,7 @@ namespace PopnTouchi2.ViewModel
         /// </summary>
         public ThemeChooser ThemeChooser { get; set; }
 
-        /// <summary>
-        /// SessionViewModel Construtor.
-        /// Initializes all SessionViewModel components.
-        /// </summary>
-        /// <param name="s">The Session to link with its ViewModel</param>
-        private SessionViewModel(Session s) : base()
+        public SessionViewModel(Double width, Double height, Session s, List<int> IDs)
         {
             Session = s;
             ThemeVM = new ThemeViewModel(Session.Theme, this);
@@ -177,7 +172,6 @@ namespace PopnTouchi2.ViewModel
             Bubbles = new ScatterView();
             Notes = new ScatterView();
             NotesOnStave = new List<NoteViewModel>();
-            ThemeChooser = new ThemeChooser(this);
             NbgVM = new NoteBubbleGeneratorViewModel(Session.NoteBubbleGenerator, this);
             MbgVM = new MelodyBubbleGeneratorViewModel(Session.MelodyBubbleGenerator, this);
 
@@ -185,11 +179,11 @@ namespace PopnTouchi2.ViewModel
             SessionSVI.Opacity = 0;
             Bubbles.Visibility = Visibility.Visible;
             Notes.Visibility = Visibility.Visible;
-            
+
             Grid.Background = (new ThemeViewModel(Session.Theme, this)).BackgroundImage;
 
             //TODO mettre dans SetDimensions
-            displayTrees(new Thickness(0, 0, 0, 0), new Thickness(10,10,200,400));
+            displayTrees(new Thickness(0, 0, 0, 0), new Thickness(10, 10, 200, 400));
             //else displayTrees(new Thickness(10, 75, 200, 90), new Thickness(10, 30, 200, 200));
 
             Reducer = new SurfaceButton();
@@ -200,7 +194,7 @@ namespace PopnTouchi2.ViewModel
             Reducer.VerticalAlignment = System.Windows.VerticalAlignment.Top;
             Reducer.Background = Brushes.Red;
             Reducer.Content = "Reduce !";
-            
+
             Play_Button = new Grid();
             Play_Button.HorizontalAlignment = System.Windows.HorizontalAlignment.Left;
             Play_Button.VerticalAlignment = System.Windows.VerticalAlignment.Top;
@@ -218,8 +212,6 @@ namespace PopnTouchi2.ViewModel
             Theme_Button.Margin = new Thickness(0, 0, 100, 0);
             Theme_Button.Background = ThemeVM.ThemesImage;
             Theme_Button.Visibility = Visibility.Visible;
-
-            Theme_Button.PreviewTouchDown += new EventHandler<TouchEventArgs>(ThemeChooser.Theme_Button_TouchDown);
 
             SessionSVI.CanMove = false;
             SessionSVI.CanRotate = false;
@@ -246,11 +238,12 @@ namespace PopnTouchi2.ViewModel
             Grid.SetZIndex(MbgVM.Grid, 0);
 
             SessionSVI.Content = Grid;
-        }
+            SessionSVI.Width = width;
+            SessionSVI.Height = height;
 
-        public SessionViewModel(Double width, Double height, Session s, List<int> IDs)
-            : this(s)
-        {
+            ThemeChooser = new ThemeChooser(this);
+            Theme_Button.PreviewTouchDown += new EventHandler<TouchEventArgs>(ThemeChooser.Theme_Button_TouchDown);
+
             int i = 1;
             while (IDs.Contains(i)) i++;
             SessionID = i;
@@ -281,17 +274,23 @@ namespace PopnTouchi2.ViewModel
         
         public void SetDimensions(Double width, Double height)
         {
+            SessionSVI.Width = width;
+            SessionSVI.Height = height;
+
             NbgVM.Grid.Width = width / 8.0;
             NbgVM.Grid.Height = width * 0.07948;
             MbgVM.Grid.Width = width / 8.0;
             MbgVM.Grid.Height = width * 0.07948;
 
-            //Size of SurfaceButton Play
+            ThemeChooser.SetDimensions(width);
 
+            //Size of SurfaceButton Play
             Play_Button.Width = width / 11.0;
             Play_Button.Height = height / 7.0;
 
-   
+            Theme_Button.Width = (351.0 / 1920.0) * width;
+            Theme_Button.Height = (110 / 1080.0) * height;
+            
             UpdateSound.Grid1.Width = width / 10;
             UpdateSound.Grid2.Width = width / 10;
             UpdateSound.Grid1.Height = height / 11;
