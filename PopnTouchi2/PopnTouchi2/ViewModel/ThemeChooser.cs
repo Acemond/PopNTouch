@@ -11,12 +11,24 @@ using Microsoft.Surface.Presentation.Controls;
 
 namespace PopnTouchi2.ViewModel
 {
+    /// <summary>
+    /// TODO
+    /// </summary>
     public class ThemeChooser
     {
+        /// <summary>
+        /// TODO
+        /// </summary>
         private SessionViewModel sessionVM;
 
+        /// <summary>
+        /// TODO
+        /// </summary>
         public Grid Grid { get; set; }
 
+        /// <summary>
+        /// TODO
+        /// </summary>
         public StackPanel Themes { get; set; }
 
         private Border border1;
@@ -26,7 +38,10 @@ namespace PopnTouchi2.ViewModel
         private Border border3;
         private Grid GridTheme3;
 
-
+        /// <summary>
+        /// TODO
+        /// </summary>
+        /// <param name="s"></param>
         public ThemeChooser(SessionViewModel s)
         {
             sessionVM = s;
@@ -89,6 +104,10 @@ namespace PopnTouchi2.ViewModel
             
         }
 
+        /// <summary>
+        /// TODO
+        /// </summary>
+        /// <param name="width"></param>
         public void SetDimensions(double width)
         {
             double ratio = width / 1920.0;
@@ -109,6 +128,11 @@ namespace PopnTouchi2.ViewModel
             GridTheme3.Height = 265.0 * ratio;
         }
 
+        /// <summary>
+        /// TODO
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         public void Theme_Button_TouchDown(object sender, RoutedEventArgs e)
         {
             sessionVM.Grid.Children.Add(Grid);
@@ -117,6 +141,11 @@ namespace PopnTouchi2.ViewModel
             Grid.SetZIndex(Themes, 101);
         }
 
+        /// <summary>
+        /// TODO
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void GridTheme1_TouchDown(object sender, RoutedEventArgs e)
         {
             if (sessionVM.Session.ThemeID == 1)
@@ -135,8 +164,7 @@ namespace PopnTouchi2.ViewModel
             sessionVM.Grid.Children.Remove(sessionVM.NbgVM.Grid);
             sessionVM.Grid.Children.Remove(sessionVM.MbgVM.Grid);
             sessionVM.Grid.Children.Remove(sessionVM.Bubbles);
-            sessionVM.Grid.Children.Remove(sessionVM.UpdateSound.Grid1);
-            sessionVM.Grid.Children.Remove(sessionVM.UpdateSound.Grid2);
+            sessionVM.Grid.Children.Remove(sessionVM.UpdateSound.Grid);
             sessionVM.Grid.Children.Remove(sessionVM.Play_Button);
             sessionVM.Grid.Children.Remove(sessionVM.Theme_Button);
             sessionVM.Grid.Children.Remove(sessionVM.TreeUp.Grid);
@@ -160,8 +188,7 @@ namespace PopnTouchi2.ViewModel
             sessionVM.Grid.Children.Add(sessionVM.NbgVM.Grid);
             sessionVM.Grid.Children.Add(sessionVM.MbgVM.Grid);
             sessionVM.Grid.Children.Add(sessionVM.Bubbles);
-            sessionVM.Grid.Children.Add(sessionVM.UpdateSound.Grid1);
-            sessionVM.Grid.Children.Add(sessionVM.UpdateSound.Grid2);
+            sessionVM.Grid.Children.Add(sessionVM.UpdateSound.Grid);
             sessionVM.Grid.Children.Add(sessionVM.Play_Button);
             sessionVM.Grid.Children.Add(sessionVM.Theme_Button);
 
@@ -169,6 +196,11 @@ namespace PopnTouchi2.ViewModel
             sessionVM.Grid.Children.Remove(Themes);
         }
         
+        /// <summary>
+        /// TODO
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void GridTheme2_TouchDown(object sender, RoutedEventArgs e)
         {
             if (sessionVM.Session.ThemeID == 2)
@@ -186,8 +218,7 @@ namespace PopnTouchi2.ViewModel
             sessionVM.Grid.Children.Remove(sessionVM.NbgVM.Grid);
             sessionVM.Grid.Children.Remove(sessionVM.MbgVM.Grid);
             sessionVM.Grid.Children.Remove(sessionVM.Bubbles);
-            sessionVM.Grid.Children.Remove(sessionVM.UpdateSound.Grid1);
-            sessionVM.Grid.Children.Remove(sessionVM.UpdateSound.Grid2);
+            sessionVM.Grid.Children.Remove(sessionVM.UpdateSound.Grid);
             sessionVM.Grid.Children.Remove(sessionVM.Play_Button);
             sessionVM.Grid.Children.Remove(sessionVM.Theme_Button);
             sessionVM.Grid.Children.Remove(sessionVM.TreeUp.Grid);
@@ -211,8 +242,7 @@ namespace PopnTouchi2.ViewModel
             sessionVM.Grid.Children.Add(sessionVM.NbgVM.Grid);
             sessionVM.Grid.Children.Add(sessionVM.MbgVM.Grid);
             sessionVM.Grid.Children.Add(sessionVM.Bubbles);
-            sessionVM.Grid.Children.Add(sessionVM.UpdateSound.Grid1);
-            sessionVM.Grid.Children.Add(sessionVM.UpdateSound.Grid2);
+            sessionVM.Grid.Children.Add(sessionVM.UpdateSound.Grid);
             sessionVM.Grid.Children.Add(sessionVM.Play_Button);
             sessionVM.Grid.Children.Add(sessionVM.Theme_Button);
 
@@ -220,6 +250,11 @@ namespace PopnTouchi2.ViewModel
             sessionVM.Grid.Children.Remove(Themes);
         }
 
+        /// <summary>
+        /// TODO
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void GridTheme3_TouchDown(object sender, RoutedEventArgs e)
         {
             if (sessionVM.Session.ThemeID == 3)

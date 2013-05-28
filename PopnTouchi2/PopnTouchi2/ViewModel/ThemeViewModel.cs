@@ -14,26 +14,10 @@ namespace PopnTouchi2.ViewModel
     public class ThemeViewModel : ViewModelBase
     {
         /// <summary>
-        /// Parameter.
-        /// </summary>
-        private Theme theme;
-
-        /// <summary>
         /// Property.
         /// Theme element from the Model.
         /// </summary>
-        public Theme Theme
-        {
-            get
-            {
-                return theme;
-            }
-            set
-            {
-                theme = value;
-                NotifyPropertyChanged("Theme");
-            }
-        }
+        public Theme Theme { get; set; }
 
         /// <summary>
         /// Property.
@@ -103,36 +87,29 @@ namespace PopnTouchi2.ViewModel
 
             BackgroundImage = new ImageBrush();
             BackgroundImage.ImageSource =
-                new BitmapImage(
-                    new Uri(@"../../Resources/Images/Theme" + SessionVM.Session.ThemeID +"/background.jpg", UriKind.Relative)
-                );
+                new BitmapImage(new Uri(@"../../Resources/Images/Theme" + SessionVM.Session.ThemeID + "/background.jpg", UriKind.Relative));
+
             NoteGeneratorImage = new ImageBrush();
-            NoteGeneratorImage.ImageSource =
-                new BitmapImage(
-                    new Uri(@"../../Resources/Images/Theme" + SessionVM.Session.ThemeID + "/notefactory.png", UriKind.Relative)
-                );
+            NoteGeneratorImage.ImageSource = GetBitmapImage("notefactory");
+
             MelodyGeneratorImage = new ImageBrush();
-            MelodyGeneratorImage.ImageSource =
-                new BitmapImage(
-                    new Uri(@"../../Resources/Images/Theme" + SessionVM.Session.ThemeID + "/melodyfactory.png", UriKind.Relative)
-                );
+            MelodyGeneratorImage.ImageSource = GetBitmapImage("melodyfactory");
+
             PlayImage = new ImageBrush();
-            PlayImage.ImageSource = new BitmapImage(new Uri(@"../../Resources/Images/Theme" + SessionVM.Session.ThemeID + "/playdrop.png", UriKind.Relative));
+            PlayImage.ImageSource = GetBitmapImage("playdrop");
 
             SoundPointEnableImage = new ImageBrush();
-            SoundPointEnableImage.ImageSource = new BitmapImage(new Uri(@"../../Resources/Images/Theme" + SessionVM.Session.ThemeID + "/soundpointenable.png", UriKind.Relative));
+            SoundPointEnableImage.ImageSource = GetBitmapImage("soundpointenable");
 
             SoundPointDisableImage = new ImageBrush();
-            SoundPointDisableImage.ImageSource = new BitmapImage(new Uri(@"../../Resources/Images/Theme" + SessionVM.Session.ThemeID + "/soundpointdisable.png", UriKind.Relative));
-            
+            SoundPointDisableImage.ImageSource = GetBitmapImage("soundpointdisable");
+
             ThemesImage = new ImageBrush();
             ThemesImage.ImageSource = new BitmapImage(new Uri(@"../../Resources/Images/UI_items/themes.png", UriKind.Relative));
-
 
             NoteBubbleImages.Add(NoteValue.crotchet, GetNoteBitmapImage("bullenoire"));
             NoteBubbleImages.Add(NoteValue.minim, GetNoteBitmapImage("bulleblanche"));
             NoteBubbleImages.Add(NoteValue.quaver, GetNoteBitmapImage("bullecroche"));
-
 
             MelodyBubbleImages.Add(Gesture.infinite , GetMelodyBitmapImage("infinite"));
             MelodyBubbleImages.Add(Gesture.s, GetMelodyBitmapImage("s"));
@@ -160,6 +137,16 @@ namespace PopnTouchi2.ViewModel
         public BitmapImage GetMelodyBitmapImage(String img)
         {
             return new BitmapImage(new Uri(@"../../Resources/Images/Theme" + SessionVM.Session.ThemeID + "/Bubbles/Melodies/" + img + ".png", UriKind.Relative));
+        }
+
+        /// <summary>
+        /// Retrieves the bitmap image with the given name.
+        /// </summary>
+        /// <param name="img">Image name</param>
+        /// <returns>BitmapImage corresponding</returns>
+        public BitmapImage GetBitmapImage(String img)
+        {
+            return new BitmapImage(new Uri(@"../../Resources/Images/Theme" + SessionVM.Session.ThemeID + "/"+img+".png", UriKind.Relative));
         }
 
         /// <summary>

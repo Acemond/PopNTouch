@@ -24,7 +24,7 @@ namespace PopnTouchi2.ViewModel
         /// Parameter.
         /// Private
         /// </summary>
-        private SessionViewModel sessionVM;
+        public SessionViewModel SessionVM;
 
         /// <summary>
         /// Property.
@@ -64,38 +64,40 @@ namespace PopnTouchi2.ViewModel
         public TreeViewModel(Boolean up, Thickness t, SessionViewModel s)
         {
             this.Up = !up;
-            sessionVM = s;
+            SessionVM = s;
+            double ratio = s.SessionSVI.Width / 1920.0;
+
             Grid = new Grid();
             Grid.HorizontalAlignment = System.Windows.HorizontalAlignment.Left;
             Grid.Margin = t;
 
+            Grid.Height = 210.0 * ratio;
+            Grid.Width = 210.0 * ratio;
+
             if (Up)
             {
-                Instrument1 = new Instrument(sessionVM.Session.Theme.InstrumentsTop[0].Name);
-                Instrument2 = new Instrument(sessionVM.Session.Theme.InstrumentsTop[1].Name);
+                Instrument1 = new Instrument(SessionVM.Session.Theme.InstrumentsTop[0].Name);
+                Instrument2 = new Instrument(SessionVM.Session.Theme.InstrumentsTop[1].Name);
             }
             else
             {
-                Instrument1 = new Instrument(sessionVM.Session.Theme.InstrumentsBottom[0].Name);
-                Instrument2 = new Instrument(sessionVM.Session.Theme.InstrumentsBottom[1].Name);
+                Instrument1 = new Instrument(SessionVM.Session.Theme.InstrumentsBottom[0].Name);
+                Instrument2 = new Instrument(SessionVM.Session.Theme.InstrumentsBottom[1].Name);
             }
 
 
             Images = new List<Grid>();
-            Images.Add(createGridForImage(Instrument1.Name.ToString(), 100, 100, HorizontalAlignment.Left, VerticalAlignment.Center));
-            Images.Add(createGridForImage(Instrument1.Name.ToString(), 100, 100, HorizontalAlignment.Right, VerticalAlignment.Top));
-            Images.Add(createGridForImage(Instrument2.Name.ToString(), 100, 100, HorizontalAlignment.Right, VerticalAlignment.Bottom));
+            Images.Add(createGridForImage(Instrument1.Name.ToString(), 100.0 * ratio, 100.0 * ratio, HorizontalAlignment.Left, VerticalAlignment.Center));
+            Images.Add(createGridForImage(Instrument1.Name.ToString(), 100.0 * ratio, 100.0 * ratio, HorizontalAlignment.Right, VerticalAlignment.Top));
+            Images.Add(createGridForImage(Instrument2.Name.ToString(), 100.0 * ratio, 100.0 * ratio, HorizontalAlignment.Right, VerticalAlignment.Bottom));
 
-            Images.Add(createGridForLinks("root", 50, 50, new Thickness(0, 0, 100, 0)));
-            Images.Add(createGridForLinks("lower_branch", 80, 120, new Thickness(50, 80, 50, 0)));
-            Images.Add(createGridForLinks("upper_branch", 80, 120, new Thickness(50, 0, 50, 80)));
+            Images.Add(createGridForLinks("root", 50.0 * ratio, 50.0 * ratio, new Thickness(0, 0, 100.0 * ratio, 0)));
+            Images.Add(createGridForLinks("lower_branch", 80.0 * ratio, 120.0 * ratio, new Thickness(50.0 * ratio, 60.0 * ratio, 50.0 * ratio, 0.0)));
+            Images.Add(createGridForLinks("upper_branch", 80.0 * ratio, 120.0 * ratio, new Thickness(50.0 * ratio, 0.0, 50.0 * ratio, 60.0 * ratio)));
 
             Images[0].Visibility = Visibility.Visible;
 
-            foreach (Grid g in Images)
-            {
-                Grid.Children.Add(g);
-            }
+            foreach (Grid g in Images) Grid.Children.Add(g);
 
             Images[0].TouchDown += new EventHandler<TouchEventArgs>(touchDown0);
             Images[1].TouchDown += new EventHandler<TouchEventArgs>(touchDown1);
@@ -126,16 +128,18 @@ namespace PopnTouchi2.ViewModel
         /// <param name="h">Horizontal Alignment</param>
         /// <param name="v">Vertical Alignment</param>
         /// <returns>The grid</returns>
-        public Grid createGridForImage(String path, int height, int width, HorizontalAlignment h, VerticalAlignment v)
+        public Grid createGridForImage(String path, double height, double width, HorizontalAlignment h, VerticalAlignment v)
         {
             Grid g = new Grid();
-            g.Background = getImageBrush(path);
+            ImageBrush ib = getImageBrush(path);
+            ib.Stretch = Stretch.Uniform;
+            g.Background = ib;
             g.Height = height;
             g.Width = width;
             g.HorizontalAlignment = h;
             g.VerticalAlignment = v;
             g.Visibility = Visibility.Hidden;
-         
+            Grid.SetZIndex(g, 201);
             return g;
         }
 
@@ -147,7 +151,7 @@ namespace PopnTouchi2.ViewModel
         /// <param name="width">Width of grid</param>
         /// <param name="t">The Thickness</param>
         /// <returns>The grid</returns>
-        public Grid createGridForLinks(String path, int height, int width, Thickness t)
+        public Grid createGridForLinks(String path, double height, double width, Thickness t)
         {
             Grid g = new Grid();
             g.Background = getImageBrush(path);
@@ -155,7 +159,7 @@ namespace PopnTouchi2.ViewModel
             g.Width = width;
             g.Margin = t;
             g.Visibility = Visibility.Hidden;
-
+            Grid.SetZIndex(g, 200);
             return g;
         }
 
@@ -167,7 +171,7 @@ namespace PopnTouchi2.ViewModel
         /// <param name="e"></param>
         private void touchDown0(object sender, TouchEventArgs e)
         {
-            for (int i = 1; i < Images.Count; i++) { Images[i].Visibility = Visibility.Visible; }
+            for (int i = 1; i < Images.Count; i++) Images[i].Visibility = Visibility.Visible;
             Images[0].Visibility = Visibility.Hidden;
         }
 
@@ -184,15 +188,9 @@ namespace PopnTouchi2.ViewModel
             Images[0].Background = getImageBrush(Instrument1.Name.ToString());
             Images[0].Visibility = Visibility.Visible;
             for (int i = 1; i < Images.Count; i++) { Images[i].Visibility = Visibility.Hidden; }
-            if (Up)
-            {
-                sessionVM.Session.StaveTop.CurrentInstrument = Instrument1;
-            }
-            else
-            {
-                sessionVM.Session.StaveBottom.CurrentInstrument = Instrument1;
-            }
-            
+
+            if (Up) SessionVM.Session.StaveTop.CurrentInstrument = Instrument1;
+            else SessionVM.Session.StaveBottom.CurrentInstrument = Instrument1;
         }
 
         /// <summary>
@@ -207,14 +205,9 @@ namespace PopnTouchi2.ViewModel
             Images[0].Background = getImageBrush(Instrument2.Name.ToString());
             Images[0].Visibility = Visibility.Visible;
             for (int i = 1; i < Images.Count; i++) { Images[i].Visibility = Visibility.Hidden; }
-            if (Up)
-            {
-                sessionVM.Session.StaveTop.CurrentInstrument = Instrument2;
-            }
-            else
-            {
-                sessionVM.Session.StaveBottom.CurrentInstrument = Instrument2;
-            }
+
+            if (Up) SessionVM.Session.StaveTop.CurrentInstrument = Instrument2;
+            else SessionVM.Session.StaveBottom.CurrentInstrument = Instrument2;
         }
     }
 }

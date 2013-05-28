@@ -13,10 +13,10 @@ namespace PopnTouchi2.ViewModel
     public class StaveViewModel : ViewModelBase
     {
         /// <summary>
-        /// Parameter.
-        /// Instrument identifier.
+        /// Property.
+        /// TODO
         /// </summary>
-        private int instrument;
+        public int CurrentInstrument { get; set; }
 
         /// <summary>
         /// Parameter.
@@ -40,21 +40,5 @@ namespace PopnTouchi2.ViewModel
             Animation = new StaveAnimation(stave);
         }
 
-        /// <summary>
-        /// Property.
-        /// TODO
-        /// </summary>
-        public int CurrentInstrument
-        {
-            get
-            {
-                return instrument; 
-            }
-            set
-            {
-               instrument = value;
-                NotifyPropertyChanged("CurrentInstrument");
-            }
-        }
     }
 }

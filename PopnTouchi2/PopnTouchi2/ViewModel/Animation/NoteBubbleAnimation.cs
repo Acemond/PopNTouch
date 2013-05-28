@@ -317,8 +317,10 @@ namespace PopnTouchi2.ViewModel.Animation
                     sessionVM.Session.StaveBottom.AddNote(noteBubbleVM.NoteBubble.Note, positionNote);
                 }
                 sessionVM.Bubbles.Items.Remove(noteBubbleVM.SVItem);
-
+                sessionVM.NbgVM.NoteBubbleVMs.Remove(noteBubbleVM);
             }
+
+
 
         }
 

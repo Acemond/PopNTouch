@@ -22,10 +22,10 @@ namespace PopnTouchi2.ViewModel
     public class NoteViewModel : ViewModelBase
     {
         /// <summary>
-        /// Parameter.
-        /// Note element from the Model.
+        /// Property.
+        /// TODO
         /// </summary>
-        private Note note;
+        public Note Note { get; set; }
 
         /// <summary>
         /// Property.
@@ -57,7 +57,7 @@ namespace PopnTouchi2.ViewModel
         public NoteViewModel(Point center, Note n, ScatterView sv, SessionViewModel s)
             : base(s)
         {
-            note = n;
+            Note = n;
             SVItem = new ScatterViewItem();
             ParentSV = sv;
 
@@ -71,7 +71,7 @@ namespace PopnTouchi2.ViewModel
 
             FrameworkElementFactory bubbleImage = new FrameworkElementFactory(typeof(Image));
 
-            String noteValue = note.Duration.ToString();
+            String noteValue = Note.Duration.ToString();
             int offset = GlobalVariables.ManipulationGrid[n.Position+2];
             double betweenStave = (350 - offset) * (SessionVM.SessionSVI.ActualHeight / 1080);
 
@@ -82,8 +82,8 @@ namespace PopnTouchi2.ViewModel
 
             bubbleImage.SetValue(Image.IsHitTestVisibleProperty, false);
 
-            bubbleImage.SetValue(Image.WidthProperty, (110.0 / 1920.0) * SessionVM.SessionSVI.ActualWidth);
-            bubbleImage.SetValue(Image.HeightProperty, (204.0 / 1080.0) * SessionVM.SessionSVI.ActualHeight);
+            bubbleImage.SetValue(Image.WidthProperty, (110.0 / 1920.0) * SessionVM.Grid.ActualWidth);
+            bubbleImage.SetValue(Image.HeightProperty, (204.0 / 1080.0) * SessionVM.Grid.ActualHeight);
             
             FrameworkElementFactory touchZone = new FrameworkElementFactory(typeof(Ellipse));
             touchZone.SetValue(Ellipse.FillProperty, Brushes.Transparent);
@@ -104,21 +104,6 @@ namespace PopnTouchi2.ViewModel
             Animation = new NoteAnimation(this, SessionVM);
         }
 
-        /// <summary>
-        /// Property.
-        /// TODO
-        /// </summary>
-        public Note Note
-        {
-            get
-            {
-                return note;
-            }
-            set
-            {
-                note = value;
-                NotifyPropertyChanged("Notes");
-            }
-        }
+        
     }
 }

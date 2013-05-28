@@ -25,26 +25,11 @@ namespace PopnTouchi2.ViewModel
     public class SessionViewModel : ViewModelBase
     {
         /// <summary>
-        /// Parameter.
-        /// Session's element from the Model.
-        /// </summary>
-        private Session session;
-        /// <summary>
         /// Property.
         /// TODO
         /// </summary>
-        public Session Session
-        {
-            get
-            {
-                return session;
-            }
-            set
-            {
-                session = value;
-                NotifyPropertyChanged("Session");
-            }
-        }
+        public Session Session { get; set; }
+
         /// <summary>
         /// Property.
         /// Session's Bubbles' ScatterView instance.
@@ -169,6 +154,7 @@ namespace PopnTouchi2.ViewModel
             SessionSVI = new ScatterViewItem();
             SessionSVI.Width = width;
             SessionSVI.Height = height;
+            double ratio = width / 1920.0;
             ThemeVM = new ThemeViewModel(Session.Theme, this);
             Grid = new Grid();
             UpdateSound = new ChangeSoundViewModel(this);
@@ -184,13 +170,7 @@ namespace PopnTouchi2.ViewModel
             Notes.Visibility = Visibility.Visible;
 
             Grid.Background = (new ThemeViewModel(Session.Theme, this)).BackgroundImage;
-
-            //TODO mettre dans SetDimensions
-
-            displayTrees(new Thickness(20, 0, 0, 130), new Thickness(20,0,0,580));
-
-            //else displayTrees(new Thickness(10, 75, 200, 90), new Thickness(10, 30, 200, 200));
-
+            
             Reducer = new SurfaceButton();
             Reduced = false;
             Reducer.Width = 100;
@@ -223,18 +203,18 @@ namespace PopnTouchi2.ViewModel
             SessionSVI.CanScale = false;
             SessionSVI.ShowsActivationEffects = false;
 
+            displayTrees(new Thickness(20.0 * ratio, 0, 0, 130.0 * ratio), new Thickness(20.0 * ratio, 0, 0, 580.0 * ratio));
+
             Grid.Children.Add(Bubbles);
             Grid.Children.Add(Notes);
             Grid.Children.Add(NbgVM.Grid);
             Grid.Children.Add(MbgVM.Grid);
             Grid.Children.Add(Play_Button);
             Grid.Children.Add(Theme_Button);
-            Grid.Children.Add(UpdateSound.Grid1);
-            Grid.Children.Add(UpdateSound.Grid2);
+            Grid.Children.Add(UpdateSound.Grid);
 
             Grid.SetZIndex(Theme_Button, 5);
-            Grid.SetZIndex(UpdateSound.Grid1, 4);
-            Grid.SetZIndex(UpdateSound.Grid2, 4);
+            Grid.SetZIndex(UpdateSound.Grid, 4);
             Grid.SetZIndex(TreeUp.Grid, 3);
             Grid.SetZIndex(TreeDown.Grid, 3);
             Grid.SetZIndex(Bubbles, 2);
@@ -293,6 +273,8 @@ namespace PopnTouchi2.ViewModel
             SessionSVI.Width = width;
             SessionSVI.Height = height;
 
+            double ratio = width / 1920.0;
+
             NbgVM.Grid.Width = width / 8.0;
             NbgVM.Grid.Height = width * 0.07948;
             MbgVM.Grid.Width = width / 8.0;
@@ -306,17 +288,10 @@ namespace PopnTouchi2.ViewModel
 
             Theme_Button.Width = (351.0 / 1920.0) * width;
             Theme_Button.Height = (110 / 1080.0) * height;
+
+            TreeUp.Grid.Margin = new Thickness(20.0 * ratio, 0, 0, 130.0 * ratio);
+            TreeDown.Grid.Margin = new Thickness(20.0 * ratio, 0, 0, 580.0 * ratio);
             
-            UpdateSound.Grid1.Width = width / 10;
-            UpdateSound.Grid2.Width = width / 10;
-            UpdateSound.Grid1.Height = height / 11;
-            UpdateSound.Grid2.Height = height / 11;
-
-            TreeUp.Grid.Width = width / 7;
-            TreeUp.Grid.Height = width / 5;
-            TreeDown.Grid.Width = width / 7;
-            TreeDown.Grid.Height = width / 5;
-
             SessionSVI.Width = width;
             SessionSVI.Height = height;
             SessionSVI.Center = new Point(width / 2.0, height / 2.0);
@@ -338,19 +313,19 @@ namespace PopnTouchi2.ViewModel
         {
             if (!IsPlaying)
             {
-                session.StopBackgroundSound();
+                Session.StopBackgroundSound();
 
-                session.StaveTop.PlayAllNotes();
-                session.StaveBottom.PlayAllNotes();
+                Session.StaveTop.PlayAllNotes();
+                Session.StaveBottom.PlayAllNotes();
                 Play_Button.Opacity = 0.5;
                 IsPlaying = true;
             }
             else
             {
-                session.PlayBackgroundSound();
+                Session.PlayBackgroundSound();
 
-                session.StaveTop.StopMusic();
-                session.StaveBottom.StopMusic();
+                Session.StaveTop.StopMusic();
+                Session.StaveBottom.StopMusic();
                 Play_Button.Opacity = 1;
                 IsPlaying = false;
             }
@@ -375,6 +350,13 @@ namespace PopnTouchi2.ViewModel
         /// </summary>
         public void LoadSession()
         {
+            //TODO : check : no problem with that ?
+            SessionSVI.Width = Grid.ActualWidth;
+            SessionSVI.Height = Grid.ActualHeight;
+            //ODOT
+
+            double ratio = SessionSVI.Width / 1920.0;
+
             string path = "Sessions/sess" + SessionID + ".bin";
             BinaryFormatter formatter = new BinaryFormatter();
             FileStream stream = File.Open(path, FileMode.Open);
@@ -406,21 +388,19 @@ namespace PopnTouchi2.ViewModel
             NbgVM = new NoteBubbleGeneratorViewModel(Session.NoteBubbleGenerator, this);
             MbgVM = new MelodyBubbleGeneratorViewModel(Session.MelodyBubbleGenerator, this);
 
+            displayTrees(new Thickness(20.0 * ratio, 0, 0, 130.0 * ratio), new Thickness(20.0 * ratio, 0, 0, 580.0 * ratio));
+
             Grid.Children.Add(Bubbles);
             Grid.Children.Add(Notes);
             Grid.Children.Add(Reducer);
             Grid.Children.Add(Play_Button);
-            Grid.Children.Add(UpdateSound.Grid1);
-            Grid.Children.Add(UpdateSound.Grid2);
-            Grid.Children.Add(TreeUp.Grid);
-            Grid.Children.Add(TreeDown.Grid);
+            Grid.Children.Add(UpdateSound.Grid);
             Grid.Children.Add(NbgVM.Grid);
             Grid.Children.Add(MbgVM.Grid);
             Grid.Children.Add(Theme_Button);
 
             Grid.SetZIndex(Theme_Button, 5);
-            Grid.SetZIndex(UpdateSound.Grid1, 4);
-            Grid.SetZIndex(UpdateSound.Grid2, 4);
+            Grid.SetZIndex(UpdateSound.Grid, 4);
             Grid.SetZIndex(TreeUp.Grid, 3);
             Grid.SetZIndex(TreeDown.Grid, 3);
             Grid.SetZIndex(Bubbles, 2);
@@ -431,8 +411,8 @@ namespace PopnTouchi2.ViewModel
             double XCenter;
             foreach (Note note in sd.StaveTopNotes)
             {
-                XCenter = note.Position * 60.0 + 120.0;
-                NoteViewModel noteVM = new NoteViewModel(new Point(XCenter, conv.getCenterY(true, note)), note, Notes, this);
+                XCenter = ((note.Position * 60.0 + 120.0) / 1920.0) * Grid.ActualWidth;
+                NoteViewModel noteVM = new NoteViewModel(new Point(XCenter, (conv.getCenterY(true, note) / 1080.0) * Grid.ActualHeight), note, Notes, this);
                 Session.StaveTop.AddNote(note, note.Position);
                 Notes.Items.Add(noteVM.SVItem);
                 NotesOnStave.Add(noteVM);
@@ -440,13 +420,12 @@ namespace PopnTouchi2.ViewModel
 
             foreach (Note note in sd.StaveBottomNotes)
             {
-                XCenter = note.Position * 60.0 + 120.0;
-                NoteViewModel noteVM = new NoteViewModel(new Point(XCenter, conv.getCenterY(false, note)), note, Notes, this);
+                XCenter = ((note.Position * 60.0 + 120.0) / 1920.0) * Grid.ActualWidth;
+                NoteViewModel noteVM = new NoteViewModel(new Point(XCenter, (conv.getCenterY(false, note) / 1080.0) * Grid.ActualHeight), note, Notes, this);
                 Session.StaveBottom.AddNote(note, note.Position);
                 Notes.Items.Add(noteVM.SVItem);
                 NotesOnStave.Add(noteVM);
             }
-
             SetDimensions(Grid.ActualWidth, Grid.ActualHeight);
         }
 
@@ -458,6 +437,8 @@ namespace PopnTouchi2.ViewModel
             Notes = null;
             NotesOnStave = null;
             Session = null;
+            TreeDown = null;
+            TreeUp = null;
         }
     }
 }
