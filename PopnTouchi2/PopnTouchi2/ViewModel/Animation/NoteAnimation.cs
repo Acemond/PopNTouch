@@ -147,6 +147,9 @@ namespace PopnTouchi2.ViewModel.Animation
                 nbVM.NoteBubble.Note.Sharp = false;
                 nbVM.NoteBubble.Note.Flat = false;
                 sessionVM.Bubbles.Items.Add(nbVM.SVItem);
+
+                String effect = "pop" + (new Random()).Next(1, 5).ToString();
+                AudioController.PlaySoundWithString(effect);
             }
         }
 

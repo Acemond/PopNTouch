@@ -166,7 +166,7 @@ namespace PopnTouchi2.ViewModel.Animation
             else bubbleCenter.X = Math.Floor((bubbleCenter.X + 30.0) / 60.0) * 60.0;
 
             //"Applatissement" de la portée (MAJ : Switch -> Tableau !)
-            int offset = GlobalVariables.ManipulationGrid[(int)(bubbleCenter.X / 60.0)];
+            int offset = GlobalVariables.ManipulationGrid.ElementAtOrDefault((int)(bubbleCenter.X / 60.0));
             bubbleCenter.Y += offset;
 
             int positionNote = (int)(bubbleCenter.X - 120) / 60;
@@ -183,7 +183,6 @@ namespace PopnTouchi2.ViewModel.Animation
                     bubbleCenter.Y = Math.Floor((bubbleCenter.Y + 6.0) / 20.0) * 20.0 + 4.0;
 
                     noteBubbleVM.NoteBubble.Note = new Note(converter.getOctave(bubbleCenter.Y), noteBubbleVM.NoteBubble.Note.Duration, converter.getPitch(bubbleCenter.Y), positionNote, noteBubbleVM.NoteBubble.Note.Sharp, noteBubbleVM.NoteBubble.Note.Flat);
-                //    sessionVM.Session.StaveTop.AddNote(noteBubbleVM.NoteBubble.Note, positionNote);
                 }
                 else
                 {
@@ -191,7 +190,6 @@ namespace PopnTouchi2.ViewModel.Animation
                     bubbleCenter.Y = Math.Floor((bubbleCenter.Y + 15.0) / 20.0) * 20.0 - 5.0;
 
                     noteBubbleVM.NoteBubble.Note = new Note(converter.getOctave(bubbleCenter.Y), noteBubbleVM.NoteBubble.Note.Duration, converter.getPitch(bubbleCenter.Y), positionNote, noteBubbleVM.NoteBubble.Note.Sharp, noteBubbleVM.NoteBubble.Note.Flat);
-                 //   sessionVM.Session.StaveBottom.AddNote(noteBubbleVM.NoteBubble.Note, positionNote);
                 }
 
                 bubbleCenter.Y -= offset;
@@ -234,21 +232,25 @@ namespace PopnTouchi2.ViewModel.Animation
             int positionNote = (int)(centerX - 120) / 60;
             Converter c = new Converter();
             double betweenStave = (350 - GlobalVariables.ManipulationGrid[noteBubbleVM.NoteBubble.Note.Position + 2]) * (sessionVM.SessionSVI.ActualHeight / 1080);
-            
+            bool isUp = (bubbleCenter.Y < betweenStave);
 
             if (noteBubbleVM.NoteBubble.Note.Sharp || noteBubbleVM.NoteBubble.Note.Flat)
             {
                 bool goOn = true;
 
                 for(int i = 0; i< sessionVM.NotesOnStave.Count && goOn; i++){
-                   
-                   
+
+
+                    bool changeLine = false;
                     if (sessionVM.NotesOnStave[i].SVItem.ActualCenter == bubbleCenter)
                     {
                         noteVM = sessionVM.NotesOnStave[i];
-                        noteVM.Note.Flat = noteBubbleVM.NoteBubble.Note.Flat;
-                        noteVM.Note.Sharp = noteBubbleVM.NoteBubble.Note.Sharp;
-                        if (bubbleCenter.Y < betweenStave)
+                        if(noteBubbleVM.NoteBubble.Note.Flat)
+                            changeLine = noteVM.Note.DownSemiTone();
+                        else
+                            changeLine = noteVM.Note.UpSemiTone();
+
+                        if (isUp)
                         {
                             sessionVM.Session.StaveTop.CurrentInstrument.PlayNote(noteVM.Note);
                             sessionVM.Session.StaveTop.AddNote(noteVM.Note, positionNote);
@@ -262,6 +264,14 @@ namespace PopnTouchi2.ViewModel.Animation
                         sessionVM.NotesOnStave.Remove(sessionVM.NotesOnStave[i]);
                         sessionVM.NotesOnStave.Add(noteVM);
                         sessionVM.Bubbles.Items.Remove(noteBubbleVM.SVItem);
+                        if (changeLine)
+                        {
+                            sessionVM.Notes.Items.Remove(noteVM.SVItem);
+                            double y = c.getCenterY(isUp, noteVM.Note);
+                            y = (y - GlobalVariables.ManipulationGrid[positionNote+2])*(sessionVM.SessionSVI.ActualHeight / 1080);
+                            noteVM = new NoteViewModel(new Point(bubbleCenter.X, y), noteVM.Note, sessionVM.Notes, sessionVM);
+                            sessionVM.Notes.Items.Add(noteVM.SVItem);
+                        }
                         goOn = false;
                     }
                 }
@@ -297,10 +307,7 @@ namespace PopnTouchi2.ViewModel.Animation
         public void touchDown(object sender, TouchEventArgs e)
         {
             StopAnimation();
-            String effect = "discovery";
-            Random r = new Random();
-            int nb = r.Next(1, 5);
-            effect += nb.ToString();
+            String effect = "discovery" + (new Random()).Next(1, 5).ToString();
             AudioController.PlaySoundWithString(effect);
         }
         #endregion

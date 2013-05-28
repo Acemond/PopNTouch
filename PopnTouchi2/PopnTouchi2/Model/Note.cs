@@ -141,5 +141,89 @@ namespace PopnTouchi2
         {
             return Duration.GetHashCode();
         }
+
+        /// <summary>
+        /// Down a semitone of the current Note
+        /// </summary>
+        public bool DownSemiTone()
+        {
+            if (Sharp)
+            {
+                Sharp = false;
+                return false;
+            }
+
+            if (Flat)
+            {
+                Flat = false;
+                switch (Pitch)
+                {
+                    case "do": Pitch = "la"; Sharp = true; break;
+                    case "re": Pitch = "do"; break;
+                    case "mi": Pitch = "re"; break;
+                    case "fa": Pitch = "re"; Sharp = true; break;
+                    case "sol": Pitch = "fa"; break;
+                    case "la": Pitch = "sol"; break;
+                    case "si": Pitch = "la"; break;
+                }
+            }
+
+            switch (Pitch)
+            {
+                case "do": Pitch = "si"; break;
+                case "re": Pitch = "do"; Sharp = true; break;
+                case "mi": Pitch = "re"; Sharp = true; break;
+                case "fa": Pitch = "mi"; break;
+                case "sol": Pitch = "fa"; Sharp = true; break;
+                case "la": Pitch = "sol"; Sharp = true; break;
+                case "si": Pitch = "la"; Sharp = true; break;
+            }
+
+            return true;
+
+            
+        }
+
+        /// <summary>
+        /// Up a semitone of the current Note
+        /// </summary>
+        /// <returns>True if the note change its position</returns>
+        public bool UpSemiTone()
+        {
+            if (Flat)
+            {
+                Flat = false;
+                return false;
+            }
+
+            if (Sharp)
+            {
+                Sharp = false;
+                switch (Pitch)
+                {
+                    case "do": Pitch = "re"; break;
+                    case "re": Pitch = "mi"; break;
+                    case "mi": Pitch = "fa"; Sharp = true; break;
+                    case "fa": Pitch = "sol"; break;
+                    case "sol": Pitch = "la"; break;
+                    case "la": Pitch = "si"; break;
+                    case "si": Pitch = "do"; Sharp = true; break;
+                }
+                return true;
+            }
+
+            switch (Pitch)
+            {
+                case "do": Pitch = "do"; Sharp = true; return false;
+                case "re": Pitch = "re"; Sharp = true; return false;
+                case "mi": Pitch = "fa"; return true;
+                case "fa": Pitch = "fa"; Sharp = true; return false;
+                case "sol": Pitch = "sol"; Sharp = true; return false;
+                case "la": Pitch = "la"; Sharp = true; return false;
+                case "si": Pitch = "do"; return true;
+            }
+
+            return true;
+        }
     }
 }
