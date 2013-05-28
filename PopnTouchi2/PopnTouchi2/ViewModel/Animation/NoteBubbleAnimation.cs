@@ -250,17 +250,6 @@ namespace PopnTouchi2.ViewModel.Animation
                         else
                             changeLine = noteVM.Note.UpSemiTone();
 
-                        if (isUp)
-                        {
-                            sessionVM.Session.StaveTop.CurrentInstrument.PlayNote(noteVM.Note);
-                            sessionVM.Session.StaveTop.AddNote(noteVM.Note, positionNote);
-                        }
-                        else
-                        {
-                            sessionVM.Session.StaveBottom.CurrentInstrument.PlayNote(noteVM.Note);
-                            sessionVM.Session.StaveBottom.AddNote(noteVM.Note, positionNote);
-                                
-                        }
                         sessionVM.NotesOnStave.Remove(sessionVM.NotesOnStave[i]);
                         sessionVM.NotesOnStave.Add(noteVM);
                         sessionVM.Bubbles.Items.Remove(noteBubbleVM.SVItem);
@@ -268,10 +257,44 @@ namespace PopnTouchi2.ViewModel.Animation
                         {
                             sessionVM.Notes.Items.Remove(noteVM.SVItem);
                             double y = c.getCenterY(isUp, noteVM.Note);
-                            y = (y - GlobalVariables.ManipulationGrid[positionNote+2])*(sessionVM.SessionSVI.ActualHeight / 1080);
-                            noteVM = new NoteViewModel(new Point(bubbleCenter.X, y), noteVM.Note, sessionVM.Notes, sessionVM);
-                            sessionVM.Notes.Items.Add(noteVM.SVItem);
+                            if (y == 0)
+                            {
+                                sessionVM.NotesOnStave.Remove(noteVM);
+                                if (isUp)
+                                    sessionVM.Session.StaveTop.RemoveNote(noteVM.Note);
+                                else
+                                    sessionVM.Session.StaveBottom.RemoveNote(noteVM.Note);
+
+                                Point center = new Point();
+                                center = noteVM.SVItem.ActualCenter;
+
+                                NoteBubbleViewModel nbVM = new NoteBubbleViewModel(center, new NoteBubble(noteVM.Note), sessionVM.Bubbles, sessionVM);
+                                nbVM.NoteBubble.Note.Sharp = false;
+                                nbVM.NoteBubble.Note.Flat = false;
+                                sessionVM.Bubbles.Items.Add(nbVM.SVItem);
+
+                                String effect = "pop" + (new Random()).Next(1, 5).ToString();
+                                AudioController.PlaySoundWithString(effect);
+                            }
+                            else
+                            {
+                                y = (y - GlobalVariables.ManipulationGrid[positionNote + 2]) * (sessionVM.SessionSVI.ActualHeight / 1080);
+                                noteVM = new NoteViewModel(new Point(bubbleCenter.X, y), noteVM.Note, sessionVM.Notes, sessionVM);
+                                sessionVM.Notes.Items.Add(noteVM.SVItem);
+                                if (isUp)
+                                {
+                                    sessionVM.Session.StaveTop.CurrentInstrument.PlayNote(noteVM.Note);
+                                    sessionVM.Session.StaveTop.AddNote(noteVM.Note, positionNote);
+                                }
+                                else
+                                {
+                                    sessionVM.Session.StaveBottom.CurrentInstrument.PlayNote(noteVM.Note);
+                                    sessionVM.Session.StaveBottom.AddNote(noteVM.Note, positionNote);
+
+                                }
+                            }
                         }
+                       
                         goOn = false;
                     }
                 }
@@ -283,7 +306,7 @@ namespace PopnTouchi2.ViewModel.Animation
                 sessionVM.Notes.Items.Add(noteVM.SVItem);
                 sessionVM.NotesOnStave.Add(noteVM);
                 
-                if (bubbleCenter.Y < betweenStave)
+                if (isUp)
                 {
                     sessionVM.Session.StaveTop.CurrentInstrument.PlayNote(noteBubbleVM.NoteBubble.Note);
                     sessionVM.Session.StaveTop.AddNote(noteBubbleVM.NoteBubble.Note, positionNote);

@@ -137,8 +137,8 @@ namespace PopnTouchi2.ViewModel
             bubbleImage.SetValue(Image.SourceProperty, new ThemeViewModel(SessionVM.Session.Theme, SessionVM).GetNoteBubbleImageSource(nb.Note.Duration));
                  
             bubbleImage.SetValue(Image.IsHitTestVisibleProperty, false);
-            bubbleImage.SetValue(Image.WidthProperty, 85.0);
-            bubbleImage.SetValue(Image.HeightProperty, 85.0);
+            bubbleImage.SetValue(Image.WidthProperty, (85.0 / 1920.0) * SessionVM.SessionSVI.ActualWidth);
+            bubbleImage.SetValue(Image.HeightProperty, (85.0 / 1080.0) * SessionVM.SessionSVI.ActualHeight);
 
             FrameworkElementFactory touchZone = new FrameworkElementFactory(typeof(Ellipse));
             touchZone.SetValue(Ellipse.FillProperty, Brushes.Transparent);
