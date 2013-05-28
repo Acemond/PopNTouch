@@ -50,22 +50,8 @@ namespace PopnTouchi2.ViewModel
             Grid1.VerticalAlignment = VerticalAlignment.Top;
             Grid2.VerticalAlignment = VerticalAlignment.Top;
 
-<<<<<<< HEAD
             Grid1.Margin = new System.Windows.Thickness(10, 0, 1200, 0);
             Grid2.Margin = new System.Windows.Thickness(10, 0, 690, 0);
-=======
-            if (sessionVM.Session.OnePlayer)
-            {
-                Grid1.Margin = new System.Windows.Thickness(10, 0, 1200, 0);
-                Grid2.Margin = new System.Windows.Thickness(10, 0, 690, 0);
-            }
-            else
-            {
-                Grid1.Margin = new System.Windows.Thickness(20, 0, 750, 0);
-                Grid2.Margin = new System.Windows.Thickness(20, 0, 470, 0);
-            }
-
->>>>>>> aceltis
 
             Images = new List<Grid>();
 
@@ -92,11 +78,7 @@ namespace PopnTouchi2.ViewModel
         public Grid createButtonForImage(Boolean enabled, HorizontalAlignment h)
         {
             Grid g = new Grid();
-<<<<<<< HEAD
-            g.Background = getImageBrush(path);
-            g.Height = 24;
-            g.Width = 24;
-=======
+
             if (enabled)
             {
                 g.Background = sessionVM.ThemeVM.SoundPointEnableImage;
@@ -106,17 +88,9 @@ namespace PopnTouchi2.ViewModel
                 g.Background = sessionVM.ThemeVM.SoundPointDisableImage;
             }
 
-            if (sessionVM.Session.OnePlayer)
-            {
-                g.Height = 24;
-                g.Width = 24;
-            }
-            else
-            {
-                g.Height = 16;
-                g.Width = 16;
-            }
->>>>>>> aceltis
+            g.Height = 24;
+            g.Width = 24;
+
             g.VerticalAlignment = VerticalAlignment.Center;
             g.HorizontalAlignment = h;
 

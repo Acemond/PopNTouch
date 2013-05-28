@@ -287,14 +287,10 @@ namespace PopnTouchi2.ViewModel
             MbgVM.Grid.Height = width * 0.07948;
 
             //Size of SurfaceButton Play
-<<<<<<< HEAD
-            Play.Width = width / 11.0;
-            Play.Height = height / 7.0;
-=======
-            Play_Button.Width = width / 11;
-            Play_Button.Height = height / 7;
 
->>>>>>> aceltis
+            Play_Button.Width = width / 11.0;
+            Play_Button.Height = height / 7.0;
+
    
             UpdateSound.Grid1.Width = width / 10;
             UpdateSound.Grid2.Width = width / 10;
@@ -391,7 +387,7 @@ namespace PopnTouchi2.ViewModel
 
             Bubbles = new ScatterView();
             Notes = new ScatterView();
-            UpdateSound = new ChangeSoundViewModel(Session);
+            UpdateSound = new ChangeSoundViewModel(this);
             NotesOnStave = new List<NoteViewModel>();
 
             NbgVM = new NoteBubbleGeneratorViewModel(Session.NoteBubbleGenerator, this);
@@ -400,7 +396,7 @@ namespace PopnTouchi2.ViewModel
             Grid.Children.Add(Bubbles);
             Grid.Children.Add(Notes);
             Grid.Children.Add(Reducer);
-            Grid.Children.Add(Play);
+            Grid.Children.Add(Play_Button);
             Grid.Children.Add(UpdateSound.Grid1);
             Grid.Children.Add(UpdateSound.Grid2);
             Grid.Children.Add(TreeUp.Grid);
