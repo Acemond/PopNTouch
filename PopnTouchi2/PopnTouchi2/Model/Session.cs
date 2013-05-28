@@ -78,8 +78,14 @@ namespace PopnTouchi2
             StaveBottom = new Stave(Theme.InstrumentsBottom[0], Theme);
             
             //sound methods
-            Theme.sound.Play();
-          //  AudioController.FadeInBackgroundSound();
+            try
+            {
+                Theme.sound.Play();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Limited number of sound instance");
+            }
         }
         #endregion
 
@@ -89,7 +95,14 @@ namespace PopnTouchi2
         /// </summary>
         public void StopBackgroundSound()
         {
-            Theme.sound.Stop(AudioStopOptions.AsAuthored);
+            try
+            {
+                Theme.sound.Stop(AudioStopOptions.AsAuthored);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Limited number of sound instance");
+            }
         }
 
         /// <summary>
@@ -98,7 +111,14 @@ namespace PopnTouchi2
         public void PlayBackgroundSound()
         {
             Theme.refreshSound();
-            Theme.sound.Play();
+            try
+            {
+                Theme.sound.Play();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Limited number of sound instance");
+            }
         }
 
         /// <summary>

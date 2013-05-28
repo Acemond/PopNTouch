@@ -599,6 +599,7 @@ namespace PopnTouchi2.ViewModel.Animation
             MainDesktop = (DesktopView)((ScatterView)SessionVM.SessionSVI.Parent).Parent;
 
             SessionVM.LoadSession("test.bin");
+          
             SessionVM.Session.PlayBackgroundSound();
 
             MakeReadyForDisplay();

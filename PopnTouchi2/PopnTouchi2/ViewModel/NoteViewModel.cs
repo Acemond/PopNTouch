@@ -12,6 +12,7 @@ using System.Windows.Input;
 using System.Windows.Shapes;
 using PopnTouchi2.Infrastructure;
 using PopnTouchi2.ViewModel.Animation;
+using PopnTouchi2.Model.Enums;
 
 namespace PopnTouchi2.ViewModel
 {
@@ -66,8 +67,10 @@ namespace PopnTouchi2.ViewModel
             FrameworkElementFactory bubbleImage = new FrameworkElementFactory(typeof(Image));
 
             String noteValue = note.Duration.ToString();
+            int offset = GlobalVariables.ManipulationGrid[n.Position+2];
+            double betweenStave = (350 - offset) * (SessionVM.SessionSVI.ActualHeight / 1080);
 
-            if (center.Y < (370 * SessionVM.SessionSVI.ActualHeight /1080))
+            if (center.Y < betweenStave)
                 bubbleImage.SetValue(Image.SourceProperty, new BitmapImage(new Uri(@"../../Resources/Images/UI_items/Notes/black/" + noteValue + ".png", UriKind.Relative)));
             else
                 bubbleImage.SetValue(Image.SourceProperty, new BitmapImage(new Uri(@"../../Resources/Images/UI_items/Notes/white/" + noteValue + ".png", UriKind.Relative)));
