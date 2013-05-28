@@ -48,7 +48,18 @@ namespace PopnTouchi2
         /// of the background after the 
         /// Stop button
         /// </summary>
-        public abstract void refreshSound();
+        /// <param name="name"></param>
+        public void refreshSound(String name)
+        {
+            try
+            {
+                sound = AudioController.INSTANCE.SoundBank.GetCue(name);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("Limited instance of background sound");
+            }
+        }
         
     }
 }

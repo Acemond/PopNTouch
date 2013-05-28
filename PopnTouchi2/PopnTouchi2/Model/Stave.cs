@@ -238,7 +238,7 @@ namespace PopnTouchi2
             Timer.Elapsed -= new ElapsedEventHandler(PlayList);
             PositionNote = 0;
             IteratorNotes = 0;
-            theme.refreshSound();
+            theme.refreshSound(theme.sound.ToString());
             try
             {
                 theme.sound.Play();

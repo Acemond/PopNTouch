@@ -21,18 +21,7 @@ namespace PopnTouchi2
             InstrumentsBottom[0] = new Instrument(InstrumentType.contrebass);
             InstrumentsBottom[1] = new Instrument(InstrumentType.vibraphone);
 
-            // TODO sound = AudioController.INSTANCE.SoundBank.GetCue("loop_eveningWater");
-        }
-
-        /// <summary>
-        /// refreshSound()
-        /// Used to activated the sound 
-        /// of the background after the 
-        /// Stop button
-        /// </summary>
-        public override void refreshSound()
-        {
-            sound = AudioController.INSTANCE.SoundBank.GetCue("loop_eveningWater");
+            refreshSound("loop_eveningWater");
         }
     }
 }
