@@ -64,26 +64,17 @@ namespace PopnTouchi2.ViewModel
             Grid g = new Grid();
             double ratio = sessionVM.SessionSVI.Width / 1920.0;
 
-            if (enabled)
-            {
-                g.Background = sessionVM.ThemeVM.SoundPointEnableImage;
-            }
-            else
-            {
-                g.Background = sessionVM.ThemeVM.SoundPointDisableImage;
-            }
+            if (enabled) g.Background = sessionVM.ThemeVM.SoundPointEnableImage;
+            else g.Background = sessionVM.ThemeVM.SoundPointDisableImage;
 
             g.Height = 28.0 * ratio;
             g.Width = 28.0 * ratio;
 
             g.VerticalAlignment = VerticalAlignment.Center;
 
-            g.Visibility = Visibility.Visible;
-
             g.PreviewTouchDown += new EventHandler<TouchEventArgs>(TouchDown);
             g.Margin = new Thickness(margin, 0.0, 0.0, 0.0);
             return g;
-
         }
 
         /// <summary>

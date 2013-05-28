@@ -154,6 +154,7 @@ namespace PopnTouchi2.ViewModel
             SessionSVI = new ScatterViewItem();
             SessionSVI.Width = width;
             SessionSVI.Height = height;
+            double ratio = width / 1920.0;
             ThemeVM = new ThemeViewModel(Session.Theme, this);
             Grid = new Grid();
             UpdateSound = new ChangeSoundViewModel(this);
@@ -169,13 +170,7 @@ namespace PopnTouchi2.ViewModel
             Notes.Visibility = Visibility.Visible;
 
             Grid.Background = (new ThemeViewModel(Session.Theme, this)).BackgroundImage;
-
-            //TODO mettre dans SetDimensions
-
-            displayTrees(new Thickness(20, 0, 0, 130), new Thickness(20,0,0,580));
-
-            //else displayTrees(new Thickness(10, 75, 200, 90), new Thickness(10, 30, 200, 200));
-
+            
             Reducer = new SurfaceButton();
             Reduced = false;
             Reducer.Width = 100;
@@ -207,6 +202,8 @@ namespace PopnTouchi2.ViewModel
             SessionSVI.CanRotate = false;
             SessionSVI.CanScale = false;
             SessionSVI.ShowsActivationEffects = false;
+
+            displayTrees(new Thickness(20.0 * ratio, 0, 0, 130.0 * ratio), new Thickness(20.0 * ratio, 0, 0, 580.0 * ratio));
 
             Grid.Children.Add(Bubbles);
             Grid.Children.Add(Notes);
@@ -276,6 +273,8 @@ namespace PopnTouchi2.ViewModel
             SessionSVI.Width = width;
             SessionSVI.Height = height;
 
+            double ratio = width / 1920.0;
+
             NbgVM.Grid.Width = width / 8.0;
             NbgVM.Grid.Height = width * 0.07948;
             MbgVM.Grid.Width = width / 8.0;
@@ -289,15 +288,10 @@ namespace PopnTouchi2.ViewModel
 
             Theme_Button.Width = (351.0 / 1920.0) * width;
             Theme_Button.Height = (110 / 1080.0) * height;
+
+            TreeUp.Grid.Margin = new Thickness(20.0 * ratio, 0, 0, 130.0 * ratio);
+            TreeDown.Grid.Margin = new Thickness(20.0 * ratio, 0, 0, 580.0 * ratio);
             
-            /*UpdateSound.Grid.Width = width / 10;
-            UpdateSound.Grid.Height = height / 11;*/
-
-            TreeUp.Grid.Width = width / 7;
-            TreeUp.Grid.Height = width / 5;
-            TreeDown.Grid.Width = width / 7;
-            TreeDown.Grid.Height = width / 5;
-
             SessionSVI.Width = width;
             SessionSVI.Height = height;
             SessionSVI.Center = new Point(width / 2.0, height / 2.0);
@@ -361,6 +355,8 @@ namespace PopnTouchi2.ViewModel
             SessionSVI.Height = Grid.ActualHeight;
             //ODOT
 
+            double ratio = SessionSVI.Width / 1920.0;
+
             string path = "Sessions/sess" + SessionID + ".bin";
             BinaryFormatter formatter = new BinaryFormatter();
             FileStream stream = File.Open(path, FileMode.Open);
@@ -392,13 +388,13 @@ namespace PopnTouchi2.ViewModel
             NbgVM = new NoteBubbleGeneratorViewModel(Session.NoteBubbleGenerator, this);
             MbgVM = new MelodyBubbleGeneratorViewModel(Session.MelodyBubbleGenerator, this);
 
+            displayTrees(new Thickness(20.0 * ratio, 0, 0, 130.0 * ratio), new Thickness(20.0 * ratio, 0, 0, 580.0 * ratio));
+
             Grid.Children.Add(Bubbles);
             Grid.Children.Add(Notes);
             Grid.Children.Add(Reducer);
             Grid.Children.Add(Play_Button);
             Grid.Children.Add(UpdateSound.Grid);
-            Grid.Children.Add(TreeUp.Grid);
-            Grid.Children.Add(TreeDown.Grid);
             Grid.Children.Add(NbgVM.Grid);
             Grid.Children.Add(MbgVM.Grid);
             Grid.Children.Add(Theme_Button);
@@ -430,7 +426,6 @@ namespace PopnTouchi2.ViewModel
                 Notes.Items.Add(noteVM.SVItem);
                 NotesOnStave.Add(noteVM);
             }
-
             SetDimensions(Grid.ActualWidth, Grid.ActualHeight);
         }
 
@@ -442,6 +437,8 @@ namespace PopnTouchi2.ViewModel
             Notes = null;
             NotesOnStave = null;
             Session = null;
+            TreeDown = null;
+            TreeUp = null;
         }
     }
 }
