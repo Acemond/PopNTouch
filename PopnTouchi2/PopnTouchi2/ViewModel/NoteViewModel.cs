@@ -27,12 +27,6 @@ namespace PopnTouchi2.ViewModel
         private Note note;
 
         /// <summary>
-        /// Parameter.
-        /// Private
-        /// </summary>
-        private SessionViewModel sessionVM;
-
-        /// <summary>
         /// Property.
         /// The parent ScatterView.
         /// </summary>
@@ -76,8 +70,16 @@ namespace PopnTouchi2.ViewModel
             bubbleImage.SetValue(Image.SourceProperty, new BitmapImage(new Uri(@"../../Resources/Images/UI_items/Notes/black/" + noteValue + ".png", UriKind.Relative)));
 
             bubbleImage.SetValue(Image.IsHitTestVisibleProperty, false);
-            bubbleImage.SetValue(Image.WidthProperty, 85.0);
-            bubbleImage.SetValue(Image.HeightProperty, 85.0);
+            if (SessionVM.Session.OnePlayer)
+            {
+                bubbleImage.SetValue(Image.WidthProperty, 85.0);
+                bubbleImage.SetValue(Image.HeightProperty, 85.0);
+            }
+            else
+            {
+                bubbleImage.SetValue(Image.WidthProperty, 50.0);
+                bubbleImage.SetValue(Image.HeightProperty, 50.0);
+            }
 
             FrameworkElementFactory touchZone = new FrameworkElementFactory(typeof(Ellipse));
             touchZone.SetValue(Ellipse.FillProperty, Brushes.Transparent);

@@ -38,12 +38,6 @@ namespace PopnTouchi2
         public int MaxPosition { get; set; }
 
         /// <summary>
-        /// Parameter.
-        /// True if this instance is for the upper stave.
-        /// </summary>
-        public Boolean isUp;
-
-        /// <summary>
         /// Property.
         /// Iterator of the Notes list
         /// </summary>
@@ -73,6 +67,18 @@ namespace PopnTouchi2
         /// </summary>
         public int IteratorMelody { get; set; }
 
+        /// <summary>
+        /// Property.
+        /// The position of a note in the melody
+        /// </summary>
+        public int PositionMelody { get; set; }
+
+        /// <summary>
+        /// Property.
+        /// The position of a note in the list Notes
+        /// </summary>
+        public int PositionNote { get; set; }
+
 
         /// <summary>
         /// Stave Constructor.
@@ -80,7 +86,7 @@ namespace PopnTouchi2
         /// </summary>
         /// <param name="up">True if the current instance is the upper stave</param>
         /// <param name="instru">The instrument to be used</param>
-        public Stave(Boolean up, Instrument instru, Theme theme)
+        public Stave(Instrument instru, Theme theme)
         {
             this.theme = theme;
             MaxPosition = 0;
@@ -90,7 +96,8 @@ namespace PopnTouchi2
             TimerMelody = new Timer();
             IteratorNotes = 0;
             IteratorMelody = 0;
-            isUp = up;
+            PositionMelody = 0;
+            PositionNote = 0;
         }
 
         /// <summary>
@@ -162,11 +169,11 @@ namespace PopnTouchi2
         {
             bool play = true;
 
-            if (GlobalVariables.position_Melody <= melody.Notes.Last().Position + 1)
+            if (PositionMelody <= melody.Notes.Last().Position + 1)
             {
                 while (play && (IteratorMelody < melody.Notes.Count))
                 {
-                    if (melody.Notes[IteratorMelody].Position == GlobalVariables.position_Melody)
+                    if (melody.Notes[IteratorMelody].Position == PositionMelody)
                     {
                         CurrentInstrument.PlayNote(melody.Notes[IteratorMelody]);
                         IteratorMelody++;
@@ -174,7 +181,7 @@ namespace PopnTouchi2
                     else play = false;
                 }
 
-                GlobalVariables.position_Melody++;
+                PositionMelody++;
 
             }
             else
@@ -204,41 +211,20 @@ namespace PopnTouchi2
         {
             bool play = true;
 
-            if (Math.Max(GlobalVariables.position_NoteUp, GlobalVariables.position_NoteDown) <= MaxPosition + 4)
+            if (PositionNote <= MaxPosition + 4)
             {
-                if (isUp)
+                while (play && (IteratorNotes < Notes.Count))
                 {
-                    while (play && (IteratorNotes < Notes.Count))
+                    if (Notes[IteratorNotes].Position == PositionNote)
                     {
-                        if (Notes[IteratorNotes].Position == GlobalVariables.position_NoteUp)
-                        {
-                            CurrentInstrument.PlayNote(Notes[IteratorNotes]);
-                            IteratorNotes++;
-                        }
-                        else play = false;
-
+                        CurrentInstrument.PlayNote(Notes[IteratorNotes]);
+                        IteratorNotes++;
                     }
+                    else play = false;
 
-                    GlobalVariables.position_NoteUp++;
                 }
-
-                else
-                {
-                    while (play && (IteratorNotes < Notes.Count))
-                    {
-                        if (Notes[IteratorNotes].Position == GlobalVariables.position_NoteDown)
-                        {
-                            CurrentInstrument.PlayNote(Notes[IteratorNotes]);
-                            IteratorNotes++;
-                        }
-                        else play = false;
-
-                    }
-
-                    GlobalVariables.position_NoteDown++;
-                }
-
-            }
+                PositionNote++;
+            }   
             else StopMusic();
         }
 
@@ -250,14 +236,10 @@ namespace PopnTouchi2
             Timer.Stop();
             Timer.EndInit();
             Timer.Elapsed -= new ElapsedEventHandler(PlayList);
-            GlobalVariables.position_NoteUp = 0;
-            GlobalVariables.position_NoteDown = 0;
+            PositionNote = 0;
             IteratorNotes = 0;
-            if (isUp)
-            {
-                theme.refreshSound();
-                theme.sound.Play();
-            }
+            theme.refreshSound();
+            theme.sound.Play();
         }
 
         /// <summary>
@@ -268,7 +250,7 @@ namespace PopnTouchi2
             TimerMelody.Stop();
             TimerMelody.EndInit();
             TimerMelody.Elapsed -= new ElapsedEventHandler(PlayMelody);
-            GlobalVariables.position_Melody = 0;
+            PositionMelody = 0;
             IteratorMelody = 0;
         }
     }

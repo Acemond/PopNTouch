@@ -51,6 +51,13 @@ namespace PopnTouchi2
         /// The Theme number.
         /// </summary>
         public int ThemeID { get; set; }
+
+        /// <summary>
+        /// Property.
+        /// Boolean, true if there is one player
+        /// </summary>
+        public Boolean OnePlayer { get; set; }
+
         #endregion
 
         #region Constructors
@@ -58,16 +65,17 @@ namespace PopnTouchi2
         /// Session Constructor.
         /// Initializes interface elements accordingly to a default Theme.
         /// </summary>
-        public Session()
+        public Session(Boolean onePlayer)
         {
             Theme = new Theme1(); //Could be randomized
             ThemeID = 1;
+            OnePlayer = onePlayer;
 
             NoteBubbleGenerator = new NoteBubbleGenerator();
             MelodyBubbleGenerator = new MelodyBubbleGenerator();
 
-            StaveTop = new Stave(true, Theme.InstrumentsTop[0], Theme);
-            StaveBottom = new Stave(false, Theme.InstrumentsBottom[0], Theme);
+            StaveTop = new Stave(Theme.InstrumentsTop[0], Theme);
+            StaveBottom = new Stave(Theme.InstrumentsBottom[0], Theme);
             
             //sound methods
             Theme.sound.Play();

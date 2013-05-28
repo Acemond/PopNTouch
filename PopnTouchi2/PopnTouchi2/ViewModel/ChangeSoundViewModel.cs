@@ -46,18 +46,21 @@ namespace PopnTouchi2.ViewModel
             session = s;
             
             Grid1 = new Grid();
-            Grid1.Width = 150;
-            Grid1.Height = 80;
-            Grid1.VerticalAlignment = VerticalAlignment.Top;
-            Grid1.Margin = new System.Windows.Thickness(10, 0, 800, 150);
-            Grid1.Background = Brushes.Transparent;
-
             Grid2 = new Grid();
-            Grid2.Width = 150;
-            Grid2.Height = 80;
+            Grid1.VerticalAlignment = VerticalAlignment.Top;
             Grid2.VerticalAlignment = VerticalAlignment.Top;
-            Grid2.Margin = new System.Windows.Thickness(10, 0, 470, 150);
-            Grid2.Background = Brushes.Transparent;
+
+            if (session.OnePlayer)
+            {
+                Grid1.Margin = new System.Windows.Thickness(10, 0, 850, 150);
+                Grid2.Margin = new System.Windows.Thickness(10, 0, 520, 150);
+            }
+            else
+            {
+                Grid1.Margin = new System.Windows.Thickness(20, 0, 500, 100);
+                Grid2.Margin = new System.Windows.Thickness(20, 0, 250, 100);
+            }
+
 
             Images = new List<SurfaceButton>();
 
@@ -83,15 +86,23 @@ namespace PopnTouchi2.ViewModel
 
         public SurfaceButton createButtonForImage(String path, HorizontalAlignment h)
         {
-            SurfaceButton g = new SurfaceButton();
-            g.Background = getImageBrush(path);
-            g.Height = 24;
-            g.Width = 24;
-            g.VerticalAlignment = VerticalAlignment.Center;
-            g.HorizontalAlignment = h;
-           
-            g.Visibility = Visibility.Visible;
-            return g;
+            SurfaceButton b = new SurfaceButton();
+            b.Background = getImageBrush(path);
+            if (session.OnePlayer)
+            {
+                b.Height = 24;
+                b.Width = 24;
+            }
+            else
+            {
+                b.MaxHeight = 5;
+                b.MaxWidth = 5;
+            }
+            b.VerticalAlignment = VerticalAlignment.Center;
+            b.HorizontalAlignment = h;
+
+            b.Visibility = Visibility.Visible;
+            return b;
 
         }
 

@@ -169,7 +169,9 @@ namespace PopnTouchi2.ViewModel
             Grid.Background = (new ThemeViewModel(Session.Theme, this)).BackgroundImage;
                  
             //TODO changer thickness bottom et top avec les résolutions plus grandes
+            if(session.OnePlayer)
             displayTrees(new Thickness(10, 50, 200, 90), new Thickness(10,10,200,400));
+            else displayTrees(new Thickness(10, 75, 200, 90), new Thickness(10, 30, 200, 200));
 
             Reducer = new SurfaceButton();
             Reduced = false;
@@ -181,8 +183,8 @@ namespace PopnTouchi2.ViewModel
             Reducer.Content = "Reduce !";
             
             Play = new SurfaceButton();
-            Play.Width = 140;
-            Play.Height = 150;
+           // Play.Width = 140;
+           // Play.Height = 150;
             Play.HorizontalAlignment = System.Windows.HorizontalAlignment.Left;
             Play.VerticalAlignment = System.Windows.VerticalAlignment.Top;
             ImageBrush img = new ImageBrush();
@@ -255,6 +257,28 @@ namespace PopnTouchi2.ViewModel
             NbgVM.Grid.Height = width * 0.07948;
             MbgVM.Grid.Width = width / 8.0;
             MbgVM.Grid.Height = width * 0.07948;
+
+            //Size of SurfaceButton Play
+            Play.Width = width / 11;
+            Play.Height = height / 7;
+
+            if (session.OnePlayer)
+            {
+                UpdateSound.Grid1.Width = width / 8.5;
+                UpdateSound.Grid2.Width = width / 8.5;
+            }
+            else
+            {
+                UpdateSound.Grid1.Width = width / 6;
+                UpdateSound.Grid2.Width = width / 6;
+            }
+            UpdateSound.Grid1.Height = height / 11;
+            UpdateSound.Grid2.Height = height / 11;
+
+            TreeUp.Grid.Width = width / 7;
+            TreeUp.Grid.Height = width / 5;
+            TreeDown.Grid.Width = width / 7;
+            TreeDown.Grid.Height = width / 5;
 
             SessionSVI.Width = width;
             SessionSVI.Height = height;
@@ -329,8 +353,8 @@ namespace PopnTouchi2.ViewModel
                 default: Session.Theme = new Theme1(); break;
             }
 
-            Session.StaveTop = new Stave(true, Session.Theme.InstrumentsTop[0], Session.Theme);
-            Session.StaveBottom = new Stave(false, Session.Theme.InstrumentsBottom[0], Session.Theme);
+            Session.StaveTop = new Stave(Session.Theme.InstrumentsTop[0], Session.Theme);
+            Session.StaveBottom = new Stave(Session.Theme.InstrumentsBottom[0], Session.Theme);
             Session.StaveTop.Notes = sd.StaveTopNotes;
             Session.StaveBottom.Notes = sd.StaveBottomNotes;
             //Notes = sd.NotesSV;
