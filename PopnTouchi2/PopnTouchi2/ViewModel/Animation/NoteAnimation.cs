@@ -99,7 +99,8 @@ namespace PopnTouchi2.ViewModel.Animation
                     NoteCenter.Y = Math.Floor((NoteCenter.Y + 6.0) / 20.0) * 20.0 + 4.0;
 
                     noteVM.Note = new Note(converter.getOctave(NoteCenter.Y), noteVM.Note.Duration, converter.getPitch(NoteCenter.Y), positionNote, noteVM.Note.Sharp, noteVM.Note.Flat);
-                    sessionVM.Session.StaveTop.AddNote(noteVM.Note, positionNote);
+                    if(!sessionVM.Session.StaveTop.Notes.Contains(noteVM.Note))
+                        sessionVM.Session.StaveTop.AddNote(noteVM.Note, positionNote);
                 }
                 else
                 {
@@ -107,6 +108,7 @@ namespace PopnTouchi2.ViewModel.Animation
                     NoteCenter.Y = Math.Floor((NoteCenter.Y + 15.0) / 20.0) * 20.0 - 5.0;
 
                     noteVM.Note = new Note(converter.getOctave(NoteCenter.Y), noteVM.Note.Duration, converter.getPitch(NoteCenter.Y), positionNote, noteVM.Note.Sharp, noteVM.Note.Flat);
+                    if (!sessionVM.Session.StaveBottom.Notes.Contains(noteVM.Note))
                     sessionVM.Session.StaveBottom.AddNote(noteVM.Note, positionNote);
                 }
 
@@ -157,8 +159,11 @@ namespace PopnTouchi2.ViewModel.Animation
         {  
             sessionVM.Notes.Items.Remove(noteVM.SVItem);
             noteVM = new NoteViewModel(noteVM.SVItem.ActualCenter, noteVM.Note, sessionVM.Notes, sessionVM);
-            sessionVM.Notes.Items.Add(noteVM.SVItem);
-            sessionVM.NotesOnStave.Add(noteVM);
+            if (!sessionVM.NotesOnStave.Contains(noteVM))
+            {
+                sessionVM.Notes.Items.Add(noteVM.SVItem);
+                sessionVM.NotesOnStave.Add(noteVM);
+            }
 
             double betweenStave = (350 - GlobalVariables.ManipulationGrid[noteVM.Note.Position + 2]) * (sessionVM.SessionSVI.ActualHeight / 1080);
             if (NoteCenter.Y < betweenStave)

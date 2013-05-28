@@ -20,25 +20,11 @@ namespace PopnTouchi2.ViewModel
     public class MelodyBubbleViewModel : ViewModelBase
     {
         /// <summary>
-        /// Parameter.
-        /// </summary>
-        private MelodyBubble melodyBubble;
-        /// <summary>
         /// Property.
         /// MelodyBubble element from the Model.
         /// </summary>
-        public MelodyBubble MelodyBubble
-        {
-            get
-            {
-                return melodyBubble;
-            }
-            set
-            {
-                melodyBubble = value;
-                NotifyPropertyChanged("MelodyBubble");
-            }
-        }
+        public MelodyBubble MelodyBubble { get; set; }
+
         /// <summary>
         /// Property.
         /// The parent ScatterView.
@@ -110,23 +96,21 @@ namespace PopnTouchi2.ViewModel
         /// <returns>The list of NoteViewModel</returns>
         public List<NoteViewModel> melodyToListOfNote(Point positionMelody)
         {
-            int initPos = melodyBubble.Melody.Notes[0].Position;
+            int initPos = MelodyBubble.Melody.Notes[0].Position;
             bool up = (positionMelody.Y < 350);
             Converter c = new Converter();
             double height = SessionVM.SessionSVI.ActualHeight;
 
             List<NoteViewModel> notes = new List<NoteViewModel>();
-            for(int i = 0; i< melodyBubble.Melody.Notes.Count; i++)
+            for(int i = 0; i< MelodyBubble.Melody.Notes.Count; i++)
             {
-                double x = (positionMelody.X + (melodyBubble.Melody.Notes[i].Position - initPos) * 60.0) * SessionVM.Grid.ActualWidth / 1920.0 ;
-                double y = c.getCenterY(up, melodyBubble.Melody.Notes[i]);
+                double x = (positionMelody.X + (MelodyBubble.Melody.Notes[i].Position - initPos) * 60.0) * SessionVM.Grid.ActualWidth / 1920.0 ;
+                double y = c.getCenterY(up, MelodyBubble.Melody.Notes[i]);
                 
-                /*double offset = GlobalVariables.ManipulationGrid[((long)positionMelody.X / 60)+melodyBubble.Melody.Notes[i].Position - initPos];
-                y -= offset;*/
                 y *= (height / 1080.0);
 
                 Point p = new Point(x, y);
-                notes.Add(new NoteViewModel(p,melodyBubble.Melody.Notes[i], SessionVM.Notes, SessionVM));
+                notes.Add(new NoteViewModel(p,MelodyBubble.Melody.Notes[i], SessionVM.Notes, SessionVM));
             }
 
             return notes;

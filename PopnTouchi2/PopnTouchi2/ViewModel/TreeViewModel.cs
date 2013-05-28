@@ -24,7 +24,7 @@ namespace PopnTouchi2.ViewModel
         /// Parameter.
         /// Private
         /// </summary>
-        private SessionViewModel sessionVM;
+        public SessionViewModel SessionVM;
 
         /// <summary>
         /// Property.
@@ -64,20 +64,20 @@ namespace PopnTouchi2.ViewModel
         public TreeViewModel(Boolean up, Thickness t, SessionViewModel s)
         {
             this.Up = !up;
-            sessionVM = s;
+            SessionVM = s;
             Grid = new Grid();
             Grid.HorizontalAlignment = System.Windows.HorizontalAlignment.Left;
             Grid.Margin = t;
 
             if (Up)
             {
-                Instrument1 = new Instrument(sessionVM.Session.Theme.InstrumentsTop[0].Name);
-                Instrument2 = new Instrument(sessionVM.Session.Theme.InstrumentsTop[1].Name);
+                Instrument1 = new Instrument(SessionVM.Session.Theme.InstrumentsTop[0].Name);
+                Instrument2 = new Instrument(SessionVM.Session.Theme.InstrumentsTop[1].Name);
             }
             else
             {
-                Instrument1 = new Instrument(sessionVM.Session.Theme.InstrumentsBottom[0].Name);
-                Instrument2 = new Instrument(sessionVM.Session.Theme.InstrumentsBottom[1].Name);
+                Instrument1 = new Instrument(SessionVM.Session.Theme.InstrumentsBottom[0].Name);
+                Instrument2 = new Instrument(SessionVM.Session.Theme.InstrumentsBottom[1].Name);
             }
 
 
@@ -186,11 +186,11 @@ namespace PopnTouchi2.ViewModel
             for (int i = 1; i < Images.Count; i++) { Images[i].Visibility = Visibility.Hidden; }
             if (Up)
             {
-                sessionVM.Session.StaveTop.CurrentInstrument = Instrument1;
+                SessionVM.Session.StaveTop.CurrentInstrument = Instrument1;
             }
             else
             {
-                sessionVM.Session.StaveBottom.CurrentInstrument = Instrument1;
+                SessionVM.Session.StaveBottom.CurrentInstrument = Instrument1;
             }
             
         }
@@ -209,11 +209,11 @@ namespace PopnTouchi2.ViewModel
             for (int i = 1; i < Images.Count; i++) { Images[i].Visibility = Visibility.Hidden; }
             if (Up)
             {
-                sessionVM.Session.StaveTop.CurrentInstrument = Instrument2;
+                SessionVM.Session.StaveTop.CurrentInstrument = Instrument2;
             }
             else
             {
-                sessionVM.Session.StaveBottom.CurrentInstrument = Instrument2;
+                SessionVM.Session.StaveBottom.CurrentInstrument = Instrument2;
             }
         }
     }

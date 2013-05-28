@@ -25,26 +25,11 @@ namespace PopnTouchi2.ViewModel
     public class SessionViewModel : ViewModelBase
     {
         /// <summary>
-        /// Parameter.
-        /// Session's element from the Model.
-        /// </summary>
-        private Session session;
-        /// <summary>
         /// Property.
         /// TODO
         /// </summary>
-        public Session Session
-        {
-            get
-            {
-                return session;
-            }
-            set
-            {
-                session = value;
-                NotifyPropertyChanged("Session");
-            }
-        }
+        public Session Session { get; set; }
+
         /// <summary>
         /// Property.
         /// Session's Bubbles' ScatterView instance.
@@ -334,19 +319,19 @@ namespace PopnTouchi2.ViewModel
         {
             if (!IsPlaying)
             {
-                session.StopBackgroundSound();
+                Session.StopBackgroundSound();
 
-                session.StaveTop.PlayAllNotes();
-                session.StaveBottom.PlayAllNotes();
+                Session.StaveTop.PlayAllNotes();
+                Session.StaveBottom.PlayAllNotes();
                 Play_Button.Opacity = 0.5;
                 IsPlaying = true;
             }
             else
             {
-                session.PlayBackgroundSound();
+                Session.PlayBackgroundSound();
 
-                session.StaveTop.StopMusic();
-                session.StaveBottom.StopMusic();
+                Session.StaveTop.StopMusic();
+                Session.StaveBottom.StopMusic();
                 Play_Button.Opacity = 1;
                 IsPlaying = false;
             }

@@ -41,7 +41,7 @@ namespace PopnTouchi2.ViewModel
             Grid.VerticalAlignment = VerticalAlignment.Top;
             Grid.HorizontalAlignment = HorizontalAlignment.Left;
 
-            Grid.Margin = new System.Windows.Thickness(56.0 * ratio, 20.0 * ratio, 0, 0);
+            Grid.Margin = new System.Windows.Thickness(40.0 * ratio, 20.0 * ratio, 0, 0);
             
             Grid.Children.Add(createButtonForImage(true, 0.0));
             Grid.Children.Add(createButtonForImage(true, 80.0 * ratio));

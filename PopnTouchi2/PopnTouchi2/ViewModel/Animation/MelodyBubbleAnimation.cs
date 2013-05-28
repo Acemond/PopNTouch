@@ -254,6 +254,7 @@ namespace PopnTouchi2.ViewModel.Animation
                 sessionVM.Notes.Items.Add(ListOfNotes[i].SVItem);
             }
             sessionVM.Bubbles.Items.Remove(melodyBubbleVM.SVItem);
+            sessionVM.MbgVM.MelodyBubbleVMs.Remove(melodyBubbleVM);
 
         }
 
