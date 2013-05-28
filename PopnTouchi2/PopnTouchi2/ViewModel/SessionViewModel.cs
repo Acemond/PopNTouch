@@ -165,8 +165,10 @@ namespace PopnTouchi2.ViewModel
         public SessionViewModel(Double width, Double height, Session s, List<int> IDs)
         {
             Session = s;
-            ThemeVM = new ThemeViewModel(Session.Theme, this);
             SessionSVI = new ScatterViewItem();
+            SessionSVI.Width = width;
+            SessionSVI.Height = height;
+            ThemeVM = new ThemeViewModel(Session.Theme, this);
             Grid = new Grid();
             UpdateSound = new ChangeSoundViewModel(this);
             Bubbles = new ScatterView();
@@ -238,8 +240,6 @@ namespace PopnTouchi2.ViewModel
             Grid.SetZIndex(MbgVM.Grid, 0);
 
             SessionSVI.Content = Grid;
-            SessionSVI.Width = width;
-            SessionSVI.Height = height;
 
             ThemeChooser = new ThemeChooser(this);
             Theme_Button.PreviewTouchDown += new EventHandler<TouchEventArgs>(ThemeChooser.Theme_Button_TouchDown);
