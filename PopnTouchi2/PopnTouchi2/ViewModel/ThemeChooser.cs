@@ -18,10 +18,19 @@ namespace PopnTouchi2.ViewModel
         public Grid Grid { get; set; }
 
         public StackPanel Themes { get; set; }
-        
+
+        private Border border1;
+        private Grid GridTheme1;
+        private Border border2;
+        private Grid GridTheme2;
+        private Border border3;
+        private Grid GridTheme3;
+
+
         public ThemeChooser(SessionViewModel s)
         {
             sessionVM = s;
+            double ratio = sessionVM.SessionSVI.Width / 1920.0;
             Grid = new Grid();
             Grid.Background = new SolidColorBrush(Colors.Black);
             Grid.Opacity = 0.8;
@@ -32,13 +41,13 @@ namespace PopnTouchi2.ViewModel
             Themes.HorizontalAlignment = HorizontalAlignment.Center;
             Themes.Opacity = 1;
 
-            Border border1 = new Border();
+            border1 = new Border();
             border1.BorderBrush = new SolidColorBrush(Colors.White);
-            border1.BorderThickness = new Thickness(4);
-            border1.Margin = new Thickness(20, 0, 20, 0);
-            Grid GridTheme1 = new Grid();
-            GridTheme1.Width = 470;
-            GridTheme1.Height = 265;
+            border1.BorderThickness = new Thickness(4.0 * ratio);
+            border1.Margin = new Thickness(20.0 * ratio, 0, 20.0 * ratio, 0);
+            GridTheme1 = new Grid();
+            GridTheme1.Width = 470.0 * ratio;
+            GridTheme1.Height = 265.0 * ratio;
             ImageBrush img1 = new ImageBrush();
             img1.ImageSource = new BitmapImage(new Uri(@"../../Resources/Images/Theme1/background.jpg", UriKind.Relative));
             GridTheme1.Background = img1;
@@ -46,13 +55,13 @@ namespace PopnTouchi2.ViewModel
 
             GridTheme1.PreviewTouchDown += new EventHandler<TouchEventArgs>(GridTheme1_TouchDown);
 
-            Border border2 = new Border();
+            border2 = new Border();
             border2.BorderBrush = new SolidColorBrush(Colors.White);
-            border2.BorderThickness = new Thickness(4);
-            border2.Margin = new Thickness(20, 0, 20, 0);
-            Grid GridTheme2 = new Grid();
-            GridTheme2.Width = 470;
-            GridTheme2.Height = 265;
+            border2.BorderThickness = new Thickness(4.0 * ratio);
+            border2.Margin = new Thickness(20.0 * ratio, 0, 20.0 * ratio, 0);
+            GridTheme2 = new Grid();
+            GridTheme2.Width = 470.0 * ratio;
+            GridTheme2.Height = 265.0 * ratio;
             ImageBrush img2 = new ImageBrush();
             img2.ImageSource = new BitmapImage(new Uri(@"../../Resources/Images/Theme2/background.jpg", UriKind.Relative));
             GridTheme2.Background = img2;
@@ -60,13 +69,13 @@ namespace PopnTouchi2.ViewModel
 
             GridTheme2.PreviewTouchDown += new EventHandler<TouchEventArgs>(GridTheme2_TouchDown);
 
-            Border border3 = new Border();
+            border3 = new Border();
             border3.BorderBrush = new SolidColorBrush(Colors.White);
-            border3.BorderThickness = new Thickness(4);
-            border3.Margin = new Thickness(20, 0, 20, 0);
-            Grid GridTheme3 = new Grid();
-            GridTheme3.Width = 470;
-            GridTheme3.Height = 265;
+            border3.BorderThickness = new Thickness(4.0 * ratio);
+            border3.Margin = new Thickness(20.0 * ratio, 0, 20.0 * ratio, 0);
+            GridTheme3 = new Grid();
+            GridTheme3.Width = 470.0 * ratio;
+            GridTheme3.Height = 265.0 * ratio;
             ImageBrush img3 = new ImageBrush();
             img3.ImageSource = new BitmapImage(new Uri(@"../../Resources/Images/Theme3/background.jpg", UriKind.Relative));
             GridTheme3.Background = img3;
@@ -78,6 +87,26 @@ namespace PopnTouchi2.ViewModel
             Themes.Children.Add(border2);
             Themes.Children.Add(border3);
             
+        }
+
+        public void SetDimensions(double width)
+        {
+            double ratio = width / 1920.0;
+
+            border1.BorderThickness = new Thickness(4.0 * ratio);
+            border1.Margin = new Thickness(20.0 * ratio, 0, 20.0 * ratio, 0);
+            GridTheme1.Width = 470.0 * ratio;
+            GridTheme1.Height = 265.0 * ratio;
+
+            border2.BorderThickness = new Thickness(4.0 * ratio);
+            border2.Margin = new Thickness(20.0 * ratio, 0, 20.0 * ratio, 0);
+            GridTheme2.Width = 470.0 * ratio;
+            GridTheme2.Height = 265.0 * ratio;
+
+            border3.BorderThickness = new Thickness(4.0 * ratio);
+            border3.Margin = new Thickness(20.0 * ratio, 0, 20.0 * ratio, 0);
+            GridTheme3.Width = 470.0 * ratio;
+            GridTheme3.Height = 265.0 * ratio;
         }
 
         public void Theme_Button_TouchDown(object sender, RoutedEventArgs e)
