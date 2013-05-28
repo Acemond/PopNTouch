@@ -27,57 +27,28 @@ namespace PopnTouchi2.ViewModel
         /// Property.
         /// The parent Grid.
         /// </summary>
-        public Grid Grid1 { get; set; }
-
-        /// <summary>
-        /// Property.
-        /// The parent Grid.
-        /// </summary>
-        public Grid Grid2 { get; set; }
-
-        /// <summary>
-        /// Property.
-        /// The List of circles' image
-        /// </summary>
-        public List<Grid> Images { get; set; }
-
+        public Grid Grid { get; set; }
+        
         /// <summary>
         /// Constructor
         /// </summary>
         public ChangeSoundViewModel(SessionViewModel s)
         {
             sessionVM = s;
+            double ratio = s.SessionSVI.Width / 1920.0;
+
+            Grid = new Grid();
+            Grid.VerticalAlignment = VerticalAlignment.Top;
+            Grid.HorizontalAlignment = HorizontalAlignment.Left;
+
+            Grid.Margin = new System.Windows.Thickness(56.0 * ratio, 20.0 * ratio, 0, 0);
             
-            Grid1 = new Grid();
-            Grid2 = new Grid();
-            Grid1.Width = 200;
-            Grid2.Width = 200;
-            Grid1.VerticalAlignment = VerticalAlignment.Top;
-            Grid2.VerticalAlignment = VerticalAlignment.Top;
-
-            Grid1.Margin = new System.Windows.Thickness(10, 0, 1200, 0);
-            Grid2.Margin = new System.Windows.Thickness(10, 0, 690, 0);
-
-            Images = new List<Grid>();
-
-            Images.Add(createButtonForImage(true, HorizontalAlignment.Left));
-            Images.Add(createButtonForImage(true, HorizontalAlignment.Center));
-            Images.Add(createButtonForImage(true, HorizontalAlignment.Right));
-            Images.Add(createButtonForImage(false, HorizontalAlignment.Left));
-            Images.Add(createButtonForImage(false, HorizontalAlignment.Center));
-            Images.Add(createButtonForImage(false, HorizontalAlignment.Right));
-
-            for(int i = 0; i< Images.Count/2 ; i++)
-            {
-                Grid1.Children.Add(Images[i]);
-                Images[i].PreviewTouchDown += new EventHandler<TouchEventArgs>(TouchDown);
-            }
-
-            for (int i = Images.Count/2; i < Images.Count; i++)
-            {
-                Grid2.Children.Add(Images[i]);
-                Images[i].PreviewTouchDown += new EventHandler<TouchEventArgs>(TouchDown);
-            }
+            Grid.Children.Add(createButtonForImage(true, 0.0));
+            Grid.Children.Add(createButtonForImage(true, 80.0 * ratio));
+            Grid.Children.Add(createButtonForImage(true, 160.0 * ratio));
+            Grid.Children.Add(createButtonForImage(false, 240.0 * ratio));
+            Grid.Children.Add(createButtonForImage(false, 320.0 * ratio));
+            Grid.Children.Add(createButtonForImage(false, 400.0 * ratio));
         }
 
         /// <summary>
@@ -88,9 +59,10 @@ namespace PopnTouchi2.ViewModel
         /// <param name="enabled">Bool</param>
         /// <param name="h">The position of the button</param>
         /// <returns>The Grid used as a button</returns>
-        public Grid createButtonForImage(Boolean enabled, HorizontalAlignment h)
+        public Grid createButtonForImage(Boolean enabled, double margin)
         {
             Grid g = new Grid();
+            double ratio = sessionVM.SessionSVI.Width / 1920.0;
 
             if (enabled)
             {
@@ -101,13 +73,15 @@ namespace PopnTouchi2.ViewModel
                 g.Background = sessionVM.ThemeVM.SoundPointDisableImage;
             }
 
-            g.Height = 24;
-            g.Width = 24;
+            g.Height = 28.0 * ratio;
+            g.Width = 28.0 * ratio;
 
             g.VerticalAlignment = VerticalAlignment.Center;
-            g.HorizontalAlignment = h;
 
             g.Visibility = Visibility.Visible;
+
+            g.PreviewTouchDown += new EventHandler<TouchEventArgs>(TouchDown);
+            g.Margin = new Thickness(margin, 0.0, 0.0, 0.0);
             return g;
 
         }
@@ -136,18 +110,18 @@ namespace PopnTouchi2.ViewModel
         {
             Grid button = new Grid();
             button = e.Source as Grid;
-            int index = Images.IndexOf(button);
-
+            int index = Grid.Children.IndexOf(button);
+            
             for (int i = index; i >= 0; i--)
             {
-                Images[i].Background = sessionVM.ThemeVM.SoundPointEnableImage;
+                ((Grid)Grid.Children[i]).Background = sessionVM.ThemeVM.SoundPointEnableImage;
             }
 
-            for (int j = index + 1; j < Images.Count; j++)
+            for (int i = index + 1; i < Grid.Children.Count; i++)
             {
-                Images[j].Background = sessionVM.ThemeVM.SoundPointDisableImage;
+                ((Grid)Grid.Children[i]).Background = sessionVM.ThemeVM.SoundPointDisableImage;
             }
-            AudioController.UpdateVolume((float)(index+1));
+            AudioController.UpdateVolume((float)(index + 1));
         }
     }
 }

@@ -82,8 +82,8 @@ namespace PopnTouchi2.ViewModel
 
             bubbleImage.SetValue(Image.IsHitTestVisibleProperty, false);
 
-            bubbleImage.SetValue(Image.WidthProperty, (110.0 / 1920.0) * SessionVM.SessionSVI.ActualWidth);
-            bubbleImage.SetValue(Image.HeightProperty, (204.0 / 1080.0) * SessionVM.SessionSVI.ActualHeight);
+            bubbleImage.SetValue(Image.WidthProperty, (110.0 / 1920.0) * SessionVM.Grid.ActualWidth);
+            bubbleImage.SetValue(Image.HeightProperty, (204.0 / 1080.0) * SessionVM.Grid.ActualHeight);
             
             FrameworkElementFactory touchZone = new FrameworkElementFactory(typeof(Ellipse));
             touchZone.SetValue(Ellipse.FillProperty, Brushes.Transparent);

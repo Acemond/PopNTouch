@@ -118,12 +118,12 @@ namespace PopnTouchi2.ViewModel
             List<NoteViewModel> notes = new List<NoteViewModel>();
             for(int i = 0; i< melodyBubble.Melody.Notes.Count; i++)
             {
-                double x = (positionMelody.X + (melodyBubble.Melody.Notes[i].Position - initPos) * 60) * SessionVM.Grid.ActualWidth / 1920 ;
+                double x = (positionMelody.X + (melodyBubble.Melody.Notes[i].Position - initPos) * 60.0) * SessionVM.Grid.ActualWidth / 1920.0 ;
                 double y = c.getCenterY(up, melodyBubble.Melody.Notes[i]);
                 
-                double offset = GlobalVariables.ManipulationGrid[((long)positionMelody.X / 60)+melodyBubble.Melody.Notes[i].Position - initPos];
-                y -= offset;
-                y *= (height / 1080);
+                /*double offset = GlobalVariables.ManipulationGrid[((long)positionMelody.X / 60)+melodyBubble.Melody.Notes[i].Position - initPos];
+                y -= offset;*/
+                y *= (height / 1080.0);
 
                 Point p = new Point(x, y);
                 notes.Add(new NoteViewModel(p,melodyBubble.Melody.Notes[i], SessionVM.Notes, SessionVM));

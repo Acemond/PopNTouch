@@ -229,12 +229,10 @@ namespace PopnTouchi2.ViewModel
             Grid.Children.Add(MbgVM.Grid);
             Grid.Children.Add(Play_Button);
             Grid.Children.Add(Theme_Button);
-            Grid.Children.Add(UpdateSound.Grid1);
-            Grid.Children.Add(UpdateSound.Grid2);
+            Grid.Children.Add(UpdateSound.Grid);
 
             Grid.SetZIndex(Theme_Button, 5);
-            Grid.SetZIndex(UpdateSound.Grid1, 4);
-            Grid.SetZIndex(UpdateSound.Grid2, 4);
+            Grid.SetZIndex(UpdateSound.Grid, 4);
             Grid.SetZIndex(TreeUp.Grid, 3);
             Grid.SetZIndex(TreeDown.Grid, 3);
             Grid.SetZIndex(Bubbles, 2);
@@ -307,10 +305,8 @@ namespace PopnTouchi2.ViewModel
             Theme_Button.Width = (351.0 / 1920.0) * width;
             Theme_Button.Height = (110 / 1080.0) * height;
             
-            UpdateSound.Grid1.Width = width / 10;
-            UpdateSound.Grid2.Width = width / 10;
-            UpdateSound.Grid1.Height = height / 11;
-            UpdateSound.Grid2.Height = height / 11;
+            /*UpdateSound.Grid.Width = width / 10;
+            UpdateSound.Grid.Height = height / 11;*/
 
             TreeUp.Grid.Width = width / 7;
             TreeUp.Grid.Height = width / 5;
@@ -375,6 +371,11 @@ namespace PopnTouchi2.ViewModel
         /// </summary>
         public void LoadSession()
         {
+            //TODO : check : no problem with that ?
+            SessionSVI.Width = Grid.ActualWidth;
+            SessionSVI.Height = Grid.ActualHeight;
+            //ODOT
+
             string path = "Sessions/sess" + SessionID + ".bin";
             BinaryFormatter formatter = new BinaryFormatter();
             FileStream stream = File.Open(path, FileMode.Open);
@@ -410,8 +411,7 @@ namespace PopnTouchi2.ViewModel
             Grid.Children.Add(Notes);
             Grid.Children.Add(Reducer);
             Grid.Children.Add(Play_Button);
-            Grid.Children.Add(UpdateSound.Grid1);
-            Grid.Children.Add(UpdateSound.Grid2);
+            Grid.Children.Add(UpdateSound.Grid);
             Grid.Children.Add(TreeUp.Grid);
             Grid.Children.Add(TreeDown.Grid);
             Grid.Children.Add(NbgVM.Grid);
@@ -419,8 +419,7 @@ namespace PopnTouchi2.ViewModel
             Grid.Children.Add(Theme_Button);
 
             Grid.SetZIndex(Theme_Button, 5);
-            Grid.SetZIndex(UpdateSound.Grid1, 4);
-            Grid.SetZIndex(UpdateSound.Grid2, 4);
+            Grid.SetZIndex(UpdateSound.Grid, 4);
             Grid.SetZIndex(TreeUp.Grid, 3);
             Grid.SetZIndex(TreeDown.Grid, 3);
             Grid.SetZIndex(Bubbles, 2);
@@ -431,8 +430,8 @@ namespace PopnTouchi2.ViewModel
             double XCenter;
             foreach (Note note in sd.StaveTopNotes)
             {
-                XCenter = note.Position * 60.0 + 120.0;
-                NoteViewModel noteVM = new NoteViewModel(new Point(XCenter, conv.getCenterY(true, note)), note, Notes, this);
+                XCenter = ((note.Position * 60.0 + 120.0) / 1920.0) * Grid.ActualWidth;
+                NoteViewModel noteVM = new NoteViewModel(new Point(XCenter, (conv.getCenterY(true, note) / 1080.0) * Grid.ActualHeight), note, Notes, this);
                 Session.StaveTop.AddNote(note, note.Position);
                 Notes.Items.Add(noteVM.SVItem);
                 NotesOnStave.Add(noteVM);
@@ -440,8 +439,8 @@ namespace PopnTouchi2.ViewModel
 
             foreach (Note note in sd.StaveBottomNotes)
             {
-                XCenter = note.Position * 60.0 + 120.0;
-                NoteViewModel noteVM = new NoteViewModel(new Point(XCenter, conv.getCenterY(false, note)), note, Notes, this);
+                XCenter = ((note.Position * 60.0 + 120.0) / 1920.0) * Grid.ActualWidth;
+                NoteViewModel noteVM = new NoteViewModel(new Point(XCenter, (conv.getCenterY(false, note) / 1080.0) * Grid.ActualHeight), note, Notes, this);
                 Session.StaveBottom.AddNote(note, note.Position);
                 Notes.Items.Add(noteVM.SVItem);
                 NotesOnStave.Add(noteVM);
