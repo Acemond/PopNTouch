@@ -52,13 +52,13 @@ namespace PopnTouchi2.ViewModel
 
             if (session.OnePlayer)
             {
-                Grid1.Margin = new System.Windows.Thickness(10, 0, 825, 0);
-                Grid2.Margin = new System.Windows.Thickness(10, 0, 520, 0);
+                Grid1.Margin = new System.Windows.Thickness(10, 0, 1200, 0);
+                Grid2.Margin = new System.Windows.Thickness(10, 0, 690, 0);
             }
             else
             {
-                Grid1.Margin = new System.Windows.Thickness(20, 0, 500, 0);
-                Grid2.Margin = new System.Windows.Thickness(20, 0, 325, 0);
+                Grid1.Margin = new System.Windows.Thickness(20, 0, 750, 0);
+                Grid2.Margin = new System.Windows.Thickness(20, 0, 470, 0);
             }
 
 

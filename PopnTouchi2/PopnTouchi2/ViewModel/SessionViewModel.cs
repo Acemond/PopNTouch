@@ -184,8 +184,6 @@ namespace PopnTouchi2.ViewModel
             Reducer.Content = "Reduce !";
             
             Play = new Grid();
-           // Play.Width = 140;
-           // Play.Height = 150;
             Play.HorizontalAlignment = System.Windows.HorizontalAlignment.Left;
             Play.VerticalAlignment = System.Windows.VerticalAlignment.Top;
             ImageBrush img = new ImageBrush();
