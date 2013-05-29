@@ -16,7 +16,7 @@ namespace PopnTouchi2
         /// </summary>
         public Theme4() : base()
         {
-            SoundName = "loop_eveningWater";
+            SoundName = "loop_bubbles";
 
             InstrumentsTop[0] = new Instrument(InstrumentType.flute);
             InstrumentsTop[1] = new Instrument(InstrumentType.piano);

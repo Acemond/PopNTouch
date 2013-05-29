@@ -208,8 +208,9 @@ namespace PopnTouchi2.ViewModel
             Theme_Button.Visibility = Visibility.Visible;
 
             Tempo_Button = new Grid();
-            Tempo_Button.HorizontalAlignment = System.Windows.HorizontalAlignment.Center;
+            Tempo_Button.HorizontalAlignment = System.Windows.HorizontalAlignment.Right;
             Tempo_Button.VerticalAlignment = System.Windows.VerticalAlignment.Top;
+            Tempo_Button.Margin = new Thickness(0, 0, 470.0 * ratio, 0);
             Tempo_Button.Background = ThemeVM.TempoImage[1];
             Tempo_Button.Visibility = Visibility.Visible;
             Tempo_Button.PreviewTouchDown += new EventHandler<TouchEventArgs>(Tempo_Button_TouchDown);
@@ -423,8 +424,8 @@ namespace PopnTouchi2.ViewModel
             Theme_Button.Width = (351.0 / 1920.0) * width;
             Theme_Button.Height = (110 / 1080.0) * height;
 
-            Tempo_Button.Width = width / 17;
-            Tempo_Button.Height = height / 13;
+            Tempo_Button.Width = (150.0 / 1920.0) * width;
+            Tempo_Button.Height = (70.0 / 1080.0) * height;
 
             TreeUp.UpdateDimensions(ratio);
             TreeDown.UpdateDimensions(ratio);

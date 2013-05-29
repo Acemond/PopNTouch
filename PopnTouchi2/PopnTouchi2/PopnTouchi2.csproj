@@ -210,7 +210,6 @@
     <Resource Include="Resources\Images\UI_items\exos.png" />
     <Resource Include="Resources\Images\Theme1\melodyfactory.png" />
     <Resource Include="Resources\Images\Theme1\notefactory.png" />
-    <Resource Include="Resources\Images\UI_items\themes.png" />
     <Resource Include="Resources\Images\Theme1\playdrop.png" />
     <Resource Include="Resources\Images\Theme1\soundpointdisable.png" />
     <Resource Include="Resources\Images\Theme1\soundpointenable.png" />
