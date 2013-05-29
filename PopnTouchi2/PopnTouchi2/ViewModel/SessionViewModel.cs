@@ -16,6 +16,7 @@ using PopnTouchi2.Model;
 using System.Windows.Media.Imaging;
 using Microsoft.Xna.Framework.Audio;
 using System.Windows.Input;
+using PopnTouchi2.Model.Enums;
 
 namespace PopnTouchi2.ViewModel
 {
@@ -100,6 +101,12 @@ namespace PopnTouchi2.ViewModel
         /// Theme Button.
         /// </summary>
         public Grid Theme_Button { get; set; }
+
+        /// <summary>
+        /// Property.
+        /// Tempo Button.
+        /// </summary>
+        public Grid Tempo_Button { get; set; }
 
         /// <summary>
         /// Property
@@ -209,6 +216,13 @@ namespace PopnTouchi2.ViewModel
             Theme_Button.Background = ThemeVM.ThemesImage;
             Theme_Button.Visibility = Visibility.Visible;
 
+            Tempo_Button = new Grid();
+            Tempo_Button.HorizontalAlignment = System.Windows.HorizontalAlignment.Center;
+            Tempo_Button.VerticalAlignment = System.Windows.VerticalAlignment.Top;
+            Tempo_Button.Background = ThemeVM.TempoImage[1];
+            Tempo_Button.Visibility = Visibility.Visible;
+            Tempo_Button.PreviewTouchDown += new EventHandler<TouchEventArgs>(Tempo_Button_TouchDown);
+
             SessionSVI.CanMove = false;
             SessionSVI.CanRotate = false;
             SessionSVI.CanScale = false;
@@ -222,6 +236,7 @@ namespace PopnTouchi2.ViewModel
             Grid.Children.Add(MbgVM.Grid);
             Grid.Children.Add(Play_Button);
             Grid.Children.Add(Theme_Button);
+            Grid.Children.Add(Tempo_Button);
             Grid.Children.Add(UpdateSound.Grid);
 
             Grid.SetZIndex(Theme_Button, 5);
@@ -321,6 +336,9 @@ namespace PopnTouchi2.ViewModel
             Theme_Button.Width = (351.0 / 1920.0) * width;
             Theme_Button.Height = (110 / 1080.0) * height;
 
+            Tempo_Button.Width = width / 17;
+            Tempo_Button.Height = height / 13;
+
             TreeUp.Grid.Margin = new Thickness(20.0 * ratio, 0, 0, 130.0 * ratio);
             TreeDown.Grid.Margin = new Thickness(20.0 * ratio, 0, 0, 580.0 * ratio);
             
@@ -360,6 +378,25 @@ namespace PopnTouchi2.ViewModel
                 Session.StaveBottom.StopMusic();
                 Play_Button.Opacity = 1;
                 IsPlaying = false;
+            }
+        }
+
+        private void Tempo_Button_TouchDown(object sender, RoutedEventArgs e)
+        {
+            if (GlobalVariables.bpm == 60)
+            {
+                GlobalVariables.bpm = 90;
+                Tempo_Button.Background = ThemeVM.TempoImage[1];
+            }
+            else if (GlobalVariables.bpm == 90)
+            {  
+                GlobalVariables.bpm = 120;
+                Tempo_Button.Background = ThemeVM.TempoImage[2];
+            }
+            else
+            {
+                GlobalVariables.bpm = 60;
+                Tempo_Button.Background = ThemeVM.TempoImage[0];
             }
         }
 
