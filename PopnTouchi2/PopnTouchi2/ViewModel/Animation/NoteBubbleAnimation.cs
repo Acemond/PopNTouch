@@ -242,13 +242,13 @@ namespace PopnTouchi2.ViewModel.Animation
 
                 for(int i = 0; i< sessionVM.NotesOnStave.Count && goOn; i++){
 
-                    bool changeLine = false;;
+                    bool changeLine = false;
                     if (MyBubbleCenter.QuasiEquals(sessionVM.NotesOnStave[i].SVItem.ActualCenter))
                     {
                         noteVM = sessionVM.NotesOnStave[i];
                         if(noteBubbleVM.NoteBubble.Note.Flat)
                             changeLine = noteVM.Note.DownSemiTone();
-                        else
+                        if (noteBubbleVM.NoteBubble.Note.Sharp)
                             changeLine = noteVM.Note.UpSemiTone();
 
                         sessionVM.NotesOnStave.Remove(sessionVM.NotesOnStave[i]);
@@ -258,7 +258,8 @@ namespace PopnTouchi2.ViewModel.Animation
                         {
                             sessionVM.Notes.Items.Remove(noteVM.SVItem);
                             double y = c.getCenterY(isUp, noteVM.Note);
-                            if (y < 80)                            
+                            MessageBox.Show(y.ToString());
+                            if (y < 80)
                             {
                                 sessionVM.NotesOnStave.Remove(noteVM);
                                 if (isUp)
@@ -279,7 +280,7 @@ namespace PopnTouchi2.ViewModel.Animation
                             }
                             else
                             {
-                                y *= sessionVM.SessionSVI.ActualHeight / 1080;
+                                y *= sessionVM.SessionSVI.ActualHeight / 1080.0;
                                 noteVM = new NoteViewModel(new Point(bubbleCenter.X, y), noteVM.Note, sessionVM.Notes, sessionVM);
                                 sessionVM.Notes.Items.Add(noteVM.SVItem);
                                 if (isUp)
@@ -294,6 +295,13 @@ namespace PopnTouchi2.ViewModel.Animation
 
                                 }
                             }
+                        }
+                        else
+                        {
+                            if (isUp)
+                                sessionVM.Session.StaveTop.CurrentInstrument.PlayNote(noteVM.Note);
+                            else
+                                sessionVM.Session.StaveBottom.CurrentInstrument.PlayNote(noteVM.Note);
                         }
                        
                         goOn = false;
