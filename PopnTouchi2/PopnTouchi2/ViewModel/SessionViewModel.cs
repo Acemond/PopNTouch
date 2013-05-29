@@ -601,6 +601,7 @@ namespace PopnTouchi2.ViewModel
             Grid.SetZIndex(NbgVM.Grid, 0);
             Grid.SetZIndex(MbgVM.Grid, 0);
             Grid.SetZIndex(ThemeChooser.Bird, 0);
+            Grid.SetZIndex(ThemeChooser.Dragon, 0);
             
             double XCenter;
             foreach (Note note in sd.StaveTopNotes)
