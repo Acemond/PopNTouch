@@ -103,11 +103,11 @@ namespace PopnTouchi2.ViewModel.Animation
             InitStb.Begin();
         }
 
-        public SessionAnimation(SessionViewModel s, bool reduced)
+        public SessionAnimation(SessionViewModel s, bool reduced, DesktopView desktop)
             : base()
         {
+            MainDesktop = desktop;
             SessionVM = s;
-
             SessionVM.SessionSVI.TouchLeave += new EventHandler<System.Windows.Input.TouchEventArgs>(svi_TouchLeave);
             SessionVM.SessionSVI.PreviewTouchDown += new EventHandler<System.Windows.Input.TouchEventArgs>(SessionSVI_TouchDown);
         }
@@ -120,10 +120,18 @@ namespace PopnTouchi2.ViewModel.Animation
         /// <param name="e"></param>
         public void Reducer_Click(object sender, RoutedEventArgs e)
         {
+            Reduce();
+        }
+
+        public void Reduce()
+        {
             if (SessionVM.Reduced) return;
 
+            SessionVM.SessionSVI.MaxWidth = double.MaxValue;
+            SessionVM.SessionSVI.MaxHeight = double.MaxValue;
 
             AudioController.PlaySoundWithString("flash");
+            SessionVM.FullyEnlarged = false;
 
             MainDesktop = (DesktopView)((ScatterView)(SessionVM.SessionSVI.Parent)).Parent;
 
@@ -156,7 +164,6 @@ namespace PopnTouchi2.ViewModel.Animation
 
             ReplaceGridWithSnapShot(ss);
             #endregion
-
         }
 
         /// <summary>
@@ -172,6 +179,7 @@ namespace PopnTouchi2.ViewModel.Animation
             SessionVM.Grid.Children.Remove(SessionVM.TreeDown.Grid);
             SessionVM.Grid.Children.Remove(SessionVM.Play_Button);
             SessionVM.Grid.Children.Remove(SessionVM.Tempo_Button);
+            SessionVM.Grid.Children.Remove(SessionVM.Theme_Button);
             SessionVM.EraseSession();
 
             System.Windows.Shapes.Rectangle rect = new System.Windows.Shapes.Rectangle();
@@ -215,9 +223,9 @@ namespace PopnTouchi2.ViewModel.Animation
             ease.Exponent = 1.5;
 
             heightAnimation.From = SessionVM.SessionSVI.ActualHeight;
-            if (SessionVM.Orientation == "left" || SessionVM.Orientation == "right")
-                heightAnimation.To = (SessionVM.SessionSVI.ActualHeight / 4.0) / 0.5625;
-            else heightAnimation.To = SessionVM.SessionSVI.ActualHeight / 4.0;
+            /*if (SessionVM.Orientation == "left" || SessionVM.Orientation == "right")
+                heightAnimation.To = ((MainDesktop.ActualHeight) / 4.0) / 0.5625;*/
+            heightAnimation.To = (MainDesktop.ActualHeight) / 4.0;
             heightAnimation.Duration = new Duration(TimeSpan.FromSeconds(1));
             heightAnimation.EasingFunction = ease;
             heightAnimation.AccelerationRatio = .4;
@@ -228,9 +236,9 @@ namespace PopnTouchi2.ViewModel.Animation
             Storyboard.SetTargetProperty(heightAnimation, new PropertyPath(ScatterViewItem.HeightProperty));
 
             ReduceWidthAnimation.From = SessionVM.SessionSVI.ActualWidth;
-            if (SessionVM.Orientation == "left" || SessionVM.Orientation == "right")
-                ReduceWidthAnimation.To = (SessionVM.SessionSVI.ActualWidth / 4.0) / 0.5625;
-            else ReduceWidthAnimation.To = SessionVM.SessionSVI.ActualWidth / 4.0;
+            /*if (SessionVM.Orientation == "left" || SessionVM.Orientation == "right")
+                ReduceWidthAnimation.To = ((MainDesktop.ActualWidth) / 4.0) / 0.5625;*/
+            ReduceWidthAnimation.To = (MainDesktop.ActualWidth) / 4.0;
             ReduceWidthAnimation.Duration = new Duration(TimeSpan.FromSeconds(1));
             ReduceWidthAnimation.EasingFunction = ease;
             ReduceWidthAnimation.AccelerationRatio = .4;
@@ -264,9 +272,7 @@ namespace PopnTouchi2.ViewModel.Animation
         {
             SessionVM.Play_Button.Opacity = 1;
             grid.Children.Remove(SessionVM.Bubbles);
-            grid.Children.Remove(SessionVM.Reducer);
             grid.Children.Remove(SessionVM.UpdateSound.Grid);
-            grid.Children.Remove(SessionVM.Theme_Button);
         }
 
         /// <summary>
@@ -276,6 +282,25 @@ namespace PopnTouchi2.ViewModel.Animation
         {
             foreach (NoteBubbleViewModel nb in SessionVM.NbgVM.NoteBubbleVMs)
                 nb.Animation.StopAnimation();
+            foreach (MelodyBubbleViewModel mb in SessionVM.MbgVM.MelodyBubbleVMs)
+                mb.Animation.StopAnimation();
+        }
+
+        /// <summary>
+        /// Stops all bubbles animations
+        /// </summary>
+        public void resumeAllBubblesAnimations()
+        {
+            foreach (NoteBubbleViewModel nb in SessionVM.NbgVM.NoteBubbleVMs)
+            {
+                nb.Animation.canAnimate = true;
+                nb.Animation.Animate();
+            }
+            foreach (MelodyBubbleViewModel mb in SessionVM.MbgVM.MelodyBubbleVMs)
+            {
+                mb.Animation.canAnimate = true;
+                mb.Animation.Animate();
+            }
         }
 
         /// <summary>
@@ -421,6 +446,7 @@ namespace PopnTouchi2.ViewModel.Animation
 
         void DispatcherTimer_Tick(object sender, EventArgs e)
         {
+            if (SessionVM == null) return;
             TouchHoldDispatcherTimer.Stop();
             if (Math.Abs(touchDevice.GetTouchPoint(MainDesktop).Position.X - startingTouchPoint.Position.X) < 15.0 &&
                 Math.Abs(touchDevice.GetTouchPoint(MainDesktop).Position.Y - startingTouchPoint.Position.Y) < 15.0)
@@ -500,6 +526,7 @@ namespace PopnTouchi2.ViewModel.Animation
         void svi_TouchLeave(object sender, TouchEventArgs e)
         {
             TouchHoldDispatcherTimer.Stop();
+            if (SessionVM.DeleteButton.Visibility == Visibility.Visible) return;
             if (SessionVM == null) return;
             if (SessionVM.BeingDeleted) return;
             try { if (!SessionVM.Reduced) return; }
@@ -519,12 +546,14 @@ namespace PopnTouchi2.ViewModel.Animation
                 {
                     SessionVM.Reduced = false;
                     EnlargeForSide(true);
+                    SessionVM.DeleteButton.Visibility = Visibility.Hidden;
                     SessionVM.Orientation = "left";
                 }
                 else if (Xpos > 29.0 / 32.0 * Width && Xpos < Width && !MainDesktop.RightSessionActive)
                 {
                     SessionVM.Reduced = false;
                     EnlargeForSide(false);
+                    SessionVM.DeleteButton.Visibility = Visibility.Hidden;
                     SessionVM.Orientation = "right";
                 }
             }
@@ -536,6 +565,7 @@ namespace PopnTouchi2.ViewModel.Animation
                 {
                     SessionVM.Reduced = false;
                     Enlarge(-180.0);
+                    SessionVM.DeleteButton.Visibility = Visibility.Hidden;
                     SessionVM.Orientation = "top";
                 }
 
@@ -543,6 +573,7 @@ namespace PopnTouchi2.ViewModel.Animation
                 {
                     SessionVM.Reduced = false;
                     Enlarge(0.0);
+                    SessionVM.DeleteButton.Visibility = Visibility.Hidden;
                     SessionVM.Orientation = "bottom";
                 }
             }
@@ -718,7 +749,6 @@ namespace PopnTouchi2.ViewModel.Animation
 
             SessionVM.LoadSession();
             Fs.Close();
-            
             RemoveWhiteBorder();
         }
 
@@ -744,7 +774,7 @@ namespace PopnTouchi2.ViewModel.Animation
             if (SessionVM.Orientation == "left" || SessionVM.Orientation == "right") heightAnimation.To = SessionVM.SessionSVI.ActualHeight - 67.5;
             else heightAnimation.To = SessionVM.SessionSVI.ActualHeight - 120;
             heightAnimation.Duration = new Duration(TimeSpan.FromSeconds(.5));
-            heightAnimation.FillBehavior = FillBehavior.HoldEnd;
+            heightAnimation.FillBehavior = FillBehavior.Stop;
             stb.Children.Add(heightAnimation);
             Storyboard.SetTarget(heightAnimation, SessionVM.SessionSVI);
             Storyboard.SetTargetProperty(heightAnimation, new PropertyPath(ScatterViewItem.HeightProperty));
@@ -753,12 +783,24 @@ namespace PopnTouchi2.ViewModel.Animation
             if (SessionVM.Orientation == "left" || SessionVM.Orientation == "right") widthAnimation.To = SessionVM.SessionSVI.ActualWidth - 67.5;
             else widthAnimation.To = SessionVM.SessionSVI.ActualWidth - 120;
             widthAnimation.Duration = new Duration(TimeSpan.FromSeconds(.5));
-            widthAnimation.FillBehavior = FillBehavior.HoldEnd;
+            widthAnimation.FillBehavior = FillBehavior.Stop;
             stb.Children.Add(widthAnimation);
             Storyboard.SetTarget(widthAnimation, SessionVM.SessionSVI);
             Storyboard.SetTargetProperty(widthAnimation, new PropertyPath(ScatterViewItem.WidthProperty));
 
+            borderAnimation.Completed += new EventHandler(borderAnimation_Completed);
+
             stb.Begin(SessionVM.SessionSVI);
+        }
+
+        void borderAnimation_Completed(object sender, EventArgs e)
+        {
+            SessionVM.originalRatio = SessionVM.SessionSVI.ActualWidth / 1920.0;
+            SessionVM.SessionSVI.MaxWidth = SessionVM.SessionSVI.ActualWidth;
+            SessionVM.SessionSVI.MaxHeight = SessionVM.SessionSVI.ActualHeight;
+
+            SessionVM.SessionSVI.CanScale = true;
+            SessionVM.FullyEnlarged = true;
         }
         #endregion
 
@@ -769,7 +811,11 @@ namespace PopnTouchi2.ViewModel.Animation
         /// <param name="e"></param>
         void marginAnimation_Completed(object sender, EventArgs e)
         {
-            SessionVM.Grid.Children.Add(SessionVM.Reducer);
+            SessionVM.SessionSVI.CanScale = true;
+            SessionVM.FullyEnlarged = true;
+            SessionVM.InitialScale = false;
+            SessionVM.SessionSVI.MaxWidth = SessionVM.originalRatio * 1920.0;
+            SessionVM.SessionSVI.MaxHeight = SessionVM.originalRatio * 1080.0;
         }
     }
 }

@@ -118,7 +118,7 @@ namespace PopnTouchi2.ViewModel
             SoundPointDisableImage.ImageSource = GetBitmapImage("soundpointdisable");
 
             ThemesImage = new ImageBrush();
-            ThemesImage.ImageSource = new BitmapImage(new Uri(@"../../Resources/Images/UI_items/themes.png", UriKind.Relative));
+            ThemesImage.ImageSource = new BitmapImage(new Uri(@"../../Resources/Images/Theme" + SessionVM.Session.ThemeID + "/themes.png", UriKind.Relative));
 
             NoteBubbleImages.Add(NoteValue.crotchet, GetNoteBitmapImage("bullenoire"));
             NoteBubbleImages.Add(NoteValue.minim, GetNoteBitmapImage("bulleblanche"));

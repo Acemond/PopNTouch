@@ -94,24 +94,30 @@ namespace PopnTouchi2.ViewModel.Animation
                 PointAnimation centerAnimation = new PointAnimation();
                 SineEase ease = new SineEase();
                 ease.EasingMode = EasingMode.EaseInOut;
-                Random r = new Random();
+                Random r = GlobalVariables.GlobalRandom;
                 Double xOffset = (-2) * (r.Next() % 2 - .5) * r.Next(50, 100);
                 Double yOffset = (-2) * (r.Next() % 2 - .5) * r.Next(50, 100);
 
-                if (SVItem.Center.X + xOffset > ParentSV.ActualWidth)
-                    xOffset = ParentSV.ActualWidth - SVItem.Center.X;
-                if (SVItem.Center.X + xOffset < 0)
-                    xOffset = 0 - SVItem.Center.X;
-                if (SVItem.Center.Y + yOffset > ParentSV.ActualHeight)
-                    yOffset = ParentSV.ActualHeight - SVItem.Center.Y;
-                if (SVItem.Center.Y + yOffset < 630 * ParentSV.ActualHeight / 1080)
-                    yOffset = (630 * ParentSV.ActualHeight / 1080) - SVItem.Center.Y;
-
-                centerAnimation.From = SVItem.Center;
-                centerAnimation.To = new Point(SVItem.Center.X + xOffset, SVItem.Center.Y + yOffset);
                 centerAnimation.Duration = new Duration(TimeSpan.FromSeconds(r.Next(9, 21)));
                 centerAnimation.AccelerationRatio = .3;
                 centerAnimation.DecelerationRatio = .3;
+
+                if (SVItem.Center.X + xOffset > ParentSV.ActualWidth)
+                    xOffset = (ParentSV.ActualWidth - SVItem.Center.X) - (double)r.Next(50);
+                if (SVItem.Center.X + xOffset < 0)
+                    xOffset = 0 - SVItem.Center.X + (double)r.Next(50);
+                if (SVItem.Center.Y + yOffset > ParentSV.ActualHeight)
+                    yOffset = ParentSV.ActualHeight - SVItem.Center.Y - (double)r.Next(50);
+                if (SVItem.Center.Y + yOffset < 630.0 * ParentSV.ActualHeight / 1080.0)
+                    yOffset = ((630.0 * ParentSV.ActualHeight / 1080.0) - SVItem.Center.Y) + (double)r.Next(50);
+                if (SVItem.Center.Y < 630.0 * ParentSV.ActualHeight / 1080.0)
+                {
+                    centerAnimation.Duration = new Duration(TimeSpan.FromSeconds(r.Next(2, 4)));
+                    centerAnimation.DecelerationRatio = .7;
+                }
+
+                centerAnimation.From = SVItem.Center;
+                centerAnimation.To = new Point(SVItem.Center.X + xOffset, SVItem.Center.Y + yOffset);
                 centerAnimation.FillBehavior = FillBehavior.HoldEnd;
                 Storyboard.Children.Add(centerAnimation);
                 Storyboard.SetTarget(centerAnimation, SVItem);

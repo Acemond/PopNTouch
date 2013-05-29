@@ -54,6 +54,8 @@ namespace PopnTouchi2.ViewModel
         /// </summary>
         public Instrument Instrument2 { get; set; }
 
+        private double ratio;
+
         /// <summary>
         /// Constructor of a TreeViewModel
         /// </summary>
@@ -65,7 +67,7 @@ namespace PopnTouchi2.ViewModel
         {
             this.Up = !up;
             SessionVM = s;
-            double ratio = s.SessionSVI.Width / 1920.0;
+            ratio = s.SessionSVI.Width / 1920.0;
 
             Grid = new Grid();
             Grid.HorizontalAlignment = System.Windows.HorizontalAlignment.Left;
@@ -91,7 +93,9 @@ namespace PopnTouchi2.ViewModel
             Images.Add(createGridForImage(Instrument1.Name.ToString(), 100.0 * ratio, 100.0 * ratio, HorizontalAlignment.Right, VerticalAlignment.Top));
             Images.Add(createGridForImage(Instrument2.Name.ToString(), 100.0 * ratio, 100.0 * ratio, HorizontalAlignment.Right, VerticalAlignment.Bottom));
 
-            Images.Add(createGridForLinks("root", 50.0 * ratio, 50.0 * ratio, new Thickness(0, 0, 100.0 * ratio, 0)));
+            Grid root = createGridForLinks("root", 50.0 * ratio, 50.0 * ratio, new Thickness(0, 0, 100.0 * ratio, 0));
+
+            Images.Add(root);
             Images.Add(createGridForLinks("lower_branch", 80.0 * ratio, 120.0 * ratio, new Thickness(50.0 * ratio, 60.0 * ratio, 50.0 * ratio, 0.0)));
             Images.Add(createGridForLinks("upper_branch", 80.0 * ratio, 120.0 * ratio, new Thickness(50.0 * ratio, 0.0, 50.0 * ratio, 60.0 * ratio)));
 
@@ -99,10 +103,32 @@ namespace PopnTouchi2.ViewModel
 
             foreach (Grid g in Images) Grid.Children.Add(g);
 
+            Grid.SetZIndex(root, 300);
+
             Images[0].TouchDown += new EventHandler<TouchEventArgs>(touchDown0);
             Images[1].TouchDown += new EventHandler<TouchEventArgs>(touchDown1);
             Images[2].TouchDown += new EventHandler<TouchEventArgs>(touchDown2);
             Images[3].TouchDown += new EventHandler<TouchEventArgs>(touchDown1);
+        }
+
+        public void UpdateDimensions(double newRatio)
+        {
+            double oldRatio = ratio;
+            ratio = newRatio;
+            foreach (Grid g in Grid.Children)
+            {
+                g.Height = (g.Height / oldRatio) * ratio;
+                g.Width = (g.Width / oldRatio) * ratio;
+                Thickness t = g.Margin;
+                t.Left = (t.Left / oldRatio) * newRatio;
+                g.Margin = t;
+            }
+            Thickness t2 = Grid.Margin;
+            t2.Left = (t2.Left / oldRatio) * newRatio;
+            t2.Right = (t2.Right / oldRatio) * newRatio;
+            t2.Top = (t2.Top / oldRatio) * newRatio;
+            t2.Bottom = (t2.Bottom / oldRatio) * newRatio;
+            Grid.Margin = t2;
         }
 
         public void SetInstrument(Instrument instru)
