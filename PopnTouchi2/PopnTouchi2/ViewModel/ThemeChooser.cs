@@ -161,6 +161,11 @@ namespace PopnTouchi2.ViewModel
             border3.Margin = new Thickness(20.0 * ratio, 0, 20.0 * ratio, 0);
             GridTheme3.Width = 470.0 * ratio;
             GridTheme3.Height = 265.0 * ratio;
+
+            border4.BorderThickness = new Thickness(4.0 * ratio);
+            border4.Margin = new Thickness(20.0 * ratio, 0, 20.0 * ratio, 0);
+            GridTheme4.Width = 470.0 * ratio;
+            GridTheme4.Height = 265.0 * ratio;
         }
 
         /// <summary>
