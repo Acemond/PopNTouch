@@ -258,6 +258,7 @@ namespace PopnTouchi2.ViewModel
             IDs.Add(i);
 
             SetDimensions(width, height);
+            SessionSVI.Center = new Point(width / 2.0, height / 2.0);
 
             if (animated)
             {
@@ -376,7 +377,6 @@ namespace PopnTouchi2.ViewModel
             
             SessionSVI.Width = width;
             SessionSVI.Height = height;
-            SessionSVI.Center = new Point(width / 2.0, height / 2.0);
         }
 
         public void displayTrees(Thickness up, Thickness down)
