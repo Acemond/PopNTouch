@@ -328,6 +328,7 @@ namespace PopnTouchi2.ViewModel
             Grid.Children.Remove(TreeUp.Grid);
             Grid.Children.Remove(TreeDown.Grid);
             Grid.Children.Remove(Play_Button);
+            Grid.Children.Remove(Tempo_Button);
             EraseSession();
 
             SessionSVI.CanMove = true;
@@ -527,6 +528,7 @@ namespace PopnTouchi2.ViewModel
             Grid.Children.Add(NbgVM.Grid);
             Grid.Children.Add(MbgVM.Grid);
             Grid.Children.Add(Theme_Button);
+            Grid.Children.Add(Tempo_Button);
 
             Grid.SetZIndex(Theme_Button, 5);
             Grid.SetZIndex(UpdateSound.Grid, 4);

@@ -171,6 +171,7 @@ namespace PopnTouchi2.ViewModel.Animation
             SessionVM.Grid.Children.Remove(SessionVM.TreeUp.Grid);
             SessionVM.Grid.Children.Remove(SessionVM.TreeDown.Grid);
             SessionVM.Grid.Children.Remove(SessionVM.Play_Button);
+            SessionVM.Grid.Children.Remove(SessionVM.Tempo_Button);
             SessionVM.EraseSession();
 
             System.Windows.Shapes.Rectangle rect = new System.Windows.Shapes.Rectangle();
