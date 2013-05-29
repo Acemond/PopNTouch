@@ -816,6 +816,8 @@ namespace PopnTouchi2.ViewModel.Animation
             SessionVM.InitialScale = false;
             SessionVM.SessionSVI.MaxWidth = SessionVM.originalRatio * 1920.0;
             SessionVM.SessionSVI.MaxHeight = SessionVM.originalRatio * 1080.0;
+            SessionVM.Grid.Children.Add(SessionVM.Theme_Button);
+            Grid.SetZIndex(SessionVM.Theme_Button, 5);
         }
     }
 }
