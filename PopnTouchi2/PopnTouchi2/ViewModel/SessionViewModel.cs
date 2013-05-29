@@ -172,6 +172,7 @@ namespace PopnTouchi2.ViewModel
             SessionSVI = new ScatterViewItem();
             SessionSVI.Width = width;
             SessionSVI.Height = height;
+
             ratio = width / 1920.0;
             originalRatio = width / 1920.0;
 
@@ -229,11 +230,9 @@ namespace PopnTouchi2.ViewModel
             Grid.Children.Add(NbgVM.Grid);
             Grid.Children.Add(MbgVM.Grid);
             Grid.Children.Add(Play_Button);
-            Grid.Children.Add(Theme_Button);
             Grid.Children.Add(Tempo_Button);
             Grid.Children.Add(UpdateSound.Grid);
 
-            Grid.SetZIndex(Theme_Button, 5);
             Grid.SetZIndex(UpdateSound.Grid, 4);
             Grid.SetZIndex(TreeUp.Grid, 3);
             Grid.SetZIndex(TreeDown.Grid, 3);
@@ -547,7 +546,7 @@ namespace PopnTouchi2.ViewModel
             SessionSVI.Height = Grid.ActualHeight;
             //ODOT
 
-            ratio = SessionSVI.Width / 1920.0;
+            ratio = Grid.ActualWidth / 1920.0;
 
             string path = "Sessions/sess" + SessionID + ".bin";
             BinaryFormatter formatter = new BinaryFormatter();
@@ -611,7 +610,9 @@ namespace PopnTouchi2.ViewModel
             Grid.SetZIndex(MbgVM.Grid, 0);
             Grid.SetZIndex(ThemeChooser.Bird, 0);
             Grid.SetZIndex(ThemeChooser.Dragon, 0);
-            
+
+            Theme_Button.Background = ThemeVM.ThemesImage;
+
             double XCenter;
             foreach (Note note in sd.StaveTopNotes)
             {
@@ -635,7 +636,8 @@ namespace PopnTouchi2.ViewModel
             TreeUp.SetInstrument(sd.BottomInstrument);
             Session.PlayBackgroundSound();
 
-            UpdateEveryDimensions(Grid.ActualWidth, Grid.ActualHeight);
+            SetDimensions(Grid.ActualWidth, Grid.ActualHeight);
+            //UpdateEveryDimensions(Grid.ActualWidth, Grid.ActualHeight);
         }
 
         public void EraseSession()
