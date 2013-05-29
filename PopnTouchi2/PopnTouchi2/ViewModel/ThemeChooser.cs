@@ -41,6 +41,7 @@ namespace PopnTouchi2.ViewModel
         private Grid GridTheme4;
         public Grid Bird { get; set; }
         public Grid Dragon { get; set; }
+        public Grid Cat { get; set; }
 
         /// <summary>
         /// TODO
@@ -141,6 +142,14 @@ namespace PopnTouchi2.ViewModel
 
             Dragon.PreviewTouchDown += new EventHandler<TouchEventArgs>(Dragon_TouchDown);
 
+            Cat = new Grid();
+            Cat.Width = 175.0 * ratio;
+            Cat.Height = 275.0 * ratio;
+            Cat.Margin = new Thickness(0, 550.0 * ratio, 400.0 * ratio, 0);
+            Cat.Background = new SolidColorBrush(Colors.Red);
+
+            Cat.PreviewTouchDown += new EventHandler<TouchEventArgs>(Cat_TouchDown);
+
             Themes.Children.Add(border1);
             Themes.Children.Add(border2);
             Themes.Children.Add(border3);
@@ -227,6 +236,13 @@ namespace PopnTouchi2.ViewModel
                 sessionVM.Grid.Children.Remove(Dragon);
             }
 
+            if (sessionVM.Session.ThemeID == 4)
+            {
+                sessionVM.Grid.Children.Remove(Cat);
+            }
+
+            double ratio = sessionVM.SessionSVI.Width / 1920.0;
+
             sessionVM.Session.StopBackgroundSound();
             sessionVM.Session.Theme = new Theme1();
             sessionVM.Session.ThemeID = 1;
@@ -251,7 +267,7 @@ namespace PopnTouchi2.ViewModel
             sessionVM.Theme_Button.Background = sessionVM.ThemeVM.ThemesImage;
             sessionVM.Session.StaveTop.CurrentInstrument = sessionVM.Session.Theme.InstrumentsTop[0];
             sessionVM.Session.StaveBottom.CurrentInstrument = sessionVM.Session.Theme.InstrumentsBottom[0];
-            sessionVM.displayTrees(new Thickness(20, 0, 0, 130), new Thickness(20, 0, 0, 580));
+            sessionVM.displayTrees(new Thickness(20.0 * ratio, 0, 0, 130.0 * ratio), new Thickness(20.0 * ratio, 0, 0, 580.0 * ratio));
 
             sessionVM.SetDimensions(sessionVM.SessionSVI.Width, sessionVM.SessionSVI.Height);
 
@@ -291,6 +307,13 @@ namespace PopnTouchi2.ViewModel
                 sessionVM.Grid.Children.Remove(Dragon);
             }
 
+            if (sessionVM.Session.ThemeID == 4)
+            {
+                sessionVM.Grid.Children.Remove(Cat);
+            }
+    
+            double ratio = sessionVM.SessionSVI.Width / 1920.0;
+
             sessionVM.Session.StopBackgroundSound();
             sessionVM.Session.Theme = new Theme2();
             sessionVM.Session.ThemeID = 2;
@@ -314,7 +337,7 @@ namespace PopnTouchi2.ViewModel
             sessionVM.Theme_Button.Background = sessionVM.ThemeVM.ThemesImage;
             sessionVM.Session.StaveTop.CurrentInstrument = sessionVM.Session.Theme.InstrumentsTop[0];
             sessionVM.Session.StaveBottom.CurrentInstrument = sessionVM.Session.Theme.InstrumentsBottom[0];
-            sessionVM.displayTrees(new Thickness(20, 0, 0, 130), new Thickness(20, 0, 0, 580));
+            sessionVM.displayTrees(new Thickness(20.0 * ratio, 0, 0, 130 * ratio), new Thickness(20 * ratio, 0, 0, 580 * ratio));
 
             sessionVM.SetDimensions(sessionVM.SessionSVI.Width, sessionVM.SessionSVI.Height);
 
@@ -363,6 +386,13 @@ namespace PopnTouchi2.ViewModel
                 sessionVM.Grid.Children.Remove(Bird);
             }
 
+            if (sessionVM.Session.ThemeID == 4)
+            {
+                sessionVM.Grid.Children.Remove(Cat);
+            }
+    
+            double ratio = sessionVM.SessionSVI.Width / 1920.0;
+
             sessionVM.Session.StopBackgroundSound();
             sessionVM.Session.Theme = new Theme3();
             sessionVM.Session.ThemeID = 3;
@@ -387,7 +417,7 @@ namespace PopnTouchi2.ViewModel
             sessionVM.Theme_Button.Background = sessionVM.ThemeVM.ThemesImage;
             sessionVM.Session.StaveTop.CurrentInstrument = sessionVM.Session.Theme.InstrumentsTop[0];
             sessionVM.Session.StaveBottom.CurrentInstrument = sessionVM.Session.Theme.InstrumentsBottom[0];
-            sessionVM.displayTrees(new Thickness(20, 0, 0, 130), new Thickness(20, 0, 0, 580));
+            sessionVM.displayTrees(new Thickness(20.0 * ratio, 0, 0, 130.0 * ratio), new Thickness(20.0 * ratio, 0, 0, 580.0 * ratio));
 
             sessionVM.SetDimensions(sessionVM.SessionSVI.Width, sessionVM.SessionSVI.Height);
 
@@ -441,6 +471,8 @@ namespace PopnTouchi2.ViewModel
                 sessionVM.Grid.Children.Remove(Dragon);
             }
 
+            double ratio = sessionVM.SessionSVI.Width / 1920.0;
+
             sessionVM.Session.StopBackgroundSound();
             sessionVM.Session.Theme = new Theme4();
             sessionVM.Session.ThemeID = 4;
@@ -465,7 +497,7 @@ namespace PopnTouchi2.ViewModel
             sessionVM.Theme_Button.Background = sessionVM.ThemeVM.ThemesImage;
             sessionVM.Session.StaveTop.CurrentInstrument = sessionVM.Session.Theme.InstrumentsTop[0];
             sessionVM.Session.StaveBottom.CurrentInstrument = sessionVM.Session.Theme.InstrumentsBottom[0];
-            sessionVM.displayTrees(new Thickness(20, 0, 0, 130), new Thickness(20, 0, 0, 580));
+            sessionVM.displayTrees(new Thickness(20.0 * ratio, 0, 0, 130.0 * ratio), new Thickness(20.0 * ratio, 0, 0, 580.0 * ratio));
 
             sessionVM.SetDimensions(sessionVM.SessionSVI.Width, sessionVM.SessionSVI.Height);
             sessionVM.Session.PlayBackgroundSound();
@@ -473,6 +505,7 @@ namespace PopnTouchi2.ViewModel
             sessionVM.Session.StaveTop.SetTheme(sessionVM.ThemeVM.Theme);
             sessionVM.Session.StaveBottom.SetTheme(sessionVM.ThemeVM.Theme);
 
+            sessionVM.Grid.Children.Add(Cat);
             sessionVM.Grid.Children.Add(sessionVM.NbgVM.Grid);
             sessionVM.Grid.Children.Add(sessionVM.MbgVM.Grid);
             sessionVM.Grid.Children.Add(sessionVM.Bubbles);
@@ -480,9 +513,17 @@ namespace PopnTouchi2.ViewModel
             sessionVM.Grid.Children.Add(sessionVM.Play_Button);
             sessionVM.Grid.Children.Add(sessionVM.Theme_Button);
 
+            Grid.SetZIndex(Cat, 0);
+
             sessionVM.Grid.Children.Remove(Grid);
             sessionVM.Grid.Children.Remove(Themes);
             sessionVM.SessionSVI.CanScale = true;
+        }
+
+        private void Cat_TouchDown(object sender, RoutedEventArgs e)
+        {
+            //String effect = "chat" + (new Random()).Next(1, 6).ToString();
+            //AudioController.PlaySoundWithString(effect);
         }
     }
 }

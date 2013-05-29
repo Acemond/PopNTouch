@@ -618,6 +618,7 @@ namespace PopnTouchi2.ViewModel
             Grid.SetZIndex(MbgVM.Grid, 0);
             Grid.SetZIndex(ThemeChooser.Bird, 0);
             Grid.SetZIndex(ThemeChooser.Dragon, 0);
+            Grid.SetZIndex(ThemeChooser.Cat, 0);
 
             Theme_Button.Background = ThemeVM.ThemesImage;
 
