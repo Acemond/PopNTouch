@@ -196,7 +196,6 @@ namespace PopnTouchi2.ViewModel
             sessionVM.displayTrees(new Thickness(20, 0, 0, 130), new Thickness(20, 0, 0, 580));
 
             sessionVM.SetDimensions(sessionVM.SessionSVI.Width, sessionVM.SessionSVI.Height);
-            sessionVM.Session.PlayBackgroundSound();
 
             sessionVM.Session.StaveTop.SetTheme(sessionVM.ThemeVM.Theme);
             sessionVM.Session.StaveBottom.SetTheme(sessionVM.ThemeVM.Theme);
@@ -210,6 +209,8 @@ namespace PopnTouchi2.ViewModel
 
             sessionVM.Grid.Children.Remove(Grid);
             sessionVM.Grid.Children.Remove(Themes);
+
+            sessionVM.Session.PlayBackgroundSound();
         }
         
         /// <summary>
@@ -251,7 +252,6 @@ namespace PopnTouchi2.ViewModel
             sessionVM.displayTrees(new Thickness(20, 0, 0, 130), new Thickness(20, 0, 0, 580));
 
             sessionVM.SetDimensions(sessionVM.SessionSVI.Width, sessionVM.SessionSVI.Height);
-            sessionVM.Session.PlayBackgroundSound();
 
             sessionVM.Session.StaveTop.SetTheme(sessionVM.ThemeVM.Theme);
             sessionVM.Session.StaveBottom.SetTheme(sessionVM.ThemeVM.Theme);
@@ -268,6 +268,8 @@ namespace PopnTouchi2.ViewModel
 
             sessionVM.Grid.Children.Remove(Grid);
             sessionVM.Grid.Children.Remove(Themes);
+
+            sessionVM.Session.PlayBackgroundSound();
         }
 
         private void Bird_TouchDown(object sender, RoutedEventArgs e)
@@ -322,7 +324,6 @@ namespace PopnTouchi2.ViewModel
             sessionVM.displayTrees(new Thickness(20, 0, 0, 130), new Thickness(20, 0, 0, 580));
 
             sessionVM.SetDimensions(sessionVM.SessionSVI.Width, sessionVM.SessionSVI.Height);
-            sessionVM.Session.PlayBackgroundSound();
 
             sessionVM.Session.StaveTop.SetTheme(sessionVM.ThemeVM.Theme);
             sessionVM.Session.StaveBottom.SetTheme(sessionVM.ThemeVM.Theme);
@@ -336,6 +337,8 @@ namespace PopnTouchi2.ViewModel
 
             sessionVM.Grid.Children.Remove(Grid);
             sessionVM.Grid.Children.Remove(Themes);
+
+            sessionVM.Session.PlayBackgroundSound();
         }
     }
 }
