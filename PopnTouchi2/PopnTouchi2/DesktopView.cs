@@ -12,6 +12,9 @@ using PopnTouchi2.ViewModel;
 using System.Windows.Media.Imaging;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
+using System.Runtime.Serialization.Formatters.Binary;
+using System.IO;
+using PopnTouchi2.Model;
 
 namespace PopnTouchi2
 {
@@ -65,13 +68,16 @@ namespace PopnTouchi2
         /// temporary
         /// </summary>
         public SurfaceButton CreateSession_Button { get; set; }
-        
+
+        private List<SessionViewModel> openedSessions;
+
         /// <summary>
         /// Initializes few components including the session.
         /// </summary>
         public DesktopView()
         {
             IDs = new List<int>();
+            openedSessions = new List<SessionViewModel>();
 
             Image MiddleCache = new Image();
             MiddleCache.Source = new BitmapImage(new Uri(@"../../Resources/Images/desktopSmall.jpg", UriKind.Relative));
@@ -124,6 +130,75 @@ namespace PopnTouchi2
             Grid.SetZIndex(Photos, 3);
             Grid.SetZIndex(Sessions, 4);
 
+            PreviewTouchDown += new EventHandler<TouchEventArgs>(DesktopView_PreviewTouchDown);
+            PreviewTouchUp += new EventHandler<TouchEventArgs>(DesktopView_PreviewTouchUp);
+
+            Loaded += new RoutedEventHandler(DesktopView_Loaded);
+        }
+
+        void DesktopView_Loaded(object sender, RoutedEventArgs e)
+        {
+            string sPath = "Sessions/";
+            foreach (string sFileName in System.IO.Directory.GetFiles(sPath))
+            {
+                if (System.IO.Path.GetExtension(sFileName) == ".bin")
+                {
+                    BinaryFormatter formatter = new BinaryFormatter();
+                    FileStream stream = File.Open(sFileName, FileMode.Open);
+                    SessionData sd = (SessionData)formatter.Deserialize(stream);
+                    stream.Close();
+
+                    if (File.Exists("SnapShots/sc" + sd.SessionID + ".jpg"))
+                    {
+                        IDs.Add(sd.SessionID);
+
+                        string path = "SnapShots/sc" + sd.SessionID + ".jpg";
+                        ImageBrush ss = new ImageBrush();
+                        BitmapImage bi = new BitmapImage();
+                        FileStream Fs = new FileStream(path, FileMode.Open, FileAccess.Read);
+
+                        SessionVM = new SessionViewModel(ActualWidth, ActualHeight, new Session(), IDs, sd.SessionID);
+                        SessionVM.LoadReducedSession(Fs);
+
+                        bi.BeginInit();
+                        bi.StreamSource = Fs;
+                        bi.EndInit();
+                        ss.ImageSource = bi;
+
+                        SessionVM.Grid.Background = ss;
+
+                        Photos.Items.Add(SessionVM.SessionSVI);
+                        Random r = new Random();
+                        SessionVM.SessionSVI.Center = new Point(r.Next((int)ActualWidth), r.Next((int)ActualHeight));
+                    }
+                    else
+                    {
+                        try { File.Delete(sFileName); }
+                        catch (Exception exc) { }
+                    }
+                }
+            }
+        }
+
+        void DesktopView_PreviewTouchUp(object sender, TouchEventArgs e)
+        {
+            foreach (SessionViewModel svm in openedSessions)
+            {
+                if (svm.removeDeleteButtonsOnTouchUp)
+                {
+                    svm.DeleteButton.Visibility = Visibility.Hidden;
+                    svm.removeDeleteButtonsOnTouchUp = false;
+                }
+            }
+        }
+
+        void DesktopView_PreviewTouchDown(object sender, TouchEventArgs e)
+        {
+            foreach (SessionViewModel svm in openedSessions)
+            {
+                if (svm.DeleteButton.Visibility == Visibility.Visible)
+                    svm.removeDeleteButtonsOnTouchUp = true;
+            }
         }
 
         /// <summary>
@@ -135,7 +210,7 @@ namespace PopnTouchi2
         {
             if (Sessions.Items.Count == 0)
             {
-                SessionVM = new SessionViewModel(ActualWidth, ActualHeight, new Session(), IDs);
+                SessionVM = new SessionViewModel(ActualWidth, ActualHeight, new Session(), IDs, true);
                 Sessions.Items.Add(SessionVM.SessionSVI);
             }
             else if (Sessions.Items.Count == 1)
@@ -154,6 +229,8 @@ namespace PopnTouchi2
                 }
             }
 
+            openedSessions.Add(SessionVM);
+            SessionVM.Session.PlayBackgroundSound();
             CheckDesktopToDisplay();
         }
 
@@ -167,9 +244,13 @@ namespace PopnTouchi2
             HideDesktop();
             SessionVM = new SessionViewModel(true, ActualWidth, ActualHeight, new Session(), IDs);
             Sessions.Items.Add(SessionVM.SessionSVI);
+            openedSessions.Add(SessionVM);
+            SessionVM.Session.PlayBackgroundSound();
 
             SessionVM = new SessionViewModel(false, ActualWidth, ActualHeight, new Session(), IDs);
             Sessions.Items.Add(SessionVM.SessionSVI);
+            openedSessions.Add(SessionVM);
+            SessionVM.Session.PlayBackgroundSound();
 
             LeftSessionActive = true;
             RightSessionActive = true;
