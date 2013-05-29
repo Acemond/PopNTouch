@@ -578,9 +578,7 @@ namespace PopnTouchi2.ViewModel.Animation
 
             SessionVM.LoadSession();
             Fs.Close();
-
-            SessionVM.Session.PlayBackgroundSound();
-
+            
             RemoveWhiteBorder();
         }
 
