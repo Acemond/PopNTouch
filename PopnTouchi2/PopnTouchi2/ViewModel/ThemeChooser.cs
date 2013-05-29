@@ -40,6 +40,7 @@ namespace PopnTouchi2.ViewModel
         private Border border4;
         private Grid GridTheme4;
         public Grid Bird { get; set; }
+        public Grid Dragon { get; set; }
 
         /// <summary>
         /// TODO
@@ -95,7 +96,7 @@ namespace PopnTouchi2.ViewModel
             border3 = new Border();
             border3.BorderBrush = new SolidColorBrush(Colors.White);
             border3.BorderThickness = new Thickness(4.0 * ratio);
-            border3.Margin = new Thickness(20.0 * ratio, 0, 20.0 * ratio, 20.0 * ratio);
+            border3.Margin = new Thickness(20.0 * ratio, 20.0 * ratio, 20.0 * ratio, 20.0 * ratio);
             border3.HorizontalAlignment = HorizontalAlignment.Left;
             border3.VerticalAlignment = VerticalAlignment.Bottom;
             GridTheme3 = new Grid();
@@ -111,7 +112,7 @@ namespace PopnTouchi2.ViewModel
             border4 = new Border();
             border4.BorderBrush = new SolidColorBrush(Colors.White);
             border4.BorderThickness = new Thickness(4.0 * ratio);
-            border4.Margin = new Thickness(20.0 * ratio, 0, 20.0 * ratio, 0);
+            border4.Margin = new Thickness(20.0 * ratio, 20.0 * ratio, 20.0 * ratio, 20.0 * ratio);
             border4.HorizontalAlignment = HorizontalAlignment.Right;
             border4.VerticalAlignment = VerticalAlignment.Bottom;
             GridTheme4 = new Grid();
@@ -132,6 +133,14 @@ namespace PopnTouchi2.ViewModel
 
             Bird.PreviewTouchDown += new EventHandler<TouchEventArgs>(Bird_TouchDown);
 
+            Dragon = new Grid();
+            Dragon.Width = 175.0 * ratio;
+            Dragon.Height = 275.0 * ratio;
+            Dragon.Margin = new Thickness(0, 550.0 * ratio, 40.0 * ratio, 0);
+            Dragon.Background = new SolidColorBrush(Colors.Transparent);
+
+            Dragon.PreviewTouchDown += new EventHandler<TouchEventArgs>(Dragon_TouchDown);
+
             Themes.Children.Add(border1);
             Themes.Children.Add(border2);
             Themes.Children.Add(border3);
@@ -147,25 +156,32 @@ namespace PopnTouchi2.ViewModel
         {
             double ratio = width / 1920.0;
 
+            Themes.Width = 1036 * ratio;
+            Themes.Height = 626 * ratio;
+
             border1.BorderThickness = new Thickness(4.0 * ratio);
-            border1.Margin = new Thickness(20.0 * ratio, 0, 20.0 * ratio, 0);
+            border1.Margin = new Thickness(20.0 * ratio, 20.0 * ratio, 20.0 * ratio, 20.0 * ratio);
             GridTheme1.Width = 470.0 * ratio;
             GridTheme1.Height = 265.0 * ratio;
 
             border2.BorderThickness = new Thickness(4.0 * ratio);
-            border2.Margin = new Thickness(20.0 * ratio, 0, 20.0 * ratio, 0);
+            border2.Margin = new Thickness(20.0 * ratio, 20.0 * ratio, 20.0 * ratio, 20.0 * ratio);
             GridTheme2.Width = 470.0 * ratio;
             GridTheme2.Height = 265.0 * ratio;
 
             border3.BorderThickness = new Thickness(4.0 * ratio);
-            border3.Margin = new Thickness(20.0 * ratio, 0, 20.0 * ratio, 0);
+            border3.Margin = new Thickness(20.0 * ratio, 20.0 * ratio, 20.0 * ratio, 20.0 * ratio);
             GridTheme3.Width = 470.0 * ratio;
             GridTheme3.Height = 265.0 * ratio;
 
             border4.BorderThickness = new Thickness(4.0 * ratio);
-            border4.Margin = new Thickness(20.0 * ratio, 0, 20.0 * ratio, 0);
+            border4.Margin = new Thickness(20.0 * ratio, 20.0 * ratio, 20.0 * ratio, 20.0 * ratio);
             GridTheme4.Width = 470.0 * ratio;
             GridTheme4.Height = 265.0 * ratio;
+
+            Bird.Width = 140.0 * ratio;
+            Bird.Height = 165.0 * ratio;
+            Bird.Margin = new Thickness(0, 585.0 * ratio, 80.0 * ratio, 0);
         }
 
         /// <summary>
@@ -198,6 +214,11 @@ namespace PopnTouchi2.ViewModel
             if (sessionVM.Session.ThemeID == 2)
             {
                 sessionVM.Grid.Children.Remove(Bird);
+            }
+
+            if (sessionVM.Session.ThemeID == 3)
+            {
+                sessionVM.Grid.Children.Remove(Dragon);
             }
 
             sessionVM.Session.StopBackgroundSound();
@@ -257,6 +278,12 @@ namespace PopnTouchi2.ViewModel
                 sessionVM.Grid.Children.Remove(Themes);
                 return;
             }
+
+            if (sessionVM.Session.ThemeID == 3)
+            {
+                sessionVM.Grid.Children.Remove(Dragon);
+            }
+
             sessionVM.Session.StopBackgroundSound();
             sessionVM.Session.Theme = new Theme2();
             sessionVM.Session.ThemeID = 2;
@@ -359,6 +386,7 @@ namespace PopnTouchi2.ViewModel
             sessionVM.Session.StaveTop.SetTheme(sessionVM.ThemeVM.Theme);
             sessionVM.Session.StaveBottom.SetTheme(sessionVM.ThemeVM.Theme);
 
+            sessionVM.Grid.Children.Add(Dragon);
             sessionVM.Grid.Children.Add(sessionVM.NbgVM.Grid);
             sessionVM.Grid.Children.Add(sessionVM.MbgVM.Grid);
             sessionVM.Grid.Children.Add(sessionVM.Bubbles);
@@ -366,10 +394,18 @@ namespace PopnTouchi2.ViewModel
             sessionVM.Grid.Children.Add(sessionVM.Play_Button);
             sessionVM.Grid.Children.Add(sessionVM.Theme_Button);
 
+            Grid.SetZIndex(Dragon, 0);
+
             sessionVM.Grid.Children.Remove(Grid);
             sessionVM.Grid.Children.Remove(Themes);
 
             sessionVM.Session.PlayBackgroundSound();
+        }
+
+        private void Dragon_TouchDown(object sender, RoutedEventArgs e)
+        {
+            String effect = "dragon" + (new Random()).Next(1, 4).ToString();
+            AudioController.PlaySoundWithString(effect);
         }
 
         /// <summary>
@@ -389,6 +425,11 @@ namespace PopnTouchi2.ViewModel
             if (sessionVM.Session.ThemeID == 2)
             {
                 sessionVM.Grid.Children.Remove(Bird);
+            }
+
+            if (sessionVM.Session.ThemeID == 3)
+            {
+                sessionVM.Grid.Children.Remove(Dragon);
             }
 
             sessionVM.Session.StopBackgroundSound();
