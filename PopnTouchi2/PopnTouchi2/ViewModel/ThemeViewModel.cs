@@ -57,6 +57,12 @@ namespace PopnTouchi2.ViewModel
 
         /// <summary>
         /// Property.
+        /// Theme defines Tempo button aspect.
+        /// </summary>
+        public List<ImageBrush> TempoImage { get; set; }
+
+        /// <summary>
+        /// Property.
         /// Theme defines Themes button aspect.
         /// </summary>
         public ImageBrush ThemesImage { get; set; }
@@ -97,6 +103,13 @@ namespace PopnTouchi2.ViewModel
 
             PlayImage = new ImageBrush();
             PlayImage.ImageSource = GetBitmapImage("playdrop");
+
+            TempoImage = new List<ImageBrush>();
+            for (int i = 0; i < 3; i++)
+            {
+                TempoImage.Add(new ImageBrush());
+                TempoImage[i].ImageSource = new BitmapImage(new Uri(@"../../Resources/Images/UI_items/"+i.ToString()+".png", UriKind.Relative));
+            }
 
             SoundPointEnableImage = new ImageBrush();
             SoundPointEnableImage.ImageSource = GetBitmapImage("soundpointenable");
