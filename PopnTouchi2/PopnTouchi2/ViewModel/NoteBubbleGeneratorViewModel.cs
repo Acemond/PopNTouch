@@ -63,10 +63,26 @@ namespace PopnTouchi2.ViewModel
         /// <param name="e">TouchEventArgs</param>
         public void touchDown(object sender, TouchEventArgs e)
         {
-            NoteBubble newBubble = NoteBubbleGenerator.CreateNoteBubble();
-            NoteBubbleViewModel nbVM = new NoteBubbleViewModel(newBubble, SessionVM.Bubbles, SessionVM);
             if (NoteBubbleVMs.Count < GlobalVariables.MaxNoteBubbles)
             {
+                List<NoteBubble> bubblesList = new List<NoteBubble>();
+                foreach (NoteBubbleViewModel nbvm in NoteBubbleVMs)
+                    bubblesList.Add(nbvm.NoteBubble);
+                NoteBubble newBubble = NoteBubbleGenerator.CreateNoteBubble(bubblesList);
+                NoteBubbleViewModel nbVM = new NoteBubbleViewModel(newBubble, SessionVM.Bubbles, SessionVM);
+                NoteBubbleVMs.Add(nbVM);
+                SessionVM.Bubbles.Items.Add(nbVM.SVItem);
+            }
+            else
+            {
+                NoteBubbleViewModel toRemove = NoteBubbleVMs.First();
+                NoteBubbleVMs.Remove(toRemove);
+                SessionVM.Bubbles.Items.Remove(toRemove.SVItem);
+                List<NoteBubble> bubblesList = new List<NoteBubble>();
+                foreach (NoteBubbleViewModel nbvm in NoteBubbleVMs)
+                    bubblesList.Add(nbvm.NoteBubble);
+                NoteBubble newBubble = NoteBubbleGenerator.CreateNoteBubble(bubblesList);
+                NoteBubbleViewModel nbVM = new NoteBubbleViewModel(newBubble, SessionVM.Bubbles, SessionVM);
                 NoteBubbleVMs.Add(nbVM);
                 SessionVM.Bubbles.Items.Add(nbVM.SVItem);
             }

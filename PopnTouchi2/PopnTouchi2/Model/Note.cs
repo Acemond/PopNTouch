@@ -97,7 +97,7 @@ namespace PopnTouchi2
         public Note()
         {
             Octave = 1;
-            Duration = NoteValue.crotchet;
+            Duration = NoteValue.alteration;
             Pitch = "do";
             Sharp = false;
             Flat = false;

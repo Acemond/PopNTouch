@@ -10,6 +10,7 @@ using System.Windows;
 
 namespace PopnTouchi2
 {
+    [Serializable]
     /// <summary>
     /// Defines an instrument and methods to play sounds with it.
     /// </summary>

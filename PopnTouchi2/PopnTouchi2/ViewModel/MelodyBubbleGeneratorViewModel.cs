@@ -61,10 +61,27 @@ namespace PopnTouchi2.ViewModel
         /// <param name="e">TouchEventArgs</param>
         public void touchDown(object sender, TouchEventArgs e)
         {
-            MelodyBubble newBubble = MelodyBubbleGenerator.CreateMelodyBubble();
-            MelodyBubbleViewModel mbVM = new MelodyBubbleViewModel(newBubble, SessionVM.Bubbles, SessionVM);
+            
             if (GlobalVariables.MaxMelodyBubbles > MelodyBubbleVMs.Count)
             {
+                List<MelodyBubble> bubblesList = new List<MelodyBubble>();
+                foreach (MelodyBubbleViewModel nbvm in MelodyBubbleVMs)
+                    bubblesList.Add(nbvm.MelodyBubble);
+                MelodyBubble newBubble = MelodyBubbleGenerator.CreateMelodyBubble(bubblesList);
+                MelodyBubbleViewModel mbVM = new MelodyBubbleViewModel(newBubble, SessionVM.Bubbles, SessionVM);
+                MelodyBubbleVMs.Add(mbVM);
+                SessionVM.Bubbles.Items.Add(mbVM.SVItem);
+            }
+            else
+            {
+                MelodyBubbleViewModel toRemove = MelodyBubbleVMs.First();
+                MelodyBubbleVMs.Remove(toRemove);
+                SessionVM.Bubbles.Items.Remove(toRemove.SVItem);
+                List<MelodyBubble> bubblesList = new List<MelodyBubble>();
+                foreach (MelodyBubbleViewModel nbvm in MelodyBubbleVMs)
+                    bubblesList.Add(nbvm.MelodyBubble);
+                MelodyBubble newBubble = MelodyBubbleGenerator.CreateMelodyBubble(bubblesList);
+                MelodyBubbleViewModel mbVM = new MelodyBubbleViewModel(newBubble, SessionVM.Bubbles, SessionVM);
                 MelodyBubbleVMs.Add(mbVM);
                 SessionVM.Bubbles.Items.Add(mbVM.SVItem);
             }
