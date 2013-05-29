@@ -179,6 +179,7 @@ namespace PopnTouchi2.ViewModel.Animation
             SessionVM.Grid.Children.Remove(SessionVM.TreeDown.Grid);
             SessionVM.Grid.Children.Remove(SessionVM.Play_Button);
             SessionVM.Grid.Children.Remove(SessionVM.Tempo_Button);
+            SessionVM.Grid.Children.Remove(SessionVM.Theme_Button);
             SessionVM.EraseSession();
 
             System.Windows.Shapes.Rectangle rect = new System.Windows.Shapes.Rectangle();
@@ -272,7 +273,6 @@ namespace PopnTouchi2.ViewModel.Animation
             SessionVM.Play_Button.Opacity = 1;
             grid.Children.Remove(SessionVM.Bubbles);
             grid.Children.Remove(SessionVM.UpdateSound.Grid);
-            grid.Children.Remove(SessionVM.Theme_Button);
         }
 
         /// <summary>

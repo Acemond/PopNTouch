@@ -203,7 +203,7 @@ namespace PopnTouchi2.ViewModel
             Theme_Button.Height = 110;
             Theme_Button.HorizontalAlignment = System.Windows.HorizontalAlignment.Right;
             Theme_Button.VerticalAlignment = System.Windows.VerticalAlignment.Top;
-            Theme_Button.Margin = new Thickness(0, 0, 100.0, 0);
+            Theme_Button.Margin = new Thickness(0, 0, 100.0 * ratio, 0);
             Theme_Button.Background = ThemeVM.ThemesImage;
             Theme_Button.Visibility = Visibility.Visible;
 
@@ -372,6 +372,8 @@ namespace PopnTouchi2.ViewModel
             Notes.Height = (Notes.ActualHeight / oldRatio) * ratio;
             Bubbles.Width = (Notes.ActualWidth / oldRatio) * ratio;
             Bubbles.Height = (Notes.ActualHeight / oldRatio) * ratio;
+            Tempo_Button.Margin = new Thickness(0, 0, 470.0 * ratio, 0);
+            Theme_Button.Margin = new Thickness(0, 0, 100.0 * ratio, 0);
             foreach (ScatterViewItem svi in Notes.Items)
             {
                 ScaleTransform st = new ScaleTransform(ratio / originalRatio, ratio / originalRatio, svi.ActualCenter.X, svi.ActualCenter.Y);
@@ -416,6 +418,9 @@ namespace PopnTouchi2.ViewModel
             MbgVM.Grid.Height = width * 0.07948;
 
             ThemeChooser.SetDimensions(width);
+
+            Tempo_Button.Margin = new Thickness(0, 0, 470.0 * ratio, 0);
+            Theme_Button.Margin = new Thickness(0, 0, 100.0 * ratio, 0);
 
             //Size of SurfaceButton Play
             Play_Button.Width = width / 11.0;
