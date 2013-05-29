@@ -12,6 +12,9 @@ using PopnTouchi2.ViewModel;
 using System.Windows.Media.Imaging;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
+using System.Runtime.Serialization.Formatters.Binary;
+using System.IO;
+using PopnTouchi2.Model;
 
 namespace PopnTouchi2
 {
@@ -130,6 +133,52 @@ namespace PopnTouchi2
             PreviewTouchDown += new EventHandler<TouchEventArgs>(DesktopView_PreviewTouchDown);
             PreviewTouchUp += new EventHandler<TouchEventArgs>(DesktopView_PreviewTouchUp);
 
+            Loaded += new RoutedEventHandler(DesktopView_Loaded);
+        }
+
+        void DesktopView_Loaded(object sender, RoutedEventArgs e)
+        {
+            string sPath = "Sessions/";
+            foreach (string sFileName in System.IO.Directory.GetFiles(sPath))
+            {
+                if (System.IO.Path.GetExtension(sFileName) == ".bin")
+                {
+                    BinaryFormatter formatter = new BinaryFormatter();
+                    FileStream stream = File.Open(sFileName, FileMode.Open);
+                    SessionData sd = (SessionData)formatter.Deserialize(stream);
+                    stream.Close();
+
+                    if (File.Exists("SnapShots/sc" + sd.SessionID + ".jpg"))
+                    {
+                        IDs.Add(sd.SessionID);
+
+                        string path = "SnapShots/sc" + sd.SessionID + ".jpg";
+                        ImageBrush ss = new ImageBrush();
+                        BitmapImage bi = new BitmapImage();
+                        FileStream Fs = new FileStream(path, FileMode.Open, FileAccess.Read);
+
+                        SessionVM = new SessionViewModel(ActualWidth, ActualHeight, new Session(), IDs, sd.SessionID);
+                        SessionVM.LoadReducedSession(Fs);
+
+                        bi.BeginInit();
+                        bi.StreamSource = Fs;
+                        bi.EndInit();
+                        ss.ImageSource = bi;
+
+                        SessionVM.Grid.Background = ss;
+                        //Fs.Close();
+
+                        Photos.Items.Add(SessionVM.SessionSVI);
+                        Random r = new Random();
+                        SessionVM.SessionSVI.Center = new Point(r.Next((int)ActualWidth), r.Next((int)ActualHeight));
+                    }
+                    else
+                    {
+                        try { File.Delete(sFileName); }
+                        catch (Exception exc) { }
+                    }
+                }
+            }
         }
 
         void DesktopView_PreviewTouchUp(object sender, TouchEventArgs e)
@@ -162,7 +211,7 @@ namespace PopnTouchi2
         {
             if (Sessions.Items.Count == 0)
             {
-                SessionVM = new SessionViewModel(ActualWidth, ActualHeight, new Session(), IDs);
+                SessionVM = new SessionViewModel(ActualWidth, ActualHeight, new Session(), IDs, true);
                 Sessions.Items.Add(SessionVM.SessionSVI);
             }
             else if (Sessions.Items.Count == 1)

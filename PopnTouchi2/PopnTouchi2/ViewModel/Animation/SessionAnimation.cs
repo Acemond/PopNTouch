@@ -47,7 +47,7 @@ namespace PopnTouchi2.ViewModel.Animation
         /// <summary>
         /// FileStream used for SnapShots.
         /// </summary>
-        private FileStream Fs { get; set; }
+        public FileStream Fs { get; set; }
 
         private System.Windows.Threading.DispatcherTimer AutoDBRemoveDispatcherTimer = new System.Windows.Threading.DispatcherTimer();
         private System.Windows.Threading.DispatcherTimer TouchHoldDispatcherTimer = new System.Windows.Threading.DispatcherTimer();
@@ -101,6 +101,15 @@ namespace PopnTouchi2.ViewModel.Animation
             SessionVM.SessionSVI.PreviewTouchDown += new EventHandler<System.Windows.Input.TouchEventArgs>(SessionSVI_TouchDown);
 
             InitStb.Begin();
+        }
+
+        public SessionAnimation(SessionViewModel s, bool reduced)
+            : base()
+        {
+            SessionVM = s;
+
+            SessionVM.SessionSVI.TouchLeave += new EventHandler<System.Windows.Input.TouchEventArgs>(svi_TouchLeave);
+            SessionVM.SessionSVI.PreviewTouchDown += new EventHandler<System.Windows.Input.TouchEventArgs>(SessionSVI_TouchDown);
         }
         
         #region REDUCTION
@@ -286,8 +295,8 @@ namespace PopnTouchi2.ViewModel.Animation
             DoubleAnimation heightAnimation = new DoubleAnimation();
             ReduceWidthAnimation2 = new DoubleAnimation();
 
-            borderAnimation.From = new Thickness(0);
-            borderAnimation.To = new Thickness(15);
+            borderAnimation.From = new Thickness(0.0);
+            borderAnimation.To = new Thickness(15.0);
             borderAnimation.Duration = new Duration(TimeSpan.FromSeconds(.5));
             borderAnimation.FillBehavior = FillBehavior.HoldEnd;
             stb.Children.Add(borderAnimation);
@@ -295,7 +304,7 @@ namespace PopnTouchi2.ViewModel.Animation
             Storyboard.SetTargetProperty(borderAnimation, new PropertyPath(ScatterViewItem.BorderThicknessProperty));
 
             heightAnimation.From = SessionVM.SessionSVI.ActualHeight;
-            heightAnimation.To = SessionVM.SessionSVI.ActualHeight + 30;
+            heightAnimation.To = SessionVM.SessionSVI.ActualHeight + 30.0;
             heightAnimation.Duration = new Duration(TimeSpan.FromSeconds(.5));
             heightAnimation.FillBehavior = FillBehavior.HoldEnd;
             stb.Children.Add(heightAnimation);
@@ -303,7 +312,7 @@ namespace PopnTouchi2.ViewModel.Animation
             Storyboard.SetTargetProperty(heightAnimation, new PropertyPath(ScatterViewItem.HeightProperty));
 
             ReduceWidthAnimation2.From = SessionVM.SessionSVI.ActualWidth;
-            ReduceWidthAnimation2.To = SessionVM.SessionSVI.ActualWidth + 30;
+            ReduceWidthAnimation2.To = SessionVM.SessionSVI.ActualWidth + 30.0;
             ReduceWidthAnimation2.Duration = new Duration(TimeSpan.FromSeconds(.5));
             ReduceWidthAnimation2.FillBehavior = FillBehavior.HoldEnd;
             stb.Children.Add(ReduceWidthAnimation2);
@@ -404,7 +413,7 @@ namespace PopnTouchi2.ViewModel.Animation
             touchDevice = e.TouchDevice;
 
             TouchHoldDispatcherTimer = new System.Windows.Threading.DispatcherTimer();
-            TouchHoldDispatcherTimer.Interval = TimeSpan.FromSeconds(1.5);
+            TouchHoldDispatcherTimer.Interval = TimeSpan.FromSeconds(1.0);
             TouchHoldDispatcherTimer.Start();
             TouchHoldDispatcherTimer.Tick += new EventHandler(DispatcherTimer_Tick);
         }

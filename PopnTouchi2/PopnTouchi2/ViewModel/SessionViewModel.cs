@@ -163,7 +163,7 @@ namespace PopnTouchi2.ViewModel
         /// </summary>
         public ThemeChooser ThemeChooser { get; set; }
 
-        public SessionViewModel(Double width, Double height, Session s, List<int> IDs)
+        public SessionViewModel(Double width, Double height, Session s, List<int> IDs, bool animated)
         {
             Session = s;
             BeingDeleted = false;
@@ -260,8 +260,11 @@ namespace PopnTouchi2.ViewModel
 
             SetDimensions(width, height);
 
-            Animation = new SessionAnimation(this);
-            Reducer.Click += new RoutedEventHandler(Animation.Reducer_Click);
+            if (animated)
+            {
+                Animation = new SessionAnimation(this);
+                Reducer.Click += new RoutedEventHandler(Animation.Reducer_Click);
+            }
 
             DeleteButton = new SurfaceButton();
             DeleteButton.Visibility = Visibility.Hidden;
@@ -278,12 +281,6 @@ namespace PopnTouchi2.ViewModel
 
             DeleteButton.PreviewTouchDown += new EventHandler<TouchEventArgs>(DeleteButton_PreviewTouchDown);
         }
-
-        void DeleteButton_PreviewTouchDown(object sender, TouchEventArgs e)
-        {
-            DeleteButton.Visibility = Visibility.Hidden;
-            Animation.DeleteSession();
-        }
         
         /// <summary>
         /// TODO
@@ -294,7 +291,7 @@ namespace PopnTouchi2.ViewModel
         /// <param name="s"></param>
         /// <param name="IDs"></param>
         public SessionViewModel(Boolean left, Double width, Double height, Session s, List<int> IDs)
-            : this(width * 0.5625, height * 0.5625, s, IDs)
+            : this(width * 0.5625, height * 0.5625, s, IDs, true)
         {
             if (left)
             {
@@ -308,6 +305,41 @@ namespace PopnTouchi2.ViewModel
                 SessionSVI.Orientation = -90;
                 SessionSVI.Center = new Point(width - (width / 6.0 - 16.875), height / 2.0);
             }
+        }
+
+        /// <summary>
+        /// Loads a session from HDD
+        /// </summary>
+        /// <param name="width">MainDesktop width</param>
+        /// <param name="height">MainDesktop height</param>
+        /// <param name="s">Its session</param>
+        /// <param name="ID">Its original ID</param>
+        public SessionViewModel(Double width, Double height, Session s, List<int> IDs, int ID)
+            : this(width, height, s, IDs, false)
+        {
+            SessionID = ID;
+            Grid.Children.Remove(Bubbles);
+            Grid.Children.Remove(Reducer);
+            Grid.Children.Remove(UpdateSound.Grid);
+            Grid.Children.Remove(Theme_Button);
+            Grid.Children.Remove(Notes);
+            Grid.Children.Remove(NbgVM.Grid);
+            Grid.Children.Remove(MbgVM.Grid);
+            Grid.Children.Remove(TreeUp.Grid);
+            Grid.Children.Remove(TreeDown.Grid);
+            Grid.Children.Remove(Play_Button);
+            EraseSession();
+
+            SessionSVI.CanMove = true;
+            SessionSVI.CanRotate = true;
+
+            SessionSVI.Opacity = 1;
+        }
+
+        void DeleteButton_PreviewTouchDown(object sender, TouchEventArgs e)
+        {
+            DeleteButton.Visibility = Visibility.Hidden;
+            Animation.DeleteSession();
         }
         
         /// <summary>
@@ -412,6 +444,23 @@ namespace PopnTouchi2.ViewModel
             SessionData sd = new SessionData(this);
             formatter.Serialize(stream, sd);
             stream.Close();
+        }
+        
+        /// <summary>
+        /// Loads a session from a binary file reduced
+        /// </summary>
+        public void LoadReducedSession(FileStream ScStream)
+        {
+            SessionSVI.BorderBrush = Brushes.White;
+            SessionSVI.BorderThickness = new Thickness(15.0);
+
+            SessionSVI.Width = SessionSVI.Width / 4.0 + 30.0;
+            SessionSVI.Height = SessionSVI.Height / 4.0 + 30.0;
+
+            Animation = new SessionAnimation(this, true);
+            Reducer.Click += new RoutedEventHandler(Animation.Reducer_Click);
+            Animation.Fs = ScStream;
+            Reduced = true;
         }
 
         /// <summary>
@@ -534,7 +583,8 @@ namespace PopnTouchi2.ViewModel
             try
             {
                 File.Delete("Sessions/sess" + SessionID + ".bin");
-                File.Delete("SnapShots/sc" + SessionID.ToString() + ".jpg");
+                Animation.Fs.Close();
+                File.Delete("SnapShots/sc" + SessionID + ".jpg");
             }
             catch (Exception exc)
             {
