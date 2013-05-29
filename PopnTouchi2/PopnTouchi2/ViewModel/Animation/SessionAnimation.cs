@@ -421,6 +421,7 @@ namespace PopnTouchi2.ViewModel.Animation
 
         void DispatcherTimer_Tick(object sender, EventArgs e)
         {
+            if (SessionVM == null) return;
             TouchHoldDispatcherTimer.Stop();
             if (Math.Abs(touchDevice.GetTouchPoint(MainDesktop).Position.X - startingTouchPoint.Position.X) < 15.0 &&
                 Math.Abs(touchDevice.GetTouchPoint(MainDesktop).Position.Y - startingTouchPoint.Position.Y) < 15.0)

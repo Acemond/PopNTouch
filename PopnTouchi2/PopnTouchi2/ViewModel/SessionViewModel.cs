@@ -224,7 +224,7 @@ namespace PopnTouchi2.ViewModel
 
             SessionSVI.CanMove = false;
             SessionSVI.CanRotate = false;
-            SessionSVI.CanScale = false;
+            SessionSVI.CanScale = true;
             SessionSVI.ShowsActivationEffects = false;
 
             displayTrees(new Thickness(20.0 * ratio, 0, 0, 130.0 * ratio), new Thickness(20.0 * ratio, 0, 0, 580.0 * ratio));
