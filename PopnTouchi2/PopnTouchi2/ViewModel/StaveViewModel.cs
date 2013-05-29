@@ -39,6 +39,5 @@ namespace PopnTouchi2.ViewModel
             Stave = stave;
             Animation = new StaveAnimation(stave);
         }
-
     }
 }
