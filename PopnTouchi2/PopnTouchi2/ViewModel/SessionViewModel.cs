@@ -373,6 +373,8 @@ namespace PopnTouchi2.ViewModel
                 case 4: Session.Theme = new Theme4(); break;
                 default: Session.Theme = new Theme1(); break;
             }
+
+            ThemeVM = new ThemeViewModel(Session.Theme, this);
             Converter conv = new Converter();
             Session.StaveTop = new Stave(Session.Theme.InstrumentsTop[0], Session.Theme);
             Session.StaveBottom = new Stave(Session.Theme.InstrumentsBottom[0], Session.Theme);
@@ -389,6 +391,15 @@ namespace PopnTouchi2.ViewModel
             MbgVM = new MelodyBubbleGeneratorViewModel(Session.MelodyBubbleGenerator, this);
 
             displayTrees(new Thickness(20.0 * ratio, 0, 0, 130.0 * ratio), new Thickness(20.0 * ratio, 0, 0, 580.0 * ratio));
+
+            Play_Button = new Grid();
+            Play_Button.HorizontalAlignment = System.Windows.HorizontalAlignment.Left;
+            Play_Button.VerticalAlignment = System.Windows.VerticalAlignment.Top;
+            Play_Button.Background = ThemeVM.PlayImage;
+            Play_Button.Visibility = Visibility.Visible;
+            IsPlaying = false;
+
+            Play_Button.PreviewTouchDown += new EventHandler<TouchEventArgs>(Play_Button_TouchDown);
 
             Grid.Children.Add(Bubbles);
             Grid.Children.Add(Notes);
@@ -444,6 +455,8 @@ namespace PopnTouchi2.ViewModel
             Session = null;
             TreeDown = null;
             TreeUp = null;
+            ThemeVM = null;
+            Play_Button = null;
         }
     }
 }
