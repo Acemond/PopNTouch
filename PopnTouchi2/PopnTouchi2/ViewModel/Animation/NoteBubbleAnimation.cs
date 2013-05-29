@@ -258,7 +258,6 @@ namespace PopnTouchi2.ViewModel.Animation
                         {
                             sessionVM.Notes.Items.Remove(noteVM.SVItem);
                             double y = c.getCenterY(isUp, noteVM.Note);
-                            MessageBox.Show(y.ToString());
                             if (y < 80)
                             {
                                 sessionVM.NotesOnStave.Remove(noteVM);
