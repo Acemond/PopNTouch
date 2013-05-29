@@ -533,8 +533,8 @@ namespace PopnTouchi2.ViewModel
         {
             try
             {
-                File.Delete("Sessions/sess" + SessionVM.SessionID + ".bin");
-                File.Delete("SnapShots/sc" + SessionVM.SessionID.ToString() + ".jpg");
+                File.Delete("Sessions/sess" + SessionID + ".bin");
+                File.Delete("SnapShots/sc" + SessionID.ToString() + ".jpg");
             }
             catch (Exception exc)
             {
