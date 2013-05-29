@@ -159,7 +159,7 @@ namespace PopnTouchi2
                         FileStream Fs = new FileStream(path, FileMode.Open, FileAccess.Read);
 
                         SessionVM = new SessionViewModel(ActualWidth, ActualHeight, new Session(), IDs, sd.SessionID);
-                        SessionVM.LoadReducedSession(Fs);
+                        SessionVM.LoadReducedSession(Fs, this);
 
                         bi.BeginInit();
                         bi.StreamSource = Fs;
@@ -170,6 +170,7 @@ namespace PopnTouchi2
 
                         Photos.Items.Add(SessionVM.SessionSVI);
                         SessionVM.SessionSVI.Center = new Point(r.Next((int)ActualWidth), r.Next((int)ActualHeight));
+                        openedSessions.Add(SessionVM);
                     }
                     else
                     {

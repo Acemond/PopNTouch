@@ -103,11 +103,11 @@ namespace PopnTouchi2.ViewModel.Animation
             InitStb.Begin();
         }
 
-        public SessionAnimation(SessionViewModel s, bool reduced)
+        public SessionAnimation(SessionViewModel s, bool reduced, DesktopView desktop)
             : base()
         {
+            MainDesktop = desktop;
             SessionVM = s;
-
             SessionVM.SessionSVI.TouchLeave += new EventHandler<System.Windows.Input.TouchEventArgs>(svi_TouchLeave);
             SessionVM.SessionSVI.PreviewTouchDown += new EventHandler<System.Windows.Input.TouchEventArgs>(SessionSVI_TouchDown);
         }
@@ -526,6 +526,7 @@ namespace PopnTouchi2.ViewModel.Animation
         void svi_TouchLeave(object sender, TouchEventArgs e)
         {
             TouchHoldDispatcherTimer.Stop();
+            if (SessionVM.DeleteButton.Visibility == Visibility.Visible) return;
             if (SessionVM == null) return;
             if (SessionVM.BeingDeleted) return;
             try { if (!SessionVM.Reduced) return; }

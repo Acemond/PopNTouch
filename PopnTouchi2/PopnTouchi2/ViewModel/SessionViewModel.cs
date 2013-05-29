@@ -515,7 +515,7 @@ namespace PopnTouchi2.ViewModel
         /// <summary>
         /// Loads a session from a binary file reduced
         /// </summary>
-        public void LoadReducedSession(FileStream ScStream)
+        public void LoadReducedSession(FileStream ScStream, DesktopView desktop)
         {
             SessionSVI.BorderBrush = Brushes.White;
             SessionSVI.BorderThickness = new Thickness(15.0);
@@ -523,7 +523,7 @@ namespace PopnTouchi2.ViewModel
             SessionSVI.Width = SessionSVI.Width / 4.0 + 30.0;
             SessionSVI.Height = SessionSVI.Height / 4.0 + 30.0;
 
-            Animation = new SessionAnimation(this, true);
+            Animation = new SessionAnimation(this, true, desktop);
             Animation.Fs = ScStream;
             Reduced = true;
         }
