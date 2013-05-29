@@ -170,7 +170,8 @@ namespace PopnTouchi2.ViewModel
             Notes.Visibility = Visibility.Visible;
 
             Grid.Background = (new ThemeViewModel(Session.Theme, this)).BackgroundImage;
-            
+            Session.PlayBackgroundSound();
+
             Reducer = new SurfaceButton();
             Reduced = false;
             Reducer.Width = 100;
@@ -441,6 +442,7 @@ namespace PopnTouchi2.ViewModel
 
             TreeDown.SetInstrument(sd.TopInstrument);
             TreeUp.SetInstrument(sd.BottomInstrument);
+            Session.PlayBackgroundSound();
 
             SetDimensions(Grid.ActualWidth, Grid.ActualHeight);
         }
