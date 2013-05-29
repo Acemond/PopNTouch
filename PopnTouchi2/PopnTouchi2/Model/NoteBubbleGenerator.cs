@@ -94,7 +94,7 @@ namespace PopnTouchi2
             NoteValue mostNeededNote = NoteValue.crotchet;
             Random rand = new Random();
 
-            if (rand.Next(3) == 0 && SharpBubblesCount + FlatBubblesCount < 4)
+            if (rand.Next(4) == 0 && SharpBubblesCount + FlatBubblesCount < 4)
                 return NoteValue.alteration;
 
             try

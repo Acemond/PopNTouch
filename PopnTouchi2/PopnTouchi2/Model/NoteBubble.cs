@@ -54,7 +54,7 @@ namespace PopnTouchi2
         /// <param name="flat">flat (b)</param>
         public NoteBubble(bool sharp, bool flat)
         {
-            Note = new Note();
+            Note = new Note(NoteValue.alteration);
             Note.Flat = flat;
             Note.Sharp = sharp;
             Id = GlobalVariables.idNoteBubble++;

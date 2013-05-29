@@ -105,6 +105,20 @@ namespace PopnTouchi2
         }
 
         /// <summary>
+        /// Note Constructor.
+        /// Generates a new object of class Note, default Note
+        /// </summary>
+        public Note(NoteValue d)
+        {
+            Octave = 1;
+            Duration = d;
+            Pitch = "do";
+            Sharp = false;
+            Flat = false;
+            Position = -1;
+        }
+
+        /// <summary>
         /// Return true if two notes are equals
         /// Don't mind about duration
         /// </summary>
