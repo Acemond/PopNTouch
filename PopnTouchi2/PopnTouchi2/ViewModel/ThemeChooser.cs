@@ -227,6 +227,8 @@ namespace PopnTouchi2.ViewModel
                 sessionVM.Grid.Children.Remove(Dragon);
             }
 
+            double ratio = sessionVM.SessionSVI.Width / 1920.0;
+
             sessionVM.Session.StopBackgroundSound();
             sessionVM.Session.Theme = new Theme1();
             sessionVM.Session.ThemeID = 1;
@@ -251,7 +253,7 @@ namespace PopnTouchi2.ViewModel
             sessionVM.Theme_Button.Background = sessionVM.ThemeVM.ThemesImage;
             sessionVM.Session.StaveTop.CurrentInstrument = sessionVM.Session.Theme.InstrumentsTop[0];
             sessionVM.Session.StaveBottom.CurrentInstrument = sessionVM.Session.Theme.InstrumentsBottom[0];
-            sessionVM.displayTrees(new Thickness(20, 0, 0, 130), new Thickness(20, 0, 0, 580));
+            sessionVM.displayTrees(new Thickness(20.0 * ratio, 0, 0, 130.0 * ratio), new Thickness(20.0 * ratio, 0, 0, 580.0 * ratio));
 
             sessionVM.SetDimensions(sessionVM.SessionSVI.Width, sessionVM.SessionSVI.Height);
 
@@ -291,6 +293,8 @@ namespace PopnTouchi2.ViewModel
                 sessionVM.Grid.Children.Remove(Dragon);
             }
 
+            double ratio = sessionVM.SessionSVI.Width / 1920.0;
+
             sessionVM.Session.StopBackgroundSound();
             sessionVM.Session.Theme = new Theme2();
             sessionVM.Session.ThemeID = 2;
@@ -314,7 +318,7 @@ namespace PopnTouchi2.ViewModel
             sessionVM.Theme_Button.Background = sessionVM.ThemeVM.ThemesImage;
             sessionVM.Session.StaveTop.CurrentInstrument = sessionVM.Session.Theme.InstrumentsTop[0];
             sessionVM.Session.StaveBottom.CurrentInstrument = sessionVM.Session.Theme.InstrumentsBottom[0];
-            sessionVM.displayTrees(new Thickness(20, 0, 0, 130), new Thickness(20, 0, 0, 580));
+            sessionVM.displayTrees(new Thickness(20.0 * ratio, 0, 0, 130 * ratio), new Thickness(20 * ratio, 0, 0, 580 * ratio));
 
             sessionVM.SetDimensions(sessionVM.SessionSVI.Width, sessionVM.SessionSVI.Height);
 
@@ -363,6 +367,8 @@ namespace PopnTouchi2.ViewModel
                 sessionVM.Grid.Children.Remove(Bird);
             }
 
+            double ratio = sessionVM.SessionSVI.Width / 1920.0;
+
             sessionVM.Session.StopBackgroundSound();
             sessionVM.Session.Theme = new Theme3();
             sessionVM.Session.ThemeID = 3;
@@ -387,7 +393,7 @@ namespace PopnTouchi2.ViewModel
             sessionVM.Theme_Button.Background = sessionVM.ThemeVM.ThemesImage;
             sessionVM.Session.StaveTop.CurrentInstrument = sessionVM.Session.Theme.InstrumentsTop[0];
             sessionVM.Session.StaveBottom.CurrentInstrument = sessionVM.Session.Theme.InstrumentsBottom[0];
-            sessionVM.displayTrees(new Thickness(20, 0, 0, 130), new Thickness(20, 0, 0, 580));
+            sessionVM.displayTrees(new Thickness(20.0 * ratio, 0, 0, 130.0 * ratio), new Thickness(20.0 * ratio, 0, 0, 580.0 * ratio));
 
             sessionVM.SetDimensions(sessionVM.SessionSVI.Width, sessionVM.SessionSVI.Height);
 
@@ -441,6 +447,8 @@ namespace PopnTouchi2.ViewModel
                 sessionVM.Grid.Children.Remove(Dragon);
             }
 
+            double ratio = sessionVM.SessionSVI.Width / 1920.0;
+
             sessionVM.Session.StopBackgroundSound();
             sessionVM.Session.Theme = new Theme4();
             sessionVM.Session.ThemeID = 4;
@@ -465,7 +473,7 @@ namespace PopnTouchi2.ViewModel
             sessionVM.Theme_Button.Background = sessionVM.ThemeVM.ThemesImage;
             sessionVM.Session.StaveTop.CurrentInstrument = sessionVM.Session.Theme.InstrumentsTop[0];
             sessionVM.Session.StaveBottom.CurrentInstrument = sessionVM.Session.Theme.InstrumentsBottom[0];
-            sessionVM.displayTrees(new Thickness(20, 0, 0, 130), new Thickness(20, 0, 0, 580));
+            sessionVM.displayTrees(new Thickness(20.0 * ratio, 0, 0, 130.0 * ratio), new Thickness(20.0 * ratio, 0, 0, 580.0 * ratio));
 
             sessionVM.SetDimensions(sessionVM.SessionSVI.Width, sessionVM.SessionSVI.Height);
             sessionVM.Session.PlayBackgroundSound();
