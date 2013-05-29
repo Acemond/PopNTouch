@@ -28,7 +28,7 @@ namespace PopnTouchi2.Model.Enums
         /// <summary>
         /// The array containing the offsets of the staves
         /// </summary>
-        public static int[] ManipulationGrid = new int[] { 0, 0, 0, 11, 25, 35, 47, 55, 63, 70, 76, 80, 82, 84, 84, 83, 81, 76, 69, 61, 50, 39, 27, 15, 5, -3, -8, -11, -10, -6 };
+        public static int[] ManipulationGrid = new int[] { 0, 0, 0, 11, 25, 35, 47, 55, 63, 70, 76, 80, 82, 84, 84, 82, 80, 75, 68, 60, 49, 38, 26, 14, 4, -4, -9, -12, -12, -11, -7 };
         
         public static int StaveTopFirstDo = 335;
         public static int HeightOfOctave = 175;
