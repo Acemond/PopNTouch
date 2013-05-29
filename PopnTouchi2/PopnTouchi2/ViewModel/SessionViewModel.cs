@@ -372,10 +372,10 @@ namespace PopnTouchi2.ViewModel
             UpdateSound.UpdateDimensions(newRatio);
             TreeUp.UpdateDimensions(newRatio);
             TreeDown.UpdateDimensions(newRatio);
-            Notes.Width = (Notes.ActualWidth / oldRatio) * ratio;
-            Notes.Height = (Notes.ActualHeight / oldRatio) * ratio;
-            Bubbles.Width = (Notes.ActualWidth / oldRatio) * ratio;
-            Bubbles.Height = (Notes.ActualHeight / oldRatio) * ratio;
+            Notes.Width = Grid.ActualWidth;
+            Notes.Height = Grid.ActualHeight;
+            Bubbles.Width = Grid.ActualWidth;
+            Bubbles.Height = Grid.ActualHeight;
             Tempo_Button.Margin = new Thickness(0, 0, 470.0 * ratio, 0);
             Theme_Button.Margin = new Thickness(0, 0, 100.0 * ratio, 0);
             foreach (ScatterViewItem svi in Notes.Items)
