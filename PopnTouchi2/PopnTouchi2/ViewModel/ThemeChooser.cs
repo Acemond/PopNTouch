@@ -143,10 +143,10 @@ namespace PopnTouchi2.ViewModel
             Dragon.PreviewTouchDown += new EventHandler<TouchEventArgs>(Dragon_TouchDown);
 
             Cat = new Grid();
-            Cat.Width = 175.0 * ratio;
-            Cat.Height = 275.0 * ratio;
-            Cat.Margin = new Thickness(0, 550.0 * ratio, 400.0 * ratio, 0);
-            Cat.Background = new SolidColorBrush(Colors.Red);
+            Cat.Width = 200.0 * ratio;
+            Cat.Height = 165.0 * ratio;
+            Cat.Margin = new Thickness(0, 500.0 * ratio, 450.0 * ratio, 0);
+            Cat.Background = new SolidColorBrush(Colors.Transparent);
 
             Cat.PreviewTouchDown += new EventHandler<TouchEventArgs>(Cat_TouchDown);
 
@@ -195,6 +195,10 @@ namespace PopnTouchi2.ViewModel
             Dragon.Width = 175.0 * ratio;
             Dragon.Height = 275.0 * ratio;
             Dragon.Margin = new Thickness(0, 550.0 * ratio, 40.0 * ratio, 0);
+
+            Cat.Width = 200.0 * ratio;
+            Cat.Height = 165.0 * ratio;
+            Cat.Margin = new Thickness(0, 500.0 * ratio, 450.0 * ratio, 0);
         }
 
         /// <summary>
@@ -359,7 +363,7 @@ namespace PopnTouchi2.ViewModel
 
         private void Bird_TouchDown(object sender, RoutedEventArgs e)
         {
-            String effect = "whistle" + (new Random()).Next(1, 4).ToString();
+            String effect = "whistle" + (new Random()).Next(1, 5).ToString();
             AudioController.PlaySoundWithString(effect);
         }
 
@@ -437,7 +441,7 @@ namespace PopnTouchi2.ViewModel
 
         private void Dragon_TouchDown(object sender, RoutedEventArgs e)
         {
-            String effect = "dragon" + (new Random()).Next(1, 4).ToString();
+            String effect = "dragon" + (new Random()).Next(1, 5).ToString();
             AudioController.PlaySoundWithString(effect);
         }
 
@@ -514,8 +518,8 @@ namespace PopnTouchi2.ViewModel
 
         private void Cat_TouchDown(object sender, RoutedEventArgs e)
         {
-            //String effect = "chat" + (new Random()).Next(1, 6).ToString();
-            //AudioController.PlaySoundWithString(effect);
+            String effect = "chat" + (new Random()).Next(1, 7).ToString();
+            AudioController.PlaySoundWithString(effect);
         }
     }
 }
