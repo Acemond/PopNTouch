@@ -96,7 +96,7 @@ namespace PopnTouchi2.ViewModel
             border3 = new Border();
             border3.BorderBrush = new SolidColorBrush(Colors.White);
             border3.BorderThickness = new Thickness(4.0 * ratio);
-            border3.Margin = new Thickness(20.0 * ratio, 0, 20.0 * ratio, 20.0 * ratio);
+            border3.Margin = new Thickness(20.0 * ratio, 20.0 * ratio, 20.0 * ratio, 20.0 * ratio);
             border3.HorizontalAlignment = HorizontalAlignment.Left;
             border3.VerticalAlignment = VerticalAlignment.Bottom;
             GridTheme3 = new Grid();
@@ -112,7 +112,7 @@ namespace PopnTouchi2.ViewModel
             border4 = new Border();
             border4.BorderBrush = new SolidColorBrush(Colors.White);
             border4.BorderThickness = new Thickness(4.0 * ratio);
-            border4.Margin = new Thickness(20.0 * ratio, 0, 20.0 * ratio, 0);
+            border4.Margin = new Thickness(20.0 * ratio, 20.0 * ratio, 20.0 * ratio, 20.0 * ratio);
             border4.HorizontalAlignment = HorizontalAlignment.Right;
             border4.VerticalAlignment = VerticalAlignment.Bottom;
             GridTheme4 = new Grid();
@@ -156,20 +156,32 @@ namespace PopnTouchi2.ViewModel
         {
             double ratio = width / 1920.0;
 
+            Themes.Width = 1036 * ratio;
+            Themes.Height = 626 * ratio;
+
             border1.BorderThickness = new Thickness(4.0 * ratio);
-            border1.Margin = new Thickness(20.0 * ratio, 0, 20.0 * ratio, 0);
+            border1.Margin = new Thickness(20.0 * ratio, 20.0 * ratio, 20.0 * ratio, 20.0 * ratio);
             GridTheme1.Width = 470.0 * ratio;
             GridTheme1.Height = 265.0 * ratio;
 
             border2.BorderThickness = new Thickness(4.0 * ratio);
-            border2.Margin = new Thickness(20.0 * ratio, 0, 20.0 * ratio, 0);
+            border2.Margin = new Thickness(20.0 * ratio, 20.0 * ratio, 20.0 * ratio, 20.0 * ratio);
             GridTheme2.Width = 470.0 * ratio;
             GridTheme2.Height = 265.0 * ratio;
 
             border3.BorderThickness = new Thickness(4.0 * ratio);
-            border3.Margin = new Thickness(20.0 * ratio, 0, 20.0 * ratio, 0);
+            border3.Margin = new Thickness(20.0 * ratio, 20.0 * ratio, 20.0 * ratio, 20.0 * ratio);
             GridTheme3.Width = 470.0 * ratio;
             GridTheme3.Height = 265.0 * ratio;
+
+            border4.BorderThickness = new Thickness(4.0 * ratio);
+            border4.Margin = new Thickness(20.0 * ratio, 20.0 * ratio, 20.0 * ratio, 20.0 * ratio);
+            GridTheme4.Width = 470.0 * ratio;
+            GridTheme4.Height = 265.0 * ratio;
+
+            Bird.Width = 140.0 * ratio;
+            Bird.Height = 165.0 * ratio;
+            Bird.Margin = new Thickness(0, 585.0 * ratio, 80.0 * ratio, 0);
         }
 
         /// <summary>
