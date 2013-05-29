@@ -29,7 +29,7 @@ namespace PopnTouchi2.ViewModel
         /// <summary>
         /// TODO
         /// </summary>
-        public StackPanel Themes { get; set; }
+        public Grid Themes { get; set; }
 
         private Border border1;
         private Grid GridTheme1;
@@ -37,6 +37,8 @@ namespace PopnTouchi2.ViewModel
         private Grid GridTheme2;
         private Border border3;
         private Grid GridTheme3;
+        private Border border4;
+        private Grid GridTheme4;
         public Grid Bird { get; set; }
 
         /// <summary>
@@ -51,8 +53,9 @@ namespace PopnTouchi2.ViewModel
             Grid.Background = new SolidColorBrush(Colors.Black);
             Grid.Opacity = 0.8;
 
-            Themes = new StackPanel();
-            Themes.Orientation = Orientation.Horizontal;
+            Themes = new Grid();
+            Themes.Width = 1036 * ratio;
+            Themes.Height = 626 * ratio;
             Themes.VerticalAlignment = VerticalAlignment.Center;
             Themes.HorizontalAlignment = HorizontalAlignment.Center;
             Themes.Opacity = 1;
@@ -60,7 +63,9 @@ namespace PopnTouchi2.ViewModel
             border1 = new Border();
             border1.BorderBrush = new SolidColorBrush(Colors.White);
             border1.BorderThickness = new Thickness(4.0 * ratio);
-            border1.Margin = new Thickness(20.0 * ratio, 0, 20.0 * ratio, 0);
+            border1.Margin = new Thickness(20.0 * ratio, 20.0 * ratio, 20.0 * ratio, 20.0 * ratio);
+            border1.HorizontalAlignment = HorizontalAlignment.Left;
+            border1.VerticalAlignment = VerticalAlignment.Top;
             GridTheme1 = new Grid();
             GridTheme1.Width = 470.0 * ratio;
             GridTheme1.Height = 265.0 * ratio;
@@ -74,7 +79,9 @@ namespace PopnTouchi2.ViewModel
             border2 = new Border();
             border2.BorderBrush = new SolidColorBrush(Colors.White);
             border2.BorderThickness = new Thickness(4.0 * ratio);
-            border2.Margin = new Thickness(20.0 * ratio, 0, 20.0 * ratio, 0);
+            border2.Margin = new Thickness(20.0 * ratio, 20.0 * ratio, 20.0 * ratio, 20.0 * ratio);
+            border2.HorizontalAlignment = HorizontalAlignment.Right;
+            border2.VerticalAlignment = VerticalAlignment.Top;
             GridTheme2 = new Grid();
             GridTheme2.Width = 470.0 * ratio;
             GridTheme2.Height = 265.0 * ratio;
@@ -88,7 +95,9 @@ namespace PopnTouchi2.ViewModel
             border3 = new Border();
             border3.BorderBrush = new SolidColorBrush(Colors.White);
             border3.BorderThickness = new Thickness(4.0 * ratio);
-            border3.Margin = new Thickness(20.0 * ratio, 0, 20.0 * ratio, 0);
+            border3.Margin = new Thickness(20.0 * ratio, 0, 20.0 * ratio, 20.0 * ratio);
+            border3.HorizontalAlignment = HorizontalAlignment.Left;
+            border3.VerticalAlignment = VerticalAlignment.Bottom;
             GridTheme3 = new Grid();
             GridTheme3.Width = 470.0 * ratio;
             GridTheme3.Height = 265.0 * ratio;
@@ -98,6 +107,22 @@ namespace PopnTouchi2.ViewModel
             border3.Child = GridTheme3;
 
             GridTheme3.PreviewTouchDown += new EventHandler<TouchEventArgs>(GridTheme3_TouchDown);
+
+            border4 = new Border();
+            border4.BorderBrush = new SolidColorBrush(Colors.White);
+            border4.BorderThickness = new Thickness(4.0 * ratio);
+            border4.Margin = new Thickness(20.0 * ratio, 0, 20.0 * ratio, 0);
+            border4.HorizontalAlignment = HorizontalAlignment.Right;
+            border4.VerticalAlignment = VerticalAlignment.Bottom;
+            GridTheme4 = new Grid();
+            GridTheme4.Width = 470.0 * ratio;
+            GridTheme4.Height = 265.0 * ratio;
+            ImageBrush img4 = new ImageBrush();
+            img4.ImageSource = new BitmapImage(new Uri(@"../../Resources/Images/Theme4/background.jpg", UriKind.Relative));
+            GridTheme4.Background = img4;
+            border4.Child = GridTheme4;
+
+            GridTheme4.PreviewTouchDown += new EventHandler<TouchEventArgs>(GridTheme4_TouchDown);
 
             Bird = new Grid();
             Bird.Width = 140.0 * ratio;
@@ -110,6 +135,7 @@ namespace PopnTouchi2.ViewModel
             Themes.Children.Add(border1);
             Themes.Children.Add(border2);
             Themes.Children.Add(border3);
+            Themes.Children.Add(border4);
             
         }
 
@@ -298,6 +324,68 @@ namespace PopnTouchi2.ViewModel
             sessionVM.Session.StopBackgroundSound();
             sessionVM.Session.Theme = new Theme3();
             sessionVM.Session.ThemeID = 3;
+            sessionVM.ThemeVM = new ThemeViewModel(sessionVM.Session.Theme, sessionVM);
+            sessionVM.Grid.Background = sessionVM.ThemeVM.BackgroundImage;
+
+            sessionVM.Grid.Children.Remove(sessionVM.NbgVM.Grid);
+            sessionVM.Grid.Children.Remove(sessionVM.MbgVM.Grid);
+            sessionVM.Grid.Children.Remove(sessionVM.Bubbles);
+            sessionVM.Grid.Children.Remove(sessionVM.UpdateSound.Grid);
+            sessionVM.Grid.Children.Remove(sessionVM.Play_Button);
+            sessionVM.Grid.Children.Remove(sessionVM.Theme_Button);
+            sessionVM.Grid.Children.Remove(sessionVM.TreeUp.Grid);
+            sessionVM.Grid.Children.Remove(sessionVM.TreeDown.Grid);
+
+
+            sessionVM.NbgVM = new NoteBubbleGeneratorViewModel(sessionVM.Session.NoteBubbleGenerator, sessionVM);
+            sessionVM.MbgVM = new MelodyBubbleGeneratorViewModel(sessionVM.Session.MelodyBubbleGenerator, sessionVM);
+            sessionVM.Bubbles = new ScatterView();
+            sessionVM.UpdateSound = new ChangeSoundViewModel(sessionVM);
+            sessionVM.Play_Button.Background = sessionVM.ThemeVM.PlayImage;
+            sessionVM.Theme_Button.Background = sessionVM.ThemeVM.ThemesImage;
+            sessionVM.Session.StaveTop.CurrentInstrument = sessionVM.Session.Theme.InstrumentsTop[0];
+            sessionVM.Session.StaveBottom.CurrentInstrument = sessionVM.Session.Theme.InstrumentsBottom[0];
+            sessionVM.displayTrees(new Thickness(20, 0, 0, 130), new Thickness(20, 0, 0, 580));
+
+            sessionVM.SetDimensions(sessionVM.SessionSVI.Width, sessionVM.SessionSVI.Height);
+            sessionVM.Session.PlayBackgroundSound();
+
+            sessionVM.Session.StaveTop.SetTheme(sessionVM.ThemeVM.Theme);
+            sessionVM.Session.StaveBottom.SetTheme(sessionVM.ThemeVM.Theme);
+
+            sessionVM.Grid.Children.Add(sessionVM.NbgVM.Grid);
+            sessionVM.Grid.Children.Add(sessionVM.MbgVM.Grid);
+            sessionVM.Grid.Children.Add(sessionVM.Bubbles);
+            sessionVM.Grid.Children.Add(sessionVM.UpdateSound.Grid);
+            sessionVM.Grid.Children.Add(sessionVM.Play_Button);
+            sessionVM.Grid.Children.Add(sessionVM.Theme_Button);
+
+            sessionVM.Grid.Children.Remove(Grid);
+            sessionVM.Grid.Children.Remove(Themes);
+        }
+
+        /// <summary>
+        /// TODO
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void GridTheme4_TouchDown(object sender, RoutedEventArgs e)
+        {
+            if (sessionVM.Session.ThemeID == 4)
+            {
+                sessionVM.Grid.Children.Remove(Grid);
+                sessionVM.Grid.Children.Remove(Themes);
+                return;
+            }
+
+            if (sessionVM.Session.ThemeID == 2)
+            {
+                sessionVM.Grid.Children.Remove(Bird);
+            }
+
+            sessionVM.Session.StopBackgroundSound();
+            sessionVM.Session.Theme = new Theme4();
+            sessionVM.Session.ThemeID = 4;
             sessionVM.ThemeVM = new ThemeViewModel(sessionVM.Session.Theme, sessionVM);
             sessionVM.Grid.Background = sessionVM.ThemeVM.BackgroundImage;
 

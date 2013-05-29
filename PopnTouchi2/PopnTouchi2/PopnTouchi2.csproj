@@ -238,7 +238,6 @@
     <Resource Include="Resources\Images\Theme3\playdrop.png" />
     <Resource Include="Resources\Images\Theme3\soundpointdisable.png" />
     <Resource Include="Resources\Images\Theme3\soundpointenable.png" />
-    <Resource Include="Resources\Images\Theme4\background.png" />
     <Resource Include="Resources\Images\Theme4\Bubbles\Melodies\s.png" />
     <Resource Include="Resources\Images\Theme4\Bubbles\Melodies\t.png" />
     <Resource Include="Resources\Images\Theme4\Bubbles\Melodies\wave.png" />
