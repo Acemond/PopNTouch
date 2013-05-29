@@ -33,6 +33,12 @@ namespace PopnTouchi2
         public Cue sound { get; set; }
 
         /// <summary>
+        /// Property
+        /// Theme's sound name
+        /// </summary>
+        public String SoundName { get; set; }
+
+        /// <summary>
         /// Theme Constructor.
         /// Initialize instruments for each stave and a new Dictionary mapping a NoteBubble to its image.
         /// </summary>
@@ -49,11 +55,11 @@ namespace PopnTouchi2
         /// Stop button
         /// </summary>
         /// <param name="name"></param>
-        public virtual void refreshSound(String name)
+        public virtual void refreshSound()
         {
             try
             {
-                sound = AudioController.INSTANCE.SoundBank.GetCue(name);
+                sound = AudioController.INSTANCE.SoundBank.GetCue(SoundName);
             }
             catch (Exception e)
             {

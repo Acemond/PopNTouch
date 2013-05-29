@@ -18,12 +18,14 @@ namespace PopnTouchi2
         /// </summary>
         public Theme1() : base()
         {
+            SoundName = "loop_eveningWater";
+
             InstrumentsTop[0] = new Instrument(InstrumentType.piano);
             InstrumentsTop[1] = new Instrument(InstrumentType.flute);
             InstrumentsBottom[0] = new Instrument(InstrumentType.bass);
             InstrumentsBottom[1] = new Instrument(InstrumentType.contrebass);
 
-            refreshSound("loop_eveningWater");
+            refreshSound();
         }
     }
 }

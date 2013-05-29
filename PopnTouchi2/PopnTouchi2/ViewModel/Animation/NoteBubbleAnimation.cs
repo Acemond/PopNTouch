@@ -8,6 +8,7 @@ using System.Windows.Threading;
 using Microsoft.Surface.Presentation.Controls;
 using System.Windows.Input;
 using PopnTouchi2.Model.Enums;
+using PopnTouchi2.Infrastructure;
 
 namespace PopnTouchi2.ViewModel.Animation
 {
@@ -228,11 +229,12 @@ namespace PopnTouchi2.ViewModel.Animation
         void moveCenter_Completed(object sender, EventArgs e)
         {
             NoteViewModel noteVM = null;
-            double centerX = bubbleCenter.X * 1920.0 / sessionVM.Grid.ActualWidth;
+            double centerX = bubbleCenter.X * 1920 / sessionVM.Grid.ActualWidth;
             int positionNote = (int)(centerX - 120) / 60;
             Converter c = new Converter();
-            double betweenStave = (350 - GlobalVariables.ManipulationGrid[noteBubbleVM.NoteBubble.Note.Position + 2]) * (sessionVM.SessionSVI.ActualHeight / 1080);
+            double betweenStave = (350 - GlobalVariables.ManipulationGrid.ElementAtOrDefault(noteBubbleVM.NoteBubble.Note.Position + 2)) * (sessionVM.SessionSVI.ActualHeight / 1080);
             bool isUp = (bubbleCenter.Y < betweenStave);
+            MyPoint MyBubbleCenter = new MyPoint(bubbleCenter);
 
             if (noteBubbleVM.NoteBubble.Note.Sharp || noteBubbleVM.NoteBubble.Note.Flat)
             {
@@ -240,9 +242,8 @@ namespace PopnTouchi2.ViewModel.Animation
 
                 for(int i = 0; i< sessionVM.NotesOnStave.Count && goOn; i++){
 
-
-                    bool changeLine = false;
-                    if (sessionVM.NotesOnStave[i].SVItem.ActualCenter == bubbleCenter)
+                    bool changeLine = false;;
+                    if (MyBubbleCenter.QuasiEquals(sessionVM.NotesOnStave[i].SVItem.ActualCenter))
                     {
                         noteVM = sessionVM.NotesOnStave[i];
                         if(noteBubbleVM.NoteBubble.Note.Flat)
@@ -257,7 +258,7 @@ namespace PopnTouchi2.ViewModel.Animation
                         {
                             sessionVM.Notes.Items.Remove(noteVM.SVItem);
                             double y = c.getCenterY(isUp, noteVM.Note);
-                            if (y == 0)
+                            if (y < 80)                            
                             {
                                 sessionVM.NotesOnStave.Remove(noteVM);
                                 if (isUp)
@@ -278,7 +279,7 @@ namespace PopnTouchi2.ViewModel.Animation
                             }
                             else
                             {
-                                y = (y - GlobalVariables.ManipulationGrid[positionNote + 2]) * (sessionVM.SessionSVI.ActualHeight / 1080);
+                                y *= sessionVM.SessionSVI.ActualHeight / 1080;
                                 noteVM = new NoteViewModel(new Point(bubbleCenter.X, y), noteVM.Note, sessionVM.Notes, sessionVM);
                                 sessionVM.Notes.Items.Add(noteVM.SVItem);
                                 if (isUp)

@@ -5,6 +5,8 @@ using System.Text;
 using System.Collections.ObjectModel;
 using System.Timers;
 using PopnTouchi2.Model.Enums;
+using PopnTouchi2.Model;
+using System.Windows;
 
 namespace PopnTouchi2
 {
@@ -241,7 +243,7 @@ namespace PopnTouchi2
             
             try
             {
-                theme.refreshSound(theme.sound.ToString());
+                theme.refreshSound(); 
                 theme.sound.Play();
             }
             catch (Exception ex)
@@ -261,6 +263,15 @@ namespace PopnTouchi2
             TimerMelody.Elapsed -= new ElapsedEventHandler(PlayMelody);
             PositionMelody = 0;
             IteratorMelody = 0;
+        }
+
+        /// <summary>
+        /// Setter for the theme
+        /// </summary>
+        /// <param name="t"></param>
+        public void SetTheme(Theme t)
+        {
+            theme = t;
         }
     }
 }

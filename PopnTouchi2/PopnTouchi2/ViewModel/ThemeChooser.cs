@@ -184,6 +184,8 @@ namespace PopnTouchi2.ViewModel
             sessionVM.SetDimensions(sessionVM.SessionSVI.Width, sessionVM.SessionSVI.Height);
             sessionVM.Session.PlayBackgroundSound();
 
+            sessionVM.Session.StaveTop.SetTheme(sessionVM.ThemeVM.Theme);
+            sessionVM.Session.StaveBottom.SetTheme(sessionVM.ThemeVM.Theme);
 
             sessionVM.Grid.Children.Add(sessionVM.NbgVM.Grid);
             sessionVM.Grid.Children.Add(sessionVM.MbgVM.Grid);
@@ -237,6 +239,9 @@ namespace PopnTouchi2.ViewModel
 
             sessionVM.SetDimensions(sessionVM.SessionSVI.Width, sessionVM.SessionSVI.Height);
             sessionVM.Session.PlayBackgroundSound();
+
+            sessionVM.Session.StaveTop.SetTheme(sessionVM.ThemeVM.Theme);
+            sessionVM.Session.StaveBottom.SetTheme(sessionVM.ThemeVM.Theme);
 
 
             sessionVM.Grid.Children.Add(sessionVM.NbgVM.Grid);
@@ -292,6 +297,8 @@ namespace PopnTouchi2.ViewModel
             sessionVM.SetDimensions(sessionVM.SessionSVI.Width, sessionVM.SessionSVI.Height);
             sessionVM.Session.PlayBackgroundSound();
 
+            sessionVM.Session.StaveTop.SetTheme(sessionVM.ThemeVM.Theme);
+            sessionVM.Session.StaveBottom.SetTheme(sessionVM.ThemeVM.Theme);
 
             sessionVM.Grid.Children.Add(sessionVM.NbgVM.Grid);
             sessionVM.Grid.Children.Add(sessionVM.MbgVM.Grid);

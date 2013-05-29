@@ -73,6 +73,7 @@ namespace PopnTouchi2
             //sound methods
             try
             {
+                Theme.refreshSound();
                 Theme.sound.Play();
             }
             catch (Exception ex)
@@ -105,7 +106,7 @@ namespace PopnTouchi2
         {
             try
             {
-                Theme.refreshSound(Theme.sound.ToString());
+                Theme.refreshSound();
                 Theme.sound.Play();
             }
             catch (Exception ex)

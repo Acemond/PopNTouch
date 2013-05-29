@@ -104,10 +104,10 @@ namespace PopnTouchi2.ViewModel
             List<NoteViewModel> notes = new List<NoteViewModel>();
             for(int i = 0; i< MelodyBubble.Melody.Notes.Count; i++)
             {
-                double x = (positionMelody.X + (MelodyBubble.Melody.Notes[i].Position - initPos) * 60.0) * SessionVM.Grid.ActualWidth / 1920.0 ;
+                double x = (positionMelody.X + (MelodyBubble.Melody.Notes[i].Position - initPos) * 60) * SessionVM.Grid.ActualWidth / 1920 ;
                 double y = c.getCenterY(up, MelodyBubble.Melody.Notes[i]);
                 
-                y *= (height / 1080.0);
+                y *= (height / 1080);
 
                 Point p = new Point(x, y);
                 notes.Add(new NoteViewModel(p,MelodyBubble.Melody.Notes[i], SessionVM.Notes, SessionVM));
