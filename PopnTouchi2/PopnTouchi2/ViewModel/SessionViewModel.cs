@@ -625,7 +625,7 @@ namespace PopnTouchi2.ViewModel
             TreeUp.SetInstrument(sd.BottomInstrument);
             Session.PlayBackgroundSound();
 
-            SetDimensions(Grid.ActualWidth, Grid.ActualHeight);
+            UpdateEveryDimensions(Grid.ActualWidth, Grid.ActualHeight);
         }
 
         public void EraseSession()

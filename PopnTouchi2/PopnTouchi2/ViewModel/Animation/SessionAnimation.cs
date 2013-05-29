@@ -347,7 +347,6 @@ namespace PopnTouchi2.ViewModel.Animation
 
             ReduceWidthAnimation2.Completed += new EventHandler(stb_border_Completed);
             stb.Begin(SessionVM.SessionSVI);
-            SessionVM.Reduced = true;
         }
 
         /// <summary>
@@ -408,6 +407,7 @@ namespace PopnTouchi2.ViewModel.Animation
             SessionVM.SessionSVI.CanRotate = true;
 
             SessionVM.SessionSVI.PreviewTouchDown += new EventHandler<System.Windows.Input.TouchEventArgs>(Session_PreviewTouchDown);
+            SessionVM.Reduced = true;
         }
 
         /// <summary>
