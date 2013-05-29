@@ -158,8 +158,8 @@ namespace PopnTouchi2
                 Flat = false;
                 switch (Pitch)
                 {
-                    case "do": Pitch = "la"; Sharp = true; break;
-                    case "re": Pitch = "do"; break;
+                    case "do": Pitch = "la"; Octave--; Sharp = true; break;
+                    case "re": Pitch = "do"; Octave--; break;
                     case "mi": Pitch = "re"; break;
                     case "fa": Pitch = "re"; Sharp = true; break;
                     case "sol": Pitch = "fa"; break;
@@ -190,10 +190,11 @@ namespace PopnTouchi2
         /// <returns>True if the note change its position</returns>
         public bool UpSemiTone()
         {
+            bool res = false;
             if (Flat)
             {
                 Flat = false;
-                return false;
+                return res;
             }
 
             if (Sharp)
@@ -201,29 +202,29 @@ namespace PopnTouchi2
                 Sharp = false;
                 switch (Pitch)
                 {
-                    case "do": Pitch = "re"; break;
-                    case "re": Pitch = "mi"; break;
-                    case "mi": Pitch = "fa"; Sharp = true; break;
-                    case "fa": Pitch = "sol"; break;
-                    case "sol": Pitch = "la"; break;
-                    case "la": Pitch = "si"; break;
-                    case "si": Pitch = "do"; Sharp = true; break;
+                    case "do": Pitch = "re"; res = true;   break;
+                    case "re": Pitch = "mi"; res = true; break;
+                    case "mi": Pitch = "fa"; Sharp = true; res = true; break;
+                    case "fa": Pitch = "sol"; res = true; break;
+                    case "sol": Pitch = "la"; res = true; break;
+                    case "la": Pitch = "si"; res = true; break;
+                    case "si": Pitch = "do"; Octave++; Sharp = true; res = true; break;
                 }
-                return true;
+                return res;
             }
 
             switch (Pitch)
             {
-                case "do": Pitch = "do"; Sharp = true; return false;
-                case "re": Pitch = "re"; Sharp = true; return false;
-                case "mi": Pitch = "fa"; return true;
-                case "fa": Pitch = "fa"; Sharp = true; return false;
-                case "sol": Pitch = "sol"; Sharp = true; return false;
-                case "la": Pitch = "la"; Sharp = true; return false;
-                case "si": Pitch = "do"; return true;
+                case "do": Pitch = "do"; Sharp = true; res = false; break;
+                case "re": Pitch = "re"; Sharp = true; res = false; break;
+                case "mi": Pitch = "fa"; res = true; break;
+                case "fa": Pitch = "fa"; Sharp = true; res = false; break;
+                case "sol": Pitch = "sol"; Sharp = true; res = false; break;
+                case "la": Pitch = "la"; Sharp = true; res = false; break;
+                case "si": Pitch = "do"; Octave++;  res = true; break;
             }
 
-            return true;
+            return res;
         }
     }
 }

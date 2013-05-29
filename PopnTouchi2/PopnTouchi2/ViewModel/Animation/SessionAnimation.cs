@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Drawing.Imaging;
 using System.Runtime.Serialization.Formatters.Binary;
 using PopnTouchi2.Model;
+using System.Windows.Input;
 
 namespace PopnTouchi2.ViewModel.Animation
 {
@@ -38,10 +39,18 @@ namespace PopnTouchi2.ViewModel.Animation
         private DoubleAnimation EnlargeWidthAnimation;
 
         /// <summary>
+        /// Where user has started to touch a SVI
+        /// </summary>
+        private TouchPoint startingTouchPoint;
+        private TouchDevice touchDevice;
+
+        /// <summary>
         /// FileStream used for SnapShots.
         /// </summary>
-        private FileStream Fs { get; set; }
-        
+        public FileStream Fs { get; set; }
+
+        private System.Windows.Threading.DispatcherTimer AutoDBRemoveDispatcherTimer = new System.Windows.Threading.DispatcherTimer();
+        private System.Windows.Threading.DispatcherTimer TouchHoldDispatcherTimer = new System.Windows.Threading.DispatcherTimer();
 
         /// <summary>
         /// 
@@ -89,10 +98,20 @@ namespace PopnTouchi2.ViewModel.Animation
 
             initWidthAnimation.Completed += new EventHandler(marginAnimation_Completed);
             SessionVM.SessionSVI.TouchLeave += new EventHandler<System.Windows.Input.TouchEventArgs>(svi_TouchLeave);
+            SessionVM.SessionSVI.PreviewTouchDown += new EventHandler<System.Windows.Input.TouchEventArgs>(SessionSVI_TouchDown);
 
             InitStb.Begin();
         }
 
+        public SessionAnimation(SessionViewModel s, bool reduced)
+            : base()
+        {
+            SessionVM = s;
+
+            SessionVM.SessionSVI.TouchLeave += new EventHandler<System.Windows.Input.TouchEventArgs>(svi_TouchLeave);
+            SessionVM.SessionSVI.PreviewTouchDown += new EventHandler<System.Windows.Input.TouchEventArgs>(SessionSVI_TouchDown);
+        }
+        
         #region REDUCTION
         /// <summary>
         /// TODO Replace by gesture (Adrien's got an idea) AND organize
@@ -140,6 +159,10 @@ namespace PopnTouchi2.ViewModel.Animation
 
         }
 
+        /// <summary>
+        /// Replaces the SVI content with the ImageBrush given as an argument
+        /// </summary>
+        /// <param name="ss">ScreenShot to set as SVI content</param>
         private void ReplaceGridWithSnapShot(ImageBrush ss)
         {
             SessionVM.Grid.Children.Remove(SessionVM.Notes);
@@ -147,6 +170,8 @@ namespace PopnTouchi2.ViewModel.Animation
             SessionVM.Grid.Children.Remove(SessionVM.MbgVM.Grid);
             SessionVM.Grid.Children.Remove(SessionVM.TreeUp.Grid);
             SessionVM.Grid.Children.Remove(SessionVM.TreeDown.Grid);
+            SessionVM.Grid.Children.Remove(SessionVM.Play_Button);
+            SessionVM.Grid.Children.Remove(SessionVM.Tempo_Button);
             SessionVM.EraseSession();
 
             System.Windows.Shapes.Rectangle rect = new System.Windows.Shapes.Rectangle();
@@ -172,6 +197,11 @@ namespace PopnTouchi2.ViewModel.Animation
             SessionVM.Grid.Background = ss;
         }
 
+        /// <summary>
+        /// Occurs when Flash's animation is over
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         void flash_Completed(object sender, EventArgs e)
         {
 
@@ -226,11 +256,15 @@ namespace PopnTouchi2.ViewModel.Animation
             stb.Begin(SessionVM.SessionSVI);
         }
 
+        /// <summary>
+        /// Removes useless Grid's element to take the SnapShot
+        /// </summary>
+        /// <param name="grid">Grid concerned</param>
         private void MakeReadyForSnapShot(Grid grid)
         {
+            SessionVM.Play_Button.Opacity = 1;
             grid.Children.Remove(SessionVM.Bubbles);
             grid.Children.Remove(SessionVM.Reducer);
-            grid.Children.Remove(SessionVM.Play_Button);
             grid.Children.Remove(SessionVM.UpdateSound.Grid);
             grid.Children.Remove(SessionVM.Theme_Button);
         }
@@ -262,8 +296,8 @@ namespace PopnTouchi2.ViewModel.Animation
             DoubleAnimation heightAnimation = new DoubleAnimation();
             ReduceWidthAnimation2 = new DoubleAnimation();
 
-            borderAnimation.From = new Thickness(0);
-            borderAnimation.To = new Thickness(15);
+            borderAnimation.From = new Thickness(0.0);
+            borderAnimation.To = new Thickness(15.0);
             borderAnimation.Duration = new Duration(TimeSpan.FromSeconds(.5));
             borderAnimation.FillBehavior = FillBehavior.HoldEnd;
             stb.Children.Add(borderAnimation);
@@ -271,7 +305,7 @@ namespace PopnTouchi2.ViewModel.Animation
             Storyboard.SetTargetProperty(borderAnimation, new PropertyPath(ScatterViewItem.BorderThicknessProperty));
 
             heightAnimation.From = SessionVM.SessionSVI.ActualHeight;
-            heightAnimation.To = SessionVM.SessionSVI.ActualHeight + 30;
+            heightAnimation.To = SessionVM.SessionSVI.ActualHeight + 30.0;
             heightAnimation.Duration = new Duration(TimeSpan.FromSeconds(.5));
             heightAnimation.FillBehavior = FillBehavior.HoldEnd;
             stb.Children.Add(heightAnimation);
@@ -279,7 +313,7 @@ namespace PopnTouchi2.ViewModel.Animation
             Storyboard.SetTargetProperty(heightAnimation, new PropertyPath(ScatterViewItem.HeightProperty));
 
             ReduceWidthAnimation2.From = SessionVM.SessionSVI.ActualWidth;
-            ReduceWidthAnimation2.To = SessionVM.SessionSVI.ActualWidth + 30;
+            ReduceWidthAnimation2.To = SessionVM.SessionSVI.ActualWidth + 30.0;
             ReduceWidthAnimation2.Duration = new Duration(TimeSpan.FromSeconds(.5));
             ReduceWidthAnimation2.FillBehavior = FillBehavior.HoldEnd;
             stb.Children.Add(ReduceWidthAnimation2);
@@ -368,9 +402,108 @@ namespace PopnTouchi2.ViewModel.Animation
 
 
         #region ENLARGEMENT
-        void svi_TouchLeave(object sender, System.Windows.Input.TouchEventArgs e)
+        /// <summary>
+        /// Starts the chrono to know if user is waiting for Deletion
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        void SessionSVI_TouchDown(object sender, TouchEventArgs e)
         {
             if (!SessionVM.Reduced) return;
+            startingTouchPoint = e.GetTouchPoint(MainDesktop);
+            touchDevice = e.TouchDevice;
+
+            TouchHoldDispatcherTimer = new System.Windows.Threading.DispatcherTimer();
+            TouchHoldDispatcherTimer.Interval = TimeSpan.FromSeconds(1.0);
+            TouchHoldDispatcherTimer.Start();
+            TouchHoldDispatcherTimer.Tick += new EventHandler(DispatcherTimer_Tick);
+        }
+
+        void DispatcherTimer_Tick(object sender, EventArgs e)
+        {
+            TouchHoldDispatcherTimer.Stop();
+            if (Math.Abs(touchDevice.GetTouchPoint(MainDesktop).Position.X - startingTouchPoint.Position.X) < 15.0 &&
+                Math.Abs(touchDevice.GetTouchPoint(MainDesktop).Position.Y - startingTouchPoint.Position.Y) < 15.0)
+            {
+                SessionVM.DeleteButton.Visibility = Visibility.Visible;
+                AutoDBRemoveDispatcherTimer = new System.Windows.Threading.DispatcherTimer();
+                AutoDBRemoveDispatcherTimer.Interval = TimeSpan.FromSeconds(2);
+                AutoDBRemoveDispatcherTimer.Tick += new EventHandler(autoDeleteRemove);
+                AutoDBRemoveDispatcherTimer.Start();
+
+            }
+        }
+
+        void autoDeleteRemove(object sender, EventArgs e)
+        {
+            AutoDBRemoveDispatcherTimer.Stop();
+            if (SessionVM == null) return;
+            SessionVM.DeleteButton.Visibility = Visibility.Hidden;
+        }
+
+        public void DeleteSession()
+        {
+            SessionVM.BeingDeleted = true;
+
+            Storyboard DeleteStb = new Storyboard();
+            DoubleAnimation endingAnimation = new DoubleAnimation();
+            DoubleAnimation endingWidthAnimation = new DoubleAnimation();
+            DoubleAnimation endingHeightAnimation = new DoubleAnimation();
+
+            ExponentialEase ease = new ExponentialEase();
+            ease.EasingMode = EasingMode.EaseOut;
+            ease.Exponent = 2;
+
+            endingAnimation.From = 1;
+            endingAnimation.To = 0;
+            endingAnimation.Duration = new Duration(TimeSpan.FromSeconds(.3));
+            endingAnimation.FillBehavior = FillBehavior.HoldEnd;
+            DeleteStb.Children.Add(endingAnimation);
+            Storyboard.SetTarget(endingAnimation, SessionVM.SessionSVI);
+            Storyboard.SetTargetProperty(endingAnimation, new PropertyPath(ScatterViewItem.OpacityProperty));
+
+            endingWidthAnimation.From = SessionVM.SessionSVI.Width;
+            endingWidthAnimation.To = SessionVM.SessionSVI.Width * 0.8;
+            endingWidthAnimation.Duration = new Duration(TimeSpan.FromSeconds(.4));
+            endingWidthAnimation.EasingFunction = ease;
+            endingWidthAnimation.FillBehavior = FillBehavior.Stop;
+            DeleteStb.Children.Add(endingWidthAnimation);
+            Storyboard.SetTarget(endingWidthAnimation, SessionVM.SessionSVI);
+            Storyboard.SetTargetProperty(endingWidthAnimation, new PropertyPath(ScatterViewItem.WidthProperty));
+
+            endingHeightAnimation.From = SessionVM.SessionSVI.Height;
+            endingHeightAnimation.To = SessionVM.SessionSVI.Height * 0.8;
+            endingHeightAnimation.Duration = new Duration(TimeSpan.FromSeconds(.4));
+            endingHeightAnimation.EasingFunction = ease;
+            endingHeightAnimation.FillBehavior = FillBehavior.Stop;
+            DeleteStb.Children.Add(endingHeightAnimation);
+            Storyboard.SetTarget(endingHeightAnimation, SessionVM.SessionSVI);
+            Storyboard.SetTargetProperty(endingHeightAnimation, new PropertyPath(ScatterViewItem.HeightProperty));
+
+            endingWidthAnimation.Completed += new EventHandler(deleteAnimationCompleted);
+
+            DeleteStb.Begin();
+        }
+
+        void deleteAnimationCompleted(object sender, EventArgs e)
+        {
+            SessionVM.DeleteSession();
+            MainDesktop.Photos.Items.Remove(SessionVM.SessionSVI);
+            SessionVM = null;
+        }
+
+        /// <summary>
+        /// Launched when user is done with messing with a SVI
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        void svi_TouchLeave(object sender, TouchEventArgs e)
+        {
+            TouchHoldDispatcherTimer.Stop();
+            if (SessionVM == null) return;
+            if (SessionVM.BeingDeleted) return;
+            try { if (!SessionVM.Reduced) return; }
+            catch (Exception exc) { return; }
 
             SessionVM.SessionSVI = (ScatterViewItem)SessionVM.Grid.Parent;
             MainDesktop = (DesktopView)((ScatterView)SessionVM.SessionSVI.Parent).Parent;
@@ -415,6 +548,10 @@ namespace PopnTouchi2.ViewModel.Animation
             }
         }
         
+        /// <summary>
+        /// Enlarges a SVI to go mid-screen
+        /// </summary>
+        /// <param name="left"></param>
         private void EnlargeForSide(Boolean left)
         {
             MainDesktop.Photos.Items.Remove(SessionVM.SessionSVI);
@@ -499,6 +636,10 @@ namespace PopnTouchi2.ViewModel.Animation
             stb.Begin(SessionVM.Grid);
         }
 
+        /// <summary>
+        /// Enlarges a SVI to go fullscreen
+        /// </summary>
+        /// <param name="orientation"></param>
         private void Enlarge(double orientation)
         {
             MainDesktop.Photos.Items.Remove(SessionVM.SessionSVI);
@@ -577,9 +718,7 @@ namespace PopnTouchi2.ViewModel.Animation
 
             SessionVM.LoadSession();
             Fs.Close();
-
-            SessionVM.Session.PlayBackgroundSound();
-
+            
             RemoveWhiteBorder();
         }
 
@@ -623,6 +762,11 @@ namespace PopnTouchi2.ViewModel.Animation
         }
         #endregion
 
+        /// <summary>
+        /// Launched when session's opening animation ends
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         void marginAnimation_Completed(object sender, EventArgs e)
         {
             SessionVM.Grid.Children.Add(SessionVM.Reducer);

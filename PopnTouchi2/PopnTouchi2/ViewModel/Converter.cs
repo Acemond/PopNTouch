@@ -66,6 +66,7 @@ namespace PopnTouchi2.ViewModel
 
             Pitch += note.Pitch + "_";
             Pitch += note.Octave.ToString();
+
             double res = 0;
             foreach(double d in PositionToPitch.Keys)
             {

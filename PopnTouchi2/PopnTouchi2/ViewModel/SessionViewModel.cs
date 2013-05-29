@@ -16,6 +16,7 @@ using PopnTouchi2.Model;
 using System.Windows.Media.Imaging;
 using Microsoft.Xna.Framework.Audio;
 using System.Windows.Input;
+using PopnTouchi2.Model.Enums;
 
 namespace PopnTouchi2.ViewModel
 {
@@ -102,6 +103,12 @@ namespace PopnTouchi2.ViewModel
         public Grid Theme_Button { get; set; }
 
         /// <summary>
+        /// Property.
+        /// Tempo Button.
+        /// </summary>
+        public Grid Tempo_Button { get; set; }
+
+        /// <summary>
         /// Property
         /// Boolean true if the stave is playing
         /// </summary>
@@ -143,14 +150,24 @@ namespace PopnTouchi2.ViewModel
         public ChangeSoundViewModel UpdateSound { get; set; }
 
         /// <summary>
+        /// Delete Button
+        /// </summary>
+        public SurfaceButton DeleteButton { get; set; }
+
+        public bool BeingDeleted { get; set; }
+        public bool removeDeleteButtonsOnTouchUp { get; set; }
+
+        /// <summary>
         /// Property.
         /// Manager of Themes choice.
         /// </summary>
         public ThemeChooser ThemeChooser { get; set; }
 
-        public SessionViewModel(Double width, Double height, Session s, List<int> IDs)
+        public SessionViewModel(Double width, Double height, Session s, List<int> IDs, bool animated)
         {
             Session = s;
+            BeingDeleted = false;
+            removeDeleteButtonsOnTouchUp = false;
             SessionSVI = new ScatterViewItem();
             SessionSVI.Width = width;
             SessionSVI.Height = height;
@@ -170,7 +187,7 @@ namespace PopnTouchi2.ViewModel
             Notes.Visibility = Visibility.Visible;
 
             Grid.Background = (new ThemeViewModel(Session.Theme, this)).BackgroundImage;
-            
+
             Reducer = new SurfaceButton();
             Reduced = false;
             Reducer.Width = 100;
@@ -198,6 +215,13 @@ namespace PopnTouchi2.ViewModel
             Theme_Button.Background = ThemeVM.ThemesImage;
             Theme_Button.Visibility = Visibility.Visible;
 
+            Tempo_Button = new Grid();
+            Tempo_Button.HorizontalAlignment = System.Windows.HorizontalAlignment.Center;
+            Tempo_Button.VerticalAlignment = System.Windows.VerticalAlignment.Top;
+            Tempo_Button.Background = ThemeVM.TempoImage[1];
+            Tempo_Button.Visibility = Visibility.Visible;
+            Tempo_Button.PreviewTouchDown += new EventHandler<TouchEventArgs>(Tempo_Button_TouchDown);
+
             SessionSVI.CanMove = false;
             SessionSVI.CanRotate = false;
             SessionSVI.CanScale = false;
@@ -211,6 +235,7 @@ namespace PopnTouchi2.ViewModel
             Grid.Children.Add(MbgVM.Grid);
             Grid.Children.Add(Play_Button);
             Grid.Children.Add(Theme_Button);
+            Grid.Children.Add(Tempo_Button);
             Grid.Children.Add(UpdateSound.Grid);
 
             Grid.SetZIndex(Theme_Button, 5);
@@ -233,11 +258,30 @@ namespace PopnTouchi2.ViewModel
             IDs.Add(i);
 
             SetDimensions(width, height);
+            SessionSVI.Center = new Point(width / 2.0, height / 2.0);
 
-            Animation = new SessionAnimation(this);
-            Reducer.Click += new RoutedEventHandler(Animation.Reducer_Click);
+            if (animated)
+            {
+                Animation = new SessionAnimation(this);
+                Reducer.Click += new RoutedEventHandler(Animation.Reducer_Click);
+            }
+
+            DeleteButton = new SurfaceButton();
+            DeleteButton.Visibility = Visibility.Hidden;
+            ImageBrush ib = new ImageBrush();
+            ib.ImageSource = new BitmapImage(new Uri(@"../../Resources/Images/ui_items/delete-icon.png", UriKind.Relative));
+            DeleteButton.Background = ib;
+            DeleteButton.Width = 25.0;
+            DeleteButton.Height = 25.0;
+            DeleteButton.HorizontalAlignment = HorizontalAlignment.Left;
+            DeleteButton.VerticalAlignment = VerticalAlignment.Top;
+            Grid.Children.Add(DeleteButton);
+
+            Grid.SetZIndex(DeleteButton, 1000);
+
+            DeleteButton.PreviewTouchDown += new EventHandler<TouchEventArgs>(DeleteButton_PreviewTouchDown);
         }
-
+        
         /// <summary>
         /// TODO
         /// </summary>
@@ -247,7 +291,7 @@ namespace PopnTouchi2.ViewModel
         /// <param name="s"></param>
         /// <param name="IDs"></param>
         public SessionViewModel(Boolean left, Double width, Double height, Session s, List<int> IDs)
-            : this(width * 0.5625, height * 0.5625, s, IDs)
+            : this(width * 0.5625, height * 0.5625, s, IDs, true)
         {
             if (left)
             {
@@ -261,6 +305,42 @@ namespace PopnTouchi2.ViewModel
                 SessionSVI.Orientation = -90;
                 SessionSVI.Center = new Point(width - (width / 6.0 - 16.875), height / 2.0);
             }
+        }
+
+        /// <summary>
+        /// Loads a session from HDD
+        /// </summary>
+        /// <param name="width">MainDesktop width</param>
+        /// <param name="height">MainDesktop height</param>
+        /// <param name="s">Its session</param>
+        /// <param name="ID">Its original ID</param>
+        public SessionViewModel(Double width, Double height, Session s, List<int> IDs, int ID)
+            : this(width, height, s, IDs, false)
+        {
+            SessionID = ID;
+            Grid.Children.Remove(Bubbles);
+            Grid.Children.Remove(Reducer);
+            Grid.Children.Remove(UpdateSound.Grid);
+            Grid.Children.Remove(Theme_Button);
+            Grid.Children.Remove(Notes);
+            Grid.Children.Remove(NbgVM.Grid);
+            Grid.Children.Remove(MbgVM.Grid);
+            Grid.Children.Remove(TreeUp.Grid);
+            Grid.Children.Remove(TreeDown.Grid);
+            Grid.Children.Remove(Play_Button);
+            Grid.Children.Remove(Tempo_Button);
+            EraseSession();
+
+            SessionSVI.CanMove = true;
+            SessionSVI.CanRotate = true;
+
+            SessionSVI.Opacity = 1;
+        }
+
+        void DeleteButton_PreviewTouchDown(object sender, TouchEventArgs e)
+        {
+            DeleteButton.Visibility = Visibility.Hidden;
+            Animation.DeleteSession();
         }
         
         /// <summary>
@@ -289,12 +369,14 @@ namespace PopnTouchi2.ViewModel
             Theme_Button.Width = (351.0 / 1920.0) * width;
             Theme_Button.Height = (110 / 1080.0) * height;
 
+            Tempo_Button.Width = width / 17;
+            Tempo_Button.Height = height / 13;
+
             TreeUp.Grid.Margin = new Thickness(20.0 * ratio, 0, 0, 130.0 * ratio);
             TreeDown.Grid.Margin = new Thickness(20.0 * ratio, 0, 0, 580.0 * ratio);
             
             SessionSVI.Width = width;
             SessionSVI.Height = height;
-            SessionSVI.Center = new Point(width / 2.0, height / 2.0);
         }
 
         public void displayTrees(Thickness up, Thickness down)
@@ -331,6 +413,25 @@ namespace PopnTouchi2.ViewModel
             }
         }
 
+        private void Tempo_Button_TouchDown(object sender, RoutedEventArgs e)
+        {
+            if (GlobalVariables.bpm == 60)
+            {
+                GlobalVariables.bpm = 90;
+                Tempo_Button.Background = ThemeVM.TempoImage[1];
+            }
+            else if (GlobalVariables.bpm == 90)
+            {  
+                GlobalVariables.bpm = 120;
+                Tempo_Button.Background = ThemeVM.TempoImage[2];
+            }
+            else
+            {
+                GlobalVariables.bpm = 60;
+                Tempo_Button.Background = ThemeVM.TempoImage[0];
+            }
+        }
+
         /// <summary>
         /// Saves current session into binary file
         /// </summary>
@@ -343,6 +444,23 @@ namespace PopnTouchi2.ViewModel
             SessionData sd = new SessionData(this);
             formatter.Serialize(stream, sd);
             stream.Close();
+        }
+        
+        /// <summary>
+        /// Loads a session from a binary file reduced
+        /// </summary>
+        public void LoadReducedSession(FileStream ScStream)
+        {
+            SessionSVI.BorderBrush = Brushes.White;
+            SessionSVI.BorderThickness = new Thickness(15.0);
+
+            SessionSVI.Width = SessionSVI.Width / 4.0 + 30.0;
+            SessionSVI.Height = SessionSVI.Height / 4.0 + 30.0;
+
+            Animation = new SessionAnimation(this, true);
+            Reducer.Click += new RoutedEventHandler(Animation.Reducer_Click);
+            Animation.Fs = ScStream;
+            Reduced = true;
         }
 
         /// <summary>
@@ -373,10 +491,11 @@ namespace PopnTouchi2.ViewModel
                 case 4: Session.Theme = new Theme4(); break;
                 default: Session.Theme = new Theme1(); break;
             }
+
+            ThemeVM = new ThemeViewModel(Session.Theme, this);
             Converter conv = new Converter();
             Session.StaveTop = new Stave(Session.Theme.InstrumentsTop[0], Session.Theme);
             Session.StaveBottom = new Stave(Session.Theme.InstrumentsBottom[0], Session.Theme);
-            Session.ThemeID = sd.ThemeID;
 
             Grid.Background = (new ThemeViewModel(Session.Theme, this)).BackgroundImage;
 
@@ -390,6 +509,15 @@ namespace PopnTouchi2.ViewModel
 
             displayTrees(new Thickness(20.0 * ratio, 0, 0, 130.0 * ratio), new Thickness(20.0 * ratio, 0, 0, 580.0 * ratio));
 
+            Play_Button = new Grid();
+            Play_Button.HorizontalAlignment = System.Windows.HorizontalAlignment.Left;
+            Play_Button.VerticalAlignment = System.Windows.VerticalAlignment.Top;
+            Play_Button.Background = ThemeVM.PlayImage;
+            Play_Button.Visibility = Visibility.Visible;
+            IsPlaying = false;
+
+            Play_Button.PreviewTouchDown += new EventHandler<TouchEventArgs>(Play_Button_TouchDown);
+
             Grid.Children.Add(Bubbles);
             Grid.Children.Add(Notes);
             Grid.Children.Add(Reducer);
@@ -398,6 +526,7 @@ namespace PopnTouchi2.ViewModel
             Grid.Children.Add(NbgVM.Grid);
             Grid.Children.Add(MbgVM.Grid);
             Grid.Children.Add(Theme_Button);
+            Grid.Children.Add(Tempo_Button);
 
             Grid.SetZIndex(Theme_Button, 5);
             Grid.SetZIndex(UpdateSound.Grid, 4);
@@ -430,6 +559,7 @@ namespace PopnTouchi2.ViewModel
 
             TreeDown.SetInstrument(sd.TopInstrument);
             TreeUp.SetInstrument(sd.BottomInstrument);
+            Session.PlayBackgroundSound();
 
             SetDimensions(Grid.ActualWidth, Grid.ActualHeight);
         }
@@ -444,6 +574,22 @@ namespace PopnTouchi2.ViewModel
             Session = null;
             TreeDown = null;
             TreeUp = null;
+            ThemeVM = null;
+            Play_Button = null;
+        }
+
+        public void DeleteSession()
+        {
+            try
+            {
+                File.Delete("Sessions/sess" + SessionID + ".bin");
+                Animation.Fs.Close();
+                File.Delete("SnapShots/sc" + SessionID + ".jpg");
+            }
+            catch (Exception exc)
+            {
+
+            }
         }
     }
 }

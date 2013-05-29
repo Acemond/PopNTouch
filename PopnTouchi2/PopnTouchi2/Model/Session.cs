@@ -70,16 +70,6 @@ namespace PopnTouchi2
             StaveTop = new Stave(Theme.InstrumentsTop[0], Theme);
             StaveBottom = new Stave(Theme.InstrumentsBottom[0], Theme);
             
-            //sound methods
-            try
-            {
-                Theme.refreshSound();
-                Theme.sound.Play();
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine("Limited number of sound instance");
-            }
         }
         #endregion
 
