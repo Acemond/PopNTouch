@@ -167,9 +167,14 @@ namespace PopnTouchi2.ViewModel
         /// </summary>
         /// <param name="noteValue">The Notevalue needed to find the Bubble Image</param>
         /// <returns>A BitmapImage linked to the Bubble</returns>
-        public BitmapImage GetNoteBubbleImageSource(NoteValue noteValue)
+        public BitmapImage GetNoteBubbleImageSource(Note n)
         {
-            return NoteBubbleImages[noteValue];
+            if (n.Sharp)
+                return GetNoteBubbleImageSource(true);
+            else if (n.Flat)
+                return GetNoteBubbleImageSource(false);
+            else
+                return NoteBubbleImages[n.Duration];
         }
 
         /// <summary>

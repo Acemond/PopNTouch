@@ -65,14 +65,9 @@ namespace PopnTouchi2.ViewModel
             SVItem.HorizontalAlignment = HorizontalAlignment.Center;
 
             FrameworkElementFactory bubbleImage = new FrameworkElementFactory(typeof(Image));
-            if (!NoteBubble.Note.Sharp && !NoteBubble.Note.Flat)
-            {    
-                bubbleImage.SetValue(Image.SourceProperty, new ThemeViewModel(SessionVM.Session.Theme, SessionVM).GetNoteBubbleImageSource(nb.Note.Duration));                  
-            }
-            else
-            {
-                bubbleImage.SetValue(Image.SourceProperty, new ThemeViewModel(SessionVM.Session.Theme, SessionVM).GetNoteBubbleImageSource(nb.Note.Sharp));
-            }
+
+            bubbleImage.SetValue(Image.SourceProperty, new ThemeViewModel(SessionVM.Session.Theme, SessionVM).GetNoteBubbleImageSource(nb.Note));                  
+            
             
             bubbleImage.SetValue(Image.IsHitTestVisibleProperty, false);
 
@@ -121,7 +116,7 @@ namespace PopnTouchi2.ViewModel
             FrameworkElementFactory bubbleImage = new FrameworkElementFactory(typeof(Image));
 
       
-            bubbleImage.SetValue(Image.SourceProperty, new ThemeViewModel(SessionVM.Session.Theme, SessionVM).GetNoteBubbleImageSource(nb.Note.Duration));
+            bubbleImage.SetValue(Image.SourceProperty, new ThemeViewModel(SessionVM.Session.Theme, SessionVM).GetNoteBubbleImageSource(nb.Note));
  
             bubbleImage.SetValue(Image.IsHitTestVisibleProperty, false);
             bubbleImage.SetValue(Image.WidthProperty, (85.0 / 1920.0) * SessionVM.SessionSVI.ActualWidth);
