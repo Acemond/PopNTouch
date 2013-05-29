@@ -812,6 +812,7 @@ namespace PopnTouchi2.ViewModel.Animation
         {
             SessionVM.SessionSVI.CanScale = true;
             SessionVM.FullyEnlarged = true;
+            SessionVM.InitialScale = false;
             SessionVM.SessionSVI.MaxWidth = SessionVM.originalRatio * 1920.0;
             SessionVM.SessionSVI.MaxHeight = SessionVM.originalRatio * 1080.0;
         }

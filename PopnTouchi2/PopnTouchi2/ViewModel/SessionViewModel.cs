@@ -153,6 +153,7 @@ namespace PopnTouchi2.ViewModel
         public bool BeingDeleted { get; set; }
         public bool removeDeleteButtonsOnTouchUp { get; set; }
         public bool FullyEnlarged { get; set; }
+        public bool InitialScale { get; set; }
         private double ratio;
         public double originalRatio { get; set; }
 
@@ -166,6 +167,7 @@ namespace PopnTouchi2.ViewModel
         {
             Session = s;
             BeingDeleted = false;
+            InitialScale = true;
             removeDeleteButtonsOnTouchUp = false;
             SessionSVI = new ScatterViewItem();
             SessionSVI.Width = width;
@@ -283,6 +285,7 @@ namespace PopnTouchi2.ViewModel
 
         void SessionSVI_SizeChanged(object sender, SizeChangedEventArgs e)
         {
+            if (InitialScale) UpdateEveryDimensions(Grid.ActualWidth, Grid.ActualHeight);
             if (!FullyEnlarged) return;
             UpdateEveryDimensions(Grid.ActualWidth, Grid.ActualHeight);
             if (ratio < originalRatio * 0.9)
@@ -329,6 +332,7 @@ namespace PopnTouchi2.ViewModel
         public SessionViewModel(Double width, Double height, Session s, List<int> IDs, int ID)
             : this(width, height, s, IDs, false)
         {
+            InitialScale = false;
             SessionID = ID;
             Grid.Children.Remove(Bubbles);
             Grid.Children.Remove(UpdateSound.Grid);
