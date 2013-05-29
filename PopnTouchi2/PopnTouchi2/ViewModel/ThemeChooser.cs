@@ -182,6 +182,10 @@ namespace PopnTouchi2.ViewModel
             Bird.Width = 140.0 * ratio;
             Bird.Height = 165.0 * ratio;
             Bird.Margin = new Thickness(0, 585.0 * ratio, 80.0 * ratio, 0);
+
+            Dragon.Width = 175.0 * ratio;
+            Dragon.Height = 275.0 * ratio;
+            Dragon.Margin = new Thickness(0, 550.0 * ratio, 40.0 * ratio, 0);
         }
 
         /// <summary>
@@ -191,8 +195,10 @@ namespace PopnTouchi2.ViewModel
         /// <param name="e"></param>
         public void Theme_Button_TouchDown(object sender, RoutedEventArgs e)
         {
+            if (!sessionVM.FullyEnlarged) return;
             sessionVM.Grid.Children.Add(Grid);
             sessionVM.Grid.Children.Add(Themes);
+            sessionVM.SessionSVI.CanScale = false;
             Grid.SetZIndex(Grid, 100);
             Grid.SetZIndex(Themes, 101);
         }
@@ -263,6 +269,7 @@ namespace PopnTouchi2.ViewModel
             sessionVM.Grid.Children.Remove(Themes);
 
             sessionVM.Session.PlayBackgroundSound();
+            sessionVM.SessionSVI.CanScale = true;
         }
         
         /// <summary>
@@ -328,6 +335,7 @@ namespace PopnTouchi2.ViewModel
             sessionVM.Grid.Children.Remove(Themes);
 
             sessionVM.Session.PlayBackgroundSound();
+            sessionVM.SessionSVI.CanScale = true;
         }
 
         private void Bird_TouchDown(object sender, RoutedEventArgs e)
@@ -400,6 +408,7 @@ namespace PopnTouchi2.ViewModel
             sessionVM.Grid.Children.Remove(Themes);
 
             sessionVM.Session.PlayBackgroundSound();
+            sessionVM.SessionSVI.CanScale = true;
         }
 
         private void Dragon_TouchDown(object sender, RoutedEventArgs e)
@@ -473,6 +482,7 @@ namespace PopnTouchi2.ViewModel
 
             sessionVM.Grid.Children.Remove(Grid);
             sessionVM.Grid.Children.Remove(Themes);
+            sessionVM.SessionSVI.CanScale = true;
         }
     }
 }
