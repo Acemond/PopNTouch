@@ -459,25 +459,34 @@ namespace PopnTouchi2.ViewModel
 
         private void Play_Button_TouchDown(object sender, RoutedEventArgs e)
         {
+            Thread play = new Thread(PlayStaves);
+
             if (!IsPlaying)
             {
-                Session.StopBackgroundSound();
+                Session.StopBackgroundSound();              
+                play.Start();
 
-                Session.StaveTop.PlayAllNotes();
-                Session.StaveBottom.PlayAllNotes();
                 Play_Button.Opacity = 0.5;
                 IsPlaying = true;
+               
             }
             else
             {
                 Session.PlayBackgroundSound();
-
+                play.Abort();
                 Session.StaveTop.StopMusic();
                 Session.StaveBottom.StopMusic();
                 Play_Button.Opacity = 1;
                 IsPlaying = false;
             }
         }
+
+        private void PlayStaves()
+        {
+            Session.StaveTop.PlayAllNotes();
+            Session.StaveBottom.PlayAllNotes();
+        }
+
 
         private void Tempo_Button_TouchDown(object sender, RoutedEventArgs e)
         {
