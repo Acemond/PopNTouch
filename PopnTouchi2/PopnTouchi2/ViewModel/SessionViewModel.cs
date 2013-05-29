@@ -187,7 +187,6 @@ namespace PopnTouchi2.ViewModel
             Notes.Visibility = Visibility.Visible;
 
             Grid.Background = (new ThemeViewModel(Session.Theme, this)).BackgroundImage;
-            Session.PlayBackgroundSound();
 
             Reducer = new SurfaceButton();
             Reduced = false;
@@ -497,7 +496,6 @@ namespace PopnTouchi2.ViewModel
             Converter conv = new Converter();
             Session.StaveTop = new Stave(Session.Theme.InstrumentsTop[0], Session.Theme);
             Session.StaveBottom = new Stave(Session.Theme.InstrumentsBottom[0], Session.Theme);
-            Session.ThemeID = sd.ThemeID;
 
             Grid.Background = (new ThemeViewModel(Session.Theme, this)).BackgroundImage;
 

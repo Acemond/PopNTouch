@@ -166,7 +166,6 @@ namespace PopnTouchi2
                         ss.ImageSource = bi;
 
                         SessionVM.Grid.Background = ss;
-                        //Fs.Close();
 
                         Photos.Items.Add(SessionVM.SessionSVI);
                         Random r = new Random();
@@ -231,6 +230,7 @@ namespace PopnTouchi2
             }
 
             openedSessions.Add(SessionVM);
+            SessionVM.Session.PlayBackgroundSound();
             CheckDesktopToDisplay();
         }
 
@@ -245,10 +245,12 @@ namespace PopnTouchi2
             SessionVM = new SessionViewModel(true, ActualWidth, ActualHeight, new Session(), IDs);
             Sessions.Items.Add(SessionVM.SessionSVI);
             openedSessions.Add(SessionVM);
+            SessionVM.Session.PlayBackgroundSound();
 
             SessionVM = new SessionViewModel(false, ActualWidth, ActualHeight, new Session(), IDs);
             Sessions.Items.Add(SessionVM.SessionSVI);
             openedSessions.Add(SessionVM);
+            SessionVM.Session.PlayBackgroundSound();
 
             LeftSessionActive = true;
             RightSessionActive = true;
