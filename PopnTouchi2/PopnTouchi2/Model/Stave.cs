@@ -199,7 +199,9 @@ namespace PopnTouchi2
         /// </summary>
         public int PlayAllNotes()
         {
-            int time = Notes.Last().Position* (30000/GlobalVariables.bpm);
+            int time = 1000;
+            if(Notes.Count != 0)
+                time = (Notes.Last().Position+4)* (30000/GlobalVariables.bpm);
             Timer.Interval = 30000 / GlobalVariables.bpm;
             Timer.Start();
             Timer.Elapsed += new ElapsedEventHandler(PlayList);

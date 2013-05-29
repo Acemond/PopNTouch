@@ -150,9 +150,6 @@ namespace PopnTouchi2.ViewModel
         /// </summary>
         public SurfaceButton DeleteButton { get; set; }
 
-        private Thread play;
-
-
         public bool BeingDeleted { get; set; }
         public bool removeDeleteButtonsOnTouchUp { get; set; }
         public bool FullyEnlarged { get; set; }
@@ -461,14 +458,15 @@ namespace PopnTouchi2.ViewModel
 
         private void Play_Button_TouchDown(object sender, RoutedEventArgs e)
         {
-            play = new Thread(PlayStaves);
+            Thread play = new Thread(PlayStaves);
 
             if (!IsPlaying)
             {
                 Session.StopBackgroundSound();              
                 play.Start();
 
-                setPlay(0.5, true);
+                Play_Button.Opacity = 0.5;
+                IsPlaying = true;
             }
             else
             {
@@ -476,7 +474,8 @@ namespace PopnTouchi2.ViewModel
                 play.Abort();
                 Session.StaveTop.StopMusic();
                 Session.StaveBottom.StopMusic();
-                setPlay(1.0, false);
+                Play_Button.Opacity = 1;
+                IsPlaying = false;
             }
         }
 
@@ -485,13 +484,18 @@ namespace PopnTouchi2.ViewModel
             int timeTop = Session.StaveTop.PlayAllNotes();
             int timeDown = Session.StaveBottom.PlayAllNotes();
             Thread.Sleep(Math.Max(timeTop,timeDown));
-           // setPlay(1.0, false);
+
+            UpdatePlay();   
         }
 
-        private void setPlay(double op, bool isplaying)
+        void UpdateControl()
         {
-            Play_Button.Opacity = op;
-            IsPlaying = isplaying;
+            Play_Button.Opacity = 1;
+            IsPlaying = false;
+        }
+
+        private void UpdatePlay(){
+            Play_Button.Dispatcher.BeginInvoke((Action)UpdateControl, null);
         }
 
 
