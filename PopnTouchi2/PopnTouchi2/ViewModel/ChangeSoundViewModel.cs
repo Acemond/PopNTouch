@@ -28,14 +28,16 @@ namespace PopnTouchi2.ViewModel
         /// The parent Grid.
         /// </summary>
         public Grid Grid { get; set; }
-        
+
+        private double ratio;
+
         /// <summary>
         /// Constructor
         /// </summary>
         public ChangeSoundViewModel(SessionViewModel s)
         {
             sessionVM = s;
-            double ratio = s.SessionSVI.Width / 1920.0;
+            ratio = s.SessionSVI.Width / 1920.0;
 
             Grid = new Grid();
             Grid.VerticalAlignment = VerticalAlignment.Top;
@@ -49,6 +51,22 @@ namespace PopnTouchi2.ViewModel
             Grid.Children.Add(createButtonForImage(false, 240.0 * ratio));
             Grid.Children.Add(createButtonForImage(false, 320.0 * ratio));
             Grid.Children.Add(createButtonForImage(false, 400.0 * ratio));
+        }
+
+        public void UpdateDimensions(double newRatio)
+        {
+            double oldRatio = ratio;
+            ratio = newRatio;
+            foreach (Grid g in Grid.Children)
+            {
+                g.Height = 28.0 * ratio;
+                g.Width = 28.0 * ratio;
+                Thickness t = g.Margin;
+                t.Left = (t.Left / oldRatio) * newRatio;
+                g.Margin = t;
+            }
+
+            Grid.Margin = new System.Windows.Thickness(40.0 * ratio, 20.0 * ratio, 0, 0);
         }
 
         /// <summary>

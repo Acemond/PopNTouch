@@ -74,7 +74,7 @@ namespace PopnTouchi2.ViewModel.Animation
                 PointAnimation centerAnimation = new PointAnimation();
                 SineEase ease = new SineEase();
                 ease.EasingMode = EasingMode.EaseInOut;
-                Random r = new Random();
+                Random r = GlobalVariables.GlobalRandom;
                 Double xOffset = (-2) * (r.Next() % 2 - .5) * r.Next(50, 100);
                 Double yOffset = (-2) * (r.Next() % 2 - .5) * r.Next(50, 100);
 

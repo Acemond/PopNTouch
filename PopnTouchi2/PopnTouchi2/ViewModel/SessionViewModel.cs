@@ -17,6 +17,7 @@ using System.Windows.Media.Imaging;
 using Microsoft.Xna.Framework.Audio;
 using System.Windows.Input;
 using PopnTouchi2.Model.Enums;
+using System.Windows.Shapes;
 
 namespace PopnTouchi2.ViewModel
 {
@@ -84,11 +85,6 @@ namespace PopnTouchi2.ViewModel
         /// ThemeViewModel of the SessionViewModel
         /// </summary>
         public ThemeViewModel ThemeVM { get; set; }
-        /// <summary>
-        /// Property.
-        /// Temporary Reduce Button.
-        /// </summary>
-        public SurfaceButton Reducer { get; set; }
 
         /// <summary>
         /// Property.
@@ -156,6 +152,9 @@ namespace PopnTouchi2.ViewModel
 
         public bool BeingDeleted { get; set; }
         public bool removeDeleteButtonsOnTouchUp { get; set; }
+        public bool FullyEnlarged { get; set; }
+        private double ratio;
+        public double originalRatio { get; set; }
 
         /// <summary>
         /// Property.
@@ -171,7 +170,9 @@ namespace PopnTouchi2.ViewModel
             SessionSVI = new ScatterViewItem();
             SessionSVI.Width = width;
             SessionSVI.Height = height;
-            double ratio = width / 1920.0;
+            ratio = width / 1920.0;
+            originalRatio = width / 1920.0;
+
             ThemeVM = new ThemeViewModel(Session.Theme, this);
             Grid = new Grid();
             UpdateSound = new ChangeSoundViewModel(this);
@@ -187,16 +188,7 @@ namespace PopnTouchi2.ViewModel
             Notes.Visibility = Visibility.Visible;
 
             Grid.Background = (new ThemeViewModel(Session.Theme, this)).BackgroundImage;
-
-            Reducer = new SurfaceButton();
-            Reduced = false;
-            Reducer.Width = 100;
-            Reducer.Height = 25;
-            Reducer.HorizontalAlignment = System.Windows.HorizontalAlignment.Right;
-            Reducer.VerticalAlignment = System.Windows.VerticalAlignment.Top;
-            Reducer.Background = Brushes.Red;
-            Reducer.Content = "Reduce !";
-
+            
             Play_Button = new Grid();
             Play_Button.HorizontalAlignment = System.Windows.HorizontalAlignment.Left;
             Play_Button.VerticalAlignment = System.Windows.VerticalAlignment.Top;
@@ -224,7 +216,7 @@ namespace PopnTouchi2.ViewModel
 
             SessionSVI.CanMove = false;
             SessionSVI.CanRotate = false;
-            SessionSVI.CanScale = true;
+            //SessionSVI.CanScale = false;
             SessionSVI.ShowsActivationEffects = false;
 
             displayTrees(new Thickness(20.0 * ratio, 0, 0, 130.0 * ratio), new Thickness(20.0 * ratio, 0, 0, 580.0 * ratio));
@@ -260,11 +252,7 @@ namespace PopnTouchi2.ViewModel
             SetDimensions(width, height);
             SessionSVI.Center = new Point(width / 2.0, height / 2.0);
 
-            if (animated)
-            {
-                Animation = new SessionAnimation(this);
-                Reducer.Click += new RoutedEventHandler(Animation.Reducer_Click);
-            }
+            if (animated) Animation = new SessionAnimation(this);
 
             DeleteButton = new SurfaceButton();
             DeleteButton.Visibility = Visibility.Hidden;
@@ -280,8 +268,31 @@ namespace PopnTouchi2.ViewModel
             Grid.SetZIndex(DeleteButton, 1000);
 
             DeleteButton.PreviewTouchDown += new EventHandler<TouchEventArgs>(DeleteButton_PreviewTouchDown);
+
+            SessionSVI.SizeChanged += new SizeChangedEventHandler(SessionSVI_SizeChanged);
+            SessionSVI.PreviewTouchUp += new EventHandler<TouchEventArgs>(SessionSVI_TouchLeave);
         }
-        
+
+        void SessionSVI_TouchLeave(object sender, TouchEventArgs e)
+        {
+            if (!FullyEnlarged) return;
+            if (ratio != originalRatio)
+                UpdateEveryDimensions(originalRatio * 1920.0, originalRatio * 1080.0);
+        }
+
+        void SessionSVI_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            if (!FullyEnlarged) return;
+            UpdateEveryDimensions(Grid.ActualWidth, Grid.ActualHeight);
+            if (ratio < originalRatio * 0.9)
+            {
+                UpdateEveryDimensions(originalRatio * 0.9 * 1920.0, originalRatio * 0.9 * 1080.0);
+                SessionSVI.CanScale = false;
+                Animation.Reduce();
+            }
+            if (ratio == originalRatio) Animation.resumeAllBubblesAnimations();
+        }
+                        
         /// <summary>
         /// TODO
         /// </summary>
@@ -319,7 +330,6 @@ namespace PopnTouchi2.ViewModel
         {
             SessionID = ID;
             Grid.Children.Remove(Bubbles);
-            Grid.Children.Remove(Reducer);
             Grid.Children.Remove(UpdateSound.Grid);
             Grid.Children.Remove(Theme_Button);
             Grid.Children.Remove(Notes);
@@ -342,6 +352,50 @@ namespace PopnTouchi2.ViewModel
             DeleteButton.Visibility = Visibility.Hidden;
             Animation.DeleteSession();
         }
+
+        /// <summary>
+        /// TODO
+        /// </summary>
+        /// <param name="width"></param>
+        /// <param name="height"></param>
+        public void UpdateEveryDimensions(Double width, Double height)
+        {
+            Animation.stopAllBubblesAnimations();
+            double oldRatio = ratio;
+            SetDimensions(width, height);
+            double newRatio = width / 1920.0;
+            UpdateSound.UpdateDimensions(newRatio);
+            TreeUp.UpdateDimensions(newRatio);
+            TreeDown.UpdateDimensions(newRatio);
+            Notes.Width = (Notes.ActualWidth / oldRatio) * ratio;
+            Notes.Height = (Notes.ActualHeight / oldRatio) * ratio;
+            Bubbles.Width = (Notes.ActualWidth / oldRatio) * ratio;
+            Bubbles.Height = (Notes.ActualHeight / oldRatio) * ratio;
+            foreach (ScatterViewItem svi in Notes.Items)
+            {
+                ScaleTransform st = new ScaleTransform(ratio / originalRatio, ratio / originalRatio, svi.ActualCenter.X, svi.ActualCenter.Y);
+                svi.LayoutTransform = st;
+
+                svi.Width = (svi.ActualWidth / oldRatio) * ratio;
+                svi.Height = (svi.ActualHeight / oldRatio) * ratio;
+
+                Point oldCenter = svi.Center;
+                Point newCenter = new Point((oldCenter.X / oldRatio) * ratio, (oldCenter.Y / oldRatio) * ratio);
+                svi.Center = newCenter;
+            }
+            foreach (ScatterViewItem svi in Bubbles.Items)
+            {
+                ScaleTransform st = new ScaleTransform(ratio / originalRatio, ratio / originalRatio, svi.ActualCenter.X, svi.ActualCenter.Y);
+                svi.LayoutTransform = st;
+
+                svi.Width = (svi.ActualWidth / oldRatio) * ratio;
+                svi.Height = (svi.ActualHeight / oldRatio) * ratio;
+
+                Point oldCenter = svi.Center;
+                Point newCenter = new Point((oldCenter.X / oldRatio) * ratio, (oldCenter.Y / oldRatio) * ratio);
+                svi.Center = newCenter;
+            }
+        }
         
         /// <summary>
         /// TODO
@@ -352,8 +406,8 @@ namespace PopnTouchi2.ViewModel
         {
             SessionSVI.Width = width;
             SessionSVI.Height = height;
-
-            double ratio = width / 1920.0;
+            
+            ratio = width / 1920.0;
 
             NbgVM.Grid.Width = width / 8.0;
             NbgVM.Grid.Height = width * 0.07948;
@@ -372,8 +426,10 @@ namespace PopnTouchi2.ViewModel
             Tempo_Button.Width = width / 17;
             Tempo_Button.Height = height / 13;
 
-            TreeUp.Grid.Margin = new Thickness(20.0 * ratio, 0, 0, 130.0 * ratio);
-            TreeDown.Grid.Margin = new Thickness(20.0 * ratio, 0, 0, 580.0 * ratio);
+            TreeUp.UpdateDimensions(ratio);
+            TreeDown.UpdateDimensions(ratio);
+
+            UpdateSound.UpdateDimensions(ratio);
             
             SessionSVI.Width = width;
             SessionSVI.Height = height;
@@ -458,7 +514,6 @@ namespace PopnTouchi2.ViewModel
             SessionSVI.Height = SessionSVI.Height / 4.0 + 30.0;
 
             Animation = new SessionAnimation(this, true);
-            Reducer.Click += new RoutedEventHandler(Animation.Reducer_Click);
             Animation.Fs = ScStream;
             Reduced = true;
         }
@@ -473,7 +528,7 @@ namespace PopnTouchi2.ViewModel
             SessionSVI.Height = Grid.ActualHeight;
             //ODOT
 
-            double ratio = SessionSVI.Width / 1920.0;
+            ratio = SessionSVI.Width / 1920.0;
 
             string path = "Sessions/sess" + SessionID + ".bin";
             BinaryFormatter formatter = new BinaryFormatter();
@@ -520,7 +575,6 @@ namespace PopnTouchi2.ViewModel
 
             Grid.Children.Add(Bubbles);
             Grid.Children.Add(Notes);
-            Grid.Children.Add(Reducer);
             Grid.Children.Add(Play_Button);
             Grid.Children.Add(UpdateSound.Grid);
             Grid.Children.Add(NbgVM.Grid);

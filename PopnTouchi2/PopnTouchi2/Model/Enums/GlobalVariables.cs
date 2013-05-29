@@ -25,6 +25,8 @@ namespace PopnTouchi2.Model.Enums
         /// </summary>
         public static int idMelodyBubble = 0;
 
+        public static Random GlobalRandom = new Random();
+
         /// <summary>
         /// The array containing the offsets of the staves
         /// </summary>

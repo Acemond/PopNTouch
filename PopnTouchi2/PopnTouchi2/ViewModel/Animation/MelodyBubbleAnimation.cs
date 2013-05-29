@@ -79,14 +79,14 @@ namespace PopnTouchi2.ViewModel.Animation
         /// Note Bubble Animation 
         /// Moves the NoteBubble randomly on the screen.
         /// </summary>
-        private void Animate()
+        public void Animate()
         {
             if (canAnimate)
             {
                 PointAnimation centerAnimation = new PointAnimation();
                 SineEase ease = new SineEase();
                 ease.EasingMode = EasingMode.EaseInOut;
-                Random r = new Random();
+                Random r = GlobalVariables.GlobalRandom;
                 Double xOffset = (-2) * (r.Next() % 2 - .5) * r.Next(50, 100);
                 Double yOffset = (-2) * (r.Next() % 2 - .5) * r.Next(50, 100);
 
