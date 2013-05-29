@@ -214,11 +214,11 @@ namespace PopnTouchi2.ViewModel.Animation
             sessionVM.Notes.Items.Remove(noteVM.SVItem);
 
             noteVM.Note.Sharp = false;
-            noteVM.Note.Flat = true;
+            noteVM.Note.Flat = false;
+            noteVM.Note.Position = -1;
+            noteVM.Note.Pitch = "la";
 
             NoteBubbleViewModel nbVM = new NoteBubbleViewModel(center, new NoteBubble(noteVM.Note), sessionVM.Bubbles, sessionVM);
-            nbVM.NoteBubble.Note.Sharp = false;
-            nbVM.NoteBubble.Note.Flat = false;
             sessionVM.Bubbles.Items.Add(nbVM.SVItem);
 
             String effect = "pop" + (new Random()).Next(1, 5).ToString();

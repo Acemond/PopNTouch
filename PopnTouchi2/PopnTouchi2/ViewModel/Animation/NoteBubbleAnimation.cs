@@ -354,7 +354,8 @@ namespace PopnTouchi2.ViewModel.Animation
 
                 else
                 {
-                    //Il y a une note à cet endroit
+                    canAnimate = true;
+                    Animate();
                 }
             }
         }
