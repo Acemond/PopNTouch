@@ -41,6 +41,7 @@ namespace PopnTouchi2.ViewModel
         private Grid GridTheme4;
         public Grid Bird { get; set; }
         public Grid Dragon { get; set; }
+        public Grid Cat { get; set; }
 
         /// <summary>
         /// TODO
@@ -141,6 +142,14 @@ namespace PopnTouchi2.ViewModel
 
             Dragon.PreviewTouchDown += new EventHandler<TouchEventArgs>(Dragon_TouchDown);
 
+            Cat = new Grid();
+            Cat.Width = 175.0 * ratio;
+            Cat.Height = 275.0 * ratio;
+            Cat.Margin = new Thickness(0, 550.0 * ratio, 400.0 * ratio, 0);
+            Cat.Background = new SolidColorBrush(Colors.Red);
+
+            Cat.PreviewTouchDown += new EventHandler<TouchEventArgs>(Cat_TouchDown);
+
             Themes.Children.Add(border1);
             Themes.Children.Add(border2);
             Themes.Children.Add(border3);
@@ -227,6 +236,11 @@ namespace PopnTouchi2.ViewModel
                 sessionVM.Grid.Children.Remove(Dragon);
             }
 
+            if (sessionVM.Session.ThemeID == 4)
+            {
+                sessionVM.Grid.Children.Remove(Cat);
+            }
+
             sessionVM.Session.StopBackgroundSound();
             sessionVM.Session.Theme = new Theme1();
             sessionVM.Session.ThemeID = 1;
@@ -289,6 +303,11 @@ namespace PopnTouchi2.ViewModel
             if (sessionVM.Session.ThemeID == 3)
             {
                 sessionVM.Grid.Children.Remove(Dragon);
+            }
+
+            if (sessionVM.Session.ThemeID == 4)
+            {
+                sessionVM.Grid.Children.Remove(Cat);
             }
 
             sessionVM.Session.StopBackgroundSound();
@@ -361,6 +380,11 @@ namespace PopnTouchi2.ViewModel
             if (sessionVM.Session.ThemeID == 2)
             {
                 sessionVM.Grid.Children.Remove(Bird);
+            }
+
+            if (sessionVM.Session.ThemeID == 4)
+            {
+                sessionVM.Grid.Children.Remove(Cat);
             }
 
             sessionVM.Session.StopBackgroundSound();
@@ -473,6 +497,7 @@ namespace PopnTouchi2.ViewModel
             sessionVM.Session.StaveTop.SetTheme(sessionVM.ThemeVM.Theme);
             sessionVM.Session.StaveBottom.SetTheme(sessionVM.ThemeVM.Theme);
 
+            sessionVM.Grid.Children.Add(Cat);
             sessionVM.Grid.Children.Add(sessionVM.NbgVM.Grid);
             sessionVM.Grid.Children.Add(sessionVM.MbgVM.Grid);
             sessionVM.Grid.Children.Add(sessionVM.Bubbles);
@@ -480,9 +505,17 @@ namespace PopnTouchi2.ViewModel
             sessionVM.Grid.Children.Add(sessionVM.Play_Button);
             sessionVM.Grid.Children.Add(sessionVM.Theme_Button);
 
+            Grid.SetZIndex(Cat, 0);
+
             sessionVM.Grid.Children.Remove(Grid);
             sessionVM.Grid.Children.Remove(Themes);
             sessionVM.SessionSVI.CanScale = true;
+        }
+
+        private void Cat_TouchDown(object sender, RoutedEventArgs e)
+        {
+            //String effect = "chat" + (new Random()).Next(1, 6).ToString();
+            //AudioController.PlaySoundWithString(effect);
         }
     }
 }
