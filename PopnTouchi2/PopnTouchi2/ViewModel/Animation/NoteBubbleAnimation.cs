@@ -83,11 +83,11 @@ namespace PopnTouchi2.ViewModel.Animation
                 centerAnimation.DecelerationRatio = .3;
 
                 if (SVItem.Center.X + xOffset > ParentSV.ActualWidth)
-                    xOffset = ParentSV.ActualWidth - SVItem.Center.X;
+                    xOffset = (ParentSV.ActualWidth - SVItem.Center.X) - (double)r.Next(50);
                 if (SVItem.Center.X + xOffset < 0)
-                    xOffset = 0 - SVItem.Center.X;
+                    xOffset = 0 - SVItem.Center.X + (double)r.Next(50);
                 if (SVItem.Center.Y + yOffset > ParentSV.ActualHeight)
-                    yOffset = ParentSV.ActualHeight - SVItem.Center.Y;
+                    yOffset = ParentSV.ActualHeight - SVItem.Center.Y - (double)r.Next(50);
                 if (SVItem.Center.Y + yOffset < 630.0 * ParentSV.ActualHeight / 1080.0)
                     yOffset = ((630.0 * ParentSV.ActualHeight / 1080.0) - SVItem.Center.Y) + (double)r.Next(50);
                 if (SVItem.Center.Y < 630.0 * ParentSV.ActualHeight / 1080.0)
