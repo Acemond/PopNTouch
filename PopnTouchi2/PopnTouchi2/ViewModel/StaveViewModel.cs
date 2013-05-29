@@ -19,10 +19,10 @@ namespace PopnTouchi2.ViewModel
         public int CurrentInstrument { get; set; }
 
         /// <summary>
-        /// Parameter.
+        /// Property.
         /// Stave element from the Model.
         /// </summary>
-        private Stave stave;
+        public Stave Stave;
 
         /// <summary>
         /// Parameter.
@@ -36,7 +36,7 @@ namespace PopnTouchi2.ViewModel
         /// </summary>
         public StaveViewModel(Stave stave, SessionViewModel s) : base(s)
         {
-            this.stave = stave;
+            Stave = stave;
             Animation = new StaveAnimation(stave);
         }
 

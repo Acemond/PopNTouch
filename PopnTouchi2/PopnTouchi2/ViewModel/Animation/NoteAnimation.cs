@@ -83,7 +83,7 @@ namespace PopnTouchi2.ViewModel.Animation
         /// <param name="e"></param>
         public void touchLeave(object sender, ContainerManipulationCompletedEventArgs e)
         {
-            SVItem.PreviewTouchDown -=new EventHandler<TouchEventArgs>(touchDown);
+            SVItem.PreviewTouchDown -= new EventHandler<TouchEventArgs>(touchDown);
 
             ScatterViewItem Note = new ScatterViewItem();
             Note = e.Source as ScatterViewItem;
@@ -164,6 +164,8 @@ namespace PopnTouchi2.ViewModel.Animation
             {
                 ReturnOnBubbleFormat(noteVM.SVItem.Center);
             }
+
+            SVItem.PreviewTouchDown += new EventHandler<TouchEventArgs>(touchDown);
         }
 
         void moveCenter_Completed(object sender, EventArgs e)
@@ -198,7 +200,7 @@ namespace PopnTouchi2.ViewModel.Animation
                 ReturnOnBubbleFormat(noteVM.SVItem.Center);
 
             }
-            SVItem.PreviewTouchDown +=new EventHandler<TouchEventArgs>(touchDown);
+        
             
         }
 
@@ -210,6 +212,9 @@ namespace PopnTouchi2.ViewModel.Animation
         {
             sessionVM.NotesOnStave.Remove(noteVM);
             sessionVM.Notes.Items.Remove(noteVM.SVItem);
+
+            noteVM.Note.Sharp = false;
+            noteVM.Note.Flat = true;
 
             NoteBubbleViewModel nbVM = new NoteBubbleViewModel(center, new NoteBubble(noteVM.Note), sessionVM.Bubbles, sessionVM);
             nbVM.NoteBubble.Note.Sharp = false;
