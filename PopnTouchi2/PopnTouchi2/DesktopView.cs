@@ -65,13 +65,16 @@ namespace PopnTouchi2
         /// temporary
         /// </summary>
         public SurfaceButton CreateSession_Button { get; set; }
-        
+
+        private List<SessionViewModel> openedSessions;
+
         /// <summary>
         /// Initializes few components including the session.
         /// </summary>
         public DesktopView()
         {
             IDs = new List<int>();
+            openedSessions = new List<SessionViewModel>();
 
             Image MiddleCache = new Image();
             MiddleCache.Source = new BitmapImage(new Uri(@"../../Resources/Images/desktopSmall.jpg", UriKind.Relative));
@@ -124,6 +127,30 @@ namespace PopnTouchi2
             Grid.SetZIndex(Photos, 3);
             Grid.SetZIndex(Sessions, 4);
 
+            PreviewTouchDown += new EventHandler<TouchEventArgs>(DesktopView_PreviewTouchDown);
+            PreviewTouchUp += new EventHandler<TouchEventArgs>(DesktopView_PreviewTouchUp);
+
+        }
+
+        void DesktopView_PreviewTouchUp(object sender, TouchEventArgs e)
+        {
+            foreach (SessionViewModel svm in openedSessions)
+            {
+                if (svm.removeDeleteButtonsOnTouchUp)
+                {
+                    svm.DeleteButton.Visibility = Visibility.Hidden;
+                    svm.removeDeleteButtonsOnTouchUp = false;
+                }
+            }
+        }
+
+        void DesktopView_PreviewTouchDown(object sender, TouchEventArgs e)
+        {
+            foreach (SessionViewModel svm in openedSessions)
+            {
+                if (svm.DeleteButton.Visibility == Visibility.Visible)
+                    svm.removeDeleteButtonsOnTouchUp = true;
+            }
         }
 
         /// <summary>
@@ -154,6 +181,7 @@ namespace PopnTouchi2
                 }
             }
 
+            openedSessions.Add(SessionVM);
             CheckDesktopToDisplay();
         }
 
@@ -167,9 +195,11 @@ namespace PopnTouchi2
             HideDesktop();
             SessionVM = new SessionViewModel(true, ActualWidth, ActualHeight, new Session(), IDs);
             Sessions.Items.Add(SessionVM.SessionSVI);
+            openedSessions.Add(SessionVM);
 
             SessionVM = new SessionViewModel(false, ActualWidth, ActualHeight, new Session(), IDs);
             Sessions.Items.Add(SessionVM.SessionSVI);
+            openedSessions.Add(SessionVM);
 
             LeftSessionActive = true;
             RightSessionActive = true;

@@ -143,6 +143,14 @@ namespace PopnTouchi2.ViewModel
         public ChangeSoundViewModel UpdateSound { get; set; }
 
         /// <summary>
+        /// Delete Button
+        /// </summary>
+        public SurfaceButton DeleteButton { get; set; }
+
+        public bool BeingDeleted { get; set; }
+        public bool removeDeleteButtonsOnTouchUp { get; set; }
+
+        /// <summary>
         /// Property.
         /// Manager of Themes choice.
         /// </summary>
@@ -151,6 +159,8 @@ namespace PopnTouchi2.ViewModel
         public SessionViewModel(Double width, Double height, Session s, List<int> IDs)
         {
             Session = s;
+            BeingDeleted = false;
+            removeDeleteButtonsOnTouchUp = false;
             SessionSVI = new ScatterViewItem();
             SessionSVI.Width = width;
             SessionSVI.Height = height;
@@ -237,8 +247,29 @@ namespace PopnTouchi2.ViewModel
 
             Animation = new SessionAnimation(this);
             Reducer.Click += new RoutedEventHandler(Animation.Reducer_Click);
+
+            DeleteButton = new SurfaceButton();
+            DeleteButton.Visibility = Visibility.Hidden;
+            ImageBrush ib = new ImageBrush();
+            ib.ImageSource = new BitmapImage(new Uri(@"../../Resources/Images/ui_items/delete-icon.png", UriKind.Relative));
+            DeleteButton.Background = ib;
+            DeleteButton.Width = 25.0;
+            DeleteButton.Height = 25.0;
+            DeleteButton.HorizontalAlignment = HorizontalAlignment.Left;
+            DeleteButton.VerticalAlignment = VerticalAlignment.Top;
+            Grid.Children.Add(DeleteButton);
+
+            Grid.SetZIndex(DeleteButton, 1000);
+
+            DeleteButton.PreviewTouchDown += new EventHandler<TouchEventArgs>(DeleteButton_PreviewTouchDown);
         }
 
+        void DeleteButton_PreviewTouchDown(object sender, TouchEventArgs e)
+        {
+            DeleteButton.Visibility = Visibility.Hidden;
+            Animation.DeleteSession();
+        }
+        
         /// <summary>
         /// TODO
         /// </summary>
@@ -459,6 +490,19 @@ namespace PopnTouchi2.ViewModel
             TreeUp = null;
             ThemeVM = null;
             Play_Button = null;
+        }
+
+        public void DeleteSession()
+        {
+            try
+            {
+                File.Delete("Sessions/sess" + SessionVM.SessionID + ".bin");
+                File.Delete("SnapShots/sc" + SessionVM.SessionID.ToString() + ".jpg");
+            }
+            catch (Exception exc)
+            {
+
+            }
         }
     }
 }
