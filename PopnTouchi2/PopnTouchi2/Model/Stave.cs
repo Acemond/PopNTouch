@@ -7,6 +7,7 @@ using System.Timers;
 using PopnTouchi2.Model.Enums;
 using PopnTouchi2.Model;
 using System.Windows;
+using PopnTouchi2.ViewModel;
 
 namespace PopnTouchi2
 {
@@ -240,7 +241,6 @@ namespace PopnTouchi2
             Timer.Elapsed -= new ElapsedEventHandler(PlayList);
             PositionNote = 0;
             IteratorNotes = 0;
-            
             try
             {
                 theme.refreshSound(); 

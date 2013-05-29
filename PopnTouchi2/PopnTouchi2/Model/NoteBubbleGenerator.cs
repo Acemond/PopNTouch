@@ -68,6 +68,7 @@ namespace PopnTouchi2
                     else FlatBubblesCount++;
                 }
             }
+
             NoteValue needed = MostNeeded();
             NoteBubble newBubble;
             if (needed == NoteValue.alteration)

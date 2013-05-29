@@ -123,7 +123,7 @@ namespace PopnTouchi2.ViewModel
             NoteBubbleImages.Add(NoteValue.crotchet, GetNoteBitmapImage("bullenoire"));
             NoteBubbleImages.Add(NoteValue.minim, GetNoteBitmapImage("bulleblanche"));
             NoteBubbleImages.Add(NoteValue.quaver, GetNoteBitmapImage("bullecroche"));
-
+  
             MelodyBubbleImages.Add(Gesture.infinite , GetMelodyBitmapImage("infinite"));
             MelodyBubbleImages.Add(Gesture.s, GetMelodyBitmapImage("s"));
             MelodyBubbleImages.Add(Gesture.t, GetMelodyBitmapImage("t"));

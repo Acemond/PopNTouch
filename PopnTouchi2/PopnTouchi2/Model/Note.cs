@@ -97,11 +97,22 @@ namespace PopnTouchi2
         public Note()
         {
             Octave = 1;
-            Duration = NoteValue.alteration;
+            Duration = NoteValue.quaver;
             Pitch = "do";
             Sharp = false;
             Flat = false;
             Position = -1;
+        }
+
+        /// <summary>
+        /// Return true if two notes are equals
+        /// Don't mind about duration
+        /// </summary>
+        /// <param name="n"></param>
+        /// <returns></returns>
+        public bool  equals(Note n)
+        {
+            return ((Octave == n.Octave) && (Position == n.Position) && (Pitch == n.Pitch));
         }
 
         /// <summary>
