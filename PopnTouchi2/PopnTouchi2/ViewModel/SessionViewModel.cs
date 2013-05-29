@@ -221,7 +221,7 @@ namespace PopnTouchi2.ViewModel
             Grid.SetZIndex(Notes, 1);
             Grid.SetZIndex(NbgVM.Grid, 0);
             Grid.SetZIndex(MbgVM.Grid, 0);
-
+            
             SessionSVI.Content = Grid;
 
             ThemeChooser = new ThemeChooser(this);
@@ -407,6 +407,7 @@ namespace PopnTouchi2.ViewModel
             Grid.SetZIndex(Notes, 1);
             Grid.SetZIndex(NbgVM.Grid, 0);
             Grid.SetZIndex(MbgVM.Grid, 0);
+            Grid.SetZIndex(ThemeChooser.Bird, 0);
             
             double XCenter;
             foreach (Note note in sd.StaveTopNotes)
