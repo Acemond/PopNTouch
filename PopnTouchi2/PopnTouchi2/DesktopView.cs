@@ -139,6 +139,7 @@ namespace PopnTouchi2
         void DesktopView_Loaded(object sender, RoutedEventArgs e)
         {
             string sPath = "Sessions/";
+            Random r = new Random();
             foreach (string sFileName in System.IO.Directory.GetFiles(sPath))
             {
                 if (System.IO.Path.GetExtension(sFileName) == ".bin")
@@ -168,7 +169,6 @@ namespace PopnTouchi2
                         SessionVM.Grid.Background = ss;
 
                         Photos.Items.Add(SessionVM.SessionSVI);
-                        Random r = new Random();
                         SessionVM.SessionSVI.Center = new Point(r.Next((int)ActualWidth), r.Next((int)ActualHeight));
                     }
                     else
