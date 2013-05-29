@@ -16,6 +16,8 @@ namespace PopnTouchi2
     /// </summary>
     public class Stave
     {
+        public bool HasFinishedPlay { get; set; }
+
         /// <summary>
         /// Attribute
         /// Link the stave to the theme
@@ -101,6 +103,7 @@ namespace PopnTouchi2
             IteratorMelody = 0;
             PositionMelody = 0;
             PositionNote = 0;
+            HasFinishedPlay = true;
         }
 
         /// <summary>
@@ -199,6 +202,7 @@ namespace PopnTouchi2
         /// </summary>
         public void PlayAllNotes()
         {
+            HasFinishedPlay = false;
             Timer.Interval = 30000 / GlobalVariables.bpm;
             Timer.Start();
             Timer.Elapsed += new ElapsedEventHandler(PlayList);
@@ -250,7 +254,7 @@ namespace PopnTouchi2
             {
                 Console.WriteLine("Limited number of sound instance");
             }
-
+            HasFinishedPlay = true;
         }
 
         /// <summary>
