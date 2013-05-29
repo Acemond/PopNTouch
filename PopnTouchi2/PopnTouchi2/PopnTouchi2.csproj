@@ -161,6 +161,7 @@
     <None Include="Resources\Wave Bank.xwb" />
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="Resources\icon.ico" />
     <Content Include="PopnTouchi2.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
