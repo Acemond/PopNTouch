@@ -4,6 +4,7 @@
         xmlns:s="http://schemas.microsoft.com/surface/2008"
 
         Title="DesktopWindow"
+        Icon=".\Resources\icon.ico"
         Height="1080"
         Width="1920"
                  Margin="0"
