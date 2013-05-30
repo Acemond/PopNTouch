@@ -78,7 +78,7 @@ namespace PopnTouchi2.ViewModel.Animation
         public void BeginBubbleAnimation()
         {
             Random r = GlobalVariables.GlobalRandom;
-            DispatcherTimer.Interval = TimeSpan.FromMilliseconds(r.Next(1000, 10000));
+            DispatcherTimer.Interval = TimeSpan.FromMilliseconds(r.Next(100, 10000));
             DispatcherTimer.Start();
         }
 
