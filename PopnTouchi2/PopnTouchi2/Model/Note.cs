@@ -92,6 +92,25 @@ namespace PopnTouchi2
 
         /// <summary>
         /// Note Constructor.
+        /// Generates a new object of class Note with a given octave, duration, pitch,
+        /// sharp and flat
+        /// </summary>
+        /// <param name="oct">Octave</param>
+        /// <param name="d">NoteValue</param>
+        /// <param name="pitch">String representing the Pitch</param>
+        /// <param name="posit">Position</param>
+        public Note(Note note)
+        {
+            Octave = note.Octave;
+            Duration = note.Duration;
+            Pitch = note.Pitch;
+            Sharp = note.Sharp;
+            Flat = note.Flat;
+            Position = note.Position;
+        }
+
+        /// <summary>
+        /// Note Constructor.
         /// Generates a new object of class Note, default Note
         /// </summary>
         public Note()

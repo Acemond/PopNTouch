@@ -216,14 +216,12 @@ namespace PopnTouchi2.ViewModel.Animation
             sessionVM.NotesOnStave.Remove(noteVM);
             sessionVM.Notes.Items.Remove(noteVM.SVItem);
 
-            noteVM.Note.Sharp = false;
-            noteVM.Note.Flat = false;
             noteVM.Note.Position = -1;
             noteVM.Note.Pitch = "la";
 
             if (noteVM.Note.Sharp)
             {
-                NoteBubbleViewModel nbVMA = new NoteBubbleViewModel(center, new NoteBubble(noteVM.Note), sessionVM.Bubbles, sessionVM);
+                NoteBubbleViewModel nbVMA = new NoteBubbleViewModel(center, new NoteBubble(new Note(noteVM.Note)), sessionVM.Bubbles, sessionVM);
                 noteVM.Note.Sharp = false;
                 if (sessionVM.NbgVM.NoteBubbleVMs.Count >= GlobalVariables.MaxNoteBubbles)
                 {
@@ -234,10 +232,11 @@ namespace PopnTouchi2.ViewModel.Animation
                 }
                 sessionVM.Bubbles.Items.Add(nbVMA.SVItem);
                 sessionVM.NbgVM.NoteBubbleVMs.Add(nbVMA);
+                nbVMA.Animation.MoveFromLocation();
             }
             else if (noteVM.Note.Flat)
             {
-                NoteBubbleViewModel nbVMA = new NoteBubbleViewModel(center, new NoteBubble(noteVM.Note), sessionVM.Bubbles, sessionVM);
+                NoteBubbleViewModel nbVMA = new NoteBubbleViewModel(center, new NoteBubble(new Note(noteVM.Note)), sessionVM.Bubbles, sessionVM);
                 noteVM.Note.Flat = false;
                 if (sessionVM.NbgVM.NoteBubbleVMs.Count >= GlobalVariables.MaxNoteBubbles)
                 {
@@ -248,6 +247,7 @@ namespace PopnTouchi2.ViewModel.Animation
                 }
                 sessionVM.Bubbles.Items.Add(nbVMA.SVItem);
                 sessionVM.NbgVM.NoteBubbleVMs.Add(nbVMA);
+                nbVMA.Animation.MoveFromLocation();
             }
             NoteBubbleViewModel nbVM = new NoteBubbleViewModel(center, new NoteBubble(noteVM.Note), sessionVM.Bubbles, sessionVM);
             if (sessionVM.NbgVM.NoteBubbleVMs.Count >= GlobalVariables.MaxNoteBubbles)
