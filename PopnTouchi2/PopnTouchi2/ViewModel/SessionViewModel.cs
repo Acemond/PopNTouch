@@ -146,6 +146,16 @@ namespace PopnTouchi2.ViewModel
         public Grid previewGrid { get; set; }
 
         /// <summary>
+        /// Preview Grid to ease note placement
+        /// </summary>
+        public Grid topStaveHighlight { get; set; }
+
+        /// <summary>
+        /// Preview Grid to ease note placement
+        /// </summary>
+        public Grid bottomStaveHighlight { get; set; }
+
+        /// <summary>
         /// The Grid containing the circles for sound changing
         /// </summary>
         public ChangeSoundViewModel UpdateSound { get; set; }
@@ -211,6 +221,20 @@ namespace PopnTouchi2.ViewModel
             previewGrid.Opacity = 0;
             previewGrid.Margin = new Thickness(150.0 * ratio, 90.0 * ratio, 90.0 * ratio, 480.0 * ratio);
 
+            topStaveHighlight = new Grid();
+            ImageBrush tSHImage = new ImageBrush();
+            tSHImage.ImageSource = new BitmapImage(new Uri(@"../../Resources/Images/ui_items/blackStaveHighlight.png", UriKind.Relative));
+            topStaveHighlight.Background = tSHImage;
+            topStaveHighlight.Opacity = 0;
+            topStaveHighlight.Margin = new Thickness(0.0, 60.0 * ratio, 0.0, 480.0 * ratio);
+
+            bottomStaveHighlight = new Grid();
+            ImageBrush bSHImage = new ImageBrush();
+            bSHImage.ImageSource = new BitmapImage(new Uri(@"../../Resources/Images/ui_items/whiteStaveHighlight.png", UriKind.Relative));
+            bottomStaveHighlight.Background = bSHImage;
+            bottomStaveHighlight.Opacity = 0;
+            bottomStaveHighlight.Margin = new Thickness(0.0, 60.0 * ratio, 0.0, 480.0 * ratio);
+
             Play_Button.PreviewTouchDown += new EventHandler<TouchEventArgs>(Play_Button_TouchDown);
 
             Theme_Button = new Grid();
@@ -245,6 +269,8 @@ namespace PopnTouchi2.ViewModel
             Grid.Children.Add(Tempo_Button);
             Grid.Children.Add(UpdateSound.Grid);
             Grid.Children.Add(previewGrid);
+            Grid.Children.Add(topStaveHighlight);
+            Grid.Children.Add(bottomStaveHighlight);
 
             Grid.SetZIndex(UpdateSound.Grid, 4);
             Grid.SetZIndex(TreeUp.Grid, 3);

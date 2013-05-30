@@ -8,6 +8,7 @@ using System.Windows.Threading;
 using Microsoft.Surface.Presentation.Controls;
 using System.Windows.Input;
 using PopnTouchi2.Model.Enums;
+using System.Windows.Controls;
 
 namespace PopnTouchi2.ViewModel.Animation
 {
@@ -46,6 +47,8 @@ namespace PopnTouchi2.ViewModel.Animation
         /// The position of the melody
         /// </summary>
         public Point PositionMelody { get; set; }
+
+        private DispatcherTimer highlightDt;
 
         #endregion
 
@@ -286,18 +289,72 @@ namespace PopnTouchi2.ViewModel.Animation
             if (playUp)
             {
                 sessionVM.Session.StaveTop.melody = melodyBubbleVM.MelodyBubble.Melody;
-                playUp = false;
+                try
+                {
+                    DisplayHighlightGrid(true, true);
+                    highlightDt = new DispatcherTimer();
+                    if (sessionVM.Session.Bpm == 60) highlightDt.Interval = TimeSpan.FromMilliseconds(4000);
+                    if (sessionVM.Session.Bpm == 90) highlightDt.Interval = TimeSpan.FromMilliseconds(3000);
+                    if (sessionVM.Session.Bpm == 120) highlightDt.Interval = TimeSpan.FromMilliseconds(2000);
+                    highlightDt.Tick += new EventHandler(dt_Tick);
+                    highlightDt.Start();
+                }
+                catch (Exception exc) { }
                 sessionVM.Session.StaveTop.StopMelody();
-                sessionVM.Session.StaveTop.PlayMelody(); 
+                sessionVM.Session.StaveTop.PlayMelody();
             }
             else
             {
                 sessionVM.Session.StaveBottom.melody = melodyBubbleVM.MelodyBubble.Melody;
+                try {
+                    DisplayHighlightGrid(true, false);
+                    highlightDt = new DispatcherTimer();
+                    if (sessionVM.Session.Bpm == 60) highlightDt.Interval = TimeSpan.FromMilliseconds(4000);
+                    if (sessionVM.Session.Bpm == 90) highlightDt.Interval = TimeSpan.FromMilliseconds(3000);
+                    if (sessionVM.Session.Bpm == 120) highlightDt.Interval = TimeSpan.FromMilliseconds(2000);
+                    highlightDt.Tick += new EventHandler(dt_Tick);
+                    highlightDt.Start();
+                }
+                catch (Exception exc) { }
                 playUp = true;
                 sessionVM.Session.StaveBottom.StopMelody();
                 sessionVM.Session.StaveBottom.PlayMelody();
             }
+            playUp = !playUp;
+        }
 
+        void dt_Tick(object sender, EventArgs e)
+        {
+            highlightDt.Stop();
+            DisplayHighlightGrid(false, false);
+            DisplayHighlightGrid(false, true);
+        }
+
+        private void DisplayHighlightGrid(bool appear, bool top)
+        {
+            Storyboard pGSTB = new Storyboard();
+            DoubleAnimation previewGridAnimation = new DoubleAnimation();
+
+            if (appear)
+            {
+                if (top) previewGridAnimation.From = sessionVM.topStaveHighlight.Opacity;
+                else previewGridAnimation.From = sessionVM.bottomStaveHighlight.Opacity;
+                previewGridAnimation.To = 1;
+            }
+            else
+            {
+                if (top) previewGridAnimation.From = sessionVM.topStaveHighlight.Opacity;
+                else previewGridAnimation.From = sessionVM.bottomStaveHighlight.Opacity;
+                previewGridAnimation.To = 0;
+            }
+            previewGridAnimation.Duration = new Duration(TimeSpan.FromSeconds(.2));
+            previewGridAnimation.FillBehavior = FillBehavior.HoldEnd;
+            pGSTB.Children.Add(previewGridAnimation);
+            if(top) Storyboard.SetTarget(previewGridAnimation, sessionVM.topStaveHighlight);
+            else Storyboard.SetTarget(previewGridAnimation, sessionVM.bottomStaveHighlight);
+            Storyboard.SetTargetProperty(previewGridAnimation, new PropertyPath(Grid.OpacityProperty));
+
+            pGSTB.Begin();
         }
         #endregion
     }
