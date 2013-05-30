@@ -506,6 +506,8 @@ namespace PopnTouchi2.ViewModel
 
         void UpdateControl()
         {
+            Session.StaveTop.StopMusic();
+            Session.StaveBottom.StopMusic();
             Play_Button.Opacity = 1;
             IsPlaying = false;
             Session.PlayBackgroundSound();
@@ -518,19 +520,19 @@ namespace PopnTouchi2.ViewModel
 
         private void Tempo_Button_TouchDown(object sender, RoutedEventArgs e)
         {
-            if (GlobalVariables.bpm == 60)
+            if (Session.Bpm == 60)
             {
-                GlobalVariables.bpm = 90;
+                Session.ChangeBpm(90);
                 Tempo_Button.Background = ThemeVM.TempoImage[1];
             }
-            else if (GlobalVariables.bpm == 90)
-            {  
-                GlobalVariables.bpm = 120;
+            else if (Session.Bpm == 90)
+            {
+                Session.ChangeBpm(120);
                 Tempo_Button.Background = ThemeVM.TempoImage[2];
             }
             else
             {
-                GlobalVariables.bpm = 60;
+                Session.ChangeBpm(60);
                 Tempo_Button.Background = ThemeVM.TempoImage[0];
             }
         }
@@ -654,8 +656,9 @@ namespace PopnTouchi2.ViewModel
             foreach (Note note in sd.StaveTopNotes)
             {
                 XCenter = ((note.Position * 60.0 + 120.0) / 1920.0) * Grid.ActualWidth;
-                NoteViewModel noteVM = new NoteViewModel(new Point(XCenter, (conv.getCenterY(true, note) / 1080.0) * Grid.ActualHeight), new Note(note), Notes, this);
-                Session.StaveTop.AddNote(note, note.Position);
+                Note newNote = new Note(note);
+                NoteViewModel noteVM = new NoteViewModel(new Point(XCenter, (conv.getCenterY(true, note) / 1080.0) * Grid.ActualHeight), newNote, Notes, this);
+                Session.StaveTop.AddNote(newNote, newNote.Position);
                 Notes.Items.Add(noteVM.SVItem);
                 NotesOnStave.Add(noteVM);
             }
@@ -663,8 +666,9 @@ namespace PopnTouchi2.ViewModel
             foreach (Note note in sd.StaveBottomNotes)
             {
                 XCenter = ((note.Position * 60.0 + 120.0) / 1920.0) * Grid.ActualWidth;
-                NoteViewModel noteVM = new NoteViewModel(new Point(XCenter, (conv.getCenterY(false, note) / 1080.0) * Grid.ActualHeight), new Note(note), Notes, this);
-                Session.StaveBottom.AddNote(note, note.Position);
+                Note newNote = new Note(note);
+                NoteViewModel noteVM = new NoteViewModel(new Point(XCenter, (conv.getCenterY(false, note) / 1080.0) * Grid.ActualHeight), newNote, Notes, this);
+                Session.StaveBottom.AddNote(newNote, newNote.Position);
                 Notes.Items.Add(noteVM.SVItem);
                 NotesOnStave.Add(noteVM);
                 Session.StaveBottom.AddNote(noteVM.Note, noteVM.Note.Position);
@@ -676,6 +680,8 @@ namespace PopnTouchi2.ViewModel
 
             SetDimensions(Grid.ActualWidth, Grid.ActualHeight);
             //UpdateEveryDimensions(Grid.ActualWidth, Grid.ActualHeight);
+
+            Session.ChangeBpm(sd.bpm);
         }
 
         public void EraseSession()

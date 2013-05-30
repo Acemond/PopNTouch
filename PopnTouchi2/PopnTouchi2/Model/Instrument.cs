@@ -22,6 +22,12 @@ namespace PopnTouchi2
         /// </summary>
         public InstrumentType Name { get; set; }
 
+        /// <summary>
+        /// Property.
+        /// Session's Tempo
+        /// </summary>
+        public int Bpm { get; set; }
+
         #region constructors
         /// <summary>
         /// Instrument Constructor.
@@ -31,10 +37,21 @@ namespace PopnTouchi2
         public Instrument(InstrumentType instru)
         {
             Name = instru;
+            Bpm = 90;
         }
         #endregion
 
         #region methods
+
+        /// <summary>
+        /// Set the tempo of an instrument
+        /// </summary>
+        /// <param name="newBpm"></param>
+        public void SetBpm(int newBpm)
+        {
+            Bpm = newBpm;
+        }
+
         /// <summary>
         /// Plays the given note with the instrument.
         /// </summary>
@@ -54,7 +71,7 @@ namespace PopnTouchi2
         public void ActionPlay(object n)
         {
             Note note = n as Note;
-            TimeSpan t = new TimeSpan(0, 0, 0, 0, (note.Duration.GetHashCode() * 30000) / GlobalVariables.bpm);
+            TimeSpan t = new TimeSpan(0, 0, 0, 0, (note.Duration.GetHashCode() * 30000) / Bpm);
             Cue cue = AudioController.INSTANCE.SoundBank.GetCue("silence");
             try
             {

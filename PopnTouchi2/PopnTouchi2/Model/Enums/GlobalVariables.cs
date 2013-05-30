@@ -11,11 +11,6 @@ namespace PopnTouchi2.Model.Enums
     public class GlobalVariables
     {
         /// <summary>
-        /// The tempo of the staves
-        /// </summary>
-        public static int bpm = 90;
-
-        /// <summary>
         /// identify the notebubble
         /// </summary>
         public static int idNoteBubble = 0;

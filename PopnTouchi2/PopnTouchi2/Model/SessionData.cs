@@ -5,6 +5,7 @@ using System.Text;
 using System.Collections.ObjectModel;
 using Microsoft.Surface.Presentation.Controls;
 using PopnTouchi2.ViewModel;
+using PopnTouchi2.Model.Enums;
 
 namespace PopnTouchi2.Model
 {
@@ -33,6 +34,8 @@ namespace PopnTouchi2.Model
 
         public int SessionID { get; set; }
 
+        public int bpm { get; set; }
+
         /// <summary>
         /// Property.
         /// Session's ScatterView.
@@ -55,6 +58,8 @@ namespace PopnTouchi2.Model
                 StaveTopNotes.Add(note);
             foreach (Note note in sessionVM.Session.StaveBottom.Notes)
                 StaveBottomNotes.Add(note);
+
+            bpm = sessionVM.Session.Bpm;
 
             SessionID = sessionVM.SessionID;
             TopInstrument = sessionVM.Session.StaveTop.CurrentInstrument;

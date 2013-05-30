@@ -51,6 +51,12 @@ namespace PopnTouchi2
         /// The Theme number.
         /// </summary>
         public int ThemeID { get; set; }
+
+        /// <summary>
+        /// Property.
+        /// The Session Tempo
+        /// </summary>
+        public int Bpm { get; set; }
         
         #endregion
 
@@ -63,6 +69,7 @@ namespace PopnTouchi2
         {
             Theme = new Theme1(); //Could be randomized
             ThemeID = 1;
+            Bpm = 90;
 
             NoteBubbleGenerator = new NoteBubbleGenerator();
             MelodyBubbleGenerator = new MelodyBubbleGenerator();
@@ -111,7 +118,9 @@ namespace PopnTouchi2
         /// <param name="newBpm">The new Bpm value</param>
         public void ChangeBpm(int newBpm)
         {
-            GlobalVariables.bpm = newBpm;
+            Bpm = newBpm;
+            StaveTop.CurrentInstrument.Bpm = newBpm;
+            StaveBottom.CurrentInstrument.Bpm = newBpm;
         }
         #endregion
     }
