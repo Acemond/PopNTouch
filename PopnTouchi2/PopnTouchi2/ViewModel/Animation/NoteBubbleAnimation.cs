@@ -375,6 +375,7 @@ namespace PopnTouchi2.ViewModel.Animation
                     else
                     {
                         y *= sessionVM.SessionSVI.ActualHeight / 1080.0;
+                        sessionVM.NbgVM.NoteBubbleVMs.Remove(noteBubbleVM);
                         sessionVM.Bubbles.Items.Remove(noteBubbleVM.SVItem);
                         sessionVM.Notes.Items.Remove(noteVM.SVItem);
                         sessionVM.NotesOnStave.Remove(noteVM);

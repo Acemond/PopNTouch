@@ -177,8 +177,9 @@ namespace PopnTouchi2.ViewModel.Animation
                     && converter.getOctave(virtualCenter.Y) == sessionVM.NotesOnStave[i].Note.Octave
                     && converter.getPitch(virtualCenter.Y) == sessionVM.NotesOnStave[i].Note.Pitch)
                 {
+                    //sessionVM.NotesOnStave[i].Animation.ReturnOnBubbleFormat();
+                    //NothingAtThisPlace = true;
                     NothingAtThisPlace = false;
-                    noteVM = sessionVM.NotesOnStave[i];
                 }
                 else NothingAtThisPlace = true;
             }
@@ -227,6 +228,8 @@ namespace PopnTouchi2.ViewModel.Animation
             if (noteVM.Note.Sharp)
             {
                 NoteBubbleViewModel nbVMA = new NoteBubbleViewModel(noteVM.SVItem.Center, new NoteBubble(new Note(noteVM.Note)), sessionVM.Bubbles, sessionVM);
+                nbVMA.NoteBubble.Note.Duration = NoteValue.alteration;
+                nbVMA.NoteBubble.Note.Sharp = true;
                 noteVM.Note.Sharp = false;
                 if (sessionVM.NbgVM.NoteBubbleVMs.Count >= GlobalVariables.MaxNoteBubbles)
                 {
@@ -242,6 +245,8 @@ namespace PopnTouchi2.ViewModel.Animation
             else if (noteVM.Note.Flat)
             {
                 NoteBubbleViewModel nbVMA = new NoteBubbleViewModel(noteVM.SVItem.Center, new NoteBubble(new Note(noteVM.Note)), sessionVM.Bubbles, sessionVM);
+                nbVMA.NoteBubble.Note.Duration = NoteValue.alteration;
+                nbVMA.NoteBubble.Note.Flat = true;
                 noteVM.Note.Flat = false;
                 if (sessionVM.NbgVM.NoteBubbleVMs.Count >= GlobalVariables.MaxNoteBubbles)
                 {
