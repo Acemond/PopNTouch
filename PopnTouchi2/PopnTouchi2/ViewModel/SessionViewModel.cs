@@ -595,6 +595,8 @@ namespace PopnTouchi2.ViewModel
             Animation = new SessionAnimation(this, true, desktop);
             Animation.Fs = ScStream;
             Reduced = true;
+
+            SessionSVI.CanScale = false;
         }
 
         /// <summary>
