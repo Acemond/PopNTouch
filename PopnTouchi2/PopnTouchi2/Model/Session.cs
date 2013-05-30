@@ -67,8 +67,8 @@ namespace PopnTouchi2
             NoteBubbleGenerator = new NoteBubbleGenerator();
             MelodyBubbleGenerator = new MelodyBubbleGenerator();
 
-            StaveTop = new Stave(Theme.InstrumentsTop[0], Theme);
-            StaveBottom = new Stave(Theme.InstrumentsBottom[0], Theme);
+            StaveTop = new Stave(Theme.InstrumentsTop[0]);
+            StaveBottom = new Stave(Theme.InstrumentsBottom[0]);
             
         }
         #endregion

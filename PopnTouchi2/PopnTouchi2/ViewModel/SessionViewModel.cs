@@ -150,9 +150,6 @@ namespace PopnTouchi2.ViewModel
         /// </summary>
         public SurfaceButton DeleteButton { get; set; }
 
-        private Thread play;
-
-
         public bool BeingDeleted { get; set; }
         public bool removeDeleteButtonsOnTouchUp { get; set; }
         public bool FullyEnlarged { get; set; }
@@ -429,8 +426,8 @@ namespace PopnTouchi2.ViewModel
             Theme_Button.Margin = new Thickness(0, 0, 100.0 * ratio, 0);
 
             //Size of SurfaceButton Play
-            Play_Button.Width = width / 11.0;
-            Play_Button.Height = height / 7.0;
+            Play_Button.Width = (140.0 / 1920.0) * width;
+            Play_Button.Height = (150.0 / 1080) * height;
 
             Theme_Button.Width = (351.0 / 1920.0) * width;
             Theme_Button.Height = (110 / 1080.0) * height;
@@ -461,22 +458,24 @@ namespace PopnTouchi2.ViewModel
 
         private void Play_Button_TouchDown(object sender, RoutedEventArgs e)
         {
-            play = new Thread(PlayStaves);
+            Thread play = new Thread(PlayStaves);
 
             if (!IsPlaying)
             {
                 Session.StopBackgroundSound();              
                 play.Start();
 
-                setPlay(0.5, true);
+                Play_Button.Opacity = 0.5;
+                IsPlaying = true;
             }
             else
             {
-                Session.PlayBackgroundSound();
                 play.Abort();
                 Session.StaveTop.StopMusic();
                 Session.StaveBottom.StopMusic();
-                setPlay(1.0, false);
+                Play_Button.Opacity = 1;
+                IsPlaying = false;
+                Session.PlayBackgroundSound();
             }
         }
 
@@ -485,13 +484,19 @@ namespace PopnTouchi2.ViewModel
             int timeTop = Session.StaveTop.PlayAllNotes();
             int timeDown = Session.StaveBottom.PlayAllNotes();
             Thread.Sleep(Math.Max(timeTop,timeDown));
-           // setPlay(1.0, false);
+
+            UpdatePlay();   
         }
 
-        private void setPlay(double op, bool isplaying)
+        void UpdateControl()
         {
-            Play_Button.Opacity = op;
-            IsPlaying = isplaying;
+            Play_Button.Opacity = 1;
+            IsPlaying = false;
+            Session.PlayBackgroundSound();
+        }
+
+        private void UpdatePlay(){
+            Play_Button.Dispatcher.BeginInvoke((Action)UpdateControl, null);
         }
 
 
@@ -575,8 +580,8 @@ namespace PopnTouchi2.ViewModel
 
             ThemeVM = new ThemeViewModel(Session.Theme, this);
             Converter conv = new Converter();
-            Session.StaveTop = new Stave(Session.Theme.InstrumentsTop[0], Session.Theme);
-            Session.StaveBottom = new Stave(Session.Theme.InstrumentsBottom[0], Session.Theme);
+            Session.StaveTop = new Stave(Session.Theme.InstrumentsTop[0]);
+            Session.StaveBottom = new Stave(Session.Theme.InstrumentsBottom[0]);
 
             Grid.Background = (new ThemeViewModel(Session.Theme, this)).BackgroundImage;
 

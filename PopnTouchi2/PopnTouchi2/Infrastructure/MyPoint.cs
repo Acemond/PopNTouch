@@ -30,7 +30,7 @@ namespace PopnTouchi2.Infrastructure
 
         public bool QuasiEquals(Point p)
         {
-            return ((X+1 > p.X && X-1 < p.X) && (Y+1 > p.Y && Y-1 < p.Y));
+            return ((X+2 > p.X && X-2 < p.X) && (Y+2 > p.Y && Y-2 < p.Y));
         }
     }
 }

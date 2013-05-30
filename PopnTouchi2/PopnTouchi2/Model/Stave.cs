@@ -17,12 +17,6 @@ namespace PopnTouchi2
     public class Stave
     {
         /// <summary>
-        /// Attribute
-        /// Link the stave to the theme
-        /// </summary>
-        private Theme theme;
-
-        /// <summary>
         /// Property.
         /// A list of Notes observable by the StaveViewModel.
         /// </summary>
@@ -89,9 +83,8 @@ namespace PopnTouchi2
         /// </summary>
         /// <param name="instru">The instrument to be used</param>
         /// <param name="theme">The theme</param>
-        public Stave(Instrument instru, Theme theme)
+        public Stave(Instrument instru)
         {
-            this.theme = theme;
             MaxPosition = 0;
             Notes = new ObservableCollection<Note>();
             CurrentInstrument = instru;
@@ -115,6 +108,7 @@ namespace PopnTouchi2
             for(i = 0; i< cardMelody ; i++)
             {
                 mb.Melody.Notes[i].Position += position;
+                if (mb.Melody.Notes[i].Position >= GlobalVariables.MaxPositionOnStave) break;
                 int posArray = 0;
                 while ((posArray < Notes.Count) && (Notes[posArray].Position < mb.Melody.Notes[i].Position))
                 {
@@ -199,7 +193,9 @@ namespace PopnTouchi2
         /// </summary>
         public int PlayAllNotes()
         {
-            int time = Notes.Last().Position* (30000/GlobalVariables.bpm);
+            int time = 1000;
+            if(Notes.Count != 0)
+                time = (Notes.Last().Position+4)* (30000/GlobalVariables.bpm);
             Timer.Interval = 30000 / GlobalVariables.bpm;
             Timer.Start();
             Timer.Elapsed += new ElapsedEventHandler(PlayList);
@@ -243,15 +239,6 @@ namespace PopnTouchi2
             Timer.Elapsed -= new ElapsedEventHandler(PlayList);
             PositionNote = 0;
             IteratorNotes = 0;
-            try
-            {
-                theme.refreshSound(); 
-                theme.sound.Play();
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine("Limited number of sound instance");
-            }
         }
 
         /// <summary>
@@ -264,15 +251,6 @@ namespace PopnTouchi2
             TimerMelody.Elapsed -= new ElapsedEventHandler(PlayMelody);
             PositionMelody = 0;
             IteratorMelody = 0;
-        }
-
-        /// <summary>
-        /// Setter for the theme
-        /// </summary>
-        /// <param name="t"></param>
-        public void SetTheme(Theme t)
-        {
-            theme = t;
         }
     }
 }

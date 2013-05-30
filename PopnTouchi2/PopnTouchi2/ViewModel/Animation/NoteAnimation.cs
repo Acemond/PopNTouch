@@ -214,7 +214,9 @@ namespace PopnTouchi2.ViewModel.Animation
             sessionVM.Notes.Items.Remove(noteVM.SVItem);
 
             noteVM.Note.Sharp = false;
-            noteVM.Note.Flat = true;
+            noteVM.Note.Flat = false;
+            noteVM.Note.Position = -1;
+            noteVM.Note.Pitch = "la";
 
             if (noteVM.Note.Sharp)
             {

@@ -225,10 +225,12 @@ namespace PopnTouchi2.ViewModel.Animation
                 bubbleCenter.X = bubbleCenter.X * width / 1920.0;
                 bubbleCenter.Y = bubbleCenter.Y * height / 1080.0;
 
+
                 noteBubbleVM.SVItem.Center = bubbleCenter;
+                MyPoint noteBubbleCenter = new MyPoint(bubbleCenter);
                 for (int i = 0; i < sessionVM.NotesOnStave.Count && NothingAtThisPlace; i++)
                 {
-                    if (noteBubbleVM.SVItem.Center == sessionVM.NotesOnStave[i].SVItem.Center)
+                    if (noteBubbleCenter.QuasiEquals(sessionVM.NotesOnStave[i].SVItem.Center))
                     {
                         NothingAtThisPlace = false;
                         noteVM = sessionVM.NotesOnStave[i];
@@ -294,6 +296,7 @@ namespace PopnTouchi2.ViewModel.Animation
             }
             else
             {
+                //If the NoteBubbleViewModel is a (#) or (b)
                 if (noteBubbleVM.NoteBubble.Note.Sharp || noteBubbleVM.NoteBubble.Note.Flat)
                 {
                     bool changeline = false;
@@ -302,54 +305,54 @@ namespace PopnTouchi2.ViewModel.Animation
                     if (noteBubbleVM.NoteBubble.Note.Flat)
                         changeline = noteVM.Note.DownSemiTone();
                     sessionVM.Bubbles.Items.Remove(noteBubbleVM.SVItem);
-                    if (changeline)
+                    
+                    double y = converter.getCenterY(isUp, noteVM.Note);
+                    if (y < 80)
                     {
-                        double y = converter.getCenterY(isUp, noteVM.Note);
-                        if (y < 80)
-                        {
-                            sessionVM.NotesOnStave.Remove(noteVM);
-                            if (isUp)
-                                sessionVM.Session.StaveTop.RemoveNote(noteVM.Note);
-                            else
-                                sessionVM.Session.StaveBottom.RemoveNote(noteVM.Note);
-
-                            NoteBubbleViewModel nbVM = new NoteBubbleViewModel(noteVM.SVItem.Center, new NoteBubble(noteVM.Note), sessionVM.Bubbles, sessionVM);
-                            nbVM.NoteBubble.Note.Sharp = false;
-                            nbVM.NoteBubble.Note.Flat = false;
-                            sessionVM.Bubbles.Items.Add(nbVM.SVItem);
-
-                            String effect = "pop" + (new Random()).Next(1, 5).ToString();
-                            AudioController.PlaySoundWithString(effect);
-                        }
+                        sessionVM.NotesOnStave.Remove(noteVM);
+                        if (isUp)
+                            sessionVM.Session.StaveTop.RemoveNote(noteVM.Note);
                         else
-                        {
-                            y *= sessionVM.SessionSVI.ActualHeight / 1080.0;
-                            sessionVM.Notes.Items.Remove(noteVM.SVItem);
-                            noteVM = new NoteViewModel(new Point(bubbleCenter.X, y), noteVM.Note, sessionVM.Notes, sessionVM);
+                            sessionVM.Session.StaveBottom.RemoveNote(noteVM.Note);
 
-                            if (isUp)
-                            {
-                                sessionVM.Session.StaveTop.CurrentInstrument.PlayNote(noteVM.Note);
-                                sessionVM.Session.StaveTop.AddNote(noteVM.Note, positionNote);
-                            }
-                            else
-                            {
-                                sessionVM.Session.StaveBottom.CurrentInstrument.PlayNote(noteVM.Note);
-                                sessionVM.Session.StaveBottom.AddNote(noteVM.Note, positionNote);
-                            }
-                            sessionVM.Notes.Items.Add(noteVM.SVItem);
-                        }
+                        noteVM.Note.Sharp = false;
+                        noteVM.Note.Flat = false;
+                        noteVM.Note.Position = -1;
+                        noteVM.Note.Pitch = "la";
+                        NoteBubbleViewModel nbVM = new NoteBubbleViewModel(noteVM.SVItem.Center, new NoteBubble(noteVM.Note), sessionVM.Bubbles, sessionVM);
+                        sessionVM.Bubbles.Items.Add(nbVM.SVItem);
+
+                        String effect = "pop" + (new Random()).Next(1, 5).ToString();
+                        AudioController.PlaySoundWithString(effect);
                     }
                     else
                     {
-                        if (isUp)   sessionVM.Session.StaveTop.CurrentInstrument.PlayNote(noteVM.Note);
-                        else        sessionVM.Session.StaveBottom.CurrentInstrument.PlayNote(noteVM.Note);
+                        y *= sessionVM.SessionSVI.ActualHeight / 1080.0;
+                        sessionVM.Notes.Items.Remove(noteVM.SVItem);
+                        sessionVM.NotesOnStave.Remove(noteVM);
+                        noteVM = new NoteViewModel(new Point(bubbleCenter.X, y), noteVM.Note, sessionVM.Notes, sessionVM);
+
+                        if (isUp)
+                        {
+                            sessionVM.Session.StaveTop.RemoveNote(noteVM.Note);
+                            sessionVM.Session.StaveTop.CurrentInstrument.PlayNote(noteVM.Note);
+                            sessionVM.Session.StaveTop.AddNote(noteVM.Note, positionNote);
+                        }
+                        else
+                        {
+                            sessionVM.Session.StaveBottom.RemoveNote(noteVM.Note);
+                            sessionVM.Session.StaveBottom.CurrentInstrument.PlayNote(noteVM.Note);
+                            sessionVM.Session.StaveBottom.AddNote(noteVM.Note, positionNote);
+                        }
+                        sessionVM.Notes.Items.Add(noteVM.SVItem);
+                        sessionVM.NotesOnStave.Add(noteVM);
                     }
                 }
 
                 else
                 {
-                    //Il y a une note à cet endroit
+                    canAnimate = true;
+                    Animate();
                 }
             }
         }
