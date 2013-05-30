@@ -83,11 +83,18 @@ namespace PopnTouchi2.ViewModel.Animation
         #endregion
 
         #region Methods
+        public void BeginBubbleAnimation()
+        {
+            Random r = GlobalVariables.GlobalRandom;
+            DispatcherTimer.Interval = TimeSpan.FromMilliseconds(r.Next(1000, 10000));
+            DispatcherTimer.Start();
+        }
+
         /// <summary>
         /// Note Bubble Animation 
         /// Moves the NoteBubble randomly on the screen.
         /// </summary>
-        public void Animate()
+        private void Animate()
         {
             if (canAnimate)
             {
@@ -98,7 +105,7 @@ namespace PopnTouchi2.ViewModel.Animation
                 Double xOffset = (-2) * (r.Next() % 2 - .5) * r.Next(50, 100);
                 Double yOffset = (-2) * (r.Next() % 2 - .5) * r.Next(50, 100);
 
-                centerAnimation.Duration = new Duration(TimeSpan.FromSeconds(r.Next(9, 21)));
+                centerAnimation.Duration = new Duration(TimeSpan.FromMilliseconds(r.Next(9000, 21000)));
                 centerAnimation.AccelerationRatio = .3;
                 centerAnimation.DecelerationRatio = .3;
 
@@ -112,7 +119,7 @@ namespace PopnTouchi2.ViewModel.Animation
                     yOffset = ((630.0 * ParentSV.ActualHeight / 1080.0) - SVItem.Center.Y) + (double)r.Next(50);
                 if (SVItem.Center.Y < 630.0 * ParentSV.ActualHeight / 1080.0)
                 {
-                    centerAnimation.Duration = new Duration(TimeSpan.FromSeconds(r.Next(2, 4)));
+                    centerAnimation.Duration = new Duration(TimeSpan.FromMilliseconds(r.Next(2000, 4000)));
                     centerAnimation.DecelerationRatio = .7;
                 }
 
@@ -212,7 +219,7 @@ namespace PopnTouchi2.ViewModel.Animation
             Storyboard.Remove();
             Storyboard.Children = new TimelineCollection();
             Random r = new Random();
-            DispatcherTimer.Interval = TimeSpan.FromMilliseconds(r.Next(3000, 9000));
+            DispatcherTimer.Interval = TimeSpan.FromMilliseconds(r.Next(1000, 10000));
             DispatcherTimer.Start();
         }
         /// <summary>

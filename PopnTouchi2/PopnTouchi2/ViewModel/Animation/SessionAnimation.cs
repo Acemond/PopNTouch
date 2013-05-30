@@ -294,7 +294,7 @@ namespace PopnTouchi2.ViewModel.Animation
             foreach (NoteBubbleViewModel nb in SessionVM.NbgVM.NoteBubbleVMs)
             {
                 nb.Animation.canAnimate = true;
-                nb.Animation.Animate();
+                nb.Animation.BeginBubbleAnimation();
             }
             foreach (MelodyBubbleViewModel mb in SessionVM.MbgVM.MelodyBubbleVMs)
             {
