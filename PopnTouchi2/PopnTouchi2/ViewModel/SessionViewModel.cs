@@ -426,8 +426,8 @@ namespace PopnTouchi2.ViewModel
             Theme_Button.Margin = new Thickness(0, 0, 100.0 * ratio, 0);
 
             //Size of SurfaceButton Play
-            Play_Button.Width = width / 11.0;
-            Play_Button.Height = height / 7.0;
+            Play_Button.Width = (140.0 / 1920.0) * width;
+            Play_Button.Height = (150.0 / 1080) * height;
 
             Theme_Button.Width = (351.0 / 1920.0) * width;
             Theme_Button.Height = (110 / 1080.0) * height;
