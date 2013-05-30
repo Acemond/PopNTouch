@@ -182,6 +182,7 @@ namespace PopnTouchi2.ViewModel.Animation
             ScatterViewItem bubble = new ScatterViewItem();
             bubble = e.Source as ScatterViewItem;
             bubbleCenter = bubble.ActualCenter;
+            NothingAtThisPlace = true;
 
             int width = (int)sessionVM.Grid.ActualWidth;
             int height = (int)sessionVM.Grid.ActualHeight;
@@ -297,13 +298,9 @@ namespace PopnTouchi2.ViewModel.Animation
                 {
                     bool changeline = false;
                     if (noteBubbleVM.NoteBubble.Note.Sharp)
-                    {
                         changeline = noteVM.Note.UpSemiTone();
-                    }
                     if (noteBubbleVM.NoteBubble.Note.Flat)
-                    {
                         changeline = noteVM.Note.DownSemiTone();
-                    }
                     sessionVM.Bubbles.Items.Remove(noteBubbleVM.SVItem);
                     if (changeline)
                     {
@@ -345,10 +342,8 @@ namespace PopnTouchi2.ViewModel.Animation
                     }
                     else
                     {
-                        if (isUp)
-                            sessionVM.Session.StaveTop.CurrentInstrument.PlayNote(noteVM.Note);
-                        else
-                            sessionVM.Session.StaveBottom.CurrentInstrument.PlayNote(noteVM.Note);
+                        if (isUp)   sessionVM.Session.StaveTop.CurrentInstrument.PlayNote(noteVM.Note);
+                        else        sessionVM.Session.StaveBottom.CurrentInstrument.PlayNote(noteVM.Note);
                     }
                 }
 

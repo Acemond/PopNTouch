@@ -255,6 +255,7 @@ namespace PopnTouchi2
 
             LeftSessionActive = true;
             RightSessionActive = true;
+            CheckDesktopToDisplay();
         }
 
         /// <summary>
@@ -286,7 +287,7 @@ namespace PopnTouchi2
             CreateSession_Button.Visibility = Visibility.Hidden;
             CreateDoubleSession_Button.Visibility = Visibility.Hidden;
             HidePhotos();
-            if(LeftSessionActive) UnhideCache();
+            if (LeftSessionActive) UnhideCache();
         }
 
         /// <summary>

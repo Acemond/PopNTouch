@@ -639,6 +639,7 @@ namespace PopnTouchi2.ViewModel
                 Session.StaveBottom.AddNote(note, note.Position);
                 Notes.Items.Add(noteVM.SVItem);
                 NotesOnStave.Add(noteVM);
+                Session.StaveBottom.AddNote(noteVM.Note, noteVM.Note.Position);
             }
 
             TreeDown.SetInstrument(sd.TopInstrument);
