@@ -25,7 +25,7 @@ namespace PopnTouchi2.ViewModel
         public Converter()
         {
             PositionToPitch = new Dictionary<double, String>();
-            PositionToPitch.Add(164, "top_sol_2");
+    //        PositionToPitch.Add(164, "top_sol_2");
             PositionToPitch.Add(184, "top_fa_2");
             PositionToPitch.Add(204, "top_mi_2");
             PositionToPitch.Add(224, "top_re_2");

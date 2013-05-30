@@ -8,6 +8,7 @@ using PopnTouchi2.Model.Enums;
 using PopnTouchi2.Model;
 using System.Windows;
 using PopnTouchi2.ViewModel;
+using System.Windows.Threading;
 
 namespace PopnTouchi2
 {
@@ -44,13 +45,13 @@ namespace PopnTouchi2
         /// Parameter.
         /// A Timer object needed to play Notes' sounds.
         /// </summary>
-        private Timer Timer;
+        private DispatcherTimer Timer;
 
         /// <summary>
         /// Parameter.
         /// A Timer object needed to play the Melody sound.
         /// </summary>
-        private Timer TimerMelody;
+        private DispatcherTimer TimerMelody;
 
         /// <summary>
         /// Parameter.
@@ -87,8 +88,8 @@ namespace PopnTouchi2
             MaxPosition = 0;
             Notes = new ObservableCollection<Note>();
             CurrentInstrument = instru;
-            Timer = new Timer();
-            TimerMelody = new Timer();
+            Timer = new DispatcherTimer();
+            TimerMelody = new DispatcherTimer();
             IteratorNotes = 0;
             IteratorMelody = 0;
             PositionMelody = 0;
@@ -149,11 +150,16 @@ namespace PopnTouchi2
         /// Plays the melody contained by the MelodyBubble.
         /// Calls the specific Event "PlayMelody"
         /// </summary>
-        public void PlayMelody()
+        public int PlayMelody()
         {
-            TimerMelody.Interval = 30000 / CurrentInstrument.Bpm;
+            int time = 0;
+            if (Notes.Count != 0)
+                time = (Notes.Last().Position + 1) * (30000 / CurrentInstrument.Bpm);
+            TimerMelody.Stop();
+            TimerMelody.Interval = TimeSpan.FromMilliseconds(30000 / CurrentInstrument.Bpm);
             TimerMelody.Start();
-            TimerMelody.Elapsed += new ElapsedEventHandler(PlayMelody);
+            TimerMelody.Tick += new EventHandler(PlayMelody);
+            return time;
         }
 
         /// <summary>
@@ -161,7 +167,7 @@ namespace PopnTouchi2
         /// </summary>
         /// <param name="source"></param>
         /// <param name="e"></param>
-        private void PlayMelody(object source, ElapsedEventArgs e)
+        private void PlayMelody(object source, EventArgs e)
         {
             bool play = true;
 
@@ -195,9 +201,9 @@ namespace PopnTouchi2
             int time = 1000;
             if(Notes.Count != 0)
                 time = (Notes.Last().Position+4)* (30000/CurrentInstrument.Bpm);
-            Timer.Interval = 30000 / CurrentInstrument.Bpm;
+            Timer.Interval = TimeSpan.FromMilliseconds(30000 / CurrentInstrument.Bpm);
             Timer.Start();
-            Timer.Elapsed += new ElapsedEventHandler(PlayList);
+            Timer.Tick += new EventHandler(PlayList);
             return time;
         }
 
@@ -207,7 +213,7 @@ namespace PopnTouchi2
         /// </summary>
         /// <param name="source"></param>
         /// <param name="e"></param>
-        private void PlayList(object source, ElapsedEventArgs e)
+        private void PlayList(object source, EventArgs e)
         {
             bool play = true;
 
@@ -234,8 +240,7 @@ namespace PopnTouchi2
         public void StopMusic()
         {
             Timer.Stop();
-            Timer.EndInit();
-            Timer.Elapsed -= new ElapsedEventHandler(PlayList);
+            Timer.Tick -= new EventHandler(PlayList);
             PositionNote = 0;
             IteratorNotes = 0;
         }
@@ -246,8 +251,7 @@ namespace PopnTouchi2
         public void StopMelody()
         {
             TimerMelody.Stop();
-            TimerMelody.EndInit();
-            TimerMelody.Elapsed -= new ElapsedEventHandler(PlayMelody);
+            TimerMelody.Tick -= new EventHandler(PlayMelody);
             PositionMelody = 0;
             IteratorMelody = 0;
         }
