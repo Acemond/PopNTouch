@@ -418,6 +418,8 @@ namespace PopnTouchi2.ViewModel
             Tempo_Button.Margin = new Thickness(0, 0, 470.0 * ratio, 0);
             Theme_Button.Margin = new Thickness(0, 0, 100.0 * ratio, 0);
             previewGrid.Margin = new Thickness(150.0 * ratio, 90.0 * ratio, 90.0 * ratio, 480.0 * ratio);
+            topStaveHighlight.Margin = new Thickness(0.0, 60.0 * ratio, 0.0, 480.0 * ratio);
+            bottomStaveHighlight.Margin = new Thickness(0.0, 60.0 * ratio, 0.0, 480.0 * ratio);
             foreach (ScatterViewItem svi in Notes.Items)
             {
                 ScaleTransform st = new ScaleTransform(ratio / originalRatio, ratio / originalRatio, svi.ActualCenter.X, svi.ActualCenter.Y);
@@ -466,6 +468,8 @@ namespace PopnTouchi2.ViewModel
             Tempo_Button.Margin = new Thickness(0, 0, 470.0 * ratio, 0);
             Theme_Button.Margin = new Thickness(0, 0, 100.0 * ratio, 0);
             previewGrid.Margin = new Thickness(150.0 * ratio, 90.0 * ratio, 90.0 * ratio, 480.0 * ratio);
+            topStaveHighlight.Margin = new Thickness(0.0, 60.0 * ratio, 0.0, 480.0 * ratio);
+            bottomStaveHighlight.Margin = new Thickness(0.0, 60.0 * ratio, 0.0, 480.0 * ratio);
 
             //Size of SurfaceButton Play
             Play_Button.Width = (140.0 / 1920.0) * width;
