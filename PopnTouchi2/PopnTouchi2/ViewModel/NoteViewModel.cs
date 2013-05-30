@@ -126,6 +126,13 @@ namespace PopnTouchi2.ViewModel
             Animation = new NoteAnimation(this, SessionVM);
         }
 
-        
+        public NoteViewModel(NoteViewModel noteVM)
+        {
+            Note = new Note(noteVM.Note);
+            ParentSV = noteVM.ParentSV;
+            SVItem = noteVM.SVItem;
+            Animation = noteVM.Animation;
+            Picked = noteVM.Picked;
+        }
     }
 }

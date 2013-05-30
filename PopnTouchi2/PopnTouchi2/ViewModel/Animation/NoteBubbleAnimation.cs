@@ -363,6 +363,7 @@ namespace PopnTouchi2.ViewModel.Animation
                             noteVM.Note.DownSemiTone();
                         if (noteBubbleVM.NoteBubble.Note.Flat)
                             noteVM.Note.UpSemiTone();
+
                         canAnimate = true;
                         Animate();
                     }
