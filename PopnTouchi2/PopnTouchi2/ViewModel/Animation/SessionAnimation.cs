@@ -98,7 +98,7 @@ namespace PopnTouchi2.ViewModel.Animation
 
             initWidthAnimation.Completed += new EventHandler(marginAnimation_Completed);
             SessionVM.SessionSVI.TouchLeave += new EventHandler<System.Windows.Input.TouchEventArgs>(svi_TouchLeave);
-            SessionVM.SessionSVI.PreviewTouchDown += new EventHandler<System.Windows.Input.TouchEventArgs>(SessionSVI_TouchDown);
+            SessionVM.SessionSVI.TouchEnter += new EventHandler<System.Windows.Input.TouchEventArgs>(SessionSVI_TouchEnter);
 
             InitStb.Begin();
         }
@@ -109,7 +109,7 @@ namespace PopnTouchi2.ViewModel.Animation
             MainDesktop = desktop;
             SessionVM = s;
             SessionVM.SessionSVI.TouchLeave += new EventHandler<System.Windows.Input.TouchEventArgs>(svi_TouchLeave);
-            SessionVM.SessionSVI.PreviewTouchDown += new EventHandler<System.Windows.Input.TouchEventArgs>(SessionSVI_TouchDown);
+            SessionVM.SessionSVI.PreviewTouchDown += new EventHandler<System.Windows.Input.TouchEventArgs>(SessionSVI_TouchEnter);
         }
         
         #region REDUCTION
@@ -415,6 +415,7 @@ namespace PopnTouchi2.ViewModel.Animation
 
             SessionVM.SessionSVI.CanMove = true;
             SessionVM.SessionSVI.CanRotate = true;
+            SessionVM.SessionSVI.CanScale = false;
 
             SessionVM.SessionSVI.PreviewTouchDown += new EventHandler<System.Windows.Input.TouchEventArgs>(Session_PreviewTouchDown);
             SessionVM.Reduced = true;
@@ -442,7 +443,7 @@ namespace PopnTouchi2.ViewModel.Animation
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        void SessionSVI_TouchDown(object sender, TouchEventArgs e)
+        void SessionSVI_TouchEnter(object sender, TouchEventArgs e)
         {
             try
             {
@@ -467,7 +468,6 @@ namespace PopnTouchi2.ViewModel.Animation
         void DispatcherTimer_Tick(object sender, EventArgs e)
         {
             if (SessionVM == null) return;
-            TouchHoldDispatcherTimer.Stop();
             if (Math.Abs(touchDevice.GetTouchPoint(MainDesktop).Position.X - startingTouchPoint.Position.X) < 15.0 &&
                 Math.Abs(touchDevice.GetTouchPoint(MainDesktop).Position.Y - startingTouchPoint.Position.Y) < 15.0)
             {
@@ -477,6 +477,10 @@ namespace PopnTouchi2.ViewModel.Animation
                 AutoDBRemoveDispatcherTimer.Tick += new EventHandler(autoDeleteRemove);
                 AutoDBRemoveDispatcherTimer.Start();
 
+            }
+            else
+            {
+                startingTouchPoint = touchDevice.GetTouchPoint(MainDesktop);
             }
         }
 
