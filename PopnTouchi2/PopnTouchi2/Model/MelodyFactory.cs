@@ -28,9 +28,16 @@ namespace PopnTouchi2
             //minim = Blanche
 
             List<Note> l = new List<Note>();
-            l.Add(new Note(1,NoteValue.minim, "sol", 0));
-            l.Add(new Note(1,NoteValue.crotchet, "fa", 4));
-            l.Add(new Note(1, NoteValue.quaver, "si", 6));
+            l.Add(new Note(2,NoteValue.minim, "do", 0));
+            l.Add(new Note(1, NoteValue.minim, "sol", 4));
+            l.Add(new Note(1, NoteValue.crotchet, "si", 8));
+            l.Add(new Note(1, NoteValue.quaver, "sol", 10));
+            l.Add(new Note(1, NoteValue.quaver, "la", 11));
+            l.Add(new Note(1, NoteValue.crotchet, "si", 12));
+            l.Add(new Note(2, NoteValue.minim, "do", 14));
+            l.Add(new Note(1, NoteValue.minim, "do", 18));
+            l.Add(new Note(1, NoteValue.minim, "la", 21));
+            l.Add(new Note(1, NoteValue.minim, "sol", 24));
             Melodies.Add(Gesture.infinite, new Melody(l, Gesture.infinite));
 
             List<Note> l1 = new List<Note>();

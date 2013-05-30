@@ -42,7 +42,7 @@ namespace PopnTouchi2.ViewModel
         /// Attribute
         /// up is true if the Tree is on the StaveTop
         /// </summary>
-        private Boolean Up;
+        private bool Up;
 
         /// <summary>
         /// Property.
@@ -63,7 +63,7 @@ namespace PopnTouchi2.ViewModel
         /// <param name="t"></param>
         /// <param name="s"></param>
         /// <param name="theme"></param>
-        public TreeViewModel(Boolean up, Thickness t, SessionViewModel s)
+        public TreeViewModel(bool up, Thickness t, SessionViewModel s)
         {
             this.Up = !up;
             SessionVM = s;

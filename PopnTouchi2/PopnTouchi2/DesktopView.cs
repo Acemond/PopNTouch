@@ -44,12 +44,12 @@ namespace PopnTouchi2
         /// <summary>
         /// TODO
         /// </summary>
-        public Boolean LeftSessionActive { get; set; }
+        public bool LeftSessionActive { get; set; }
 
         /// <summary>
         /// TODO
         /// </summary>
-        public Boolean RightSessionActive { get; set; }
+        public bool RightSessionActive { get; set; }
 
         /// <summary>
         /// TODO
