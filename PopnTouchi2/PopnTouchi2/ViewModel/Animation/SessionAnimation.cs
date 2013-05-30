@@ -438,7 +438,7 @@ namespace PopnTouchi2.ViewModel.Animation
             {
                 if (SessionVM.Reduced)
                 {
-                    if (MainDesktop.LeftSessionActive) MainDesktop.DisplayPreviewZones(true, false);
+                    if (MainDesktop.LeftSessionActive || MainDesktop.RightSessionActive) MainDesktop.DisplayPreviewZones(true, false);
                     else MainDesktop.DisplayPreviewZones(true, true);
                 }
             }
