@@ -107,7 +107,7 @@ namespace PopnTouchi2.ViewModel.Animation
            
             //Y dans le cadre portée ?
             //Si oui, animation
-            //pas de else
+            //Sinon transform to bubble
             if (NoteCenter.Y < 576.0 && NoteCenter.Y > 165.0)
             {
                 if (NoteCenter.Y < 370.0)
@@ -216,10 +216,44 @@ namespace PopnTouchi2.ViewModel.Animation
             noteVM.Note.Sharp = false;
             noteVM.Note.Flat = true;
 
+            if (noteVM.Note.Sharp)
+            {
+                NoteBubbleViewModel nbVMA = new NoteBubbleViewModel(center, new NoteBubble(noteVM.Note), sessionVM.Bubbles, sessionVM);
+                noteVM.Note.Sharp = false;
+                if (sessionVM.NbgVM.NoteBubbleVMs.Count >= GlobalVariables.MaxNoteBubbles)
+                {
+                    NoteBubbleViewModel toRemove = sessionVM.NbgVM.NoteBubbleVMs.First();
+                    sessionVM.NbgVM.NoteBubbleVMs.Remove(toRemove);
+                    sessionVM.Bubbles.Items.Remove(toRemove.SVItem);
+                    toRemove = null;
+                }
+                sessionVM.Bubbles.Items.Add(nbVMA.SVItem);
+                sessionVM.NbgVM.NoteBubbleVMs.Add(nbVMA);
+            }
+            else if (noteVM.Note.Flat)
+            {
+                NoteBubbleViewModel nbVMA = new NoteBubbleViewModel(center, new NoteBubble(noteVM.Note), sessionVM.Bubbles, sessionVM);
+                noteVM.Note.Flat = false;
+                if (sessionVM.NbgVM.NoteBubbleVMs.Count >= GlobalVariables.MaxNoteBubbles)
+                {
+                    NoteBubbleViewModel toRemove = sessionVM.NbgVM.NoteBubbleVMs.First();
+                    sessionVM.NbgVM.NoteBubbleVMs.Remove(toRemove);
+                    sessionVM.Bubbles.Items.Remove(toRemove.SVItem);
+                    toRemove = null;
+                }
+                sessionVM.Bubbles.Items.Add(nbVMA.SVItem);
+                sessionVM.NbgVM.NoteBubbleVMs.Add(nbVMA);
+            }
             NoteBubbleViewModel nbVM = new NoteBubbleViewModel(center, new NoteBubble(noteVM.Note), sessionVM.Bubbles, sessionVM);
-            nbVM.NoteBubble.Note.Sharp = false;
-            nbVM.NoteBubble.Note.Flat = false;
+            if (sessionVM.NbgVM.NoteBubbleVMs.Count >= GlobalVariables.MaxNoteBubbles)
+            {
+                NoteBubbleViewModel toRemove = sessionVM.NbgVM.NoteBubbleVMs.First();
+                sessionVM.NbgVM.NoteBubbleVMs.Remove(toRemove);
+                sessionVM.Bubbles.Items.Remove(toRemove.SVItem);
+                toRemove = null;
+            }
             sessionVM.Bubbles.Items.Add(nbVM.SVItem);
+            sessionVM.NbgVM.NoteBubbleVMs.Add(nbVM);
 
             String effect = "pop" + (new Random()).Next(1, 5).ToString();
             AudioController.PlaySoundWithString(effect);
