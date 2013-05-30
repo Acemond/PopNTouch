@@ -45,6 +45,11 @@ namespace PopnTouchi2.ViewModel
         /// </summary>
         public NoteAnimation Animation { get; set; }
 
+        /// <summary>
+        /// Defines if the note is being moved by user
+        /// </summary>
+        public Boolean Picked { get; set; }
+
         
         /// <summary>
         /// Constructor
