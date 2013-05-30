@@ -48,7 +48,7 @@ namespace PopnTouchi2.ViewModel
         /// <summary>
         /// Defines if the note is being moved by user
         /// </summary>
-        public Boolean Picked { get; set; }
+        public bool Picked { get; set; }
 
         
         /// <summary>
