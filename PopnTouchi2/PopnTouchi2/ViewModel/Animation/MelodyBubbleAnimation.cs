@@ -291,7 +291,6 @@ namespace PopnTouchi2.ViewModel.Animation
             if ((playUp % 4) == 0)
             {
                 sessionVM.Session.StaveTop.melody = melodyBubbleVM.MelodyBubble.Melody;
-                
                 try
                 {
                     DisplayHighlightGrid(true, true);

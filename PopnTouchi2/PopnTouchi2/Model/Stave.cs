@@ -157,8 +157,8 @@ namespace PopnTouchi2
                 time = (Notes.Last().Position + 1) * (30000 / CurrentInstrument.Bpm);
             TimerMelody.Stop();
             TimerMelody.Interval = TimeSpan.FromMilliseconds(30000 / CurrentInstrument.Bpm);
-            TimerMelody.Start();
             TimerMelody.Tick += new EventHandler(PlayMelody);
+            TimerMelody.Start();
             return time;
         }
 
@@ -202,8 +202,8 @@ namespace PopnTouchi2
             if(Notes.Count != 0)
                 time = (Notes.Last().Position+4)* (30000/CurrentInstrument.Bpm);
             Timer.Interval = TimeSpan.FromMilliseconds(30000 / CurrentInstrument.Bpm);
-            Timer.Start();
             Timer.Tick += new EventHandler(PlayList);
+            Timer.Start();
             return time;
         }
 
