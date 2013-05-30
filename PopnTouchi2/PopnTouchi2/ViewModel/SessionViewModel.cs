@@ -647,7 +647,7 @@ namespace PopnTouchi2.ViewModel
             foreach (Note note in sd.StaveTopNotes)
             {
                 XCenter = ((note.Position * 60.0 + 120.0) / 1920.0) * Grid.ActualWidth;
-                NoteViewModel noteVM = new NoteViewModel(new Point(XCenter, (conv.getCenterY(true, note) / 1080.0) * Grid.ActualHeight), note, Notes, this);
+                NoteViewModel noteVM = new NoteViewModel(new Point(XCenter, (conv.getCenterY(true, note) / 1080.0) * Grid.ActualHeight), new Note(note), Notes, this);
                 Session.StaveTop.AddNote(note, note.Position);
                 Notes.Items.Add(noteVM.SVItem);
                 NotesOnStave.Add(noteVM);
@@ -656,7 +656,7 @@ namespace PopnTouchi2.ViewModel
             foreach (Note note in sd.StaveBottomNotes)
             {
                 XCenter = ((note.Position * 60.0 + 120.0) / 1920.0) * Grid.ActualWidth;
-                NoteViewModel noteVM = new NoteViewModel(new Point(XCenter, (conv.getCenterY(false, note) / 1080.0) * Grid.ActualHeight), note, Notes, this);
+                NoteViewModel noteVM = new NoteViewModel(new Point(XCenter, (conv.getCenterY(false, note) / 1080.0) * Grid.ActualHeight), new Note(note), Notes, this);
                 Session.StaveBottom.AddNote(note, note.Position);
                 Notes.Items.Add(noteVM.SVItem);
                 NotesOnStave.Add(noteVM);
