@@ -644,7 +644,7 @@ namespace PopnTouchi2.ViewModel.Animation
             Storyboard.SetTargetProperty(orientationAnimation, new PropertyPath(ScatterViewItem.OrientationProperty));
 
             heightAnimation.From = SessionVM.SessionSVI.ActualHeight;
-            heightAnimation.To = SessionVM.SessionSVI.ActualHeight * 4.0 * 0.5625;
+            heightAnimation.To = (MainDesktop.ActualHeight + 120.0) * 0.5625;
             heightAnimation.Duration = new Duration(TimeSpan.FromSeconds(1));
             heightAnimation.EasingFunction = new ExponentialEase();
             heightAnimation.AccelerationRatio = 1;
@@ -654,7 +654,7 @@ namespace PopnTouchi2.ViewModel.Animation
             Storyboard.SetTargetProperty(heightAnimation, new PropertyPath(ScatterViewItem.HeightProperty));
 
             EnlargeWidthAnimation.From = SessionVM.SessionSVI.ActualWidth;
-            EnlargeWidthAnimation.To = SessionVM.SessionSVI.ActualWidth * 4.0 * 0.5625;
+            EnlargeWidthAnimation.To = (MainDesktop.ActualWidth + 120.0) * 0.5625;
             EnlargeWidthAnimation.Duration = new Duration(TimeSpan.FromSeconds(1));
             EnlargeWidthAnimation.EasingFunction = new ExponentialEase();
             EnlargeWidthAnimation.AccelerationRatio = 1;
@@ -715,7 +715,7 @@ namespace PopnTouchi2.ViewModel.Animation
             Storyboard.SetTargetProperty(orientationAnimation, new PropertyPath(ScatterViewItem.OrientationProperty));
 
             heightAnimation.From = SessionVM.SessionSVI.ActualHeight;
-            heightAnimation.To = SessionVM.SessionSVI.ActualHeight * 4.0;
+            heightAnimation.To = MainDesktop.ActualHeight + 120.0;
             heightAnimation.Duration = new Duration(TimeSpan.FromSeconds(1));
             heightAnimation.EasingFunction = new ExponentialEase();
             heightAnimation.AccelerationRatio = 1;
@@ -725,7 +725,7 @@ namespace PopnTouchi2.ViewModel.Animation
             Storyboard.SetTargetProperty(heightAnimation, new PropertyPath(ScatterViewItem.HeightProperty));
 
             widthAnimation.From = SessionVM.SessionSVI.ActualWidth;
-            widthAnimation.To = SessionVM.SessionSVI.ActualWidth * 4.0;
+            widthAnimation.To = MainDesktop.ActualWidth + 120.0;
             widthAnimation.Duration = new Duration(TimeSpan.FromSeconds(1));
             widthAnimation.EasingFunction = new ExponentialEase();
             widthAnimation.AccelerationRatio = 1;
