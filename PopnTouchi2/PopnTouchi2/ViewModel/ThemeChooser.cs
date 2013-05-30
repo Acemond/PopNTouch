@@ -275,9 +275,6 @@ namespace PopnTouchi2.ViewModel
 
             sessionVM.SetDimensions(sessionVM.SessionSVI.Width, sessionVM.SessionSVI.Height);
 
-            sessionVM.Session.StaveTop.SetTheme(sessionVM.ThemeVM.Theme);
-            sessionVM.Session.StaveBottom.SetTheme(sessionVM.ThemeVM.Theme);
-
             sessionVM.Grid.Children.Add(sessionVM.NbgVM.Grid);
             sessionVM.Grid.Children.Add(sessionVM.MbgVM.Grid);
             sessionVM.Grid.Children.Add(sessionVM.Bubbles);
@@ -344,9 +341,6 @@ namespace PopnTouchi2.ViewModel
             sessionVM.displayTrees(new Thickness(20.0 * ratio, 0, 0, 130 * ratio), new Thickness(20 * ratio, 0, 0, 580 * ratio));
 
             sessionVM.SetDimensions(sessionVM.SessionSVI.Width, sessionVM.SessionSVI.Height);
-
-            sessionVM.Session.StaveTop.SetTheme(sessionVM.ThemeVM.Theme);
-            sessionVM.Session.StaveBottom.SetTheme(sessionVM.ThemeVM.Theme);
 
             sessionVM.Grid.Children.Add(Bird);
             sessionVM.Grid.Children.Add(sessionVM.NbgVM.Grid);
@@ -425,9 +419,6 @@ namespace PopnTouchi2.ViewModel
 
             sessionVM.SetDimensions(sessionVM.SessionSVI.Width, sessionVM.SessionSVI.Height);
 
-            sessionVM.Session.StaveTop.SetTheme(sessionVM.ThemeVM.Theme);
-            sessionVM.Session.StaveBottom.SetTheme(sessionVM.ThemeVM.Theme);
-
             sessionVM.Grid.Children.Add(Dragon);
             sessionVM.Grid.Children.Add(sessionVM.NbgVM.Grid);
             sessionVM.Grid.Children.Add(sessionVM.MbgVM.Grid);
@@ -505,9 +496,6 @@ namespace PopnTouchi2.ViewModel
 
             sessionVM.SetDimensions(sessionVM.SessionSVI.Width, sessionVM.SessionSVI.Height);
             sessionVM.Session.PlayBackgroundSound();
-
-            sessionVM.Session.StaveTop.SetTheme(sessionVM.ThemeVM.Theme);
-            sessionVM.Session.StaveBottom.SetTheme(sessionVM.ThemeVM.Theme);
 
             sessionVM.Grid.Children.Add(Cat);
             sessionVM.Grid.Children.Add(sessionVM.NbgVM.Grid);

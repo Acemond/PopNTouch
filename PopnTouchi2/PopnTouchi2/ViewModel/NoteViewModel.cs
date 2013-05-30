@@ -58,6 +58,7 @@ namespace PopnTouchi2.ViewModel
             : base(s)
         {
             Note = n;
+
             SVItem = new ScatterViewItem();
             ParentSV = sv;
 
@@ -72,13 +73,27 @@ namespace PopnTouchi2.ViewModel
             FrameworkElementFactory bubbleImage = new FrameworkElementFactory(typeof(Image));
 
             String noteValue = Note.Duration.ToString();
-            int offset = GlobalVariables.ManipulationGrid[n.Position+2];
+            int offset = GlobalVariables.ManipulationGrid.ElementAtOrDefault(n.Position+2);
             double betweenStave = (350 - offset) * (SessionVM.SessionSVI.ActualHeight / 1080);
 
             if (center.Y < betweenStave)
-                bubbleImage.SetValue(Image.SourceProperty, new BitmapImage(new Uri(@"../../Resources/Images/UI_items/Notes/black/" + noteValue + ".png", UriKind.Relative)));
+            {
+                if(Note.Flat)
+                    bubbleImage.SetValue(Image.SourceProperty, new BitmapImage(new Uri(@"../../Resources/Images/UI_items/Notes/black/" + noteValue + "_bemol.png", UriKind.Relative)));
+                else if(Note.Sharp)
+                    bubbleImage.SetValue(Image.SourceProperty, new BitmapImage(new Uri(@"../../Resources/Images/UI_items/Notes/black/" + noteValue + "_diese.png", UriKind.Relative)));
+                else 
+                    bubbleImage.SetValue(Image.SourceProperty, new BitmapImage(new Uri(@"../../Resources/Images/UI_items/Notes/black/" + noteValue + ".png", UriKind.Relative)));
+            }
             else
-                bubbleImage.SetValue(Image.SourceProperty, new BitmapImage(new Uri(@"../../Resources/Images/UI_items/Notes/white/" + noteValue + ".png", UriKind.Relative)));
+            {
+                if (Note.Flat)
+                    bubbleImage.SetValue(Image.SourceProperty, new BitmapImage(new Uri(@"../../Resources/Images/UI_items/Notes/white/" + noteValue + "_bemol.png", UriKind.Relative)));
+                else if (Note.Sharp)
+                    bubbleImage.SetValue(Image.SourceProperty, new BitmapImage(new Uri(@"../../Resources/Images/UI_items/Notes/white/" + noteValue + "_diese.png", UriKind.Relative)));
+                else
+                    bubbleImage.SetValue(Image.SourceProperty, new BitmapImage(new Uri(@"../../Resources/Images/UI_items/Notes/white/" + noteValue + ".png", UriKind.Relative)));
+            }
 
             bubbleImage.SetValue(Image.IsHitTestVisibleProperty, false);
 

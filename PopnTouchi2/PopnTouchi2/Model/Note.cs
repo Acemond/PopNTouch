@@ -172,41 +172,44 @@ namespace PopnTouchi2
         /// </summary>
         public bool DownSemiTone()
         {
+            bool res = false;
             if (Sharp)
             {
                 Sharp = false;
-                return false;
+                return res;
             }
 
-            if (Flat)
+            else if (Flat)
             {
                 Flat = false;
                 switch (Pitch)
                 {
-                    case "do": Pitch = "la"; Octave--; Sharp = true; break;
-                    case "re": Pitch = "do"; Octave--; break;
+                    case "do": Pitch = "si"; Octave--; Flat = true; break;
+                    case "re": Pitch = "do"; break;
                     case "mi": Pitch = "re"; break;
-                    case "fa": Pitch = "re"; Sharp = true; break;
+                    case "fa": Pitch = "mi"; Flat = true; break;
                     case "sol": Pitch = "fa"; break;
                     case "la": Pitch = "sol"; break;
                     case "si": Pitch = "la"; break;
                 }
+                res = true;
+                return res;
             }
 
-            switch (Pitch)
+            else
             {
-                case "do": Pitch = "si"; break;
-                case "re": Pitch = "do"; Sharp = true; break;
-                case "mi": Pitch = "re"; Sharp = true; break;
-                case "fa": Pitch = "mi"; break;
-                case "sol": Pitch = "fa"; Sharp = true; break;
-                case "la": Pitch = "sol"; Sharp = true; break;
-                case "si": Pitch = "la"; Sharp = true; break;
-            }
-
-            return true;
-
-            
+                switch (Pitch)
+                {
+                    case "do": Pitch = "si"; res = true; break;
+                    case "re": Pitch = "re"; Flat = true; res = false; break;
+                    case "mi": Pitch = "mi"; Flat = true; res = false; break;
+                    case "fa": Pitch = "mi"; res = true; break;
+                    case "sol": Pitch = "sol"; Flat = true; res = false; break;
+                    case "la": Pitch = "la"; Flat = true; res = false; break;
+                    case "si": Pitch = "si"; Flat = true; res = false; break;
+                }
+                return res;
+            }            
         }
 
         /// <summary>
@@ -222,12 +225,12 @@ namespace PopnTouchi2
                 return res;
             }
 
-            if (Sharp)
+            else if (Sharp)
             {
                 Sharp = false;
                 switch (Pitch)
                 {
-                    case "do": Pitch = "re"; res = true;   break;
+                    case "do": Pitch = "re"; res = true; break;
                     case "re": Pitch = "mi"; res = true; break;
                     case "mi": Pitch = "fa"; Sharp = true; res = true; break;
                     case "fa": Pitch = "sol"; res = true; break;
@@ -238,18 +241,20 @@ namespace PopnTouchi2
                 return res;
             }
 
-            switch (Pitch)
+            else
             {
-                case "do": Pitch = "do"; Sharp = true; res = false; break;
-                case "re": Pitch = "re"; Sharp = true; res = false; break;
-                case "mi": Pitch = "fa"; res = true; break;
-                case "fa": Pitch = "fa"; Sharp = true; res = false; break;
-                case "sol": Pitch = "sol"; Sharp = true; res = false; break;
-                case "la": Pitch = "la"; Sharp = true; res = false; break;
-                case "si": Pitch = "do"; Octave++;  res = true; break;
+                switch (Pitch)
+                {
+                    case "do": Pitch = "do"; Sharp = true; res = false; break;
+                    case "re": Pitch = "re"; Sharp = true; res = false; break;
+                    case "mi": Pitch = "fa"; res = true; break;
+                    case "fa": Pitch = "fa"; Sharp = true; res = false; break;
+                    case "sol": Pitch = "sol"; Sharp = true; res = false; break;
+                    case "la": Pitch = "la"; Sharp = true; res = false; break;
+                    case "si": Pitch = "do"; Octave++; res = true; break;
+                }
+                return res;
             }
-
-            return res;
         }
     }
 }

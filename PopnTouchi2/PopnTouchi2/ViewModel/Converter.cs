@@ -73,7 +73,7 @@ namespace PopnTouchi2.ViewModel
                 if(PositionToPitch[d] == Pitch)
                     res = d;
             }
-            return res - GlobalVariables.ManipulationGrid[note.Position + 2];
+            return res - GlobalVariables.ManipulationGrid.ElementAtOrDefault(note.Position + 2);
 
         }
 

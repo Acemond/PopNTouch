@@ -104,6 +104,10 @@ namespace PopnTouchi2.ViewModel
             List<NoteViewModel> notes = new List<NoteViewModel>();
             for(int i = 0; i< MelodyBubble.Melody.Notes.Count; i++)
             {
+                if (MelodyBubble.Melody.Notes[i].Position >= GlobalVariables.MaxPositionOnStave)
+                {
+                    break;
+                }
                 double x = (positionMelody.X + (MelodyBubble.Melody.Notes[i].Position - initPos) * 60) * SessionVM.Grid.ActualWidth / 1920 ;
                 double y = c.getCenterY(up, MelodyBubble.Melody.Notes[i]);
                 

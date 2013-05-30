@@ -470,12 +470,12 @@ namespace PopnTouchi2.ViewModel
             }
             else
             {
-                Session.PlayBackgroundSound();
                 play.Abort();
                 Session.StaveTop.StopMusic();
                 Session.StaveBottom.StopMusic();
                 Play_Button.Opacity = 1;
                 IsPlaying = false;
+                Session.PlayBackgroundSound();
             }
         }
 
@@ -492,6 +492,7 @@ namespace PopnTouchi2.ViewModel
         {
             Play_Button.Opacity = 1;
             IsPlaying = false;
+            Session.PlayBackgroundSound();
         }
 
         private void UpdatePlay(){
@@ -579,8 +580,8 @@ namespace PopnTouchi2.ViewModel
 
             ThemeVM = new ThemeViewModel(Session.Theme, this);
             Converter conv = new Converter();
-            Session.StaveTop = new Stave(Session.Theme.InstrumentsTop[0], Session.Theme);
-            Session.StaveBottom = new Stave(Session.Theme.InstrumentsBottom[0], Session.Theme);
+            Session.StaveTop = new Stave(Session.Theme.InstrumentsTop[0]);
+            Session.StaveBottom = new Stave(Session.Theme.InstrumentsBottom[0]);
 
             Grid.Background = (new ThemeViewModel(Session.Theme, this)).BackgroundImage;
 
