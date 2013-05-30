@@ -673,6 +673,8 @@ namespace PopnTouchi2.ViewModel
 
             SetDimensions(Grid.ActualWidth, Grid.ActualHeight);
             //UpdateEveryDimensions(Grid.ActualWidth, Grid.ActualHeight);
+
+            Session.Bpm = sd.bpm;
         }
 
         public void EraseSession()
