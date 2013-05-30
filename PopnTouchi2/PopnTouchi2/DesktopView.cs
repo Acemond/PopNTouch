@@ -438,7 +438,7 @@ namespace PopnTouchi2
             if (appear)
             {
                 previewGridAnimation.From = sideZonesPreview.Opacity;
-                previewGridAnimation.To = 0.25;
+                previewGridAnimation.To = 0.2;
             }
             else
             {
@@ -461,7 +461,7 @@ namespace PopnTouchi2
                 if (appear)
                 {
                     previewGridAnimation2.From = topZonesPreview.Opacity;
-                    previewGridAnimation2.To = 0.25;
+                    previewGridAnimation2.To = 0.2;
                 }
                 else
                 {

@@ -443,6 +443,7 @@ namespace PopnTouchi2.ViewModel.Animation
                 }
             }
             catch (Exception exc) { }
+
             if (!SessionVM.Reduced) return;
             startingTouchPoint = e.GetTouchPoint(MainDesktop);
             touchDevice = e.TouchDevice;
