@@ -323,12 +323,8 @@ namespace PopnTouchi2.ViewModel.Animation
             }
             else
             {
-                try
-                {
-                    topHighlightDt.Stop();
-                    bottomHighlightDt.Stop();
-                }
-                catch (Exception exc) { }
+                DisplayHighlightGrid(false, true);
+                DisplayHighlightGrid(false, false);
                 sessionVM.Session.StaveTop.StopMelody();
                 sessionVM.Session.StaveBottom.StopMelody();
                 playUp++;
