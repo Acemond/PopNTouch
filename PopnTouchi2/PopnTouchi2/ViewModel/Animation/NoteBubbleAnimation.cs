@@ -276,22 +276,7 @@ namespace PopnTouchi2.ViewModel.Animation
 
                 bubbleCenter.X = bubbleCenter.X * width / 1920.0;
                 bubbleCenter.Y = bubbleCenter.Y * height / 1080.0;
-
-
-                noteBubbleVM.SVItem.Center = bubbleCenter;
-                for (int i = 0; i < sessionVM.NotesOnStave.Count && NothingAtThisPlace; i++)
-                {
-                    if ((int)((virtualCenter.X - 120.0) / 60.0) == sessionVM.NotesOnStave[i].Note.Position
-                        && !sessionVM.NotesOnStave[i].Picked
-                        && converter.getOctave(virtualCenter.Y) == sessionVM.NotesOnStave[i].Note.Octave
-                        && converter.getPitch(virtualCenter.Y) == sessionVM.NotesOnStave[i].Note.Pitch)
-                    {
-                        NothingAtThisPlace = false;
-                        noteVM = sessionVM.NotesOnStave[i];
-                    }
-                    else NothingAtThisPlace = true;
-                }
-
+                
                 #region STB
                 Storyboard stb = new Storyboard();
                 PointAnimation moveCenter = new PointAnimation();
@@ -323,11 +308,35 @@ namespace PopnTouchi2.ViewModel.Animation
 
         void moveCenter_Completed(object sender, EventArgs e)
         {
+            Converter converter = new Converter();
             DisplayPreviewGrid(false);
+
+            noteBubbleVM.SVItem.Center = bubbleCenter;
+            for (int i = 0; i < sessionVM.NotesOnStave.Count && NothingAtThisPlace; i++)
+            {
+                if ((int)((virtualCenter.X - 120.0) / 60.0) == sessionVM.NotesOnStave[i].Note.Position
+                    && !sessionVM.NotesOnStave[i].Picked
+                    && converter.getOctave(virtualCenter.Y) == sessionVM.NotesOnStave[i].Note.Octave
+                    && converter.getPitch(virtualCenter.Y) == sessionVM.NotesOnStave[i].Note.Pitch)
+                {
+                    //Invert comments if exception raises.
+                    if (noteBubbleVM.NoteBubble.Note.Duration == NoteValue.alteration)
+                    {
+                        NothingAtThisPlace = false;
+                        noteVM = sessionVM.NotesOnStave[i];
+                    }
+                    else
+                    {
+                        sessionVM.NotesOnStave[i].Animation.BackToBubbleFormat(true);
+                        NothingAtThisPlace = true;
+                    }
+                }
+                else NothingAtThisPlace = true;
+            }
+
             int positionNote = (int)((virtualCenter.X - 120.0) / 60.0);
             double betweenStave = (350 - GlobalVariables.ManipulationGrid.ElementAtOrDefault(noteBubbleVM.NoteBubble.Note.Position + 2)) * (sessionVM.SessionSVI.ActualHeight / 1080);
             bool isUp = (bubbleCenter.Y < betweenStave);
-            Converter converter = new Converter();
 
             if (NothingAtThisPlace)
             {

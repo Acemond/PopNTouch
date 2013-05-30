@@ -270,9 +270,19 @@ namespace PopnTouchi2.ViewModel.Animation
             List<NoteViewModel> ListOfNotes = melodyBubbleVM.melodyToListOfNote(PositionMelody);
             for (int i = 0; i < ListOfNotes.Count; i++)
             {
-                sessionVM.NotesOnStave.Add(ListOfNotes[i]);
-                sessionVM.Notes.Items.Add(ListOfNotes[i].SVItem);
-                
+                for (int j = 0; j < sessionVM.NotesOnStave.Count; j++)
+                {
+                    if (ListOfNotes[i].Note.Position == sessionVM.NotesOnStave[j].Note.Position
+                        && !sessionVM.NotesOnStave[j].Picked
+                        && ListOfNotes[i].Note.Octave == sessionVM.NotesOnStave[j].Note.Octave
+                        && ListOfNotes[i].Note.Pitch == sessionVM.NotesOnStave[j].Note.Pitch)
+                    {
+                        sessionVM.NotesOnStave[j].Animation.BackToBubbleFormat(true);
+                        break;
+                    }
+                }
+                    sessionVM.NotesOnStave.Add(ListOfNotes[i]);
+                    sessionVM.Notes.Items.Add(ListOfNotes[i].SVItem);
             }
             sessionVM.Bubbles.Items.Remove(melodyBubbleVM.SVItem);
             sessionVM.MbgVM.MelodyBubbleVMs.Remove(melodyBubbleVM);

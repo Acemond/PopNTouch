@@ -159,7 +159,7 @@ namespace PopnTouchi2.ViewModel.Animation
             else
             {
                 noteVM.Picked = false;
-                ReturnOnBubbleFormat();
+                BackToBubbleFormat(true);
                 DisplayPreviewGrid(false);
             }
         }
@@ -177,9 +177,10 @@ namespace PopnTouchi2.ViewModel.Animation
                     && converter.getOctave(virtualCenter.Y) == sessionVM.NotesOnStave[i].Note.Octave
                     && converter.getPitch(virtualCenter.Y) == sessionVM.NotesOnStave[i].Note.Pitch)
                 {
-                    //sessionVM.NotesOnStave[i].Animation.ReturnOnBubbleFormat();
-                    //NothingAtThisPlace = true;
-                    NothingAtThisPlace = false;
+                    //Invert comments if exception raises.
+                    sessionVM.NotesOnStave[i].Animation.BackToBubbleFormat(true);
+                    NothingAtThisPlace = true;
+                    //NothingAtThisPlace = false;
                 }
                 else NothingAtThisPlace = true;
             }
@@ -208,7 +209,7 @@ namespace PopnTouchi2.ViewModel.Animation
                     sessionVM.Session.StaveBottom.CurrentInstrument.PlayNote(noteVM.Note);
                 }                
             }
-            else ReturnOnBubbleFormat();
+            else BackToBubbleFormat(false);
 
             noteVM.Picked = false;
         }
@@ -216,10 +217,15 @@ namespace PopnTouchi2.ViewModel.Animation
         /// <summary>
         /// Transform a NoteViewModel on a Bubble
         /// </summary>
-        /// <param name="center"></param>
-        public void ReturnOnBubbleFormat()
+        /// <param name="removeNote">Set this to true if noteVM is NOT over another noteVM</param>
+        public void BackToBubbleFormat(bool removeNote)
         {
-            if (NothingAtThisPlace) sessionVM.NotesOnStave.Remove(noteVM);
+            if (removeNote)
+            {
+                sessionVM.NotesOnStave.Remove(noteVM);
+                sessionVM.Session.StaveTop.RemoveNote(noteVM.Note);
+                sessionVM.Session.StaveBottom.RemoveNote(noteVM.Note);
+            }
             sessionVM.Notes.Items.Remove(noteVM.SVItem);
 
             noteVM.Note.Position = -1;
