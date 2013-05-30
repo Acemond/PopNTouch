@@ -34,7 +34,7 @@ namespace PopnTouchi2.ViewModel.Animation
         /// Property
         /// True if the melody is played with the upper instrument
         /// </summary>
-        public Boolean playUp;
+        public int playUp;
 
         /// <summary>
         /// Property.
@@ -67,7 +67,7 @@ namespace PopnTouchi2.ViewModel.Animation
             SVItem = mbVM.SVItem;
             ParentSV = mbVM.ParentSV;
             canAnimate = true;
-            playUp = true;
+            playUp = 0;
 
             DispatcherTimer.Tick += new EventHandler(t_Tick);
 
@@ -287,40 +287,53 @@ namespace PopnTouchi2.ViewModel.Animation
         private void touchDown(object sender, TouchEventArgs e)
         {
             StopAnimation();
-            if (playUp)
+            int time = (melodyBubbleVM.MelodyBubble.Melody.Notes.Last().Position + 1) * (30000 / sessionVM.Session.Bpm);
+            if ((playUp % 4) == 0)
             {
                 sessionVM.Session.StaveTop.melody = melodyBubbleVM.MelodyBubble.Melody;
+                
                 try
                 {
                     DisplayHighlightGrid(true, true);
                     topHighlightDt = new DispatcherTimer();
-                    if (sessionVM.Session.Bpm == 60) topHighlightDt.Interval = TimeSpan.FromMilliseconds(4000);
-                    if (sessionVM.Session.Bpm == 90) topHighlightDt.Interval = TimeSpan.FromMilliseconds(3000);
-                    if (sessionVM.Session.Bpm == 120) topHighlightDt.Interval = TimeSpan.FromMilliseconds(2000);
+                    topHighlightDt.Interval = TimeSpan.FromMilliseconds(time);
                     topHighlightDt.Tick += new EventHandler(topHighlightDt_Tick);
                     topHighlightDt.Start();
                 }
                 catch (Exception exc) { }
                 sessionVM.Session.StaveTop.StopMelody();
                 sessionVM.Session.StaveTop.PlayMelody();
+                playUp++;
             }
-            else
+            else if ((playUp % 4) == 2)
             {
                 sessionVM.Session.StaveBottom.melody = melodyBubbleVM.MelodyBubble.Melody;
-                try {
+                try
+                {
                     DisplayHighlightGrid(true, false);
                     bottomHighlightDt = new DispatcherTimer();
-                    if (sessionVM.Session.Bpm == 60) bottomHighlightDt.Interval = TimeSpan.FromMilliseconds(4000);
-                    if (sessionVM.Session.Bpm == 90) bottomHighlightDt.Interval = TimeSpan.FromMilliseconds(3000);
-                    if (sessionVM.Session.Bpm == 120) bottomHighlightDt.Interval = TimeSpan.FromMilliseconds(2000);
+                    bottomHighlightDt.Interval = TimeSpan.FromMilliseconds(time);
                     bottomHighlightDt.Tick += new EventHandler(bottomHighlightDt_Tick);
                     bottomHighlightDt.Start();
                 }
                 catch (Exception exc) { }
                 sessionVM.Session.StaveBottom.StopMelody();
                 sessionVM.Session.StaveBottom.PlayMelody();
+                playUp++;
             }
-            playUp = !playUp;
+            else
+            {
+                try
+                {
+                    topHighlightDt.Stop();
+                    bottomHighlightDt.Stop();
+                }
+                catch (Exception exc) { }
+                sessionVM.Session.StaveTop.StopMelody();
+                sessionVM.Session.StaveBottom.StopMelody();
+                playUp++;
+            }
+     
         }
 
         void topHighlightDt_Tick(object sender, EventArgs e)
