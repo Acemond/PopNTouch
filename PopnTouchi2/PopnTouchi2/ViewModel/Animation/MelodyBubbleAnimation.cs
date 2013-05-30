@@ -317,7 +317,6 @@ namespace PopnTouchi2.ViewModel.Animation
                     bottomHighlightDt.Start();
                 }
                 catch (Exception exc) { }
-                playUp = true;
                 sessionVM.Session.StaveBottom.StopMelody();
                 sessionVM.Session.StaveBottom.PlayMelody();
             }
