@@ -507,7 +507,6 @@ namespace PopnTouchi2.ViewModel
         private void Play_Button_TouchDown(object sender, RoutedEventArgs e)
         {
             play = new Thread(PlayStaves);
-
             if (!IsPlaying)
             {
                 Session.StopBackgroundSound();              
@@ -524,7 +523,7 @@ namespace PopnTouchi2.ViewModel
 
         public void StopSound()
         {
-            play.Abort();
+            try { play.Abort(); } catch (Exception exc) { }
             Session.StaveTop.StopMusic();
             Session.StaveBottom.StopMusic();
             Play_Button.Opacity = 1;

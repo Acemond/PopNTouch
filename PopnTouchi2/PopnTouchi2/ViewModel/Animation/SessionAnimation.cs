@@ -437,6 +437,7 @@ namespace PopnTouchi2.ViewModel.Animation
         #endregion
 
 
+
         #region ENLARGEMENT
         /// <summary>
         /// Starts the chrono to know if user is waiting for Deletion
@@ -552,10 +553,8 @@ namespace PopnTouchi2.ViewModel.Animation
             TouchHoldDispatcherTimer.Stop();
             if (SessionVM == null) return;
             if (SessionVM.DeleteButton.Visibility == Visibility.Visible) return;
-            if (SessionVM == null) return;
             if (SessionVM.BeingDeleted) return;
-            try { if (!SessionVM.Reduced) return; }
-            catch (Exception exc) { return; }
+            if (!SessionVM.Reduced) return;
 
             SessionVM.SessionSVI = (ScatterViewItem)SessionVM.Grid.Parent;
             MainDesktop = (DesktopView)((ScatterView)SessionVM.SessionSVI.Parent).Parent;
@@ -586,7 +585,7 @@ namespace PopnTouchi2.ViewModel.Animation
             if (MainDesktop.LeftSessionActive || MainDesktop.RightSessionActive) return;
             if (Xpos > 4.0 / 32.0 * Width && Xpos < 28.0 / 32.0 * Width)
             {
-                if (Ypos > 0 && Ypos < 3.0 / 18.0 * Height)
+                if (Ypos > 0 && Ypos < 3.0 / 18.0 * Height && MainDesktop.Sessions.Items.Count == 0)
                 {
                     SessionVM.Reduced = false;
                     Enlarge(-180.0);
@@ -594,7 +593,7 @@ namespace PopnTouchi2.ViewModel.Animation
                     SessionVM.Orientation = "top";
                 }
 
-                else if (Ypos > 15.0 / 18.0 * Height && Ypos < Height)
+                else if (Ypos > 15.0 / 18.0 * Height && Ypos < Height && MainDesktop.Sessions.Items.Count == 0)
                 {
                     SessionVM.Reduced = false;
                     Enlarge(0.0);
