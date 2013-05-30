@@ -526,6 +526,7 @@ namespace PopnTouchi2.ViewModel.Animation
         void svi_TouchLeave(object sender, TouchEventArgs e)
         {
             TouchHoldDispatcherTimer.Stop();
+            if (SessionVM == null) return;
             if (SessionVM.DeleteButton.Visibility == Visibility.Visible) return;
             if (SessionVM == null) return;
             if (SessionVM.BeingDeleted) return;
