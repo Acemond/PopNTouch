@@ -73,21 +73,37 @@ namespace PopnTouchi2.ViewModel
             SVItem.HorizontalAlignment = HorizontalAlignment.Center;
             SVItem.CanRotate = false;
             SVItem.HorizontalAlignment = HorizontalAlignment.Center;
-            
 
+            SetStyle();
+
+            Animation = new NoteAnimation(this, SessionVM);
+        }
+
+        public NoteViewModel(NoteViewModel noteVM)
+        {
+            Note = new Note(noteVM.Note);
+            ParentSV = noteVM.ParentSV;
+            SVItem = noteVM.SVItem;
+            Animation = noteVM.Animation;
+            Picked = noteVM.Picked;
+        }
+
+
+        public void SetStyle()
+        {
             FrameworkElementFactory bubbleImage = new FrameworkElementFactory(typeof(Image));
 
             String noteValue = Note.Duration.ToString();
-            int offset = GlobalVariables.ManipulationGrid.ElementAtOrDefault(n.Position+2);
+            int offset = GlobalVariables.ManipulationGrid.ElementAtOrDefault(Note.Position + 2);
             double betweenStave = (350 - offset) * (SessionVM.SessionSVI.ActualHeight / 1080);
 
-            if (center.Y < betweenStave)
+            if (SVItem.Center.Y < betweenStave)
             {
-                if(Note.Flat)
+                if (Note.Flat)
                     bubbleImage.SetValue(Image.SourceProperty, new BitmapImage(new Uri(@"../../Resources/Images/UI_items/Notes/black/" + noteValue + "_bemol.png", UriKind.Relative)));
-                else if(Note.Sharp)
+                else if (Note.Sharp)
                     bubbleImage.SetValue(Image.SourceProperty, new BitmapImage(new Uri(@"../../Resources/Images/UI_items/Notes/black/" + noteValue + "_diese.png", UriKind.Relative)));
-                else 
+                else
                     bubbleImage.SetValue(Image.SourceProperty, new BitmapImage(new Uri(@"../../Resources/Images/UI_items/Notes/black/" + noteValue + ".png", UriKind.Relative)));
             }
             else
@@ -109,8 +125,8 @@ namespace PopnTouchi2.ViewModel
             //touchZone.SetValue(Ellipse.OpacityProperty, 0.3);
             touchZone.SetValue(Ellipse.FillProperty, Brushes.Transparent);
             touchZone.SetValue(Ellipse.WidthProperty, (47.0 / 1920.0) * SessionVM.Grid.ActualWidth);
-            touchZone.SetValue(Ellipse.HeightProperty, (40.0/ 1080.0) * SessionVM.Grid.ActualHeight);
-            
+            touchZone.SetValue(Ellipse.HeightProperty, (40.0 / 1080.0) * SessionVM.Grid.ActualHeight);
+
 
             FrameworkElementFactory grid = new FrameworkElementFactory(typeof(Grid));
             grid.AppendChild(bubbleImage);
@@ -122,17 +138,6 @@ namespace PopnTouchi2.ViewModel
             Style bubbleStyle = new Style(typeof(ScatterViewItem));
             bubbleStyle.Setters.Add(new Setter(ScatterViewItem.TemplateProperty, ct));
             SVItem.Style = bubbleStyle;
-
-            Animation = new NoteAnimation(this, SessionVM);
-        }
-
-        public NoteViewModel(NoteViewModel noteVM)
-        {
-            Note = new Note(noteVM.Note);
-            ParentSV = noteVM.ParentSV;
-            SVItem = noteVM.SVItem;
-            Animation = noteVM.Animation;
-            Picked = noteVM.Picked;
         }
     }
 }

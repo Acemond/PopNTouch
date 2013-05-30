@@ -189,6 +189,7 @@ namespace PopnTouchi2.ViewModel.Animation
 
                 bool isUp = (NoteCenter.Y < betweenStave);
                 noteVM.Note = new Note(converter.getOctave(virtualCenter.Y), noteVM.Note.Duration, converter.getPitch(virtualCenter.Y), positionNote, noteVM.Note.Sharp, noteVM.Note.Flat);
+                noteVM.SetStyle();
 
                 if (isUp)
                 {
