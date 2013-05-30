@@ -10,6 +10,7 @@ using System.Windows.Input;
 using PopnTouchi2.Model.Enums;
 using System.Threading;
 using PopnTouchi2.Infrastructure;
+using System.Windows.Controls;
 
 namespace PopnTouchi2.ViewModel.Animation
 {
@@ -166,6 +167,7 @@ namespace PopnTouchi2.ViewModel.Animation
             else
             {
                 ReturnOnBubbleFormat(noteVM.SVItem.Center);
+                DisplayPreviewGrid(false);
             }
 
             SVItem.PreviewTouchDown += new EventHandler<TouchEventArgs>(touchDown);
@@ -173,6 +175,7 @@ namespace PopnTouchi2.ViewModel.Animation
 
         void moveCenter_Completed(object sender, EventArgs e)
         {
+            DisplayPreviewGrid(false);
             sessionVM.Notes.Items.Remove(noteVM.SVItem);
             if (NothingAtThisPlace)
             {
@@ -272,10 +275,35 @@ namespace PopnTouchi2.ViewModel.Animation
         public void touchDown(object sender, TouchEventArgs e)
         {
             ////Si la bulle est sur la portée et qu'on la touche, elle s'enleve de la portee
+            DisplayPreviewGrid(true);
             sessionVM.NotesOnStave.Remove(noteVM);
             sessionVM.Session.StaveTop.RemoveNote(noteVM.Note);
             sessionVM.Session.StaveBottom.RemoveNote(noteVM.Note);
             
+        }
+
+        private void DisplayPreviewGrid(bool appear)
+        {
+            Storyboard pGSTB = new Storyboard();
+            DoubleAnimation previewGridAnimation = new DoubleAnimation();
+
+            if (appear)
+            {
+                previewGridAnimation.From = sessionVM.previewGrid.Opacity;
+                previewGridAnimation.To = 0.25;
+            }
+            else
+            {
+                previewGridAnimation.From = sessionVM.previewGrid.Opacity;
+                previewGridAnimation.To = 0;
+            }
+            previewGridAnimation.Duration = new Duration(TimeSpan.FromSeconds(.5));
+            previewGridAnimation.FillBehavior = FillBehavior.HoldEnd;
+            pGSTB.Children.Add(previewGridAnimation);
+            Storyboard.SetTarget(previewGridAnimation, sessionVM.previewGrid);
+            Storyboard.SetTargetProperty(previewGridAnimation, new PropertyPath(Grid.OpacityProperty));
+
+            pGSTB.Begin();
         }
         #endregion
     }
