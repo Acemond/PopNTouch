@@ -130,6 +130,8 @@ namespace PopnTouchi2.ViewModel.Animation
             SessionVM.SessionSVI.MaxWidth = double.MaxValue;
             SessionVM.SessionSVI.MaxHeight = double.MaxValue;
 
+            SessionVM.StopSound();
+
             AudioController.PlaySoundWithString("flash");
             SessionVM.FullyEnlarged = false;
 
