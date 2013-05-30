@@ -67,9 +67,9 @@ namespace PopnTouchi2.ViewModel.Animation
             ParentSV = nVM.ParentSV;
             NothingAtThisPlace = true;
 
-            SVItem.ContainerManipulationCompleted += touchLeave;
+            SVItem.ContainerManipulationCompleted += new ContainerManipulationCompletedEventHandler(touchLeave);
 
-            SVItem.PreviewTouchDown += touchDown;
+            SVItem.PreviewTouchDown += new EventHandler<TouchEventArgs>(SVItem_PreviewTouchDown);
         }
         #endregion
 
@@ -85,7 +85,8 @@ namespace PopnTouchi2.ViewModel.Animation
         /// <param name="e"></param>
         public void touchLeave(object sender, ContainerManipulationCompletedEventArgs e)
         {
-            SVItem.PreviewTouchDown -= new EventHandler<TouchEventArgs>(touchDown);
+            if (noteVM.Picked) return;
+            noteVM.Picked = true;
 
             ScatterViewItem Note = new ScatterViewItem();
             Note = e.Source as ScatterViewItem;
@@ -131,17 +132,7 @@ namespace PopnTouchi2.ViewModel.Animation
                 NoteCenter.Y = NoteCenter.Y * height / 1080.0;
 
                 noteVM.SVItem.Center = NoteCenter;
-                MyPoint noteBubbleCenter = new MyPoint(NoteCenter);
-                for (int i = 0; i < sessionVM.NotesOnStave.Count && NothingAtThisPlace; i++)
-                {
-                    if (noteBubbleCenter.QuasiEquals(sessionVM.NotesOnStave[i].SVItem.Center))
-                    {
-                        NothingAtThisPlace = false;
-                        noteVM = sessionVM.NotesOnStave[i];
-                    }
-                    else NothingAtThisPlace = true;
-                }
-
+                
                  #region STB
                 Storyboard stb = new Storyboard();
                 PointAnimation moveCenter = new PointAnimation();
@@ -158,9 +149,9 @@ namespace PopnTouchi2.ViewModel.Animation
                 Storyboard.SetTargetProperty(moveCenter, new PropertyPath(ScatterViewItem.CenterProperty));
                 #endregion
 
+                moveCenter.Completed +=new EventHandler(moveCenter_Completed);
 
                 Note.Center = NoteCenter;
-                moveCenter.Completed += new EventHandler(moveCenter_Completed);
 
                 stb.Begin(SVItem);
             }
@@ -169,45 +160,49 @@ namespace PopnTouchi2.ViewModel.Animation
                 ReturnOnBubbleFormat(noteVM.SVItem.Center);
                 DisplayPreviewGrid(false);
             }
-
-            SVItem.PreviewTouchDown += new EventHandler<TouchEventArgs>(touchDown);
         }
 
         void moveCenter_Completed(object sender, EventArgs e)
         {
             DisplayPreviewGrid(false);
-            sessionVM.Notes.Items.Remove(noteVM.SVItem);
+
+            MyPoint noteBubbleCenter = new MyPoint(NoteCenter);
+            for (int i = 0; i < sessionVM.NotesOnStave.Count && NothingAtThisPlace; i++)
+            {
+                if (noteBubbleCenter.QuasiEquals(sessionVM.NotesOnStave[i].SVItem.Center) && !sessionVM.NotesOnStave[i].Picked)
+                {
+                    NothingAtThisPlace = false;
+                    noteVM = sessionVM.NotesOnStave[i];
+                }
+                else NothingAtThisPlace = true;
+            }
+
             if (NothingAtThisPlace)
             {
                 Converter converter = new Converter();
                 int positionNote = (int)((virtualCenter.X - 120) / 60);
 
                 double betweenStave = (350 - GlobalVariables.ManipulationGrid.ElementAtOrDefault(noteVM.Note.Position + 2)) * (sessionVM.SessionSVI.ActualHeight / 1080);
+
+                sessionVM.Session.StaveTop.RemoveNote(noteVM.Note);
+                sessionVM.Session.StaveBottom.RemoveNote(noteVM.Note);
+
                 bool isUp = (NoteCenter.Y < betweenStave);
-                noteVM = new NoteViewModel(NoteCenter, new Note(converter.getOctave(virtualCenter.Y), noteVM.Note.Duration, converter.getPitch(virtualCenter.Y), positionNote, noteVM.Note.Sharp, noteVM.Note.Flat), sessionVM.Notes, sessionVM);
-                
+                noteVM.Note = new Note(converter.getOctave(virtualCenter.Y), noteVM.Note.Duration, converter.getPitch(virtualCenter.Y), positionNote, noteVM.Note.Sharp, noteVM.Note.Flat);
+
                 if (isUp)
                 {
-                    sessionVM.Session.StaveTop.CurrentInstrument.PlayNote(noteVM.Note);
                     sessionVM.Session.StaveTop.AddNote(noteVM.Note, positionNote);
+                    sessionVM.Session.StaveTop.CurrentInstrument.PlayNote(noteVM.Note);
                 }
                 else
                 {
-                    sessionVM.Session.StaveBottom.CurrentInstrument.PlayNote(noteVM.Note);
                     sessionVM.Session.StaveBottom.AddNote(noteVM.Note, positionNote);
-                }
-
-                sessionVM.Notes.Items.Add(noteVM.SVItem);
-                sessionVM.NotesOnStave.Add(noteVM);
-                
+                    sessionVM.Session.StaveBottom.CurrentInstrument.PlayNote(noteVM.Note);
+                }                
             }
-            else
-            {
-                ReturnOnBubbleFormat(noteVM.SVItem.Center);
-
-            }
-        
-            
+            else ReturnOnBubbleFormat(noteVM.SVItem.Center);
+            noteVM.Picked = false;
         }
 
         /// <summary>
@@ -219,8 +214,8 @@ namespace PopnTouchi2.ViewModel.Animation
             sessionVM.NotesOnStave.Remove(noteVM);
             sessionVM.Notes.Items.Remove(noteVM.SVItem);
 
-            noteVM.Note.Position = -1;
-            noteVM.Note.Pitch = "la";
+            /*noteVM.Note.Position = -1;
+            noteVM.Note.Pitch = "la";*/
 
             if (noteVM.Note.Sharp)
             {
@@ -272,14 +267,10 @@ namespace PopnTouchi2.ViewModel.Animation
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        public void touchDown(object sender, TouchEventArgs e)
+        public void SVItem_PreviewTouchDown(object sender, TouchEventArgs e)
         {
             ////Si la bulle est sur la portée et qu'on la touche, elle s'enleve de la portee
             DisplayPreviewGrid(true);
-            sessionVM.NotesOnStave.Remove(noteVM);
-            sessionVM.Session.StaveTop.RemoveNote(noteVM.Note);
-            sessionVM.Session.StaveBottom.RemoveNote(noteVM.Note);
-            
         }
 
         private void DisplayPreviewGrid(bool appear)
