@@ -620,6 +620,13 @@ namespace PopnTouchi2.ViewModel
 
             Play_Button.PreviewTouchDown += new EventHandler<TouchEventArgs>(Play_Button_TouchDown);
 
+            switch (Session.ThemeID)
+            {
+                case 2: Grid.Children.Add(ThemeChooser.Bird); break;
+                case 3: Grid.Children.Add(ThemeChooser.Dragon); break;
+                case 4: Grid.Children.Add(ThemeChooser.Cat); break;
+                default: break;
+            }
             Grid.Children.Add(Bubbles);
             Grid.Children.Add(Notes);
             Grid.Children.Add(Play_Button);
