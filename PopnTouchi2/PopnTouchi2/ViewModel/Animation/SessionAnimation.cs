@@ -180,6 +180,14 @@ namespace PopnTouchi2.ViewModel.Animation
             SessionVM.Grid.Children.Remove(SessionVM.Play_Button);
             SessionVM.Grid.Children.Remove(SessionVM.Tempo_Button);
             SessionVM.Grid.Children.Remove(SessionVM.Theme_Button);
+            switch (SessionVM.Session.ThemeID)
+            {
+                case 2: SessionVM.Grid.Children.Remove(SessionVM.ThemeChooser.Bird); break;
+                case 3: SessionVM.Grid.Children.Remove(SessionVM.ThemeChooser.Dragon); break;
+                case 4: SessionVM.Grid.Children.Remove(SessionVM.ThemeChooser.Cat); break;
+                default: break;
+            }
+
             SessionVM.EraseSession();
 
             System.Windows.Shapes.Rectangle rect = new System.Windows.Shapes.Rectangle();
