@@ -48,7 +48,8 @@ namespace PopnTouchi2.ViewModel.Animation
         /// </summary>
         public Point PositionMelody { get; set; }
 
-        private DispatcherTimer highlightDt;
+        private DispatcherTimer topHighlightDt;
+        private DispatcherTimer bottomHighlightDt;
 
         #endregion
 
@@ -292,12 +293,12 @@ namespace PopnTouchi2.ViewModel.Animation
                 try
                 {
                     DisplayHighlightGrid(true, true);
-                    highlightDt = new DispatcherTimer();
-                    if (sessionVM.Session.Bpm == 60) highlightDt.Interval = TimeSpan.FromMilliseconds(4000);
-                    if (sessionVM.Session.Bpm == 90) highlightDt.Interval = TimeSpan.FromMilliseconds(3000);
-                    if (sessionVM.Session.Bpm == 120) highlightDt.Interval = TimeSpan.FromMilliseconds(2000);
-                    highlightDt.Tick += new EventHandler(dt_Tick);
-                    highlightDt.Start();
+                    topHighlightDt = new DispatcherTimer();
+                    if (sessionVM.Session.Bpm == 60) topHighlightDt.Interval = TimeSpan.FromMilliseconds(4000);
+                    if (sessionVM.Session.Bpm == 90) topHighlightDt.Interval = TimeSpan.FromMilliseconds(3000);
+                    if (sessionVM.Session.Bpm == 120) topHighlightDt.Interval = TimeSpan.FromMilliseconds(2000);
+                    topHighlightDt.Tick += new EventHandler(topHighlightDt_Tick);
+                    topHighlightDt.Start();
                 }
                 catch (Exception exc) { }
                 sessionVM.Session.StaveTop.StopMelody();
@@ -308,12 +309,12 @@ namespace PopnTouchi2.ViewModel.Animation
                 sessionVM.Session.StaveBottom.melody = melodyBubbleVM.MelodyBubble.Melody;
                 try {
                     DisplayHighlightGrid(true, false);
-                    highlightDt = new DispatcherTimer();
-                    if (sessionVM.Session.Bpm == 60) highlightDt.Interval = TimeSpan.FromMilliseconds(4000);
-                    if (sessionVM.Session.Bpm == 90) highlightDt.Interval = TimeSpan.FromMilliseconds(3000);
-                    if (sessionVM.Session.Bpm == 120) highlightDt.Interval = TimeSpan.FromMilliseconds(2000);
-                    highlightDt.Tick += new EventHandler(dt_Tick);
-                    highlightDt.Start();
+                    bottomHighlightDt = new DispatcherTimer();
+                    if (sessionVM.Session.Bpm == 60) bottomHighlightDt.Interval = TimeSpan.FromMilliseconds(4000);
+                    if (sessionVM.Session.Bpm == 90) bottomHighlightDt.Interval = TimeSpan.FromMilliseconds(3000);
+                    if (sessionVM.Session.Bpm == 120) bottomHighlightDt.Interval = TimeSpan.FromMilliseconds(2000);
+                    bottomHighlightDt.Tick += new EventHandler(bottomHighlightDt_Tick);
+                    bottomHighlightDt.Start();
                 }
                 catch (Exception exc) { }
                 playUp = true;
@@ -323,12 +324,19 @@ namespace PopnTouchi2.ViewModel.Animation
             playUp = !playUp;
         }
 
-        void dt_Tick(object sender, EventArgs e)
+        void topHighlightDt_Tick(object sender, EventArgs e)
         {
-            highlightDt.Stop();
-            DisplayHighlightGrid(false, false);
+            topHighlightDt.Stop();
             DisplayHighlightGrid(false, true);
         }
+
+        void bottomHighlightDt_Tick(object sender, EventArgs e)
+        {
+            bottomHighlightDt.Stop();
+            DisplayHighlightGrid(false, false);
+        }
+
+
 
         private void DisplayHighlightGrid(bool appear, bool top)
         {
