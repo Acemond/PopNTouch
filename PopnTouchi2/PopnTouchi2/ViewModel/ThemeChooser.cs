@@ -223,6 +223,7 @@ namespace PopnTouchi2.ViewModel
         /// <param name="e"></param>
         private void GridTheme1_TouchDown(object sender, RoutedEventArgs e)
         {
+            sessionVM.SessionSVI.CanScale = true;
             if (sessionVM.Session.ThemeID == 1)
             {
                 sessionVM.Grid.Children.Remove(Grid);
@@ -294,7 +295,6 @@ namespace PopnTouchi2.ViewModel
             sessionVM.Grid.Children.Remove(Themes);
 
             sessionVM.Session.PlayBackgroundSound();
-            sessionVM.SessionSVI.CanScale = true;
         }
         
         /// <summary>
@@ -304,6 +304,7 @@ namespace PopnTouchi2.ViewModel
         /// <param name="e"></param>
         private void GridTheme2_TouchDown(object sender, RoutedEventArgs e)
         {
+            sessionVM.SessionSVI.CanScale = true;
             if (sessionVM.Session.ThemeID == 2)
             {
                 sessionVM.Grid.Children.Remove(Grid);
@@ -364,7 +365,6 @@ namespace PopnTouchi2.ViewModel
             sessionVM.Grid.Children.Remove(Themes);
 
             sessionVM.Session.PlayBackgroundSound();
-            sessionVM.SessionSVI.CanScale = true;
         }
 
         private void Bird_TouchDown(object sender, RoutedEventArgs e)
@@ -380,6 +380,7 @@ namespace PopnTouchi2.ViewModel
         /// <param name="e"></param>
         private void GridTheme3_TouchDown(object sender, RoutedEventArgs e)
         {
+            sessionVM.SessionSVI.CanScale = true;
             if (sessionVM.Session.ThemeID == 3)
             {
                 sessionVM.Grid.Children.Remove(Grid);
@@ -441,7 +442,6 @@ namespace PopnTouchi2.ViewModel
             sessionVM.Grid.Children.Remove(Themes);
 
             sessionVM.Session.PlayBackgroundSound();
-            sessionVM.SessionSVI.CanScale = true;
         }
 
         private void Dragon_TouchDown(object sender, RoutedEventArgs e)
@@ -457,6 +457,7 @@ namespace PopnTouchi2.ViewModel
         /// <param name="e"></param>
         private void GridTheme4_TouchDown(object sender, RoutedEventArgs e)
         {
+            sessionVM.SessionSVI.CanScale = true;
             if (sessionVM.Session.ThemeID == 4)
             {
                 sessionVM.Grid.Children.Remove(Grid);
@@ -517,7 +518,6 @@ namespace PopnTouchi2.ViewModel
 
             sessionVM.Grid.Children.Remove(Grid);
             sessionVM.Grid.Children.Remove(Themes);
-            sessionVM.SessionSVI.CanScale = true;
         }
 
         private void Cat_TouchDown(object sender, RoutedEventArgs e)
