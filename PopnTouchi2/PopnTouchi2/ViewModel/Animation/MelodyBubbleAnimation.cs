@@ -185,7 +185,7 @@ namespace PopnTouchi2.ViewModel.Animation
 
 
 
-            if (bubbleCenter.X <= 90) bubbleCenter.X = 120;
+            if (bubbleCenter.X < 150.0) bubbleCenter.X = 150.0;
             else if (bubbleCenter.X >= 1830) bubbleCenter.X = 1800;
             else bubbleCenter.X = Math.Floor((bubbleCenter.X + 30) / 60) * 60;
 

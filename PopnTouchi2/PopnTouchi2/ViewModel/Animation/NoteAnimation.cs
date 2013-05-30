@@ -94,7 +94,7 @@ namespace PopnTouchi2.ViewModel.Animation
             NoteCenter.X = NoteCenter.X * 1920.0 / width;
             NoteCenter.Y = NoteCenter.Y * 1080.0 / height;
 
-            if (NoteCenter.X <= 90.0) NoteCenter.X = 120.0;
+            if (NoteCenter.X < 150.0) NoteCenter.X = 150.0;
             else if (NoteCenter.X >= 1830.0) NoteCenter.X = 1800.0;
             else NoteCenter.X = Math.Floor((NoteCenter.X + 30.0) / 60.0) * 60.0;
 

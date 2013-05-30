@@ -285,6 +285,14 @@ namespace PopnTouchi2.ViewModel
             sessionVM.Grid.Children.Add(sessionVM.Play_Button);
             sessionVM.Grid.Children.Add(sessionVM.Theme_Button);
 
+            Grid.SetZIndex(sessionVM.Theme_Button, 5);
+            Grid.SetZIndex(sessionVM.UpdateSound.Grid, 4);
+            Grid.SetZIndex(sessionVM.TreeUp.Grid, 3);
+            Grid.SetZIndex(sessionVM.TreeDown.Grid, 3);
+            Grid.SetZIndex(sessionVM.Bubbles, 2);
+            Grid.SetZIndex(sessionVM.NbgVM.Grid, 0);
+            Grid.SetZIndex(sessionVM.MbgVM.Grid, 0);
+
             sessionVM.Grid.Children.Remove(Grid);
             sessionVM.Grid.Children.Remove(Themes);
 
