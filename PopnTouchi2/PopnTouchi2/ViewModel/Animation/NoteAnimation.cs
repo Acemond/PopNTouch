@@ -275,7 +275,7 @@ namespace PopnTouchi2.ViewModel.Animation
             sessionVM.NotesOnStave.Remove(noteVM);
             sessionVM.Session.StaveTop.RemoveNote(noteVM.Note);
             sessionVM.Session.StaveBottom.RemoveNote(noteVM.Note);
-           
+            
         }
         #endregion
     }

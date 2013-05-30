@@ -141,6 +141,11 @@ namespace PopnTouchi2.ViewModel
         public TreeViewModel TreeDown { get; set; }
 
         /// <summary>
+        /// Preview Grid to ease note placement
+        /// </summary>
+        public Grid previewGrid { get; set; }
+
+        /// <summary>
         /// The Grid containing the circles for sound changing
         /// </summary>
         public ChangeSoundViewModel UpdateSound { get; set; }
@@ -199,6 +204,13 @@ namespace PopnTouchi2.ViewModel
             Play_Button.Visibility = Visibility.Visible;
             IsPlaying = false;
 
+            previewGrid = new Grid();
+            ImageBrush previewGridImage = new ImageBrush();
+            previewGridImage.ImageSource = new BitmapImage(new Uri(@"../../Resources/Images/ui_items/previewGrid.png", UriKind.Relative));
+            previewGrid.Background = previewGridImage;
+            previewGrid.Opacity = 0;
+            previewGrid.Margin = new Thickness(150.0 * ratio, 90.0 * ratio, 90.0 * ratio, 480.0 * ratio);
+
             Play_Button.PreviewTouchDown += new EventHandler<TouchEventArgs>(Play_Button_TouchDown);
 
             Theme_Button = new Grid();
@@ -232,6 +244,7 @@ namespace PopnTouchi2.ViewModel
             Grid.Children.Add(Play_Button);
             Grid.Children.Add(Tempo_Button);
             Grid.Children.Add(UpdateSound.Grid);
+            Grid.Children.Add(previewGrid);
 
             Grid.SetZIndex(UpdateSound.Grid, 4);
             Grid.SetZIndex(TreeUp.Grid, 3);
@@ -240,6 +253,7 @@ namespace PopnTouchi2.ViewModel
             Grid.SetZIndex(Notes, 1);
             Grid.SetZIndex(NbgVM.Grid, 0);
             Grid.SetZIndex(MbgVM.Grid, 0);
+            Grid.SetZIndex(previewGrid, 0);
             
             SessionSVI.Content = Grid;
 
@@ -377,6 +391,7 @@ namespace PopnTouchi2.ViewModel
             Bubbles.Height = Grid.ActualHeight;
             Tempo_Button.Margin = new Thickness(0, 0, 470.0 * ratio, 0);
             Theme_Button.Margin = new Thickness(0, 0, 100.0 * ratio, 0);
+            previewGrid.Margin = new Thickness(150.0 * ratio, 90.0 * ratio, 90.0 * ratio, 480.0 * ratio);
             foreach (ScatterViewItem svi in Notes.Items)
             {
                 ScaleTransform st = new ScaleTransform(ratio / originalRatio, ratio / originalRatio, svi.ActualCenter.X, svi.ActualCenter.Y);
@@ -424,6 +439,7 @@ namespace PopnTouchi2.ViewModel
 
             Tempo_Button.Margin = new Thickness(0, 0, 470.0 * ratio, 0);
             Theme_Button.Margin = new Thickness(0, 0, 100.0 * ratio, 0);
+            previewGrid.Margin = new Thickness(150.0 * ratio, 90.0 * ratio, 90.0 * ratio, 480.0 * ratio);
 
             //Size of SurfaceButton Play
             Play_Button.Width = (140.0 / 1920.0) * width;
