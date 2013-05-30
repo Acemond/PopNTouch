@@ -15,6 +15,8 @@ using System.Windows.Media.Animation;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.IO;
 using PopnTouchi2.Model;
+using PopnTouchi2.Model.Enums;
+using System.Windows.Threading;
 
 namespace PopnTouchi2
 {
@@ -62,6 +64,9 @@ namespace PopnTouchi2
         private Grid topZonesPreview;
         private Grid sideZonesPreview;
 
+        private bool simpleButtonDirection;
+        private bool doubleButtonDirection;
+
         /// <summary>
         /// temporary
         /// </summary>
@@ -79,6 +84,8 @@ namespace PopnTouchi2
         /// </summary>
         public DesktopView()
         {
+            simpleButtonDirection = false;
+            doubleButtonDirection = false;
             IDs = new List<int>();
             openedSessions = new List<SessionViewModel>();
 
@@ -127,7 +134,7 @@ namespace PopnTouchi2
             TwoPButtonBG.ImageSource = new BitmapImage(new Uri(@"../../Resources/Images/ui_items/two_players.png", UriKind.Relative));
             CreateDoubleSession_Button.Background = TwoPButtonBG;
             CreateDoubleSession_Button.Click += new RoutedEventHandler(CreateDoubleSession_Button_Click);
-
+            
             Children.Add(CreateSession_Button);
             Children.Add(CreateDoubleSession_Button);
 
@@ -154,6 +161,9 @@ namespace PopnTouchi2
 
         void DesktopView_Loaded(object sender, RoutedEventArgs e)
         {
+            AnimateSimpleSessionButton();
+            AnimateDoubleSessionButton();
+
             string sPath = "Sessions/";
             Random r = new Random();
             foreach (string sFileName in System.IO.Directory.GetFiles(sPath))
@@ -476,6 +486,74 @@ namespace PopnTouchi2
 
                 pGSTB2.Begin();
             }
+        }
+
+        private void AnimateSimpleSessionButton()
+        {
+            Random r = GlobalVariables.GlobalRandom;
+            simpleButtonDirection = !simpleButtonDirection;
+            Storyboard buttonsSTB = new Storyboard();
+            ThicknessAnimation marginAnimation = new ThicknessAnimation();
+            SineEase ease = new SineEase();
+            ease.EasingMode = EasingMode.EaseInOut;
+            Double yOffset;
+            if (simpleButtonDirection) yOffset = (30.0 / 1920.0) * ActualWidth;
+            else yOffset = -(30.0 / 1920.0) * ActualWidth;
+
+            marginAnimation.Duration = new Duration(TimeSpan.FromMilliseconds(r.Next(1500, 2000)));
+            /*marginAnimation.AccelerationRatio = .3;
+            marginAnimation.DecelerationRatio = .7;*/
+
+            marginAnimation.From = CreateSession_Button.Margin;
+            marginAnimation.To = new Thickness(0, 0, CreateSession_Button.Margin.Right, CreateSession_Button.Margin.Bottom + yOffset);
+            marginAnimation.FillBehavior = FillBehavior.HoldEnd;
+            marginAnimation.EasingFunction = ease;
+            Storyboard.SetTarget(marginAnimation, CreateSession_Button);
+            Storyboard.SetTargetProperty(marginAnimation, new PropertyPath(SurfaceButton.MarginProperty));
+
+            buttonsSTB.Children.Add(marginAnimation);
+            marginAnimation.Completed += new EventHandler(marginAnimation_Completed);
+
+            buttonsSTB.Begin();
+        }
+
+        void marginAnimation_Completed(object sender, EventArgs e)
+        {
+            AnimateSimpleSessionButton();
+        }
+
+        private void AnimateDoubleSessionButton()
+        {
+            Random r = GlobalVariables.GlobalRandom;
+            doubleButtonDirection = !doubleButtonDirection;
+            Storyboard buttonsSTB = new Storyboard();
+            ThicknessAnimation marginAnimation = new ThicknessAnimation();
+            SineEase ease = new SineEase();
+            ease.EasingMode = EasingMode.EaseInOut;
+            Double yOffset;
+            if (doubleButtonDirection) yOffset = (30.0 / 1920.0) * ActualWidth;
+            else yOffset = -(30.0 / 1920.0) * ActualWidth;
+
+            marginAnimation.Duration = new Duration(TimeSpan.FromMilliseconds(r.Next(1500, 2000)));
+            /*marginAnimation.AccelerationRatio = .3;
+            marginAnimation.DecelerationRatio = .7;*/
+
+            marginAnimation.From = CreateDoubleSession_Button.Margin;
+            marginAnimation.To = new Thickness(CreateDoubleSession_Button.Margin.Left, CreateDoubleSession_Button.Margin.Top + yOffset, 0, 0);
+            marginAnimation.FillBehavior = FillBehavior.HoldEnd;
+            marginAnimation.EasingFunction = ease;
+            Storyboard.SetTarget(marginAnimation, CreateDoubleSession_Button);
+            Storyboard.SetTargetProperty(marginAnimation, new PropertyPath(SurfaceButton.MarginProperty));
+
+            buttonsSTB.Children.Add(marginAnimation);
+            marginAnimation.Completed += new EventHandler(doubleMarginAnimation_Completed);
+
+            buttonsSTB.Begin();
+        }
+
+        void doubleMarginAnimation_Completed(object sender, EventArgs e)
+        {
+            AnimateDoubleSessionButton();
         }
     }
 }

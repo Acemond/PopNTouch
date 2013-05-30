@@ -45,6 +45,11 @@ namespace PopnTouchi2.ViewModel
         /// </summary>
         public NoteAnimation Animation { get; set; }
 
+        /// <summary>
+        /// Defines if the note is being moved by user
+        /// </summary>
+        public Boolean Picked { get; set; }
+
         
         /// <summary>
         /// Constructor
@@ -121,6 +126,13 @@ namespace PopnTouchi2.ViewModel
             Animation = new NoteAnimation(this, SessionVM);
         }
 
-        
+        public NoteViewModel(NoteViewModel noteVM)
+        {
+            Note = new Note(noteVM.Note);
+            ParentSV = noteVM.ParentSV;
+            SVItem = noteVM.SVItem;
+            Animation = noteVM.Animation;
+            Picked = noteVM.Picked;
+        }
     }
 }

@@ -238,6 +238,7 @@ namespace PopnTouchi2.ViewModel
             bottomStaveHighlight.Margin = new Thickness(0.0, 60.0 * ratio, 0.0, 480.0 * ratio);
 
             Play_Button.PreviewTouchDown += new EventHandler<TouchEventArgs>(Play_Button_TouchDown);
+            play = new Thread(PlayStaves);
 
             Theme_Button = new Grid();
             Theme_Button.Width = 351;
@@ -507,7 +508,6 @@ namespace PopnTouchi2.ViewModel
         private void Play_Button_TouchDown(object sender, RoutedEventArgs e)
         {
             play = new Thread(PlayStaves);
-
             if (!IsPlaying)
             {
                 Session.StopBackgroundSound();              
@@ -524,7 +524,7 @@ namespace PopnTouchi2.ViewModel
 
         public void StopSound()
         {
-            play.Abort();
+            try { play.Abort(); } catch (Exception exc) { }
             Session.StaveTop.StopMusic();
             Session.StaveBottom.StopMusic();
             Play_Button.Opacity = 1;

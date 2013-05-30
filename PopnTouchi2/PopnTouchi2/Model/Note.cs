@@ -155,17 +155,27 @@ namespace PopnTouchi2
         public String GetCue()
         {
             String PitchTmp = Pitch;
+            int OctaveTmp = Octave;
             String alteration = "";
             if (Sharp)
             {
-                alteration = "_d";
+                switch (PitchTmp)
+                {
+                    case "do": alteration = "_d"; break;
+                    case "re": alteration = "_d"; break;
+                    case "mi": PitchTmp = "fa"; break;
+                    case "fa": alteration = "_d"; break;
+                    case "sol": alteration = "_d"; break;
+                    case "la": alteration = "_d"; break;
+                    case "si": PitchTmp = "do"; OctaveTmp++; break;
+                }
             }
 
             if (Flat)
             {
                 switch (PitchTmp)
                 {
-                    case "do": PitchTmp = "si"; break;
+                    case "do": PitchTmp = "si"; OctaveTmp--;  break;
                     case "re": PitchTmp = "do"; alteration = "_d"; break;
                     case "mi": PitchTmp = "re"; alteration = "_d"; break;
                     case "fa": PitchTmp = "mi"; break;
@@ -174,7 +184,7 @@ namespace PopnTouchi2
                     case "si": PitchTmp = "la"; alteration = "_d"; break;
                 }
             }
-            return PitchTmp + "_" + Octave.ToString() + alteration;
+            return PitchTmp + "_" + OctaveTmp.ToString() + alteration;
         }
 
         /// <summary>

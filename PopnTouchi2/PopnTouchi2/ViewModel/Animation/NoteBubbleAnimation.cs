@@ -47,7 +47,9 @@ namespace PopnTouchi2.ViewModel.Animation
         /// The NoteViewModel at the same place
         /// Used for Flat and Sharp
         /// </summary>
-        private NoteViewModel noteVM { get; set; }
+        private NoteViewModel noteVM;
+
+        private DispatcherTimer noteBubbleDT;
 
         /// <summary>
         /// Boolean
@@ -74,7 +76,8 @@ namespace PopnTouchi2.ViewModel.Animation
             canAnimate = true;
             NothingAtThisPlace = true;
 
-            DispatcherTimer.Tick += new EventHandler(t_Tick);
+            noteBubbleDT = new DispatcherTimer();
+            noteBubbleDT.Tick += new EventHandler(t_Tick);
 
             SVItem.ContainerManipulationCompleted += touchLeave;
 
@@ -87,8 +90,8 @@ namespace PopnTouchi2.ViewModel.Animation
         public void BeginBubbleAnimation()
         {
             Random r = GlobalVariables.GlobalRandom;
-            DispatcherTimer.Interval = TimeSpan.FromMilliseconds(r.Next(100, 10000));
-            DispatcherTimer.Start();
+            noteBubbleDT.Interval = TimeSpan.FromMilliseconds(r.Next(100, 10000));
+            noteBubbleDT.Start();
         }
 
         /// <summary>
@@ -184,7 +187,7 @@ namespace PopnTouchi2.ViewModel.Animation
         public void StopAnimation()
         {
             canAnimate = false;
-            DispatcherTimer.Stop();
+            noteBubbleDT.Stop();
             Storyboard.Pause();
             SVItem.Center = SVItem.ActualCenter;
             SVItem.Orientation = SVItem.Orientation;
@@ -200,7 +203,7 @@ namespace PopnTouchi2.ViewModel.Animation
         /// <param name="e"></param>
         public void t_Tick(object sender, EventArgs e)
         {
-            DispatcherTimer.Stop();
+            noteBubbleDT.Stop();
             Animate();
         }
 
@@ -215,8 +218,8 @@ namespace PopnTouchi2.ViewModel.Animation
             Storyboard.Remove();
             Storyboard.Children = new TimelineCollection();
             Random r = new Random();
-            DispatcherTimer.Interval = TimeSpan.FromMilliseconds(r.Next(1000, 10000));
-            DispatcherTimer.Start();
+            noteBubbleDT.Interval = TimeSpan.FromMilliseconds(r.Next(1000, 10000));
+            noteBubbleDT.Start();
         }
         /// <summary>
         /// Event occured when a Bubble is released
@@ -355,30 +358,22 @@ namespace PopnTouchi2.ViewModel.Animation
                         changeline = noteVM.Note.UpSemiTone();
                     if (noteBubbleVM.NoteBubble.Note.Flat)
                         changeline = noteVM.Note.DownSemiTone();
-                    sessionVM.Bubbles.Items.Remove(noteBubbleVM.SVItem);
                     
                     double y = converter.getCenterY(isUp, noteVM.Note);
                     if (y < 80)
                     {
-                        sessionVM.NotesOnStave.Remove(noteVM);
-                        if (isUp)
-                            sessionVM.Session.StaveTop.RemoveNote(noteVM.Note);
-                        else
-                            sessionVM.Session.StaveBottom.RemoveNote(noteVM.Note);
+                        if (noteBubbleVM.NoteBubble.Note.Sharp)
+                            noteVM.Note.DownSemiTone();
+                        if (noteBubbleVM.NoteBubble.Note.Flat)
+                            noteVM.Note.UpSemiTone();
 
-                        noteVM.Note.Sharp = false;
-                        noteVM.Note.Flat = false;
-                        noteVM.Note.Position = -1;
-                        noteVM.Note.Pitch = "la";
-                        NoteBubbleViewModel nbVM = new NoteBubbleViewModel(noteVM.SVItem.Center, new NoteBubble(noteVM.Note), sessionVM.Bubbles, sessionVM);
-                        sessionVM.Bubbles.Items.Add(nbVM.SVItem);
-
-                        String effect = "pop" + (new Random()).Next(1, 5).ToString();
-                        AudioController.PlaySoundWithString(effect);
+                        canAnimate = true;
+                        Animate();
                     }
                     else
                     {
                         y *= sessionVM.SessionSVI.ActualHeight / 1080.0;
+                        sessionVM.Bubbles.Items.Remove(noteBubbleVM.SVItem);
                         sessionVM.Notes.Items.Remove(noteVM.SVItem);
                         sessionVM.NotesOnStave.Remove(noteVM);
                         noteVM = new NoteViewModel(new Point(bubbleCenter.X, y), noteVM.Note, sessionVM.Notes, sessionVM);
