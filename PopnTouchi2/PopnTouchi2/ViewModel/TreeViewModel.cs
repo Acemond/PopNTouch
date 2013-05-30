@@ -239,6 +239,7 @@ namespace PopnTouchi2.ViewModel
 
             if (Up) SessionVM.Session.StaveTop.CurrentInstrument = Instrument1;
             else SessionVM.Session.StaveBottom.CurrentInstrument = Instrument1;
+            SessionVM.Session.ChangeBpm(SessionVM.Session.Bpm);
         }
 
         private void SwitchToInstru2()
@@ -250,6 +251,7 @@ namespace PopnTouchi2.ViewModel
 
             if (Up) SessionVM.Session.StaveTop.CurrentInstrument = Instrument2;
             else SessionVM.Session.StaveBottom.CurrentInstrument = Instrument2;
+            SessionVM.Session.ChangeBpm(SessionVM.Session.Bpm);
         }
     }
 }

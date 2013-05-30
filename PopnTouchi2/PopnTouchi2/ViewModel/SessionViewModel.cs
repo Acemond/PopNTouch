@@ -506,6 +506,8 @@ namespace PopnTouchi2.ViewModel
 
         void UpdateControl()
         {
+            Session.StaveTop.StopMusic();
+            Session.StaveBottom.StopMusic();
             Play_Button.Opacity = 1;
             IsPlaying = false;
             Session.PlayBackgroundSound();
@@ -518,19 +520,19 @@ namespace PopnTouchi2.ViewModel
 
         private void Tempo_Button_TouchDown(object sender, RoutedEventArgs e)
         {
-            if (GlobalVariables.bpm == 60)
+            if (Session.Bpm == 60)
             {
-                GlobalVariables.bpm = 90;
+                Session.ChangeBpm(90);
                 Tempo_Button.Background = ThemeVM.TempoImage[1];
             }
-            else if (GlobalVariables.bpm == 90)
-            {  
-                GlobalVariables.bpm = 120;
+            else if (Session.Bpm == 90)
+            {
+                Session.ChangeBpm(120);
                 Tempo_Button.Background = ThemeVM.TempoImage[2];
             }
             else
             {
-                GlobalVariables.bpm = 60;
+                Session.ChangeBpm(60);
                 Tempo_Button.Background = ThemeVM.TempoImage[0];
             }
         }

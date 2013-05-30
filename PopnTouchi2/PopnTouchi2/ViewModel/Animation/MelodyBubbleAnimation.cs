@@ -214,6 +214,7 @@ namespace PopnTouchi2.ViewModel.Animation
                     if (bubbleCenter.Y >= 344) bubbleCenter.Y = 344;
                     bubbleCenter.Y = Math.Floor((bubbleCenter.Y + 6.0) / 20.0) * 20.0 + 4.0;
 
+                    sessionVM.Session.StaveTop.StopMelody();
                     sessionVM.Session.StaveTop.AddMelody(melodyBubbleVM.MelodyBubble, ((int)PositionMelody.X - 120) / 60);
 
                 }
@@ -222,6 +223,7 @@ namespace PopnTouchi2.ViewModel.Animation
                     if (bubbleCenter.Y <= 395) bubbleCenter.Y = 395;
                     bubbleCenter.Y = Math.Floor((bubbleCenter.Y + 15.0) / 20.0) * 20.0 - 5.0;
 
+                    sessionVM.Session.StaveBottom.StopMelody();
                     sessionVM.Session.StaveBottom.AddMelody(melodyBubbleVM.MelodyBubble, ((int)PositionMelody.X - 120) / 60);
                 }
 

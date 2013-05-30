@@ -76,7 +76,6 @@ namespace PopnTouchi2
         /// </summary>
         public int PositionNote { get; set; }
 
-
         /// <summary>
         /// Stave Constructor.
         /// Initializes a new empty list of Notes, a Timer, the MaxPosition to 0 and the instrument
@@ -152,7 +151,7 @@ namespace PopnTouchi2
         /// </summary>
         public void PlayMelody()
         {
-            TimerMelody.Interval = 30000 / GlobalVariables.bpm;
+            TimerMelody.Interval = 30000 / CurrentInstrument.Bpm;
             TimerMelody.Start();
             TimerMelody.Elapsed += new ElapsedEventHandler(PlayMelody);
         }
@@ -195,8 +194,8 @@ namespace PopnTouchi2
         {
             int time = 1000;
             if(Notes.Count != 0)
-                time = (Notes.Last().Position+4)* (30000/GlobalVariables.bpm);
-            Timer.Interval = 30000 / GlobalVariables.bpm;
+                time = (Notes.Last().Position+4)* (30000/CurrentInstrument.Bpm);
+            Timer.Interval = 30000 / CurrentInstrument.Bpm;
             Timer.Start();
             Timer.Elapsed += new ElapsedEventHandler(PlayList);
             return time;
