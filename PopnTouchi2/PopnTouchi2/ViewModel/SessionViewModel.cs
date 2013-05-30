@@ -238,6 +238,7 @@ namespace PopnTouchi2.ViewModel
             bottomStaveHighlight.Margin = new Thickness(0.0, 60.0 * ratio, 0.0, 480.0 * ratio);
 
             Play_Button.PreviewTouchDown += new EventHandler<TouchEventArgs>(Play_Button_TouchDown);
+            play = new Thread(PlayStaves);
 
             Theme_Button = new Grid();
             Theme_Button.Width = 351;

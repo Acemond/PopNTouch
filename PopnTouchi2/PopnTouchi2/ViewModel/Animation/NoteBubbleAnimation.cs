@@ -358,30 +358,22 @@ namespace PopnTouchi2.ViewModel.Animation
                         changeline = noteVM.Note.UpSemiTone();
                     if (noteBubbleVM.NoteBubble.Note.Flat)
                         changeline = noteVM.Note.DownSemiTone();
-                    sessionVM.Bubbles.Items.Remove(noteBubbleVM.SVItem);
                     
                     double y = converter.getCenterY(isUp, noteVM.Note);
                     if (y < 80)
                     {
-                        sessionVM.NotesOnStave.Remove(noteVM);
-                        if (isUp)
-                            sessionVM.Session.StaveTop.RemoveNote(noteVM.Note);
-                        else
-                            sessionVM.Session.StaveBottom.RemoveNote(noteVM.Note);
+                        if (noteBubbleVM.NoteBubble.Note.Sharp)
+                            noteVM.Note.DownSemiTone();
+                        if (noteBubbleVM.NoteBubble.Note.Flat)
+                            noteVM.Note.UpSemiTone();
 
-                        noteVM.Note.Sharp = false;
-                        noteVM.Note.Flat = false;
-                        noteVM.Note.Position = -1;
-                        noteVM.Note.Pitch = "la";
-                        NoteBubbleViewModel nbVM = new NoteBubbleViewModel(noteVM.SVItem.Center, new NoteBubble(noteVM.Note), sessionVM.Bubbles, sessionVM);
-                        sessionVM.Bubbles.Items.Add(nbVM.SVItem);
-
-                        String effect = "pop" + (new Random()).Next(1, 5).ToString();
-                        AudioController.PlaySoundWithString(effect);
+                        canAnimate = true;
+                        Animate();
                     }
                     else
                     {
                         y *= sessionVM.SessionSVI.ActualHeight / 1080.0;
+                        sessionVM.Bubbles.Items.Remove(noteBubbleVM.SVItem);
                         sessionVM.Notes.Items.Remove(noteVM.SVItem);
                         sessionVM.NotesOnStave.Remove(noteVM);
                         noteVM = new NoteViewModel(new Point(bubbleCenter.X, y), noteVM.Note, sessionVM.Notes, sessionVM);
