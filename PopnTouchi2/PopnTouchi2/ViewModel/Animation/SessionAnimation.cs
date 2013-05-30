@@ -434,6 +434,15 @@ namespace PopnTouchi2.ViewModel.Animation
         /// <param name="e"></param>
         void SessionSVI_TouchDown(object sender, TouchEventArgs e)
         {
+            try
+            {
+                if (SessionVM.Reduced)
+                {
+                    if (MainDesktop.LeftSessionActive) MainDesktop.DisplayPreviewZones(true, false);
+                    else MainDesktop.DisplayPreviewZones(true, true);
+                }
+            }
+            catch (Exception exc) { }
             if (!SessionVM.Reduced) return;
             startingTouchPoint = e.GetTouchPoint(MainDesktop);
             touchDevice = e.TouchDevice;

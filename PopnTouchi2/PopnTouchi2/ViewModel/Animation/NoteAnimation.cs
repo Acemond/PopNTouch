@@ -284,26 +284,30 @@ namespace PopnTouchi2.ViewModel.Animation
 
         private void DisplayPreviewGrid(bool appear)
         {
-            Storyboard pGSTB = new Storyboard();
-            DoubleAnimation previewGridAnimation = new DoubleAnimation();
-
-            if (appear)
+            try
             {
-                previewGridAnimation.From = sessionVM.previewGrid.Opacity;
-                previewGridAnimation.To = 0.25;
-            }
-            else
-            {
-                previewGridAnimation.From = sessionVM.previewGrid.Opacity;
-                previewGridAnimation.To = 0;
-            }
-            previewGridAnimation.Duration = new Duration(TimeSpan.FromSeconds(.5));
-            previewGridAnimation.FillBehavior = FillBehavior.HoldEnd;
-            pGSTB.Children.Add(previewGridAnimation);
-            Storyboard.SetTarget(previewGridAnimation, sessionVM.previewGrid);
-            Storyboard.SetTargetProperty(previewGridAnimation, new PropertyPath(Grid.OpacityProperty));
+                Storyboard pGSTB = new Storyboard();
+                DoubleAnimation previewGridAnimation = new DoubleAnimation();
 
-            pGSTB.Begin();
+                if (appear)
+                {
+                    previewGridAnimation.From = sessionVM.previewGrid.Opacity;
+                    previewGridAnimation.To = 0.25;
+                }
+                else
+                {
+                    previewGridAnimation.From = sessionVM.previewGrid.Opacity;
+                    previewGridAnimation.To = 0;
+                }
+                previewGridAnimation.Duration = new Duration(TimeSpan.FromSeconds(.5));
+                previewGridAnimation.FillBehavior = FillBehavior.HoldEnd;
+                pGSTB.Children.Add(previewGridAnimation);
+                Storyboard.SetTarget(previewGridAnimation, sessionVM.previewGrid);
+                Storyboard.SetTargetProperty(previewGridAnimation, new PropertyPath(Grid.OpacityProperty));
+
+                pGSTB.Begin();
+            }
+            catch (Exception exc) { }
         }
         #endregion
     }

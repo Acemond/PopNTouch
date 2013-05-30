@@ -59,6 +59,9 @@ namespace PopnTouchi2
         /// </summary>
         Grid MiddleCacheGrid { get; set; }
 
+        private Grid topZonesPreview;
+        private Grid sideZonesPreview;
+
         /// <summary>
         /// temporary
         /// </summary>
@@ -92,6 +95,17 @@ namespace PopnTouchi2
             MiddleCacheGrid.Children.Add(BlackBG);
             MiddleCacheGrid.Opacity = 0;
 
+            topZonesPreview = new Grid();
+            ImageBrush previewTopGridImage = new ImageBrush();
+            previewTopGridImage.ImageSource = new BitmapImage(new Uri(@"../../Resources/Images/ui_items/desktopTopZones.png", UriKind.Relative));
+            topZonesPreview.Background = previewTopGridImage;
+            topZonesPreview.Opacity = 0; 
+            sideZonesPreview = new Grid();
+            ImageBrush previewSideGridImage = new ImageBrush();
+            previewSideGridImage.ImageSource = new BitmapImage(new Uri(@"../../Resources/Images/ui_items/desktopSideZones.png", UriKind.Relative));
+            sideZonesPreview.Background = previewSideGridImage;
+            sideZonesPreview.Opacity = 0;
+
             CreateSession_Button = new SurfaceButton();
             CreateSession_Button.Width = 85;
             CreateSession_Button.Height = 85;
@@ -122,6 +136,8 @@ namespace PopnTouchi2
             Children.Add(Photos);
             Children.Add(Sessions);
             Children.Add(MiddleCacheGrid);
+            Children.Add(topZonesPreview);
+            Children.Add(sideZonesPreview);
 
             Grid.SetZIndex(BlackBG, 0);
             Grid.SetZIndex(MiddleCache, 1);
@@ -183,6 +199,7 @@ namespace PopnTouchi2
 
         void DesktopView_PreviewTouchUp(object sender, TouchEventArgs e)
         {
+            DisplayPreviewZones(false, true);
             foreach (SessionViewModel svm in openedSessions)
             {
                 if (svm.removeDeleteButtonsOnTouchUp)
@@ -411,6 +428,54 @@ namespace PopnTouchi2
             Storyboard.SetTargetProperty(OpacityAnimation, new PropertyPath(Grid.OpacityProperty));
 
             OpacitySTB.Begin();
+        }
+
+        public void DisplayPreviewZones(bool appear, bool fourZones)
+        {
+            Storyboard pGSTB = new Storyboard();
+            DoubleAnimation previewGridAnimation = new DoubleAnimation();
+
+            if (appear)
+            {
+                previewGridAnimation.From = sideZonesPreview.Opacity;
+                previewGridAnimation.To = 0.25;
+            }
+            else
+            {
+                previewGridAnimation.From = sideZonesPreview.Opacity;
+                previewGridAnimation.To = 0;
+            }
+            previewGridAnimation.Duration = new Duration(TimeSpan.FromSeconds(.5));
+            previewGridAnimation.FillBehavior = FillBehavior.HoldEnd;
+            pGSTB.Children.Add(previewGridAnimation);
+            Storyboard.SetTarget(previewGridAnimation, sideZonesPreview);
+            Storyboard.SetTargetProperty(previewGridAnimation, new PropertyPath(Grid.OpacityProperty));
+
+            pGSTB.Begin();
+
+            if (fourZones || !appear)
+            {
+                Storyboard pGSTB2 = new Storyboard();
+                DoubleAnimation previewGridAnimation2 = new DoubleAnimation();
+
+                if (appear)
+                {
+                    previewGridAnimation2.From = topZonesPreview.Opacity;
+                    previewGridAnimation2.To = 0.25;
+                }
+                else
+                {
+                    previewGridAnimation2.From = topZonesPreview.Opacity;
+                    previewGridAnimation2.To = 0;
+                }
+                previewGridAnimation2.Duration = new Duration(TimeSpan.FromSeconds(.5));
+                previewGridAnimation2.FillBehavior = FillBehavior.HoldEnd;
+                pGSTB2.Children.Add(previewGridAnimation2);
+                Storyboard.SetTarget(previewGridAnimation2, topZonesPreview);
+                Storyboard.SetTargetProperty(previewGridAnimation2, new PropertyPath(Grid.OpacityProperty));
+
+                pGSTB2.Begin();
+            }
         }
     }
 }
