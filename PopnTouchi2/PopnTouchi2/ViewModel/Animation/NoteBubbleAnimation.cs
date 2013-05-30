@@ -279,10 +279,12 @@ namespace PopnTouchi2.ViewModel.Animation
 
 
                 noteBubbleVM.SVItem.Center = bubbleCenter;
-                MyPoint noteBubbleCenter = new MyPoint(bubbleCenter);
                 for (int i = 0; i < sessionVM.NotesOnStave.Count && NothingAtThisPlace; i++)
                 {
-                    if (noteBubbleCenter.QuasiEquals(sessionVM.NotesOnStave[i].SVItem.Center))
+                    if ((int)((virtualCenter.X - 120.0) / 60.0) == sessionVM.NotesOnStave[i].Note.Position
+                        && !sessionVM.NotesOnStave[i].Picked
+                        && converter.getOctave(virtualCenter.Y) == sessionVM.NotesOnStave[i].Note.Octave
+                        && converter.getPitch(virtualCenter.Y) == sessionVM.NotesOnStave[i].Note.Pitch)
                     {
                         NothingAtThisPlace = false;
                         noteVM = sessionVM.NotesOnStave[i];
@@ -322,7 +324,7 @@ namespace PopnTouchi2.ViewModel.Animation
         void moveCenter_Completed(object sender, EventArgs e)
         {
             DisplayPreviewGrid(false);
-            int positionNote = (int)(virtualCenter.X - 120) / 60;
+            int positionNote = (int)((virtualCenter.X - 120.0) / 60.0);
             double betweenStave = (350 - GlobalVariables.ManipulationGrid.ElementAtOrDefault(noteBubbleVM.NoteBubble.Note.Position + 2)) * (sessionVM.SessionSVI.ActualHeight / 1080);
             bool isUp = (bubbleCenter.Y < betweenStave);
             Converter converter = new Converter();

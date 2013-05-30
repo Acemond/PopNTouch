@@ -85,6 +85,7 @@ namespace PopnTouchi2.ViewModel.Animation
         /// <param name="e"></param>
         public void touchLeave(object sender, ContainerManipulationCompletedEventArgs e)
         {
+            NothingAtThisPlace = true;
             if (noteVM.Picked) return;
             noteVM.Picked = true;
 
@@ -157,6 +158,7 @@ namespace PopnTouchi2.ViewModel.Animation
             }
             else
             {
+                noteVM.Picked = false;
                 ReturnOnBubbleFormat();
                 DisplayPreviewGrid(false);
             }
@@ -164,13 +166,16 @@ namespace PopnTouchi2.ViewModel.Animation
 
         void moveCenter_Completed(object sender, EventArgs e)
         {
+            Converter converter = new Converter();
             DisplayPreviewGrid(false);
 
-            MyPoint noteBubbleCenter = new MyPoint(NoteCenter);
-            NothingAtThisPlace = true;
             for (int i = 0; i < sessionVM.NotesOnStave.Count && NothingAtThisPlace; i++)
             {
-                if (noteBubbleCenter.QuasiEquals(sessionVM.NotesOnStave[i].SVItem.Center) && !sessionVM.NotesOnStave[i].Picked)
+                //if (noteBubbleCenter.QuasiEquals(sessionVM.NotesOnStave[i].SVItem.Center) && !sessionVM.NotesOnStave[i].Picked)
+                if ((int)((virtualCenter.X - 120.0) / 60.0) == sessionVM.NotesOnStave[i].Note.Position
+                    && !sessionVM.NotesOnStave[i].Picked
+                    && converter.getOctave(virtualCenter.Y) == sessionVM.NotesOnStave[i].Note.Octave
+                    && converter.getPitch(virtualCenter.Y) == sessionVM.NotesOnStave[i].Note.Pitch)
                 {
                     NothingAtThisPlace = false;
                     noteVM = sessionVM.NotesOnStave[i];
@@ -180,8 +185,7 @@ namespace PopnTouchi2.ViewModel.Animation
 
             if (NothingAtThisPlace)
             {
-                Converter converter = new Converter();
-                int positionNote = (int)((virtualCenter.X - 120) / 60);
+                int positionNote = (int)((virtualCenter.X - 120.0) / 60.0);
 
                 double betweenStave = (350 - GlobalVariables.ManipulationGrid.ElementAtOrDefault(noteVM.Note.Position + 2)) * (sessionVM.SessionSVI.ActualHeight / 1080);
 
