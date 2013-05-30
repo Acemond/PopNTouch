@@ -148,12 +148,12 @@ namespace PopnTouchi2.ViewModel.Animation
                 SineEase ease = new SineEase();
                 ease.EasingMode = EasingMode.EaseInOut;
                 Random r = GlobalVariables.GlobalRandom;
-                double xOffset = (-2) * (r.Next() % 2 - .5) * r.Next(50, 100);
-                double yOffset = (-2) * (r.Next() % 2 - .5) * r.Next(50, 100);
+                double xOffset = (-2) * (r.Next() % 2 - .5) * r.Next(40, 75);
+                double yOffset = (-2) * (r.Next() % 2 - .5) * r.Next(40, 75);
 
                 centerAnimation.Duration = new Duration(TimeSpan.FromMilliseconds(r.Next(1000, 2000)));
-                centerAnimation.AccelerationRatio = .3;
-                centerAnimation.DecelerationRatio = .3;
+                centerAnimation.AccelerationRatio = .2;
+                centerAnimation.DecelerationRatio = .8;
 
                 if (SVItem.Center.X + xOffset > ParentSV.ActualWidth)
                     xOffset = (ParentSV.ActualWidth - SVItem.Center.X) - (double)r.Next(50);
@@ -163,11 +163,6 @@ namespace PopnTouchi2.ViewModel.Animation
                     yOffset = ParentSV.ActualHeight - SVItem.Center.Y - (double)r.Next(50);
                 if (SVItem.Center.Y + yOffset < 630.0 * ParentSV.ActualHeight / 1080.0)
                     yOffset = ((630.0 * ParentSV.ActualHeight / 1080.0) - SVItem.Center.Y) + (double)r.Next(50);
-                if (SVItem.Center.Y < 630.0 * ParentSV.ActualHeight / 1080.0)
-                {
-                    centerAnimation.Duration = new Duration(TimeSpan.FromMilliseconds(r.Next(2000, 4000)));
-                    centerAnimation.DecelerationRatio = .7;
-                }
 
                 centerAnimation.From = SVItem.Center;
                 centerAnimation.To = new Point(SVItem.Center.X + xOffset, SVItem.Center.Y + yOffset);
