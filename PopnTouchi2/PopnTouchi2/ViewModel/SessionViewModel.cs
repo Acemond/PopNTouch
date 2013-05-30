@@ -18,6 +18,7 @@ using Microsoft.Xna.Framework.Audio;
 using System.Windows.Input;
 using PopnTouchi2.Model.Enums;
 using System.Windows.Shapes;
+using System.Windows.Threading;
 
 namespace PopnTouchi2.ViewModel
 {
@@ -165,6 +166,13 @@ namespace PopnTouchi2.ViewModel
         /// </summary>
         public SurfaceButton DeleteButton { get; set; }
 
+        /// <summary>
+        /// Delete Button
+        /// </summary>
+        public Grid PlayBar { get; set; }
+
+        private DispatcherTimer pBDT;
+
         private Thread play;
 
         public bool BeingDeleted { get; set; }
@@ -259,11 +267,22 @@ namespace PopnTouchi2.ViewModel
 
             SessionSVI.CanMove = false;
             SessionSVI.CanRotate = false;
-            //SessionSVI.CanScale = false;
             SessionSVI.ShowsActivationEffects = false;
 
             displayTrees(new Thickness(20.0 * ratio, 0, 0, 130.0 * ratio), new Thickness(20.0 * ratio, 0, 0, 580.0 * ratio));
 
+            PlayBar = new Grid();
+            PlayBar.Width = 17.0;
+            PlayBar.Height = 373.0;
+            ImageBrush PBImage = new ImageBrush();
+            PBImage.ImageSource = new BitmapImage(new Uri(@"../../Resources/Images/ui_items/play_bar.png", UriKind.Relative));
+            PlayBar.HorizontalAlignment = System.Windows.HorizontalAlignment.Left;
+            PlayBar.VerticalAlignment = System.Windows.VerticalAlignment.Top;
+            PlayBar.Margin = new Thickness(120.0 * ratio, 0.0, 0.0, 0.0);
+            PlayBar.Background = PBImage;
+            PlayBar.Opacity = 0.0;
+
+            Grid.Children.Add(PlayBar);
             Grid.Children.Add(Bubbles);
             Grid.Children.Add(Notes);
             Grid.Children.Add(NbgVM.Grid);
@@ -275,14 +294,17 @@ namespace PopnTouchi2.ViewModel
             Grid.Children.Add(topStaveHighlight);
             Grid.Children.Add(bottomStaveHighlight);
 
-            Grid.SetZIndex(UpdateSound.Grid, 4);
-            Grid.SetZIndex(TreeUp.Grid, 3);
-            Grid.SetZIndex(TreeDown.Grid, 3);
-            Grid.SetZIndex(Bubbles, 2);
-            Grid.SetZIndex(Notes, 1);
-            Grid.SetZIndex(NbgVM.Grid, 0);
-            Grid.SetZIndex(MbgVM.Grid, 0);
-            Grid.SetZIndex(previewGrid, 0);
+            Grid.SetZIndex(UpdateSound.Grid, 7);
+            Grid.SetZIndex(TreeUp.Grid, 6);
+            Grid.SetZIndex(TreeDown.Grid, 6);
+            Grid.SetZIndex(Bubbles, 5);
+            Grid.SetZIndex(Notes, 4);
+            Grid.SetZIndex(NbgVM.Grid, 3);
+            Grid.SetZIndex(MbgVM.Grid, 3);
+            Grid.SetZIndex(PlayBar, 2);
+            Grid.SetZIndex(previewGrid, 1);
+            Grid.SetZIndex(topStaveHighlight, 0);
+            Grid.SetZIndex(bottomStaveHighlight, 0);
             
             SessionSVI.Content = Grid;
 
@@ -423,6 +445,7 @@ namespace PopnTouchi2.ViewModel
             previewGrid.Margin = new Thickness(150.0 * ratio, 90.0 * ratio, 90.0 * ratio, 480.0 * ratio);
             topStaveHighlight.Margin = new Thickness(0.0, 60.0 * ratio, 0.0, 480.0 * ratio);
             bottomStaveHighlight.Margin = new Thickness(0.0, 60.0 * ratio, 0.0, 480.0 * ratio);
+            PlayBar.Margin = new Thickness(120.0 * ratio, 0.0, 0.0, 0.0);
             foreach (ScatterViewItem svi in Notes.Items)
             {
                 ScaleTransform st = new ScaleTransform(ratio / originalRatio, ratio / originalRatio, svi.ActualCenter.X, svi.ActualCenter.Y);
@@ -473,6 +496,7 @@ namespace PopnTouchi2.ViewModel
             previewGrid.Margin = new Thickness(150.0 * ratio, 90.0 * ratio, 90.0 * ratio, 480.0 * ratio);
             topStaveHighlight.Margin = new Thickness(0.0, 60.0 * ratio, 0.0, 480.0 * ratio);
             bottomStaveHighlight.Margin = new Thickness(0.0, 60.0 * ratio, 0.0, 480.0 * ratio);
+            PlayBar.Margin = new Thickness(120.0 * ratio, 0.0, 0.0, 0.0);
 
             //Size of SurfaceButton Play
             Play_Button.Width = (140.0 / 1920.0) * width;
@@ -510,6 +534,8 @@ namespace PopnTouchi2.ViewModel
             play = new Thread(PlayStaves);
             if (!IsPlaying)
             {
+                LaunchPlayBar();
+
                 Session.StopBackgroundSound();              
                 play.Start();
 
@@ -518,6 +544,8 @@ namespace PopnTouchi2.ViewModel
             }
             else
             {
+                StopPlayBar();
+
                 StopSound();
             }
         }
@@ -682,14 +710,13 @@ namespace PopnTouchi2.ViewModel
             Grid.Children.Add(Theme_Button);
             Grid.Children.Add(Tempo_Button);
 
-            Grid.SetZIndex(Theme_Button, 5);
-            Grid.SetZIndex(UpdateSound.Grid, 4);
-            Grid.SetZIndex(TreeUp.Grid, 3);
-            Grid.SetZIndex(TreeDown.Grid, 3);
-            Grid.SetZIndex(Bubbles, 2);
-            Grid.SetZIndex(Notes, 1);
-            Grid.SetZIndex(NbgVM.Grid, 0);
-            Grid.SetZIndex(MbgVM.Grid, 0);
+            Grid.SetZIndex(UpdateSound.Grid, 7);
+            Grid.SetZIndex(TreeUp.Grid, 6);
+            Grid.SetZIndex(TreeDown.Grid, 6);
+            Grid.SetZIndex(Bubbles, 5);
+            Grid.SetZIndex(Notes, 4);
+            Grid.SetZIndex(NbgVM.Grid, 3);
+            Grid.SetZIndex(MbgVM.Grid, 3);
             Grid.SetZIndex(ThemeChooser.Bird, 0);
             Grid.SetZIndex(ThemeChooser.Dragon, 0);
             Grid.SetZIndex(ThemeChooser.Cat, 0);
@@ -754,6 +781,87 @@ namespace PopnTouchi2.ViewModel
             {
 
             }
+        }
+
+        public void LaunchPlayBar()
+        {
+            pBDT = new DispatcherTimer();
+            pBDT.Interval = TimeSpan.FromMilliseconds(30000 / Session.Bpm);
+            pBDT.Tick += new EventHandler(pBDT_Tick);
+            pBDT.Start();
+        }
+
+        void pBDT_Tick(object sender, EventArgs e)
+        {
+            pBDT.Stop();
+
+            try
+            {
+                double lastNotePos;
+
+                if (Session.StaveTop.Notes.Count != 0)
+                {
+                    if (Session.StaveBottom.Notes.Count != 0)
+                    {
+                        lastNotePos = Math.Max(Session.StaveTop.Notes.Last().Position, Session.StaveBottom.Notes.Last().Position);
+                    }
+                    else lastNotePos = Session.StaveTop.Notes.Last().Position;
+                }
+                else lastNotePos = Session.StaveBottom.Notes.Last().Position;
+
+                DisplayPlayBar(true);
+                double endOfTheLine = (lastNotePos * 60.0) + 120.0;
+
+                Storyboard pBSTB = new Storyboard();
+                ThicknessAnimation playBarMarginAnimation = new ThicknessAnimation();
+
+                playBarMarginAnimation.From = new Thickness(120.0 * ratio, 0.0, 0.0, 0.0);
+                playBarMarginAnimation.To = new Thickness((endOfTheLine - 8.0) * ratio, PlayBar.Margin.Top, PlayBar.Margin.Right, PlayBar.Margin.Bottom);
+
+                playBarMarginAnimation.Duration = new Duration(TimeSpan.FromMinutes((((double)lastNotePos + 0.5) / 2.0) / (double)Session.Bpm)); //TODO
+                playBarMarginAnimation.FillBehavior = FillBehavior.HoldEnd;
+                pBSTB.Children.Add(playBarMarginAnimation);
+                Storyboard.SetTarget(playBarMarginAnimation, PlayBar);
+                Storyboard.SetTargetProperty(playBarMarginAnimation, new PropertyPath(Grid.MarginProperty));
+
+                playBarMarginAnimation.Completed += new EventHandler(playBarMarginAnimation_Completed);
+                pBSTB.Begin();
+            }
+            catch (Exception exc) { }
+        }
+
+        private void playBarMarginAnimation_Completed(object sender, EventArgs e)
+        {
+            StopPlayBar();
+        }
+
+        public void StopPlayBar()
+        {
+            DisplayPlayBar(false);
+        }
+
+        private void DisplayPlayBar(bool appear)
+        {
+            Storyboard pBSTB = new Storyboard();
+            DoubleAnimation playBarOpctyAnimation = new DoubleAnimation();
+
+            if (appear)
+            {
+                playBarOpctyAnimation.From = PlayBar.Opacity;
+                playBarOpctyAnimation.To = 1.0;
+            }
+            else
+            {
+                playBarOpctyAnimation.From = PlayBar.Opacity;
+                playBarOpctyAnimation.To = 0;
+            }
+            playBarOpctyAnimation.Duration = new Duration(TimeSpan.FromSeconds(.2));
+            playBarOpctyAnimation.FillBehavior = FillBehavior.HoldEnd;
+            pBSTB.Children.Add(playBarOpctyAnimation);
+            Storyboard.SetTarget(playBarOpctyAnimation, PlayBar);
+            Storyboard.SetTargetProperty(playBarOpctyAnimation, new PropertyPath(Grid.OpacityProperty));
+
+            pBSTB.Begin();
         }
     }
 }

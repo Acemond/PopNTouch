@@ -50,6 +50,8 @@ namespace PopnTouchi2.ViewModel.Animation
         /// </summary>
         private bool NothingAtThisPlace;
 
+        private bool noteDroppedTopStave;
+
         #endregion
 
         #region Constructors
@@ -118,12 +120,13 @@ namespace PopnTouchi2.ViewModel.Animation
                 {
                     if (NoteCenter.Y >= 344) NoteCenter.Y = 344;
                     NoteCenter.Y = Math.Floor((NoteCenter.Y + 6.0) / 20.0) * 20.0 + 4.0;
-                    
+                    noteDroppedTopStave = true;
                 }
                 else
                 {
                     if (NoteCenter.Y <= 395) NoteCenter.Y = 395;
                     NoteCenter.Y = Math.Floor((NoteCenter.Y + 15.0) / 20.0) * 20.0 - 5.0;
+                    noteDroppedTopStave = false;
                 }
                 virtualCenter = NoteCenter;
 
@@ -175,12 +178,14 @@ namespace PopnTouchi2.ViewModel.Animation
                 if ((int)((virtualCenter.X - 120.0) / 60.0) == sessionVM.NotesOnStave[i].Note.Position
                     && !sessionVM.NotesOnStave[i].Picked
                     && converter.getOctave(virtualCenter.Y) == sessionVM.NotesOnStave[i].Note.Octave
-                    && converter.getPitch(virtualCenter.Y) == sessionVM.NotesOnStave[i].Note.Pitch)
-                {
-                    //Invert comments if exception raises.
-                    sessionVM.NotesOnStave[i].Animation.BackToBubbleFormat(true);
-                    NothingAtThisPlace = true;
-                    //NothingAtThisPlace = false;
+                    && converter.getPitch(virtualCenter.Y) == sessionVM.NotesOnStave[i].Note.Pitch
+                    && ((noteDroppedTopStave && sessionVM.Session.StaveTop.Notes.Contains(sessionVM.NotesOnStave[i].Note)) ||
+                        (!noteDroppedTopStave && sessionVM.Session.StaveBottom.Notes.Contains(sessionVM.NotesOnStave[i].Note))))
+                    {
+                        //Invert comments if exception raises.
+                        sessionVM.NotesOnStave[i].Animation.BackToBubbleFormat(true);
+                        NothingAtThisPlace = true;
+                        //NothingAtThisPlace = false;
                 }
                 else NothingAtThisPlace = true;
             }
