@@ -99,10 +99,12 @@ namespace PopnTouchi2.ViewModel
 
             bubbleImage.SetValue(Image.WidthProperty, (125.0 / 1920.0) * SessionVM.Grid.ActualWidth);
             bubbleImage.SetValue(Image.HeightProperty, (260.0 / 1080.0) * SessionVM.Grid.ActualHeight);
-            
+
             FrameworkElementFactory touchZone = new FrameworkElementFactory(typeof(Ellipse));
+            //touchZone.SetValue(Ellipse.OpacityProperty, 0.3);
             touchZone.SetValue(Ellipse.FillProperty, Brushes.Transparent);
-            touchZone.SetValue(Ellipse.MarginProperty, new Thickness(20, 1, 12, 1));
+            touchZone.SetValue(Ellipse.WidthProperty, (47.0 / 1920.0) * SessionVM.Grid.ActualWidth);
+            touchZone.SetValue(Ellipse.HeightProperty, (40.0/ 1080.0) * SessionVM.Grid.ActualHeight);
             
 
             FrameworkElementFactory grid = new FrameworkElementFactory(typeof(Grid));
