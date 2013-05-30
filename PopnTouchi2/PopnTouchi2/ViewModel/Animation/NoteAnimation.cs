@@ -9,6 +9,7 @@ using Microsoft.Surface.Presentation.Controls;
 using System.Windows.Input;
 using PopnTouchi2.Model.Enums;
 using System.Threading;
+using PopnTouchi2.Infrastructure;
 
 namespace PopnTouchi2.ViewModel.Animation
 {
@@ -129,11 +130,13 @@ namespace PopnTouchi2.ViewModel.Animation
                 NoteCenter.Y = NoteCenter.Y * height / 1080.0;
 
                 noteVM.SVItem.Center = NoteCenter;
+                MyPoint noteBubbleCenter = new MyPoint(NoteCenter);
                 for (int i = 0; i < sessionVM.NotesOnStave.Count && NothingAtThisPlace; i++)
                 {
-                    if (noteVM.SVItem.Center == sessionVM.NotesOnStave[i].SVItem.Center)
+                    if (noteBubbleCenter.QuasiEquals(sessionVM.NotesOnStave[i].SVItem.Center))
                     {
                         NothingAtThisPlace = false;
+                        noteVM = sessionVM.NotesOnStave[i];
                     }
                     else NothingAtThisPlace = true;
                 }
