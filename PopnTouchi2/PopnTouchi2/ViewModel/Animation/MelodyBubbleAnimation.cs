@@ -78,9 +78,9 @@ namespace PopnTouchi2.ViewModel.Animation
 
             DispatcherTimer.Tick += new EventHandler(t_Tick);
 
-            SVItem.ContainerManipulationCompleted += touchLeave;
+            SVItem.ContainerManipulationCompleted += new ContainerManipulationCompletedEventHandler(touchLeave);
 
-            SVItem.PreviewTouchDown += touchDown;
+            SVItem.PreviewTouchDown += new EventHandler<TouchEventArgs>(touchDown);
             SVItem.PreviewTouchUp += new EventHandler<TouchEventArgs>(SVItem_PreviewTouchUp);
             Animate();
         }
@@ -210,9 +210,10 @@ namespace PopnTouchi2.ViewModel.Animation
 
         public void RemovePreview()
         {
+            try { sessionVM.Grid.Children.Remove(previewNotesGrid); }
+            catch (Exception exc) { }
             try { previewDt.Stop(); }
             catch (Exception exc) { }
-            sessionVM.Grid.Children.Remove(previewNotesGrid);
         }
 
         public void BeginBubbleAnimation()
@@ -268,6 +269,8 @@ namespace PopnTouchi2.ViewModel.Animation
             }
         }
 
+        private Storyboard centerSTB;
+
         /// <summary>
         /// Stops a current animation performing.
         /// </summary>
@@ -320,6 +323,9 @@ namespace PopnTouchi2.ViewModel.Animation
         private void touchLeave(object sender, ContainerManipulationCompletedEventArgs e)
         {
             if (sessionVM.Session == null) return;
+
+            if (melodyBubbleVM.Picked) return;
+            melodyBubbleVM.Picked = true;
 
             ScatterViewItem bubble = new ScatterViewItem();
             bubble = e.Source as ScatterViewItem;
@@ -377,7 +383,7 @@ namespace PopnTouchi2.ViewModel.Animation
                 bubbleCenter.Y = bubbleCenter.Y * height / 1080;
 
                 #region STB
-                Storyboard stb = new Storyboard();
+                centerSTB = new Storyboard();
                 PointAnimation moveCenter = new PointAnimation();
 
                 moveCenter.From = bubble.ActualCenter;
@@ -386,7 +392,7 @@ namespace PopnTouchi2.ViewModel.Animation
                 bubble.Center = bubbleCenter;
                 moveCenter.FillBehavior = FillBehavior.Stop;
 
-                stb.Children.Add(moveCenter);
+                centerSTB.Children.Add(moveCenter);
 
                 Storyboard.SetTarget(moveCenter, bubble);
                 Storyboard.SetTargetProperty(moveCenter, new PropertyPath(ScatterViewItem.CenterProperty));
@@ -395,11 +401,12 @@ namespace PopnTouchi2.ViewModel.Animation
                 bubble.Center = bubbleCenter;
                 moveCenter.Completed += new EventHandler(moveCenter_Completed);
 
-                stb.Begin(SVItem);
+                centerSTB.Begin(SVItem);
 
             }
             else
             {
+                melodyBubbleVM.Picked = false;
                 canAnimate = true;
                 Animate();
             }
@@ -429,6 +436,7 @@ namespace PopnTouchi2.ViewModel.Animation
             sessionVM.Bubbles.Items.Remove(melodyBubbleVM.SVItem);
             sessionVM.MbgVM.MelodyBubbleVMs.Remove(melodyBubbleVM);
 
+            melodyBubbleVM.Picked = false;
         }
 
         /// <summary>

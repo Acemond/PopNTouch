@@ -41,6 +41,10 @@ namespace PopnTouchi2.ViewModel
         /// </summary>
         public MelodyBubbleAnimation Animation { get; set; }
 
+        /// <summary>
+        /// Defines if the melodybubble is being moved by user
+        /// </summary>
+        public bool Picked { get; set; }
 
          /// <summary>
         /// NoteBubbleViewModel Constructor.
