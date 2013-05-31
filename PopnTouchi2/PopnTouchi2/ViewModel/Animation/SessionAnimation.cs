@@ -283,6 +283,12 @@ namespace PopnTouchi2.ViewModel.Animation
             SessionVM.Play_Button.Opacity = 1;
             grid.Children.Remove(SessionVM.Bubbles);
             grid.Children.Remove(SessionVM.UpdateSound.Grid);
+            grid.Children.Remove(SessionVM.PlayBar);
+            grid.Children.Remove(SessionVM.PlayBarCache);
+            grid.Children.Remove(SessionVM.StaveCache);
+            grid.Children.Remove(SessionVM.previewGrid);
+            grid.Children.Remove(SessionVM.topStaveHighlight);
+            grid.Children.Remove(SessionVM.bottomStaveHighlight);
         }
 
         /// <summary>

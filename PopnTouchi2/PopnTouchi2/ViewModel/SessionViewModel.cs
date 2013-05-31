@@ -166,12 +166,12 @@ namespace PopnTouchi2.ViewModel
         /// </summary>
         public SurfaceButton DeleteButton { get; set; }
 
-        /// <summary>
-        /// Delete Button
-        /// </summary>
         public Grid PlayBar { get; set; }
+        public Grid PlayBarCache { get; set; }
+        public Grid StaveCache { get; set; }
 
         private DispatcherTimer pBDT;
+        private DispatcherTimer pBCDT;
 
         private Thread play;
 
@@ -272,17 +272,39 @@ namespace PopnTouchi2.ViewModel
             displayTrees(new Thickness(20.0 * ratio, 0, 0, 130.0 * ratio), new Thickness(20.0 * ratio, 0, 0, 580.0 * ratio));
 
             PlayBar = new Grid();
-            PlayBar.Width = 17.0;
-            PlayBar.Height = 373.0;
+            PlayBar.Width = 12.0 * ratio;
+            PlayBar.Height = 490.0 * ratio;
             ImageBrush PBImage = new ImageBrush();
             PBImage.ImageSource = new BitmapImage(new Uri(@"../../Resources/Images/ui_items/play_bar.png", UriKind.Relative));
             PlayBar.HorizontalAlignment = System.Windows.HorizontalAlignment.Left;
             PlayBar.VerticalAlignment = System.Windows.VerticalAlignment.Top;
-            PlayBar.Margin = new Thickness(120.0 * ratio, 0.0, 0.0, 0.0);
+            PlayBar.Margin = new Thickness(120.0 * ratio, 96.0 * ratio, 0.0, 0.0);
             PlayBar.Background = PBImage;
             PlayBar.Opacity = 0.0;
 
+            PlayBarCache = new Grid();
+            PlayBarCache.Width = 1920.0 * ratio;
+            PlayBarCache.Height = 491.0 * ratio;
+            PlayBarCache.VerticalAlignment = System.Windows.VerticalAlignment.Top;
+            PlayBarCache.Margin = new Thickness(0.0, 98.0 * ratio, 0.0, 0.0);
+            PlayBarCache.Background = ThemeVM.PlayBarCache;
+            PlayBarCache.Opacity = 0.0;
+
+            StaveCache = new Grid();
+            StaveCache.Width = 1920.0 * ratio;
+            StaveCache.Height = 491.0 * ratio;
+            ImageBrush SCImage = new ImageBrush();
+            SCImage.ImageSource = new BitmapImage(new Uri(@"../../Resources/Images/ui_items/staves.png", UriKind.Relative));
+            StaveCache.VerticalAlignment = System.Windows.VerticalAlignment.Top;
+            StaveCache.Margin = new Thickness(0.0, 98.0 * ratio, 0.0, 0.0);
+            StaveCache.Background = SCImage;
+            StaveCache.Opacity = 0.0;
+
+
+
             Grid.Children.Add(PlayBar);
+            Grid.Children.Add(PlayBarCache);
+            Grid.Children.Add(StaveCache);
             Grid.Children.Add(Bubbles);
             Grid.Children.Add(Notes);
             Grid.Children.Add(NbgVM.Grid);
@@ -301,10 +323,13 @@ namespace PopnTouchi2.ViewModel
             Grid.SetZIndex(Notes, 4);
             Grid.SetZIndex(NbgVM.Grid, 3);
             Grid.SetZIndex(MbgVM.Grid, 3);
-            Grid.SetZIndex(PlayBar, 2);
-            Grid.SetZIndex(previewGrid, 1);
-            Grid.SetZIndex(topStaveHighlight, 0);
-            Grid.SetZIndex(bottomStaveHighlight, 0);
+            Grid.SetZIndex(Play_Button, 3);
+            Grid.SetZIndex(previewGrid, 2);
+            Grid.SetZIndex(StaveCache, 2);
+            Grid.SetZIndex(topStaveHighlight, 2);
+            Grid.SetZIndex(bottomStaveHighlight, 2);
+            Grid.SetZIndex(PlayBarCache, 1);
+            Grid.SetZIndex(PlayBar, 0);
             
             SessionSVI.Content = Grid;
 
@@ -408,6 +433,12 @@ namespace PopnTouchi2.ViewModel
             Grid.Children.Remove(TreeDown.Grid);
             Grid.Children.Remove(Play_Button);
             Grid.Children.Remove(Tempo_Button);
+            Grid.Children.Remove(PlayBar);
+            Grid.Children.Remove(PlayBarCache);
+            Grid.Children.Remove(StaveCache);
+            Grid.Children.Remove(previewGrid);
+            Grid.Children.Remove(topStaveHighlight);
+            Grid.Children.Remove(bottomStaveHighlight);
             EraseSession();
 
             SessionSVI.CanMove = true;
@@ -445,7 +476,19 @@ namespace PopnTouchi2.ViewModel
             previewGrid.Margin = new Thickness(150.0 * ratio, 90.0 * ratio, 90.0 * ratio, 480.0 * ratio);
             topStaveHighlight.Margin = new Thickness(0.0, 60.0 * ratio, 0.0, 480.0 * ratio);
             bottomStaveHighlight.Margin = new Thickness(0.0, 60.0 * ratio, 0.0, 480.0 * ratio);
-            PlayBar.Margin = new Thickness(120.0 * ratio, 0.0, 0.0, 0.0);
+
+
+            PlayBar.Width = 12.0 * ratio;
+            PlayBar.Height = 490.0 * ratio;
+            PlayBar.Margin = new Thickness(120.0 * ratio, 96.0 * ratio, 0.0, 0.0);
+
+            PlayBarCache.Width = 1920.0 * ratio;
+            PlayBarCache.Height = 491.0 * ratio;
+            PlayBarCache.Margin = new Thickness(0.0, 98.0 * ratio, 0.0, 0.0);
+
+            StaveCache.Width = 1920.0 * ratio;
+            StaveCache.Height = 491.0 * ratio;
+            StaveCache.Margin = new Thickness(0.0, 98.0 * ratio, 0.0, 0.0);
             foreach (ScatterViewItem svi in Notes.Items)
             {
                 ScaleTransform st = new ScaleTransform(ratio / originalRatio, ratio / originalRatio, svi.ActualCenter.X, svi.ActualCenter.Y);
@@ -496,7 +539,18 @@ namespace PopnTouchi2.ViewModel
             previewGrid.Margin = new Thickness(150.0 * ratio, 90.0 * ratio, 90.0 * ratio, 480.0 * ratio);
             topStaveHighlight.Margin = new Thickness(0.0, 60.0 * ratio, 0.0, 480.0 * ratio);
             bottomStaveHighlight.Margin = new Thickness(0.0, 60.0 * ratio, 0.0, 480.0 * ratio);
-            PlayBar.Margin = new Thickness(120.0 * ratio, 0.0, 0.0, 0.0);
+
+            PlayBar.Width = 12.0 * ratio;
+            PlayBar.Height = 490.0 * ratio;
+            PlayBar.Margin = new Thickness(120.0 * ratio, 96.0 * ratio, 0.0, 0.0);
+
+            PlayBarCache.Width = 1920.0 * ratio;
+            PlayBarCache.Height = 491.0 * ratio;
+            PlayBarCache.Margin = new Thickness(0.0, 98.0 * ratio, 0.0, 0.0);
+
+            StaveCache.Width = 1920.0 * ratio;
+            StaveCache.Height = 491.0 * ratio;
+            StaveCache.Margin = new Thickness(0.0, 98.0 * ratio, 0.0, 0.0);
 
             //Size of SurfaceButton Play
             Play_Button.Width = (140.0 / 1920.0) * width;
@@ -673,7 +727,8 @@ namespace PopnTouchi2.ViewModel
             Session.StaveTop = new Stave(Session.Theme.InstrumentsTop[0]);
             Session.StaveBottom = new Stave(Session.Theme.InstrumentsBottom[0]);
 
-            Grid.Background = (new ThemeViewModel(Session.Theme, this)).BackgroundImage;
+            Grid.Background = ThemeVM.BackgroundImage;
+            PlayBarCache.Background = ThemeVM.PlayBarCache;
 
             Bubbles = new ScatterView();
             Notes = new ScatterView();
@@ -709,6 +764,12 @@ namespace PopnTouchi2.ViewModel
             Grid.Children.Add(MbgVM.Grid);
             Grid.Children.Add(Theme_Button);
             Grid.Children.Add(Tempo_Button);
+            Grid.Children.Add(PlayBar);
+            Grid.Children.Add(PlayBarCache);
+            Grid.Children.Add(StaveCache);
+            Grid.Children.Add(previewGrid);
+            Grid.Children.Add(topStaveHighlight);
+            Grid.Children.Add(bottomStaveHighlight);
 
             Grid.SetZIndex(UpdateSound.Grid, 7);
             Grid.SetZIndex(TreeUp.Grid, 6);
@@ -717,6 +778,13 @@ namespace PopnTouchi2.ViewModel
             Grid.SetZIndex(Notes, 4);
             Grid.SetZIndex(NbgVM.Grid, 3);
             Grid.SetZIndex(MbgVM.Grid, 3);
+            Grid.SetZIndex(Play_Button, 3);
+            Grid.SetZIndex(previewGrid, 2);
+            Grid.SetZIndex(StaveCache, 2);
+            Grid.SetZIndex(topStaveHighlight, 2);
+            Grid.SetZIndex(bottomStaveHighlight, 2);
+            Grid.SetZIndex(PlayBarCache, 1);
+            Grid.SetZIndex(PlayBar, 0);
             Grid.SetZIndex(ThemeChooser.Bird, 0);
             Grid.SetZIndex(ThemeChooser.Dragon, 0);
             Grid.SetZIndex(ThemeChooser.Cat, 0);
@@ -743,6 +811,14 @@ namespace PopnTouchi2.ViewModel
                 Notes.Items.Add(noteVM.SVItem);
                 NotesOnStave.Add(noteVM);
                 Session.StaveBottom.AddNote(noteVM.Note, noteVM.Note.Position);
+            }
+
+            switch (sd.bpm)
+            {
+                default : Tempo_Button.Background = ThemeVM.TempoImage[0]; break;
+                case 90: Tempo_Button.Background = ThemeVM.TempoImage[1]; break;
+                case 120: Tempo_Button.Background = ThemeVM.TempoImage[2]; break;
+
             }
 
             TreeDown.SetInstrument(sd.TopInstrument);
@@ -794,6 +870,10 @@ namespace PopnTouchi2.ViewModel
         void pBDT_Tick(object sender, EventArgs e)
         {
             pBDT.Stop();
+            pBCDT = new DispatcherTimer();
+            pBCDT.Interval = TimeSpan.FromMilliseconds(200.0);
+            pBCDT.Tick += new EventHandler(pBCDT_Tick);
+            pBCDT.Start();
 
             try
             {
@@ -809,13 +889,17 @@ namespace PopnTouchi2.ViewModel
                 }
                 else lastNotePos = Session.StaveBottom.Notes.Last().Position;
 
-                DisplayPlayBar(true);
+                DisplayGrid(PlayBarCache, true);
+                DisplayGrid(StaveCache, true);
+                DisplayGrid(topStaveHighlight, true);
+                DisplayGrid(bottomStaveHighlight, true);
+
                 double endOfTheLine = (lastNotePos * 60.0) + 120.0;
 
                 Storyboard pBSTB = new Storyboard();
                 ThicknessAnimation playBarMarginAnimation = new ThicknessAnimation();
 
-                playBarMarginAnimation.From = new Thickness(120.0 * ratio, 0.0, 0.0, 0.0);
+                playBarMarginAnimation.From = new Thickness(120.0 * ratio, 100.0, 0.0, 0.0);
                 playBarMarginAnimation.To = new Thickness((endOfTheLine - 8.0) * ratio, PlayBar.Margin.Top, PlayBar.Margin.Right, PlayBar.Margin.Bottom);
 
                 playBarMarginAnimation.Duration = new Duration(TimeSpan.FromMinutes((((double)lastNotePos + 0.5) / 2.0) / (double)Session.Bpm)); //TODO
@@ -830,6 +914,20 @@ namespace PopnTouchi2.ViewModel
             catch (Exception exc) { }
         }
 
+        void pBCDT_Tick(object sender, EventArgs e)
+        {
+            pBCDT.Stop();
+            DisplayGrid(PlayBar, true);
+        }
+        void pBCDT_Tick2(object sender, EventArgs e)
+        {
+            pBCDT.Stop();
+            DisplayGrid(PlayBarCache, false);
+            DisplayGrid(StaveCache, false);
+            DisplayGrid(topStaveHighlight, false);
+            DisplayGrid(bottomStaveHighlight, false);
+        }
+
         private void playBarMarginAnimation_Completed(object sender, EventArgs e)
         {
             StopPlayBar();
@@ -837,28 +935,32 @@ namespace PopnTouchi2.ViewModel
 
         public void StopPlayBar()
         {
-            DisplayPlayBar(false);
+            DisplayGrid(PlayBar, false);
+            pBCDT = new DispatcherTimer();
+            pBCDT.Interval = TimeSpan.FromMilliseconds(200.0);
+            pBCDT.Tick += new EventHandler(pBCDT_Tick2);
+            pBCDT.Start();
         }
 
-        private void DisplayPlayBar(bool appear)
+        private void DisplayGrid(Grid grid, bool appear)
         {
             Storyboard pBSTB = new Storyboard();
             DoubleAnimation playBarOpctyAnimation = new DoubleAnimation();
 
             if (appear)
             {
-                playBarOpctyAnimation.From = PlayBar.Opacity;
+                playBarOpctyAnimation.From = grid.Opacity;
                 playBarOpctyAnimation.To = 1.0;
             }
             else
             {
-                playBarOpctyAnimation.From = PlayBar.Opacity;
+                playBarOpctyAnimation.From = grid.Opacity;
                 playBarOpctyAnimation.To = 0;
             }
             playBarOpctyAnimation.Duration = new Duration(TimeSpan.FromSeconds(.2));
             playBarOpctyAnimation.FillBehavior = FillBehavior.HoldEnd;
             pBSTB.Children.Add(playBarOpctyAnimation);
-            Storyboard.SetTarget(playBarOpctyAnimation, PlayBar);
+            Storyboard.SetTarget(playBarOpctyAnimation, grid);
             Storyboard.SetTargetProperty(playBarOpctyAnimation, new PropertyPath(Grid.OpacityProperty));
 
             pBSTB.Begin();

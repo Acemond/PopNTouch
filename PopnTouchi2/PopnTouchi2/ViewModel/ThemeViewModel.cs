@@ -69,6 +69,12 @@ namespace PopnTouchi2.ViewModel
 
         /// <summary>
         /// Property.
+        /// Theme defines PlayBar cache aspect.
+        /// </summary>
+        public ImageBrush PlayBarCache { get; set; }
+
+        /// <summary>
+        /// Property.
         /// Theme defines SoundPointEnable button aspect.
         /// </summary>
         public ImageBrush SoundPointEnableImage { get; set; }
@@ -119,6 +125,9 @@ namespace PopnTouchi2.ViewModel
 
             ThemesImage = new ImageBrush();
             ThemesImage.ImageSource = new BitmapImage(new Uri(@"../../Resources/Images/Theme" + SessionVM.Session.ThemeID + "/themes.png", UriKind.Relative));
+
+            PlayBarCache = new ImageBrush();
+            PlayBarCache.ImageSource = new BitmapImage(new Uri(@"../../Resources/Images/Theme" + SessionVM.Session.ThemeID + "/theme" + SessionVM.Session.ThemeID + "_shape.png", UriKind.Relative));
 
             NoteBubbleImages.Add(NoteValue.crotchet, GetNoteBitmapImage("bullenoire"));
             NoteBubbleImages.Add(NoteValue.minim, GetNoteBitmapImage("bulleblanche"));

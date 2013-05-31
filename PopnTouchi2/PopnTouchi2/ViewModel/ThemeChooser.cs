@@ -253,6 +253,7 @@ namespace PopnTouchi2.ViewModel
             sessionVM.Session.ThemeID = 1;
             sessionVM.ThemeVM = new ThemeViewModel(sessionVM.Session.Theme, sessionVM);
             sessionVM.Grid.Background = sessionVM.ThemeVM.BackgroundImage;
+            sessionVM.PlayBarCache.Background = sessionVM.ThemeVM.PlayBarCache;
 
             sessionVM.Grid.Children.Remove(sessionVM.NbgVM.Grid);
             sessionVM.Grid.Children.Remove(sessionVM.MbgVM.Grid);
@@ -329,6 +330,7 @@ namespace PopnTouchi2.ViewModel
             sessionVM.Session.ThemeID = 2;
             sessionVM.ThemeVM = new ThemeViewModel(sessionVM.Session.Theme, sessionVM);
             sessionVM.Grid.Background = sessionVM.ThemeVM.BackgroundImage;
+            sessionVM.PlayBarCache.Background = sessionVM.ThemeVM.PlayBarCache;
             
             sessionVM.Grid.Children.Remove(sessionVM.NbgVM.Grid);
             sessionVM.Grid.Children.Remove(sessionVM.MbgVM.Grid);
@@ -405,6 +407,7 @@ namespace PopnTouchi2.ViewModel
             sessionVM.Session.ThemeID = 3;
             sessionVM.ThemeVM = new ThemeViewModel(sessionVM.Session.Theme, sessionVM);
             sessionVM.Grid.Background = sessionVM.ThemeVM.BackgroundImage;
+            sessionVM.PlayBarCache.Background = sessionVM.ThemeVM.PlayBarCache;
 
             sessionVM.Grid.Children.Remove(sessionVM.NbgVM.Grid);
             sessionVM.Grid.Children.Remove(sessionVM.MbgVM.Grid);
@@ -482,6 +485,7 @@ namespace PopnTouchi2.ViewModel
             sessionVM.Session.ThemeID = 4;
             sessionVM.ThemeVM = new ThemeViewModel(sessionVM.Session.Theme, sessionVM);
             sessionVM.Grid.Background = sessionVM.ThemeVM.BackgroundImage;
+            sessionVM.PlayBarCache.Background = sessionVM.ThemeVM.PlayBarCache;
 
             sessionVM.Grid.Children.Remove(sessionVM.NbgVM.Grid);
             sessionVM.Grid.Children.Remove(sessionVM.MbgVM.Grid);
