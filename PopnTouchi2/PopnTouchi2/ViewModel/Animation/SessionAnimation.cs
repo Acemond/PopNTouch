@@ -131,6 +131,8 @@ namespace PopnTouchi2.ViewModel.Animation
             SessionVM.Session.StaveBottom.StopMelody();
             SessionVM.Session.StaveTop.StopMelody();
 
+            SessionVM.IsPlaying = false;
+
             AudioController.PlaySoundWithString("flash");
             SessionVM.FullyEnlarged = false;
 

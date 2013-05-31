@@ -174,6 +174,8 @@ namespace PopnTouchi2.ViewModel
         private DispatcherTimer pBCDT;
 
         private DispatcherTimer PlayMusicDT;
+
+        private Storyboard pBSTB;
         
         public bool BeingDeleted { get; set; }
         public bool removeDeleteButtonsOnTouchUp { get; set; }
@@ -275,7 +277,7 @@ namespace PopnTouchi2.ViewModel
             PBImage.ImageSource = new BitmapImage(new Uri(@"../../Resources/Images/ui_items/play_bar.png", UriKind.Relative));
             PlayBar.HorizontalAlignment = System.Windows.HorizontalAlignment.Left;
             PlayBar.VerticalAlignment = System.Windows.VerticalAlignment.Top;
-            PlayBar.Margin = new Thickness(120.0 * ratio, 96.0 * ratio, 0.0, 0.0);
+            PlayBar.Margin = new Thickness(120.0 * ratio, 99.0 * ratio, 0.0, 0.0);
             PlayBar.Background = PBImage;
             PlayBar.Opacity = 0.0;
 
@@ -477,7 +479,7 @@ namespace PopnTouchi2.ViewModel
 
             PlayBar.Width = 12.0 * newRatio;
             PlayBar.Height = 490.0 * newRatio;
-            PlayBar.Margin = new Thickness(120.0 * newRatio, 96.0 * newRatio, 0.0, 0.0);
+            PlayBar.Margin = new Thickness(120.0 * newRatio, 99.0 * newRatio, 0.0, 0.0);
 
             PlayBarCache.Width = 1920.0 * newRatio;
             PlayBarCache.Height = 491.0 * newRatio;
@@ -539,7 +541,7 @@ namespace PopnTouchi2.ViewModel
 
             PlayBar.Width = 12.0 * ratio;
             PlayBar.Height = 490.0 * ratio;
-            PlayBar.Margin = new Thickness(120.0 * ratio, 96.0 * ratio, 0.0, 0.0);
+            PlayBar.Margin = new Thickness(120.0 * ratio, 99.0 * ratio, 0.0, 0.0);
 
             PlayBarCache.Width = 1920.0 * ratio;
             PlayBarCache.Height = 491.0 * ratio;
@@ -847,6 +849,11 @@ namespace PopnTouchi2.ViewModel
 
         public void LaunchPlayBar()
         {
+            try { pBDT.Stop(); }
+            catch (Exception exc) { }
+            try { pBCDT.Stop(); }
+            catch (Exception exc) { }
+
             pBDT = new DispatcherTimer();
             pBCDT = new DispatcherTimer();
 
@@ -886,7 +893,7 @@ namespace PopnTouchi2.ViewModel
 
                 double endOfTheLine = (lastNotePos * 60.0) + 120.0;
 
-                Storyboard pBSTB = new Storyboard();
+                pBSTB = new Storyboard();
                 ThicknessAnimation playBarMarginAnimation = new ThicknessAnimation();
 
                 double ratio = Grid.ActualWidth / 1920.0;
@@ -894,7 +901,7 @@ namespace PopnTouchi2.ViewModel
                 playBarMarginAnimation.From = new Thickness(120.0 * ratio, 99.0 * ratio, 0.0, 0.0);
                 playBarMarginAnimation.To = new Thickness((endOfTheLine - 8.0) * ratio, PlayBar.Margin.Top, PlayBar.Margin.Right, PlayBar.Margin.Bottom);
 
-                playBarMarginAnimation.Duration = new Duration(TimeSpan.FromMinutes((((double)lastNotePos + 0.5) / 2.0) / (double)Session.Bpm)); //TODO
+                playBarMarginAnimation.Duration = new Duration(TimeSpan.FromMinutes((((double)lastNotePos + 0.5) / 2.0) / (double)Session.Bpm));
                 playBarMarginAnimation.FillBehavior = FillBehavior.HoldEnd;
                 pBSTB.Children.Add(playBarMarginAnimation);
                 Storyboard.SetTarget(playBarMarginAnimation, PlayBar);
@@ -930,6 +937,8 @@ namespace PopnTouchi2.ViewModel
             try { pBDT.Stop(); }
             catch (Exception exc) { }
             try { pBCDT.Stop(); }
+            catch (Exception exc) { }
+            try { pBSTB.Stop(); }
             catch (Exception exc) { }
             DisplayGrid(PlayBar, false);
             pBCDT = new DispatcherTimer();
