@@ -122,7 +122,8 @@ namespace PopnTouchi2.ViewModel.Animation
             virtualBubbleCenter.Y += offset;
 
             PositionMelody = new Point(virtualBubbleCenter.X, virtualBubbleCenter.Y);
-            
+
+            previewNotesGrid.Items.Clear();
 
             //Y dans le cadre portée ?
             //Si oui, animation
@@ -139,9 +140,7 @@ namespace PopnTouchi2.ViewModel.Animation
                     if (virtualBubbleCenter.Y <= 395) virtualBubbleCenter.Y = 395;
                     virtualBubbleCenter.Y = Math.Floor((virtualBubbleCenter.Y + 15.0) / 20.0) * 20.0 - 5.0;
                 }
-            }
 
-            previewNotesGrid.Items.Clear();
 
             List<NoteViewModel> ListOfNotes = melodyBubbleVM.melodyToListOfNote(PositionMelody);
             Converter cvrt = new Converter();
@@ -206,6 +205,7 @@ namespace PopnTouchi2.ViewModel.Animation
             }
             try { sessionVM.Grid.Children.Add(previewNotesGrid); }
             catch (Exception exc) { }
+            }
         }
 
         private void RemovePreview()
