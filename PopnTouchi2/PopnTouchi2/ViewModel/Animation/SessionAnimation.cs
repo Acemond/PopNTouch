@@ -123,6 +123,14 @@ namespace PopnTouchi2.ViewModel.Animation
             SessionVM.StopSound();
             SessionVM.StopPlayBar();
 
+            foreach (MelodyBubbleViewModel mbvm in SessionVM.MbgVM.MelodyBubbleVMs)
+            {
+                mbvm.Animation.RemovePreview();
+            }
+
+            SessionVM.Session.StaveBottom.StopMelody();
+            SessionVM.Session.StaveTop.StopMelody();
+
             AudioController.PlaySoundWithString("flash");
             SessionVM.FullyEnlarged = false;
 

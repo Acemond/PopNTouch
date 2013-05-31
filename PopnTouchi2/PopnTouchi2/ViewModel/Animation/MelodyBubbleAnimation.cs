@@ -208,9 +208,10 @@ namespace PopnTouchi2.ViewModel.Animation
             }
         }
 
-        private void RemovePreview()
+        public void RemovePreview()
         {
-            previewDt.Stop();
+            try { previewDt.Stop(); }
+            catch (Exception exc) { }
             sessionVM.Grid.Children.Remove(previewNotesGrid);
         }
 
@@ -318,6 +319,8 @@ namespace PopnTouchi2.ViewModel.Animation
         /// <param name="e"></param>
         private void touchLeave(object sender, ContainerManipulationCompletedEventArgs e)
         {
+            if (sessionVM.Session == null) return;
+
             ScatterViewItem bubble = new ScatterViewItem();
             bubble = e.Source as ScatterViewItem;
             bubbleCenter = bubble.ActualCenter;
