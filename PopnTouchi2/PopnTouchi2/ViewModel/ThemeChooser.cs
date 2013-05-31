@@ -248,6 +248,9 @@ namespace PopnTouchi2.ViewModel
 
             double ratio = sessionVM.SessionSVI.Width / 1920.0;
 
+            foreach (MelodyBubbleViewModel mbvm in sessionVM.MbgVM.MelodyBubbleVMs)
+                mbvm.Animation.RemovePreview();
+
             sessionVM.Session.StopBackgroundSound();
             sessionVM.Session.Theme = new Theme1();
             sessionVM.Session.ThemeID = 1;
@@ -326,6 +329,9 @@ namespace PopnTouchi2.ViewModel
     
             double ratio = sessionVM.SessionSVI.Width / 1920.0;
 
+            foreach (MelodyBubbleViewModel mbvm in sessionVM.MbgVM.MelodyBubbleVMs)
+                mbvm.Animation.RemovePreview();
+
             sessionVM.Session.StopBackgroundSound();
             sessionVM.Session.Theme = new Theme2();
             sessionVM.Session.ThemeID = 2;
@@ -403,6 +409,9 @@ namespace PopnTouchi2.ViewModel
             }
     
             double ratio = sessionVM.SessionSVI.Width / 1920.0;
+
+            foreach (MelodyBubbleViewModel mbvm in sessionVM.MbgVM.MelodyBubbleVMs)
+                mbvm.Animation.RemovePreview();
 
             sessionVM.Session.StopBackgroundSound();
             sessionVM.Session.Theme = new Theme3();
@@ -484,6 +493,9 @@ namespace PopnTouchi2.ViewModel
 
             double ratio = sessionVM.SessionSVI.Width / 1920.0;
 
+            foreach (MelodyBubbleViewModel mbvm in sessionVM.MbgVM.MelodyBubbleVMs)
+                mbvm.Animation.RemovePreview();
+
             sessionVM.Session.StopBackgroundSound();
             sessionVM.Session.Theme = new Theme4();
             sessionVM.Session.ThemeID = 4;
@@ -499,8 +511,7 @@ namespace PopnTouchi2.ViewModel
             sessionVM.Grid.Children.Remove(sessionVM.Theme_Button);
             sessionVM.Grid.Children.Remove(sessionVM.TreeUp.Grid);
             sessionVM.Grid.Children.Remove(sessionVM.TreeDown.Grid);
-
-
+            
             sessionVM.NbgVM = new NoteBubbleGeneratorViewModel(sessionVM.Session.NoteBubbleGenerator, sessionVM);
             sessionVM.MbgVM = new MelodyBubbleGeneratorViewModel(sessionVM.Session.MelodyBubbleGenerator, sessionVM);
             sessionVM.Bubbles = new ScatterView();
