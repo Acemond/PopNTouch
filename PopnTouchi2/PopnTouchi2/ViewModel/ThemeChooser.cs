@@ -296,6 +296,7 @@ namespace PopnTouchi2.ViewModel
             sessionVM.Grid.Children.Remove(Themes);
 
             sessionVM.Session.PlayBackgroundSound();
+            sessionVM.Session.ChangeBpm(sessionVM.Session.Bpm);
         }
         
         /// <summary>
@@ -367,6 +368,7 @@ namespace PopnTouchi2.ViewModel
             sessionVM.Grid.Children.Remove(Themes);
 
             sessionVM.Session.PlayBackgroundSound();
+            sessionVM.Session.ChangeBpm(sessionVM.Session.Bpm);
         }
 
         private void Bird_TouchDown(object sender, RoutedEventArgs e)
@@ -445,6 +447,8 @@ namespace PopnTouchi2.ViewModel
             sessionVM.Grid.Children.Remove(Themes);
 
             sessionVM.Session.PlayBackgroundSound();
+
+            sessionVM.Session.ChangeBpm(sessionVM.Session.Bpm);
         }
 
         private void Dragon_TouchDown(object sender, RoutedEventArgs e)
@@ -522,6 +526,8 @@ namespace PopnTouchi2.ViewModel
 
             sessionVM.Grid.Children.Remove(Grid);
             sessionVM.Grid.Children.Remove(Themes);
+
+            sessionVM.Session.ChangeBpm(sessionVM.Session.Bpm);
         }
 
         private void Cat_TouchDown(object sender, RoutedEventArgs e)
