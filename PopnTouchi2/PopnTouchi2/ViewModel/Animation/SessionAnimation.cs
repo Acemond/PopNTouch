@@ -113,20 +113,10 @@ namespace PopnTouchi2.ViewModel.Animation
         }
         
         #region REDUCTION
-        /// <summary>
-        /// TODO Replace by gesture (Adrien's got an idea) AND organize
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        public void Reducer_Click(object sender, RoutedEventArgs e)
-        {
-            Reduce();
-        }
-
         public void Reduce()
         {
             if (SessionVM.Reduced) return;
-
+            
             SessionVM.SessionSVI.MaxWidth = double.MaxValue;
             SessionVM.SessionSVI.MaxHeight = double.MaxValue;
 

@@ -173,8 +173,8 @@ namespace PopnTouchi2.ViewModel
         private DispatcherTimer pBDT;
         private DispatcherTimer pBCDT;
 
-        private Thread play;
-
+        private DispatcherTimer PlayMusicDT;
+        
         public bool BeingDeleted { get; set; }
         public bool removeDeleteButtonsOnTouchUp { get; set; }
         public bool FullyEnlarged { get; set; }
@@ -246,7 +246,6 @@ namespace PopnTouchi2.ViewModel
             bottomStaveHighlight.Margin = new Thickness(0.0, 60.0 * ratio, 0.0, 480.0 * ratio);
 
             Play_Button.PreviewTouchDown += new EventHandler<TouchEventArgs>(Play_Button_TouchDown);
-            play = new Thread(PlayStaves);
 
             Theme_Button = new Grid();
             Theme_Button.Width = 351;
@@ -585,13 +584,20 @@ namespace PopnTouchi2.ViewModel
 
         private void Play_Button_TouchDown(object sender, RoutedEventArgs e)
         {
-            play = new Thread(PlayStaves);
             if (!IsPlaying)
             {
-                LaunchPlayBar();
+                PlayMusicDT = new DispatcherTimer();
+                int timeTop = Session.StaveTop.GetTotalTime();
+                int timeDown = Session.StaveBottom.GetTotalTime();
+                PlayMusicDT.Interval = TimeSpan.FromMilliseconds(Math.Max(timeTop, timeDown));
+                PlayMusicDT.Tick += new EventHandler(PlayMusicDT_Tick);
 
-                Session.StopBackgroundSound();              
-                play.Start();
+                LaunchPlayBar();
+                PlayMusicDT.Start();
+
+                Session.StopBackgroundSound();
+                Session.StaveTop.PlayAllNotes();
+                Session.StaveBottom.PlayAllNotes();
 
                 Play_Button.Opacity = 0.5;
                 IsPlaying = true;
@@ -599,46 +605,25 @@ namespace PopnTouchi2.ViewModel
             else
             {
                 StopPlayBar();
-
                 StopSound();
             }
         }
 
+        void PlayMusicDT_Tick(object sender, EventArgs e)
+        {
+            PlayMusicDT.Stop();
+            StopSound();
+        }
+
         public void StopSound()
         {
-            try { play.Abort(); } catch (Exception exc) { }
-            Session.StaveTop.StopMusic();
-            Session.StaveBottom.StopMusic();
-            Play_Button.Opacity = 1;
-            IsPlaying = false;
-            Session.PlayBackgroundSound();
-        }
-
-        private void PlayStaves()
-        {
-            int timeTop = Session.StaveTop.PlayAllNotes();
-            int timeDown = Session.StaveBottom.PlayAllNotes();
-            Thread.Sleep(Math.Max(timeTop,timeDown));
-
-            UpdatePlay();   
-        }
-
-        void UpdateControl()
-        {
-            Session.StaveTop.StopMusic();
-            Session.StaveBottom.StopMusic();
-            Play_Button.Opacity = 1;
-            IsPlaying = false;
-            Session.PlayBackgroundSound();
-            
-        }
-
-        private void UpdatePlay(){
-            try
-            {
-                Play_Button.Dispatcher.BeginInvoke((Action)UpdateControl, null);
-            }
+            try { PlayMusicDT.Stop(); }
             catch (Exception exc) { }
+            Session.StaveTop.StopMusic();
+            Session.StaveBottom.StopMusic();
+            Play_Button.Opacity = 1;
+            IsPlaying = false;
+            Session.PlayBackgroundSound();
         }
 
 

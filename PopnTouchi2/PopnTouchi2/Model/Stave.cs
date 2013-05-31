@@ -196,14 +196,18 @@ namespace PopnTouchi2
         /// Plays all the notes contained by the stave.
         /// Calls the specific Event "PlayList"
         /// </summary>
-        public int PlayAllNotes()
+        public void PlayAllNotes()
         {
-            int time = 1000;
-            if(Notes.Count != 0)
-                time = (Notes.Last().Position+4)* (30000/CurrentInstrument.Bpm);
             Timer.Interval = TimeSpan.FromMilliseconds(30000 / CurrentInstrument.Bpm);
             Timer.Tick += new EventHandler(PlayList);
             Timer.Start();
+        }
+
+        public int GetTotalTime()
+        {
+            int time = 1000;
+            if (Notes.Count != 0)
+                time = (Notes.Last().Position + 4) * (30000 / CurrentInstrument.Bpm);
             return time;
         }
 
