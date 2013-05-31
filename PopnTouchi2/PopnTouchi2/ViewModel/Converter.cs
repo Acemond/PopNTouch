@@ -48,6 +48,7 @@ namespace PopnTouchi2.ViewModel
             PositionToPitch.Add(535, "bottom_fa_1");
             PositionToPitch.Add(555, "bottom_mi_1");
             PositionToPitch.Add(575, "bottom_re_1");
+            PositionToPitch.Add(595, "bottom_do_1");
         }
 
         /// <summary>

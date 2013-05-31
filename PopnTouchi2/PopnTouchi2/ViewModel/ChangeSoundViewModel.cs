@@ -77,7 +77,7 @@ namespace PopnTouchi2.ViewModel
         /// <param name="enabled">Bool</param>
         /// <param name="h">The position of the button</param>
         /// <returns>The Grid used as a button</returns>
-        public Grid createButtonForImage(Boolean enabled, double margin)
+        public Grid createButtonForImage(bool enabled, double margin)
         {
             Grid g = new Grid();
             double ratio = sessionVM.SessionSVI.Width / 1920.0;

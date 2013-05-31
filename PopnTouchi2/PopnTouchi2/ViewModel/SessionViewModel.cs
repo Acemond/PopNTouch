@@ -109,7 +109,7 @@ namespace PopnTouchi2.ViewModel
         /// Property
         /// Boolean true if the stave is playing
         /// </summary>
-        public Boolean IsPlaying { get; set; }
+        public bool IsPlaying { get; set; }
 
         /// <summary>
         /// Parameter.
@@ -394,7 +394,7 @@ namespace PopnTouchi2.ViewModel
         /// <param name="height"></param>
         /// <param name="s"></param>
         /// <param name="IDs"></param>
-        public SessionViewModel(Boolean left, Double width, Double height, Session s, List<int> IDs)
+        public SessionViewModel(bool left, Double width, Double height, Session s, List<int> IDs)
             : this(width * 0.5625, height * 0.5625, s, IDs, true)
         {
             if (left)
