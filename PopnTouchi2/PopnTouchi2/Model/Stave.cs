@@ -57,7 +57,7 @@ namespace PopnTouchi2
         /// Parameter.
         /// Used to play a MelodyBubble
         /// </summary>
-        public Melody melody { get; set; }
+        public Melody Melody { get; set; }
 
         /// <summary>
         /// Property.
@@ -171,13 +171,13 @@ namespace PopnTouchi2
         {
             bool play = true;
 
-            if (PositionMelody <= melody.Notes.Last().Position + 1)
+            if (PositionMelody <= Melody.Notes.Last().Position + 1)
             {
-                while (play && (IteratorMelody < melody.Notes.Count))
+                while (play && (IteratorMelody < Melody.Notes.Count))
                 {
-                    if (melody.Notes[IteratorMelody].Position == PositionMelody)
+                    if (Melody.Notes[IteratorMelody].Position == PositionMelody)
                     {
-                        CurrentInstrument.PlayNote(melody.Notes[IteratorMelody]);
+                        CurrentInstrument.PlayNote(Melody.Notes[IteratorMelody]);
                         IteratorMelody++;
                     }
                     else play = false;

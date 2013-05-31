@@ -300,7 +300,7 @@ namespace PopnTouchi2.ViewModel.Animation
             int time = (melodyBubbleVM.MelodyBubble.Melody.Notes.Last().Position + 1) * (30000 / sessionVM.Session.Bpm);
             if ((playUp % 4) == 0)
             {
-                sessionVM.Session.StaveTop.melody = melodyBubbleVM.MelodyBubble.Melody;
+                sessionVM.Session.StaveTop.Melody = melodyBubbleVM.MelodyBubble.Melody;
                 try
                 {
                     DisplayHighlightGrid(true, true);
@@ -316,7 +316,7 @@ namespace PopnTouchi2.ViewModel.Animation
             }
             else if ((playUp % 4) == 2)
             {
-                sessionVM.Session.StaveBottom.melody = melodyBubbleVM.MelodyBubble.Melody;
+                sessionVM.Session.StaveBottom.Melody = melodyBubbleVM.MelodyBubble.Melody;
                 try
                 {
                     DisplayHighlightGrid(true, false);
