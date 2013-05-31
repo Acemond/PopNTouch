@@ -58,6 +58,8 @@ namespace PopnTouchi2.ViewModel.Animation
         /// </summary>
         private bool NothingAtThisPlace;
 
+        private bool bubbleDroppedTopStave;
+
         #endregion
 
         #region Constructors
@@ -261,11 +263,13 @@ namespace PopnTouchi2.ViewModel.Animation
                 {
                     if (bubbleCenter.Y >= 344.0) bubbleCenter.Y = 344.0;
                     bubbleCenter.Y = Math.Floor((bubbleCenter.Y + 6.0) / 20.0) * 20.0 + 4.0;
+                    bubbleDroppedTopStave = true;
                 }
                 else
                 {
                     if (bubbleCenter.Y <= 395) bubbleCenter.Y = 395;
-                    bubbleCenter.Y = Math.Floor((bubbleCenter.Y + 15.0) / 20.0) * 20.0 - 5.0;             
+                    bubbleCenter.Y = Math.Floor((bubbleCenter.Y + 15.0) / 20.0) * 20.0 - 5.0;
+                    bubbleDroppedTopStave = false;
                 }
 
                 noteBubbleVM.NoteBubble.Note = new Note(converter.getOctave(bubbleCenter.Y), noteBubbleVM.NoteBubble.Note.Duration, converter.getPitch(bubbleCenter.Y), positionNote, noteBubbleVM.NoteBubble.Note.Sharp, noteBubbleVM.NoteBubble.Note.Flat);
@@ -317,9 +321,10 @@ namespace PopnTouchi2.ViewModel.Animation
                 if ((int)((virtualCenter.X - 120.0) / 60.0) == sessionVM.NotesOnStave[i].Note.Position
                     && !sessionVM.NotesOnStave[i].Picked
                     && converter.getOctave(virtualCenter.Y) == sessionVM.NotesOnStave[i].Note.Octave
-                    && converter.getPitch(virtualCenter.Y) == sessionVM.NotesOnStave[i].Note.Pitch)
+                    && converter.getPitch(virtualCenter.Y) == sessionVM.NotesOnStave[i].Note.Pitch
+                    && ((bubbleDroppedTopStave && sessionVM.Session.StaveTop.Notes.Contains(sessionVM.NotesOnStave[i].Note)) ||
+                        (!bubbleDroppedTopStave && sessionVM.Session.StaveBottom.Notes.Contains(sessionVM.NotesOnStave[i].Note))))
                 {
-                    //Invert comments if exception raises.
                     if (noteBubbleVM.NoteBubble.Note.Duration == NoteValue.alteration)
                     {
                         NothingAtThisPlace = false;

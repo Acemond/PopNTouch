@@ -9,6 +9,8 @@ using Microsoft.Surface.Presentation.Controls;
 using System.Windows.Input;
 using PopnTouchi2.Model.Enums;
 using System.Windows.Controls;
+using System.Windows.Media.Imaging;
+using System.Windows.Media;
 
 namespace PopnTouchi2.ViewModel.Animation
 {
@@ -50,6 +52,11 @@ namespace PopnTouchi2.ViewModel.Animation
 
         private DispatcherTimer topHighlightDt;
         private DispatcherTimer bottomHighlightDt;
+        private DispatcherTimer previewDt;
+
+        private ScatterView previewNotesGrid;
+
+        private bool melodyDroppedTopStave;
 
         #endregion
 
@@ -71,14 +78,144 @@ namespace PopnTouchi2.ViewModel.Animation
 
             DispatcherTimer.Tick += new EventHandler(t_Tick);
 
-            SVItem.ContainerManipulationCompleted += touchLeave;
+            SVItem.ContainerManipulationCompleted += new ContainerManipulationCompletedEventHandler(touchLeave);
 
-            SVItem.PreviewTouchDown += touchDown;
+            SVItem.PreviewTouchDown += new EventHandler<TouchEventArgs>(touchDown);
+            SVItem.PreviewTouchUp += new EventHandler<TouchEventArgs>(SVItem_PreviewTouchUp);
             Animate();
+        }
+
+        void SVItem_PreviewTouchUp(object sender, TouchEventArgs e)
+        {
+            RemovePreview();
         }
         #endregion
 
         #region Methods
+        private void DisplayPreview()
+        {
+            previewNotesGrid = new ScatterView();
+            previewNotesGrid.Margin = new Thickness(0);
+
+            previewDt = new DispatcherTimer();
+            previewDt.Interval = TimeSpan.FromSeconds(.05);
+            previewDt.Tick += new EventHandler(previewDt_Tick);
+            previewDt.Start();
+        }
+
+        void previewDt_Tick(object sender, EventArgs e)
+        {
+            ScatterViewItem bubble = SVItem;
+            Point virtualBubbleCenter = new Point(bubble.ActualCenter.X, bubble.ActualCenter.Y);
+
+            int width = (int)sessionVM.Grid.ActualWidth;
+            int height = (int)sessionVM.Grid.ActualHeight;
+            virtualBubbleCenter.X = virtualBubbleCenter.X * 1920.0 / width;
+            virtualBubbleCenter.Y = virtualBubbleCenter.Y * 1080.0 / height;
+
+            if (virtualBubbleCenter.X < 150.0) virtualBubbleCenter.X = 150.0;
+            else if (virtualBubbleCenter.X >= 1830) virtualBubbleCenter.X = 1800;
+            else virtualBubbleCenter.X = Math.Floor((virtualBubbleCenter.X + 30) / 60) * 60;
+
+            //"Applatissement" de la portée
+            int offset = GlobalVariables.ManipulationGrid.ElementAtOrDefault((int)((double)virtualBubbleCenter.X / 60.0));
+            virtualBubbleCenter.Y += offset;
+
+            PositionMelody = new Point(virtualBubbleCenter.X, virtualBubbleCenter.Y);
+
+            previewNotesGrid.Items.Clear();
+
+            //Y dans le cadre portée ?
+            //Si oui, animation
+            //pas de else
+            if (virtualBubbleCenter.Y < 576 && virtualBubbleCenter.Y > 165)
+            {
+                if (virtualBubbleCenter.Y < 370)
+                {
+                    if (virtualBubbleCenter.Y >= 344) virtualBubbleCenter.Y = 344;
+                    virtualBubbleCenter.Y = Math.Floor((virtualBubbleCenter.Y + 6.0) / 20.0) * 20.0 + 4.0;
+                }
+                else
+                {
+                    if (virtualBubbleCenter.Y <= 395) virtualBubbleCenter.Y = 395;
+                    virtualBubbleCenter.Y = Math.Floor((virtualBubbleCenter.Y + 15.0) / 20.0) * 20.0 - 5.0;
+                }
+
+
+            List<NoteViewModel> ListOfNotes = melodyBubbleVM.melodyToListOfNote(PositionMelody);
+            Converter cvrt = new Converter();
+
+            double ratio = sessionVM.Grid.ActualWidth / 1920.0;
+
+            for (int i = 0; i < ListOfNotes.Count; i++)
+            {
+                ScatterViewItem previewNote = new ScatterViewItem();
+                FrameworkElementFactory notePreviewImage = new FrameworkElementFactory(typeof(Image));
+                int offset2 = GlobalVariables.ManipulationGrid.ElementAtOrDefault(ListOfNotes[i].Note.Position + 2);
+                double betweenStave = (350 - offset2) * ratio;
+                bool up;
+
+                previewNote.CanScale = false;
+                previewNote.HorizontalAlignment = HorizontalAlignment.Center;
+                previewNote.CanRotate = false;
+                previewNote.HorizontalAlignment = HorizontalAlignment.Center;
+                
+                if (ListOfNotes[i].SVItem.Center.Y < betweenStave)
+                {
+                    up = true;
+                    if (ListOfNotes[i].Note.Flat)
+                        notePreviewImage.SetValue(Image.SourceProperty, new BitmapImage(new Uri(@"../../Resources/Images/UI_items/PreviewNotes/black/" + ListOfNotes[i].Note.Duration + "_bemol.png", UriKind.Relative)));
+                    else if (ListOfNotes[i].Note.Sharp)
+                        notePreviewImage.SetValue(Image.SourceProperty, new BitmapImage(new Uri(@"../../Resources/Images/UI_items/PreviewNotes/black/" + ListOfNotes[i].Note.Duration + "_diese.png", UriKind.Relative)));
+                    else
+                        notePreviewImage.SetValue(Image.SourceProperty, new BitmapImage(new Uri(@"../../Resources/Images/UI_items/PreviewNotes/black/" + ListOfNotes[i].Note.Duration + ".png", UriKind.Relative)));
+                }
+                else
+                {
+                    up = false;
+                    if (ListOfNotes[i].Note.Flat)
+                        notePreviewImage.SetValue(Image.SourceProperty, new BitmapImage(new Uri(@"../../Resources/Images/UI_items/PreviewNotes/white/" + ListOfNotes[i].Note.Duration + "_bemol.png", UriKind.Relative)));
+                    else if (ListOfNotes[i].Note.Sharp)
+                        notePreviewImage.SetValue(Image.SourceProperty, new BitmapImage(new Uri(@"../../Resources/Images/UI_items/PreviewNotes/white/" + ListOfNotes[i].Note.Duration + "_diese.png", UriKind.Relative)));
+                    else
+                        notePreviewImage.SetValue(Image.SourceProperty, new BitmapImage(new Uri(@"../../Resources/Images/UI_items/PreviewNotes/white/" + ListOfNotes[i].Note.Duration + ".png", UriKind.Relative)));
+                }
+
+                double Xpos = virtualBubbleCenter.X + melodyBubbleVM.MelodyBubble.Melody.Notes[i].Position * 60.0;
+                double Ypos = cvrt.getCenterY(up, melodyBubbleVM.MelodyBubble.Melody.Notes[i]) + GlobalVariables.ManipulationGrid.ElementAtOrDefault(melodyBubbleVM.MelodyBubble.Melody.Notes[i].Position + 2) - offset;
+                previewNote.Center = new Point(Xpos * ratio, Ypos * ratio);
+
+                notePreviewImage.SetValue(Image.IsHitTestVisibleProperty, false);
+
+                notePreviewImage.SetValue(Image.WidthProperty, (125.0 / 1920.0) * sessionVM.Grid.ActualWidth);
+                notePreviewImage.SetValue(Image.HeightProperty, (260.0 / 1080.0) * sessionVM.Grid.ActualHeight);
+
+                FrameworkElementFactory grid = new FrameworkElementFactory(typeof(Grid));
+                grid.AppendChild(notePreviewImage);
+
+                ControlTemplate ct = new ControlTemplate(typeof(ScatterViewItem));
+                ct.VisualTree = grid;
+
+                Style notePreviewStyle = new Style(typeof(ScatterViewItem));
+                notePreviewStyle.Setters.Add(new Setter(ScatterViewItem.TemplateProperty, ct));
+                previewNote.Style = notePreviewStyle;
+                previewNote.Opacity = 0.6;
+
+                previewNotesGrid.Items.Add(previewNote);
+            }
+            try { sessionVM.Grid.Children.Add(previewNotesGrid); }
+            catch (Exception exc) { }
+            }
+        }
+
+        public void RemovePreview()
+        {
+            try { sessionVM.Grid.Children.Remove(previewNotesGrid); }
+            catch (Exception exc) { }
+            try { previewDt.Stop(); }
+            catch (Exception exc) { }
+        }
+
         public void BeginBubbleAnimation()
         {
             Random r = GlobalVariables.GlobalRandom;
@@ -132,6 +269,8 @@ namespace PopnTouchi2.ViewModel.Animation
             }
         }
 
+        private Storyboard centerSTB;
+
         /// <summary>
         /// Stops a current animation performing.
         /// </summary>
@@ -183,6 +322,11 @@ namespace PopnTouchi2.ViewModel.Animation
         /// <param name="e"></param>
         private void touchLeave(object sender, ContainerManipulationCompletedEventArgs e)
         {
+            if (sessionVM.Session == null) return;
+
+            if (melodyBubbleVM.Picked) return;
+            melodyBubbleVM.Picked = true;
+
             ScatterViewItem bubble = new ScatterViewItem();
             bubble = e.Source as ScatterViewItem;
             bubbleCenter = bubble.ActualCenter;
@@ -213,13 +357,14 @@ namespace PopnTouchi2.ViewModel.Animation
             //pas de else
             if (bubbleCenter.Y < 576 && bubbleCenter.Y > 165)
             {
-                if (bubbleCenter.Y < 370)
+                if (bubbleCenter.Y < 370.0)
                 {
                     if (bubbleCenter.Y >= 344) bubbleCenter.Y = 344;
                     bubbleCenter.Y = Math.Floor((bubbleCenter.Y + 6.0) / 20.0) * 20.0 + 4.0;
 
                     sessionVM.Session.StaveTop.StopMelody();
                     sessionVM.Session.StaveTop.AddMelody(melodyBubbleVM.MelodyBubble, ((int)PositionMelody.X - 120) / 60);
+                    melodyDroppedTopStave = true;
 
                 }
                 else
@@ -229,6 +374,7 @@ namespace PopnTouchi2.ViewModel.Animation
 
                     sessionVM.Session.StaveBottom.StopMelody();
                     sessionVM.Session.StaveBottom.AddMelody(melodyBubbleVM.MelodyBubble, ((int)PositionMelody.X - 120) / 60);
+                    melodyDroppedTopStave = false;
                 }
 
                 bubbleCenter.Y -= offset;
@@ -237,7 +383,7 @@ namespace PopnTouchi2.ViewModel.Animation
                 bubbleCenter.Y = bubbleCenter.Y * height / 1080;
 
                 #region STB
-                Storyboard stb = new Storyboard();
+                centerSTB = new Storyboard();
                 PointAnimation moveCenter = new PointAnimation();
 
                 moveCenter.From = bubble.ActualCenter;
@@ -246,7 +392,7 @@ namespace PopnTouchi2.ViewModel.Animation
                 bubble.Center = bubbleCenter;
                 moveCenter.FillBehavior = FillBehavior.Stop;
 
-                stb.Children.Add(moveCenter);
+                centerSTB.Children.Add(moveCenter);
 
                 Storyboard.SetTarget(moveCenter, bubble);
                 Storyboard.SetTargetProperty(moveCenter, new PropertyPath(ScatterViewItem.CenterProperty));
@@ -255,11 +401,12 @@ namespace PopnTouchi2.ViewModel.Animation
                 bubble.Center = bubbleCenter;
                 moveCenter.Completed += new EventHandler(moveCenter_Completed);
 
-                stb.Begin(SVItem);
+                centerSTB.Begin(SVItem);
 
             }
             else
             {
+                melodyBubbleVM.Picked = false;
                 canAnimate = true;
                 Animate();
             }
@@ -275,18 +422,21 @@ namespace PopnTouchi2.ViewModel.Animation
                     if (ListOfNotes[i].Note.Position == sessionVM.NotesOnStave[j].Note.Position
                         && !sessionVM.NotesOnStave[j].Picked
                         && ListOfNotes[i].Note.Octave == sessionVM.NotesOnStave[j].Note.Octave
-                        && ListOfNotes[i].Note.Pitch == sessionVM.NotesOnStave[j].Note.Pitch)
+                        && ListOfNotes[i].Note.Pitch == sessionVM.NotesOnStave[j].Note.Pitch
+                        && ((melodyDroppedTopStave && sessionVM.Session.StaveTop.Notes.Contains(sessionVM.NotesOnStave[j].Note)) ||
+                            (!melodyDroppedTopStave && sessionVM.Session.StaveBottom.Notes.Contains(sessionVM.NotesOnStave[j].Note))))
                     {
                         sessionVM.NotesOnStave[j].Animation.BackToBubbleFormat(true);
                         break;
                     }
                 }
-                    sessionVM.NotesOnStave.Add(ListOfNotes[i]);
-                    sessionVM.Notes.Items.Add(ListOfNotes[i].SVItem);
+                sessionVM.NotesOnStave.Add(ListOfNotes[i]);
+                sessionVM.Notes.Items.Add(ListOfNotes[i].SVItem);
             }
             sessionVM.Bubbles.Items.Remove(melodyBubbleVM.SVItem);
             sessionVM.MbgVM.MelodyBubbleVMs.Remove(melodyBubbleVM);
 
+            melodyBubbleVM.Picked = false;
         }
 
         /// <summary>
@@ -296,6 +446,7 @@ namespace PopnTouchi2.ViewModel.Animation
         /// <param name="e"></param>
         private void touchDown(object sender, TouchEventArgs e)
         {
+            DisplayPreview();
             StopAnimation();
             int time = (melodyBubbleVM.MelodyBubble.Melody.Notes.Last().Position + 1) * (30000 / sessionVM.Session.Bpm);
             if ((playUp % 4) == 0)

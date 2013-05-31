@@ -113,24 +113,23 @@ namespace PopnTouchi2.ViewModel.Animation
         }
         
         #region REDUCTION
-        /// <summary>
-        /// TODO Replace by gesture (Adrien's got an idea) AND organize
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        public void Reducer_Click(object sender, RoutedEventArgs e)
-        {
-            Reduce();
-        }
-
         public void Reduce()
         {
             if (SessionVM.Reduced) return;
-
+            
             SessionVM.SessionSVI.MaxWidth = double.MaxValue;
             SessionVM.SessionSVI.MaxHeight = double.MaxValue;
 
             SessionVM.StopSound();
+            SessionVM.StopPlayBar();
+
+            foreach (MelodyBubbleViewModel mbvm in SessionVM.MbgVM.MelodyBubbleVMs)
+            {
+                mbvm.Animation.RemovePreview();
+            }
+
+            SessionVM.Session.StaveBottom.StopMelody();
+            SessionVM.Session.StaveTop.StopMelody();
 
             AudioController.PlaySoundWithString("flash");
             SessionVM.FullyEnlarged = false;
@@ -283,6 +282,12 @@ namespace PopnTouchi2.ViewModel.Animation
             SessionVM.Play_Button.Opacity = 1;
             grid.Children.Remove(SessionVM.Bubbles);
             grid.Children.Remove(SessionVM.UpdateSound.Grid);
+            grid.Children.Remove(SessionVM.PlayBar);
+            grid.Children.Remove(SessionVM.PlayBarCache);
+            grid.Children.Remove(SessionVM.StaveCache);
+            grid.Children.Remove(SessionVM.previewGrid);
+            grid.Children.Remove(SessionVM.topStaveHighlight);
+            grid.Children.Remove(SessionVM.bottomStaveHighlight);
         }
 
         /// <summary>
@@ -772,6 +777,7 @@ namespace PopnTouchi2.ViewModel.Animation
             MainDesktop = (DesktopView)((ScatterView)SessionVM.SessionSVI.Parent).Parent;
 
             SessionVM.LoadSession();
+            SessionVM.UpdateSound.Grid.Opacity = 0.0;
             Fs.Close();
             RemoveWhiteBorder();
         }
@@ -819,6 +825,8 @@ namespace PopnTouchi2.ViewModel.Animation
 
         void borderAnimation_Completed(object sender, EventArgs e)
         {
+            SessionVM.DisplayGrid(SessionVM.UpdateSound.Grid, true);
+
             SessionVM.originalRatio = SessionVM.SessionSVI.ActualWidth / 1920.0;
             SessionVM.SessionSVI.MaxWidth = SessionVM.SessionSVI.ActualWidth;
             SessionVM.SessionSVI.MaxHeight = SessionVM.SessionSVI.ActualHeight;

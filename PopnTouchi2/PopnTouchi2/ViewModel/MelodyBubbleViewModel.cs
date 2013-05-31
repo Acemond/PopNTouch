@@ -41,6 +41,10 @@ namespace PopnTouchi2.ViewModel
         /// </summary>
         public MelodyBubbleAnimation Animation { get; set; }
 
+        /// <summary>
+        /// Defines if the melodybubble is being moved by user
+        /// </summary>
+        public bool Picked { get; set; }
 
          /// <summary>
         /// NoteBubbleViewModel Constructor.
@@ -114,7 +118,7 @@ namespace PopnTouchi2.ViewModel
                 y *= (height / 1080);
 
                 Point p = new Point(x, y);
-                notes.Add(new NoteViewModel(p,MelodyBubble.Melody.Notes[i], SessionVM.Notes, SessionVM));
+                notes.Add(new NoteViewModel(p, MelodyBubble.Melody.Notes[i], SessionVM.Notes, SessionVM));
             }
 
             return notes;
