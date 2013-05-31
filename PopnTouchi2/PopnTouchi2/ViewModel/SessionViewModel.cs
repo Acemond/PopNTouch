@@ -483,9 +483,9 @@ namespace PopnTouchi2.ViewModel
             PlayBar.Height = 490.0 * newRatio;
             PlayBar.Margin = new Thickness(120.0 * newRatio, 99.0 * newRatio, 0.0, 0.0);
 
-            PlayBarCache.Width = 1960.0 * ratio;
-            PlayBarCache.Height = 531.0 * ratio;
-            PlayBarCache.Margin = new Thickness(0.0, 78.0 * ratio, 0.0, 0.0);
+            PlayBarCache.Width = 1920.0 * newRatio;
+            PlayBarCache.Height = 531.0 * newRatio;
+            PlayBarCache.Margin = new Thickness(0.0, 78.0 * newRatio, 0.0, 0.0);
 
             StaveCache.Width = 1920.0 * newRatio;
             StaveCache.Height = 491.0 * newRatio;
@@ -540,12 +540,12 @@ namespace PopnTouchi2.ViewModel
             previewGrid.Margin = new Thickness(150.0 * ratio, 90.0 * ratio, 90.0 * ratio, 480.0 * ratio);
             topStaveHighlight.Margin = new Thickness(0.0, 60.0 * ratio, 0.0, 480.0 * ratio);
             bottomStaveHighlight.Margin = new Thickness(0.0, 60.0 * ratio, 0.0, 480.0 * ratio);
-
+            
             PlayBar.Width = 12.0 * ratio;
             PlayBar.Height = 490.0 * ratio;
             PlayBar.Margin = new Thickness(120.0 * ratio, 99.0 * ratio, 0.0, 0.0);
 
-            PlayBarCache.Width = 1960.0 * ratio;
+            PlayBarCache.Width = 1920.0 * ratio;
             PlayBarCache.Height = 531.0 * ratio;
             PlayBarCache.Margin = new Thickness(0.0, 78.0 * ratio, 0.0, 0.0);
 
