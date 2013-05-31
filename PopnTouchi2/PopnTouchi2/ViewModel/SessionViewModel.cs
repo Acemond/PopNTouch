@@ -283,7 +283,7 @@ namespace PopnTouchi2.ViewModel
 
             PlayBarCache = new Grid();
             PlayBarCache.Width = 1920.0 * ratio;
-            PlayBarCache.Height = 491.0 * ratio;
+            PlayBarCache.Height = 531.0 * ratio;
             PlayBarCache.VerticalAlignment = System.Windows.VerticalAlignment.Top;
             PlayBarCache.Margin = new Thickness(0.0, 98.0 * ratio, 0.0, 0.0);
             PlayBarCache.Background = ThemeVM.PlayBarCache;
@@ -481,9 +481,9 @@ namespace PopnTouchi2.ViewModel
             PlayBar.Height = 490.0 * newRatio;
             PlayBar.Margin = new Thickness(120.0 * newRatio, 99.0 * newRatio, 0.0, 0.0);
 
-            PlayBarCache.Width = 1920.0 * newRatio;
-            PlayBarCache.Height = 491.0 * newRatio;
-            PlayBarCache.Margin = new Thickness(0.0, 98.0 * newRatio, 0.0, 0.0);
+            PlayBarCache.Width = 1960.0 * ratio;
+            PlayBarCache.Height = 531.0 * ratio;
+            PlayBarCache.Margin = new Thickness(0.0, 78.0 * ratio, 0.0, 0.0);
 
             StaveCache.Width = 1920.0 * newRatio;
             StaveCache.Height = 491.0 * newRatio;
@@ -543,9 +543,9 @@ namespace PopnTouchi2.ViewModel
             PlayBar.Height = 490.0 * ratio;
             PlayBar.Margin = new Thickness(120.0 * ratio, 99.0 * ratio, 0.0, 0.0);
 
-            PlayBarCache.Width = 1920.0 * ratio;
-            PlayBarCache.Height = 491.0 * ratio;
-            PlayBarCache.Margin = new Thickness(0.0, 98.0 * ratio, 0.0, 0.0);
+            PlayBarCache.Width = 1960.0 * ratio;
+            PlayBarCache.Height = 531.0 * ratio;
+            PlayBarCache.Margin = new Thickness(0.0, 78.0 * ratio, 0.0, 0.0);
 
             StaveCache.Width = 1920.0 * ratio;
             StaveCache.Height = 491.0 * ratio;
@@ -921,6 +921,8 @@ namespace PopnTouchi2.ViewModel
         void pBCDT_Tick2(object sender, EventArgs e)
         {
             pBCDT.Stop();
+            try { pBSTB.Stop(); }
+            catch (Exception exc) { }
             DisplayGrid(PlayBarCache, false);
             DisplayGrid(StaveCache, false);
             DisplayGrid(topStaveHighlight, false);
@@ -938,7 +940,7 @@ namespace PopnTouchi2.ViewModel
             catch (Exception exc) { }
             try { pBCDT.Stop(); }
             catch (Exception exc) { }
-            try { pBSTB.Stop(); }
+            try { pBSTB.Pause(); }
             catch (Exception exc) { }
             DisplayGrid(PlayBar, false);
             pBCDT = new DispatcherTimer();
