@@ -323,6 +323,8 @@ namespace PopnTouchi2.ViewModel
             Grid.SetZIndex(NbgVM.Grid, 3);
             Grid.SetZIndex(MbgVM.Grid, 3);
             Grid.SetZIndex(Play_Button, 3);
+            Grid.SetZIndex(Theme_Button, 3);
+            Grid.SetZIndex(Tempo_Button, 3);
             Grid.SetZIndex(previewGrid, 2);
             Grid.SetZIndex(StaveCache, 2);
             Grid.SetZIndex(topStaveHighlight, 2);
@@ -764,6 +766,8 @@ namespace PopnTouchi2.ViewModel
             Grid.SetZIndex(NbgVM.Grid, 3);
             Grid.SetZIndex(MbgVM.Grid, 3);
             Grid.SetZIndex(Play_Button, 3);
+            Grid.SetZIndex(Theme_Button, 3);
+            Grid.SetZIndex(Tempo_Button, 3);
             Grid.SetZIndex(previewGrid, 2);
             Grid.SetZIndex(StaveCache, 2);
             Grid.SetZIndex(topStaveHighlight, 2);
