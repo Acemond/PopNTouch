@@ -325,7 +325,6 @@ namespace PopnTouchi2.ViewModel.Animation
                     && ((bubbleDroppedTopStave && sessionVM.Session.StaveTop.Notes.Contains(sessionVM.NotesOnStave[i].Note)) ||
                         (!bubbleDroppedTopStave && sessionVM.Session.StaveBottom.Notes.Contains(sessionVM.NotesOnStave[i].Note))))
                 {
-                    //Invert comments if exception raises.
                     if (noteBubbleVM.NoteBubble.Note.Duration == NoteValue.alteration)
                     {
                         NothingAtThisPlace = false;

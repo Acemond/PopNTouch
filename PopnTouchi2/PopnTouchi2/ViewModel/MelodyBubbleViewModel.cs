@@ -114,7 +114,7 @@ namespace PopnTouchi2.ViewModel
                 y *= (height / 1080);
 
                 Point p = new Point(x, y);
-                notes.Add(new NoteViewModel(p,MelodyBubble.Melody.Notes[i], SessionVM.Notes, SessionVM));
+                notes.Add(new NoteViewModel(p, MelodyBubble.Melody.Notes[i], SessionVM.Notes, SessionVM));
             }
 
             return notes;
