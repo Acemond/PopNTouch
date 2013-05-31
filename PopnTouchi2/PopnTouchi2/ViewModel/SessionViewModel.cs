@@ -848,6 +848,7 @@ namespace PopnTouchi2.ViewModel
         public void LaunchPlayBar()
         {
             pBDT = new DispatcherTimer();
+            pBCDT = new DispatcherTimer();
 
             if (Session.Bpm >= 0)
                 pBDT.Interval = TimeSpan.FromMilliseconds(30000 / Session.Bpm);
