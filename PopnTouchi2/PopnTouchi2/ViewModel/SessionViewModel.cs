@@ -870,10 +870,6 @@ namespace PopnTouchi2.ViewModel
         void pBDT_Tick(object sender, EventArgs e)
         {
             pBDT.Stop();
-            pBCDT = new DispatcherTimer();
-            pBCDT.Interval = TimeSpan.FromMilliseconds(200.0);
-            pBCDT.Tick += new EventHandler(pBCDT_Tick);
-            pBCDT.Start();
 
             try
             {
@@ -889,6 +885,10 @@ namespace PopnTouchi2.ViewModel
                 }
                 else lastNotePos = Session.StaveBottom.Notes.Last().Position;
 
+                pBCDT = new DispatcherTimer();
+                pBCDT.Interval = TimeSpan.FromMilliseconds(200.0);
+                pBCDT.Tick += new EventHandler(pBCDT_Tick);
+                pBCDT.Start();
                 DisplayGrid(PlayBarCache, true);
                 DisplayGrid(StaveCache, true);
                 DisplayGrid(topStaveHighlight, true);
@@ -935,8 +935,13 @@ namespace PopnTouchi2.ViewModel
 
         public void StopPlayBar()
         {
+            try { pBDT.Stop(); }
+            catch (Exception exc) { }
+            try { pBCDT.Stop(); }
+            catch (Exception exc) { }
             DisplayGrid(PlayBar, false);
             pBCDT = new DispatcherTimer();
+            pBDT = new DispatcherTimer();
             pBCDT.Interval = TimeSpan.FromMilliseconds(200.0);
             pBCDT.Tick += new EventHandler(pBCDT_Tick2);
             pBCDT.Start();
