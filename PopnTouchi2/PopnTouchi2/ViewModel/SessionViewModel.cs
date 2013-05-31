@@ -810,8 +810,11 @@ namespace PopnTouchi2.ViewModel
 
             SetDimensions(Grid.ActualWidth, Grid.ActualHeight);
             //UpdateEveryDimensions(Grid.ActualWidth, Grid.ActualHeight);
-
-            Session.ChangeBpm(sd.bpm);
+            if (sd.bpm == 0)
+            {
+                Session.ChangeBpm(60);
+            }
+            else Session.ChangeBpm(sd.bpm);
         }
 
         public void EraseSession()
@@ -845,7 +848,11 @@ namespace PopnTouchi2.ViewModel
         public void LaunchPlayBar()
         {
             pBDT = new DispatcherTimer();
-            pBDT.Interval = TimeSpan.FromMilliseconds(30000 / Session.Bpm);
+            pBCDT = new DispatcherTimer();
+
+            if (Session.Bpm >= 0)
+                pBDT.Interval = TimeSpan.FromMilliseconds(30000 / Session.Bpm);
+            else { Session.ChangeBpm(60); Tempo_Button.Background = ThemeVM.TempoImage[0]; }
             pBDT.Tick += new EventHandler(pBDT_Tick);
             pBDT.Start();
         }
