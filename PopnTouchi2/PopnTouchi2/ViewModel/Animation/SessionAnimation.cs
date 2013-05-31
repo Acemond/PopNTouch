@@ -121,6 +121,7 @@ namespace PopnTouchi2.ViewModel.Animation
             SessionVM.SessionSVI.MaxHeight = double.MaxValue;
 
             SessionVM.StopSound();
+            SessionVM.StopPlayBar();
 
             AudioController.PlaySoundWithString("flash");
             SessionVM.FullyEnlarged = false;
@@ -768,6 +769,7 @@ namespace PopnTouchi2.ViewModel.Animation
             MainDesktop = (DesktopView)((ScatterView)SessionVM.SessionSVI.Parent).Parent;
 
             SessionVM.LoadSession();
+            SessionVM.UpdateSound.Grid.Opacity = 0.0;
             Fs.Close();
             RemoveWhiteBorder();
         }
@@ -815,6 +817,8 @@ namespace PopnTouchi2.ViewModel.Animation
 
         void borderAnimation_Completed(object sender, EventArgs e)
         {
+            SessionVM.DisplayGrid(SessionVM.UpdateSound.Grid, true);
+
             SessionVM.originalRatio = SessionVM.SessionSVI.ActualWidth / 1920.0;
             SessionVM.SessionSVI.MaxWidth = SessionVM.SessionSVI.ActualWidth;
             SessionVM.SessionSVI.MaxHeight = SessionVM.SessionSVI.ActualHeight;

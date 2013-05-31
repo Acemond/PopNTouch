@@ -254,14 +254,12 @@ namespace PopnTouchi2.ViewModel
             Theme_Button.VerticalAlignment = System.Windows.VerticalAlignment.Top;
             Theme_Button.Margin = new Thickness(0, 0, 100.0 * ratio, 0);
             Theme_Button.Background = ThemeVM.ThemesImage;
-            Theme_Button.Visibility = Visibility.Visible;
 
             Tempo_Button = new Grid();
             Tempo_Button.HorizontalAlignment = System.Windows.HorizontalAlignment.Right;
             Tempo_Button.VerticalAlignment = System.Windows.VerticalAlignment.Top;
             Tempo_Button.Margin = new Thickness(0, 0, 470.0 * ratio, 0);
             Tempo_Button.Background = ThemeVM.TempoImage[1];
-            Tempo_Button.Visibility = Visibility.Visible;
             Tempo_Button.PreviewTouchDown += new EventHandler<TouchEventArgs>(Tempo_Button_TouchDown);
 
             SessionSVI.CanMove = false;
@@ -470,46 +468,46 @@ namespace PopnTouchi2.ViewModel
             Notes.Height = Grid.ActualHeight;
             Bubbles.Width = Grid.ActualWidth;
             Bubbles.Height = Grid.ActualHeight;
-            Tempo_Button.Margin = new Thickness(0, 0, 470.0 * ratio, 0);
-            Theme_Button.Margin = new Thickness(0, 0, 100.0 * ratio, 0);
-            previewGrid.Margin = new Thickness(150.0 * ratio, 90.0 * ratio, 90.0 * ratio, 480.0 * ratio);
-            topStaveHighlight.Margin = new Thickness(0.0, 60.0 * ratio, 0.0, 480.0 * ratio);
-            bottomStaveHighlight.Margin = new Thickness(0.0, 60.0 * ratio, 0.0, 480.0 * ratio);
+            Tempo_Button.Margin = new Thickness(0, 0, 470.0 * newRatio, 0);
+            Theme_Button.Margin = new Thickness(0, 0, 100.0 * newRatio, 0);
+            previewGrid.Margin = new Thickness(150.0 * newRatio, 90.0 * newRatio, 90.0 * newRatio, 480.0 * newRatio);
+            topStaveHighlight.Margin = new Thickness(0.0, 60.0 * newRatio, 0.0, 480.0 * newRatio);
+            bottomStaveHighlight.Margin = new Thickness(0.0, 60.0 * newRatio, 0.0, 480.0 * newRatio);
 
 
-            PlayBar.Width = 12.0 * ratio;
-            PlayBar.Height = 490.0 * ratio;
-            PlayBar.Margin = new Thickness(120.0 * ratio, 96.0 * ratio, 0.0, 0.0);
+            PlayBar.Width = 12.0 * newRatio;
+            PlayBar.Height = 490.0 * newRatio;
+            PlayBar.Margin = new Thickness(120.0 * newRatio, 96.0 * newRatio, 0.0, 0.0);
 
-            PlayBarCache.Width = 1920.0 * ratio;
-            PlayBarCache.Height = 491.0 * ratio;
-            PlayBarCache.Margin = new Thickness(0.0, 98.0 * ratio, 0.0, 0.0);
+            PlayBarCache.Width = 1920.0 * newRatio;
+            PlayBarCache.Height = 491.0 * newRatio;
+            PlayBarCache.Margin = new Thickness(0.0, 98.0 * newRatio, 0.0, 0.0);
 
-            StaveCache.Width = 1920.0 * ratio;
-            StaveCache.Height = 491.0 * ratio;
-            StaveCache.Margin = new Thickness(0.0, 98.0 * ratio, 0.0, 0.0);
+            StaveCache.Width = 1920.0 * newRatio;
+            StaveCache.Height = 491.0 * newRatio;
+            StaveCache.Margin = new Thickness(0.0, 98.0 * newRatio, 0.0, 0.0);
             foreach (ScatterViewItem svi in Notes.Items)
             {
-                ScaleTransform st = new ScaleTransform(ratio / originalRatio, ratio / originalRatio, svi.ActualCenter.X, svi.ActualCenter.Y);
+                ScaleTransform st = new ScaleTransform(newRatio / originalRatio, newRatio / originalRatio, svi.ActualCenter.X, svi.ActualCenter.Y);
                 svi.LayoutTransform = st;
 
-                svi.Width = (svi.ActualWidth / oldRatio) * ratio;
-                svi.Height = (svi.ActualHeight / oldRatio) * ratio;
+                svi.Width = (svi.ActualWidth / oldRatio) * newRatio;
+                svi.Height = (svi.ActualHeight / oldRatio) * newRatio;
 
                 Point oldCenter = svi.Center;
-                Point newCenter = new Point((oldCenter.X / oldRatio) * ratio, (oldCenter.Y / oldRatio) * ratio);
+                Point newCenter = new Point((oldCenter.X / oldRatio) * newRatio, (oldCenter.Y / oldRatio) * newRatio);
                 svi.Center = newCenter;
             }
             foreach (ScatterViewItem svi in Bubbles.Items)
             {
-                ScaleTransform st = new ScaleTransform(ratio / originalRatio, ratio / originalRatio, svi.ActualCenter.X, svi.ActualCenter.Y);
+                ScaleTransform st = new ScaleTransform(newRatio / originalRatio, newRatio / originalRatio, svi.ActualCenter.X, svi.ActualCenter.Y);
                 svi.LayoutTransform = st;
 
-                svi.Width = (svi.ActualWidth / oldRatio) * ratio;
-                svi.Height = (svi.ActualHeight / oldRatio) * ratio;
+                svi.Width = (svi.ActualWidth / oldRatio) * newRatio;
+                svi.Height = (svi.ActualHeight / oldRatio) * newRatio;
 
                 Point oldCenter = svi.Center;
-                Point newCenter = new Point((oldCenter.X / oldRatio) * ratio, (oldCenter.Y / oldRatio) * ratio);
+                Point newCenter = new Point((oldCenter.X / oldRatio) * newRatio, (oldCenter.Y / oldRatio) * newRatio);
                 svi.Center = newCenter;
             }
         }
@@ -884,7 +882,9 @@ namespace PopnTouchi2.ViewModel
                 Storyboard pBSTB = new Storyboard();
                 ThicknessAnimation playBarMarginAnimation = new ThicknessAnimation();
 
-                playBarMarginAnimation.From = new Thickness(120.0 * ratio, 100.0, 0.0, 0.0);
+                double ratio = Grid.ActualWidth / 1920.0;
+
+                playBarMarginAnimation.From = new Thickness(120.0 * ratio, 99.0 * ratio, 0.0, 0.0);
                 playBarMarginAnimation.To = new Thickness((endOfTheLine - 8.0) * ratio, PlayBar.Margin.Top, PlayBar.Margin.Right, PlayBar.Margin.Bottom);
 
                 playBarMarginAnimation.Duration = new Duration(TimeSpan.FromMinutes((((double)lastNotePos + 0.5) / 2.0) / (double)Session.Bpm)); //TODO
@@ -932,7 +932,7 @@ namespace PopnTouchi2.ViewModel
             pBCDT.Start();
         }
 
-        private void DisplayGrid(Grid grid, bool appear)
+        public void DisplayGrid(Grid grid, bool appear)
         {
             Storyboard pBSTB = new Storyboard();
             DoubleAnimation playBarOpctyAnimation = new DoubleAnimation();
