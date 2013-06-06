@@ -50,6 +50,10 @@ namespace PopnTouchi2.ViewModel.Animation
         /// </summary>
         private bool NothingAtThisPlace;
 
+        /// <summary>
+        /// Parameter.
+        /// True if the note is dropped on the StaveTop
+        /// </summary>
         private bool noteDroppedTopStave;
 
         #endregion
@@ -167,6 +171,11 @@ namespace PopnTouchi2.ViewModel.Animation
             }
         }
 
+        /// <summary>
+        /// Event occured when the note finished its move (to the right place)
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         void moveCenter_Completed(object sender, EventArgs e)
         {
             Converter converter = new Converter();
@@ -296,6 +305,10 @@ namespace PopnTouchi2.ViewModel.Animation
             DisplayPreviewGrid(true);
         }
 
+        /// <summary>
+        /// Display the preview grid
+        /// </summary>
+        /// <param name="appear"></param>
         private void DisplayPreviewGrid(bool appear)
         {
             try

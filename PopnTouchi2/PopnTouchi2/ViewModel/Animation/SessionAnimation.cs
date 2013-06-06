@@ -14,6 +14,7 @@ using System.Drawing.Imaging;
 using System.Runtime.Serialization.Formatters.Binary;
 using PopnTouchi2.Model;
 using System.Windows.Input;
+using System.Windows.Threading;
 
 namespace PopnTouchi2.ViewModel.Animation
 {
@@ -23,15 +24,20 @@ namespace PopnTouchi2.ViewModel.Animation
     public class SessionAnimation : Animation
     {
         /// <summary>
-        /// 
+        /// Property.
         /// </summary>
         public SessionViewModel SessionVM { get; set; }
         
         /// <summary>
-        /// 
+        /// Parameter.
+        /// Instance of DesktopView
         /// </summary>
         private DesktopView MainDesktop { get; set; }
 
+        /// <summary>
+        /// Parameters.
+        /// The DoubleAnimations used to reduce, enlarge the screen
+        /// </summary>
         private DoubleAnimation initWidthAnimation;
         private DoubleAnimation OpacityAnimation;
         private DoubleAnimation ReduceWidthAnimation;
@@ -39,7 +45,7 @@ namespace PopnTouchi2.ViewModel.Animation
         private DoubleAnimation EnlargeWidthAnimation;
 
         /// <summary>
-        /// Where user has started to touch a SVI
+        /// Where user has started to touch a ScatterViewItem
         /// </summary>
         private TouchPoint startingTouchPoint;
         private TouchDevice touchDevice;
@@ -49,11 +55,15 @@ namespace PopnTouchi2.ViewModel.Animation
         /// </summary>
         public FileStream Fs { get; set; }
 
-        private System.Windows.Threading.DispatcherTimer AutoDBRemoveDispatcherTimer = new System.Windows.Threading.DispatcherTimer();
-        private System.Windows.Threading.DispatcherTimer TouchHoldDispatcherTimer = new System.Windows.Threading.DispatcherTimer();
+        /// <summary>
+        /// Timers used for the animations
+        /// </summary>
+        private DispatcherTimer AutoDBRemoveDispatcherTimer = new DispatcherTimer();
+        private DispatcherTimer TouchHoldDispatcherTimer = new DispatcherTimer();
 
         /// <summary>
-        /// 
+        /// Constructor.
+        /// Create a SessionAnimation with the current SessionViewModel
         /// </summary>
         /// <param name="s"></param>
         public SessionAnimation(SessionViewModel s) 
@@ -103,16 +113,26 @@ namespace PopnTouchi2.ViewModel.Animation
             InitStb.Begin();
         }
 
+        /// <summary>
+        /// Constructor.
+        /// </summary>
+        /// <param name="s">The current SessionViewModel</param>
+        /// <param name="reduced">True if the session is reduced</param>
+        /// <param name="desktop">The DesktopView</param>
         public SessionAnimation(SessionViewModel s, bool reduced, DesktopView desktop)
             : base()
         {
             MainDesktop = desktop;
             SessionVM = s;
-            SessionVM.SessionSVI.TouchLeave += new EventHandler<System.Windows.Input.TouchEventArgs>(svi_TouchLeave);
-            SessionVM.SessionSVI.PreviewTouchDown += new EventHandler<System.Windows.Input.TouchEventArgs>(SessionSVI_TouchEnter);
+            SessionVM.SessionSVI.TouchLeave += new EventHandler<TouchEventArgs>(svi_TouchLeave);
+            SessionVM.SessionSVI.PreviewTouchDown += new EventHandler<TouchEventArgs>(SessionSVI_TouchEnter);
         }
         
         #region REDUCTION
+
+        /// <summary>
+        /// Reduce the screen with a snapshot
+        /// </summary>
         public void Reduce()
         {
             if (SessionVM.Reduced) return;
@@ -473,6 +493,13 @@ namespace PopnTouchi2.ViewModel.Animation
             TouchHoldDispatcherTimer.Tick += new EventHandler(DispatcherTimer_Tick);
         }
 
+        /// <summary>
+        /// Event from the DispatcherTimer
+        /// Used for the delete button
+        /// which appears after several secondes
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         void DispatcherTimer_Tick(object sender, EventArgs e)
         {
             if (SessionVM == null) return;
@@ -492,6 +519,11 @@ namespace PopnTouchi2.ViewModel.Animation
             }
         }
 
+        /// <summary>
+        /// Stop the Timer and hide the DeleteButton
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         void autoDeleteRemove(object sender, EventArgs e)
         {
             AutoDBRemoveDispatcherTimer.Stop();
@@ -499,6 +531,9 @@ namespace PopnTouchi2.ViewModel.Animation
             SessionVM.DeleteButton.Visibility = Visibility.Hidden;
         }
 
+        /// <summary>
+        /// Delete a session
+        /// </summary>
         public void DeleteSession()
         {
             SessionVM.BeingDeleted = true;
@@ -542,7 +577,12 @@ namespace PopnTouchi2.ViewModel.Animation
 
             DeleteStb.Begin();
         }
-
+        
+        /// <summary>
+        /// Event occured after the ScatterView of a session was deleted
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         void deleteAnimationCompleted(object sender, EventArgs e)
         {
             SessionVM.DeleteSession();
@@ -769,7 +809,7 @@ namespace PopnTouchi2.ViewModel.Animation
         }
 
         /// <summary>
-        /// TODO
+        /// Event occured when the session is totally enlarged
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -825,6 +865,11 @@ namespace PopnTouchi2.ViewModel.Animation
             stb.Begin(SessionVM.SessionSVI);
         }
 
+        /// <summary>
+        /// Event occured when the RemoveWhiteBorder Event is finished
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         void borderAnimation_Completed(object sender, EventArgs e)
         {
             SessionVM.DisplayGrid(SessionVM.UpdateSound.Grid, true);

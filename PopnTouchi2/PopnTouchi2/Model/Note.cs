@@ -9,10 +9,11 @@ using System.Threading;
 
 namespace PopnTouchi2
 {
-    [Serializable]
+   
     /// <summary>
     /// Sets and defines all attributes and methods needed to manage a music Note.
     /// </summary>
+    [Serializable]
     public class Note
     {
         #region Properties
@@ -80,6 +81,8 @@ namespace PopnTouchi2
         /// <param name="d">NoteValue</param>
         /// <param name="pitch">String representing the Pitch</param>
         /// <param name="posit">Position</param>
+        /// <param name="sharp">(#)</param>
+        /// <param name="flat">(b)</param>
         public Note(int oct, NoteValue d, String pitch, int posit, Boolean sharp, Boolean flat)
         {
             Octave = oct;
@@ -91,14 +94,9 @@ namespace PopnTouchi2
         }
 
         /// <summary>
-        /// Note Constructor.
-        /// Generates a new object of class Note with a given octave, duration, pitch,
-        /// sharp and flat
+        /// Constructor by copie.
         /// </summary>
-        /// <param name="oct">Octave</param>
-        /// <param name="d">NoteValue</param>
-        /// <param name="pitch">String representing the Pitch</param>
-        /// <param name="posit">Position</param>
+        /// <param name="note">the Note</param>
         public Note(Note note)
         {
             Octave = note.Octave;

@@ -19,6 +19,11 @@ namespace PopnTouchi2
         /// </summary>
         public List<MelodyBubble> MelodyBubbles { get; set; }
 
+        /// <summary>
+        /// Parameter.
+        /// Dictionary counting the number of each MelodyBubble
+        /// On the screen
+        /// </summary>
         private Dictionary<Gesture, int> WildBubbles;
 
         /// <summary>

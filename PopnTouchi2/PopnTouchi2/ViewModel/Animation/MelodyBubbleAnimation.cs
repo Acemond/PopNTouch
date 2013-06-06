@@ -50,13 +50,43 @@ namespace PopnTouchi2.ViewModel.Animation
         /// </summary>
         public Point PositionMelody { get; set; }
 
+        /// <summary>
+        /// Parameter.
+        /// Timer of the preview Melody
+        /// </summary>
         private DispatcherTimer topHighlightDt;
+
+        /// <summary>
+        /// Parameter.
+        /// Timer of the preview Melody
+        /// </summary>
         private DispatcherTimer bottomHighlightDt;
+
+        /// <summary>
+        /// Parameter.
+        /// Timer of the preview Melody
+        /// </summary>
         private DispatcherTimer previewDt;
 
+        /// <summary>
+        /// Parameter.
+        /// ScatterView used to display preview of the 
+        /// notes in the MelodyBubble
+        /// </summary>
         private ScatterView previewNotesGrid;
 
+        /// <summary>
+        /// Parameter.
+        /// True if the melody is dropped on the stave
+        /// </summary>
         private bool melodyDroppedTopStave;
+
+
+        /// <summary>
+        /// Parameter.
+        /// Storyboard
+        /// </summary>
+        private Storyboard centerSTB;
 
         #endregion
 
@@ -92,6 +122,10 @@ namespace PopnTouchi2.ViewModel.Animation
         #endregion
 
         #region Methods
+
+        /// <summary>
+        /// Initialize the preview melody
+        /// </summary>
         private void DisplayPreview()
         {
             previewNotesGrid = new ScatterView();
@@ -103,6 +137,11 @@ namespace PopnTouchi2.ViewModel.Animation
             previewDt.Start();
         }
 
+        /// <summary>
+        /// Display the images of the notes from the melodyBubble
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         void previewDt_Tick(object sender, EventArgs e)
         {
             ScatterViewItem bubble = SVItem;
@@ -208,6 +247,9 @@ namespace PopnTouchi2.ViewModel.Animation
             }
         }
 
+        /// <summary>
+        /// Remove the images of the preview drop
+        /// </summary>
         public void RemovePreview()
         {
             try { sessionVM.Grid.Children.Remove(previewNotesGrid); }
@@ -216,6 +258,9 @@ namespace PopnTouchi2.ViewModel.Animation
             catch (Exception exc) { }
         }
 
+        /// <summary>
+        /// Begin the bubble animation
+        /// </summary>
         public void BeginBubbleAnimation()
         {
             Random r = GlobalVariables.GlobalRandom;
@@ -269,7 +314,6 @@ namespace PopnTouchi2.ViewModel.Animation
             }
         }
 
-        private Storyboard centerSTB;
 
         /// <summary>
         /// Stops a current animation performing.
@@ -299,7 +343,7 @@ namespace PopnTouchi2.ViewModel.Animation
         }
 
         /// <summary>
-        /// TODO
+        /// Event occured when the animation is finished
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -312,6 +356,7 @@ namespace PopnTouchi2.ViewModel.Animation
             DispatcherTimer.Interval = TimeSpan.FromMilliseconds(r.Next(3000, 9000));
             DispatcherTimer.Start();
         }
+
         /// <summary>
         /// Event occured when a MelodyBubble is released
         /// Magnetise the current bubble
@@ -412,6 +457,12 @@ namespace PopnTouchi2.ViewModel.Animation
             }
         }
 
+        /// <summary>
+        /// Event occurent when the melodyBubble
+        /// don't move any more
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         void moveCenter_Completed(object sender, EventArgs e)
         {
             List<NoteViewModel> ListOfNotes = melodyBubbleVM.melodyToListOfNote(PositionMelody);
@@ -492,12 +543,22 @@ namespace PopnTouchi2.ViewModel.Animation
      
         }
 
+        /// <summary>
+        /// Tick Event
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         void topHighlightDt_Tick(object sender, EventArgs e)
         {
             topHighlightDt.Stop();
             DisplayHighlightGrid(false, true);
         }
 
+        /// <summary>
+        /// Tick Event
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         void bottomHighlightDt_Tick(object sender, EventArgs e)
         {
             bottomHighlightDt.Stop();
@@ -505,7 +566,11 @@ namespace PopnTouchi2.ViewModel.Animation
         }
 
 
-
+        /// <summary>
+        /// Highlight the staves when the melodyBubble is touched
+        /// </summary>
+        /// <param name="appear"></param>
+        /// <param name="top"></param>
         private void DisplayHighlightGrid(bool appear, bool top)
         {
             Storyboard pGSTB = new Storyboard();

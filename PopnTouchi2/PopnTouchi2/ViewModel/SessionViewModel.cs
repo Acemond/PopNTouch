@@ -27,9 +27,10 @@ namespace PopnTouchi2.ViewModel
     /// </summary>
     public class SessionViewModel : ViewModelBase
     {
+        #region Properties
         /// <summary>
         /// Property.
-        /// TODO
+        /// The session
         /// </summary>
         public Session Session { get; set; }
 
@@ -166,13 +167,19 @@ namespace PopnTouchi2.ViewModel
         /// </summary>
         public SurfaceButton DeleteButton { get; set; }
 
+        /// <summary>
+        /// Properties.
+        /// Concern the PlayBar which appears when the PlayButton is touched
+        /// </summary>
         public Grid PlayBar { get; set; }
         public Grid PlayBarCache { get; set; }
         public Grid StaveCache { get; set; }
 
+        /// <summary>
+        /// Timers of the PlayButton
+        /// </summary>
         private DispatcherTimer pBDT;
         private DispatcherTimer pBCDT;
-
         private DispatcherTimer PlayMusicDT;
 
         private Storyboard pBSTB;
@@ -190,6 +197,17 @@ namespace PopnTouchi2.ViewModel
         /// </summary>
         public ThemeChooser ThemeChooser { get; set; }
 
+        #endregion
+
+        #region Constructors
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="width">The real Width</param>
+        /// <param name="height">The real Height</param>
+        /// <param name="s">The Session</param>
+        /// <param name="IDs">List of IDs</param>
+        /// <param name="animated">True if animated</param>
         public SessionViewModel(Double width, Double height, Session s, List<int> IDs, bool animated)
         {
             Session = s;
@@ -365,30 +383,10 @@ namespace PopnTouchi2.ViewModel
             SessionSVI.SizeChanged += new SizeChangedEventHandler(SessionSVI_SizeChanged);
             SessionSVI.PreviewTouchUp += new EventHandler<TouchEventArgs>(SessionSVI_TouchLeave);
         }
-
-        void SessionSVI_TouchLeave(object sender, TouchEventArgs e)
-        {
-            if (!FullyEnlarged) return;
-            if (ratio != originalRatio)
-                UpdateEveryDimensions(originalRatio * 1920.0, originalRatio * 1080.0);
-        }
-
-        void SessionSVI_SizeChanged(object sender, SizeChangedEventArgs e)
-        {
-            if (InitialScale) UpdateEveryDimensions(Grid.ActualWidth, Grid.ActualHeight);
-            if (!FullyEnlarged) return;
-            UpdateEveryDimensions(Grid.ActualWidth, Grid.ActualHeight);
-            if (ratio < originalRatio * 0.9)
-            {
-                UpdateEveryDimensions(originalRatio * 0.9 * 1920.0, originalRatio * 0.9 * 1080.0);
-                SessionSVI.CanScale = false;
-                Animation.Reduce();
-            }
-            if (ratio == originalRatio) Animation.resumeAllBubblesAnimations();
-        }
-                        
+          
         /// <summary>
-        /// TODO
+        /// Constructor.
+        /// Used for the orientation left of a session
         /// </summary>
         /// <param name="left"></param>
         /// <param name="width"></param>
@@ -418,6 +416,7 @@ namespace PopnTouchi2.ViewModel
         /// <param name="width">MainDesktop width</param>
         /// <param name="height">MainDesktop height</param>
         /// <param name="s">Its session</param>
+        /// <param name="IDs">Sessions IDs</param>
         /// <param name="ID">Its original ID</param>
         public SessionViewModel(Double width, Double height, Session s, List<int> IDs, int ID)
             : this(width, height, s, IDs, false)
@@ -447,7 +446,44 @@ namespace PopnTouchi2.ViewModel
 
             SessionSVI.Opacity = 1;
         }
+        #endregion
 
+        /// <summary>
+        /// Event TouchLeave
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        void SessionSVI_TouchLeave(object sender, TouchEventArgs e)
+        {
+            if (!FullyEnlarged) return;
+            if (ratio != originalRatio)
+                UpdateEveryDimensions(originalRatio * 1920.0, originalRatio * 1080.0);
+        }
+
+        /// <summary>
+        /// Event occured when the size of the ScatterViewItem of the Session change
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        void SessionSVI_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            if (InitialScale) UpdateEveryDimensions(Grid.ActualWidth, Grid.ActualHeight);
+            if (!FullyEnlarged) return;
+            UpdateEveryDimensions(Grid.ActualWidth, Grid.ActualHeight);
+            if (ratio < originalRatio * 0.9)
+            {
+                UpdateEveryDimensions(originalRatio * 0.9 * 1920.0, originalRatio * 0.9 * 1080.0);
+                SessionSVI.CanScale = false;
+                Animation.Reduce();
+            }
+            if (ratio == originalRatio) Animation.resumeAllBubblesAnimations();
+        }
+
+        /// <summary>
+        /// Event occured when the DeleteButton is touched
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         void DeleteButton_PreviewTouchDown(object sender, TouchEventArgs e)
         {
             DeleteButton.Visibility = Visibility.Hidden;
@@ -455,10 +491,12 @@ namespace PopnTouchi2.ViewModel
         }
 
         /// <summary>
-        /// TODO
+        /// Update Every Dimensions 
+        /// Used for the saving of a session
+        /// Occured when the size of a sessionViewModel change
         /// </summary>
-        /// <param name="width"></param>
-        /// <param name="height"></param>
+        /// <param name="width">The real Width</param>
+        /// <param name="height">The real Height</param>
         public void UpdateEveryDimensions(Double width, Double height)
         {
             Animation.stopAllBubblesAnimations();
@@ -515,12 +553,14 @@ namespace PopnTouchi2.ViewModel
                 svi.Center = newCenter;
             }
         }
-        
+
         /// <summary>
-        /// TODO
+        /// Set Every Dimensions 
+        /// Used for the loading of a session
+        /// Relative positions
         /// </summary>
-        /// <param name="width"></param>
-        /// <param name="height"></param>
+        /// <param name="width">The real Width</param>
+        /// <param name="height">The real Height</param>
         public void SetDimensions(Double width, Double height)
         {
             SessionSVI.Width = width;
@@ -572,6 +612,11 @@ namespace PopnTouchi2.ViewModel
             SessionSVI.Height = height;
         }
 
+        /// <summary>
+        /// Display the two instrument trees
+        /// </summary>
+        /// <param name="up"></param>
+        /// <param name="down"></param>
         public void displayTrees(Thickness up, Thickness down)
         {
             TreeUp = new TreeViewModel(true, up, this);
@@ -584,6 +629,11 @@ namespace PopnTouchi2.ViewModel
             Grid.SetZIndex(TreeDown.Grid, 3);
         }
 
+        /// <summary>
+        /// Event occured when the Play_Button is touched
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Play_Button_TouchDown(object sender, RoutedEventArgs e)
         {
             if (!IsPlaying)
@@ -611,12 +661,21 @@ namespace PopnTouchi2.ViewModel
             }
         }
 
+        /// <summary>
+        /// Tick from the PlayMusic Timer
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         void PlayMusicDT_Tick(object sender, EventArgs e)
         {
             PlayMusicDT.Stop();
             StopSound();
         }
 
+        /// <summary>
+        /// Stop the sounds of notes 
+        /// Begin the Background Sound
+        /// </summary>
         public void StopSound()
         {
             try { PlayMusicDT.Stop(); }
@@ -628,7 +687,12 @@ namespace PopnTouchi2.ViewModel
             Session.PlayBackgroundSound();
         }
 
-
+        /// <summary>
+        /// Event occured when the Tempo Button is touched
+        /// Change the images of the Tempo
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Tempo_Button_TouchDown(object sender, RoutedEventArgs e)
         {
             if (Session.Bpm == 60)
@@ -685,10 +749,8 @@ namespace PopnTouchi2.ViewModel
         /// </summary>
         public void LoadSession()
         {
-            //TODO : check : no problem with that ?
             SessionSVI.Width = Grid.ActualWidth;
             SessionSVI.Height = Grid.ActualHeight;
-            //ODOT
 
             ratio = Grid.ActualWidth / 1920.0;
 
@@ -823,6 +885,9 @@ namespace PopnTouchi2.ViewModel
             else Session.ChangeBpm(sd.bpm);
         }
 
+        /// <summary>
+        /// Erase a session
+        /// </summary>
         public void EraseSession()
         {
             Bubbles = null;
@@ -837,6 +902,9 @@ namespace PopnTouchi2.ViewModel
             Play_Button = null;
         }
 
+        /// <summary>
+        /// Delete the session
+        /// </summary>
         public void DeleteSession()
         {
             try
@@ -851,6 +919,9 @@ namespace PopnTouchi2.ViewModel
             }
         }
 
+        /// <summary>
+        /// Launch the Play Bar
+        /// </summary>
         public void LaunchPlayBar()
         {
             try { pBDT.Stop(); }
@@ -868,6 +939,11 @@ namespace PopnTouchi2.ViewModel
             pBDT.Start();
         }
 
+        /// <summary>
+        /// Tick used for the PlayBar
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         void pBDT_Tick(object sender, EventArgs e)
         {
             pBDT.Stop();
@@ -917,11 +993,22 @@ namespace PopnTouchi2.ViewModel
             catch (Exception exc) { }
         }
 
+        /// <summary>
+        /// Tick used for the playBar
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         void pBCDT_Tick(object sender, EventArgs e)
         {
             pBCDT.Stop();
             DisplayGrid(PlayBar, true);
         }
+
+        /// <summary>
+        /// Tick used for the playBar
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         void pBCDT_Tick2(object sender, EventArgs e)
         {
             pBCDT.Stop();
@@ -933,11 +1020,20 @@ namespace PopnTouchi2.ViewModel
             DisplayGrid(bottomStaveHighlight, false);
         }
 
+        /// <summary>
+        /// Event occured at the end of the playing of notes
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void playBarMarginAnimation_Completed(object sender, EventArgs e)
         {
             StopPlayBar();
         }
 
+        /// <summary>
+        /// Stop the PlayBar
+        /// Stop the timers
+        /// </summary>
         public void StopPlayBar()
         {
             try { pBDT.Stop(); }
@@ -954,6 +1050,11 @@ namespace PopnTouchi2.ViewModel
             pBCDT.Start();
         }
 
+        /// <summary>
+        /// Display the PlayBar
+        /// </summary>
+        /// <param name="grid"></param>
+        /// <param name="appear">True if the playBar appears</param>
         public void DisplayGrid(Grid grid, bool appear)
         {
             Storyboard pBSTB = new Storyboard();

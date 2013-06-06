@@ -21,12 +21,6 @@ namespace PopnTouchi2.ViewModel
     public class TreeViewModel : ViewModelBase
     {
         /// <summary>
-        /// Parameter.
-        /// Private
-        /// </summary>
-        public SessionViewModel SessionVM;
-
-        /// <summary>
         /// Property.
         /// The parent Grid.
         /// </summary>
@@ -54,6 +48,10 @@ namespace PopnTouchi2.ViewModel
         /// </summary>
         public Instrument Instrument2 { get; set; }
 
+        /// <summary>
+        /// Parameter.
+        /// Used to the relative dimensions
+        /// </summary>
         private double ratio;
 
         /// <summary>
@@ -62,7 +60,6 @@ namespace PopnTouchi2.ViewModel
         /// <param name="up"></param>
         /// <param name="t"></param>
         /// <param name="s"></param>
-        /// <param name="theme"></param>
         public TreeViewModel(bool up, Thickness t, SessionViewModel s)
         {
             this.Up = !up;
@@ -111,6 +108,11 @@ namespace PopnTouchi2.ViewModel
             Images[3].TouchDown += new EventHandler<TouchEventArgs>(touchDown1);
         }
 
+        /// <summary>
+        /// Update the dimensions of the TreeViewModel
+        /// To have relative dimensions
+        /// </summary>
+        /// <param name="newRatio">The newRation</param>
         public void UpdateDimensions(double newRatio)
         {
             double oldRatio = ratio;
@@ -131,6 +133,10 @@ namespace PopnTouchi2.ViewModel
             Grid.Margin = t2;
         }
 
+        /// <summary>
+        /// Setter of instrument
+        /// </summary>
+        /// <param name="instru"></param>
         public void SetInstrument(Instrument instru)
         {
             if (instru.Name == Instrument1.Name) SwitchToInstru1();
@@ -230,6 +236,9 @@ namespace PopnTouchi2.ViewModel
             SwitchToInstru2();
         }
 
+        /// <summary>
+        /// Switch the main instrument to the top instrument
+        /// </summary>
         private void SwitchToInstru1()
         {
             Images[0].Visibility = Visibility.Hidden;
@@ -242,6 +251,9 @@ namespace PopnTouchi2.ViewModel
             SessionVM.Session.ChangeBpm(SessionVM.Session.Bpm);
         }
 
+        /// <summary>
+        /// Switch the main instrument to the bottom instrument
+        /// </summary>
         private void SwitchToInstru2()
         {
             Images[0].Visibility = Visibility.Hidden;

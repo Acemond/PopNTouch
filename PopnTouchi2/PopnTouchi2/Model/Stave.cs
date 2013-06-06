@@ -82,7 +82,6 @@ namespace PopnTouchi2
         /// Initializes a new empty list of Notes, a Timer, the MaxPosition to 0 and the instrument
         /// </summary>
         /// <param name="instru">The instrument to be used</param>
-        /// <param name="theme">The theme</param>
         public Stave(Instrument instru)
         {
             MaxPosition = 0;
@@ -203,6 +202,10 @@ namespace PopnTouchi2
             Timer.Start();
         }
 
+        /// <summary>
+        /// Get the total time of the played stave
+        /// </summary>
+        /// <returns>The total time</returns>
         public int GetTotalTime()
         {
             int time = 1000;

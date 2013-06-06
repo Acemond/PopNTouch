@@ -6,11 +6,11 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using Microsoft.Xna.Framework.Audio;
 
-
 namespace PopnTouchi2
 {
     /// <summary>
-    /// Abstract Theme Class provides necessary methods to define multiples and differents themes for the application.
+    /// Abstract Theme Class provides necessary methods to define 
+    /// multiples and differents themes for the application.
     /// </summary>
     public abstract class Theme
     {
@@ -54,7 +54,6 @@ namespace PopnTouchi2
         /// of the background after the 
         /// Stop button
         /// </summary>
-        /// <param name="name"></param>
         public virtual void refreshSound()
         {
             try

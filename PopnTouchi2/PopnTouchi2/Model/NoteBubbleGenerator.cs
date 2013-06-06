@@ -23,9 +23,29 @@ namespace PopnTouchi2
         /// </summary>
         public ObservableCollection<NoteBubble> NoteBubbles;
 
+        /// <summary>
+        /// Parameter.
+        /// Dictionary counting the number of each Bubble
+        /// On the screen
+        /// </summary>
         private Dictionary<NoteValue, int> WildBubbles;
+
+        /// <summary>
+        /// Parameter.
+        /// Used to count the number of (#) bubble
+        /// </summary>
         private int SharpBubblesCount;
+
+        /// <summary>
+        /// Parameter.
+        /// Used to count the number of (b) bubble
+        /// </summary>
         private int FlatBubblesCount;
+
+        /// <summary>
+        /// Parameter.
+        /// Used to count the number of bubble
+        /// </summary>
         private int NoteBubblesCount;
 
         /// <summary>

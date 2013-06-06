@@ -53,6 +53,10 @@ namespace PopnTouchi2.ViewModel
             Grid.Children.Add(createButtonForImage(false, 400.0 * ratio));
         }
 
+        /// <summary>
+        /// UpdateDimensions when the size of the screen changes
+        /// </summary>
+        /// <param name="newRatio"></param>
         public void UpdateDimensions(double newRatio)
         {
             double oldRatio = ratio;
@@ -75,7 +79,7 @@ namespace PopnTouchi2.ViewModel
         /// With the image from path
         /// </summary>
         /// <param name="enabled">Bool</param>
-        /// <param name="h">The position of the button</param>
+        /// <param name="margin">The position of the button</param>
         /// <returns>The Grid used as a button</returns>
         public Grid createButtonForImage(bool enabled, double margin)
         {

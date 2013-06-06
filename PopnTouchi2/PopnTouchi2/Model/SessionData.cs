@@ -28,19 +28,29 @@ namespace PopnTouchi2.Model
         /// </summary>
         public List<Note> StaveBottomNotes { get; set; }
 
+        /// <summary>
+        /// Property.
+        /// The current Instrument of the StaveTop
+        /// </summary>
         public Instrument TopInstrument { get; set; }
-
-        public Instrument BottomInstrument { get; set; }
-
-        public int SessionID { get; set; }
-
-        public int bpm { get; set; }
 
         /// <summary>
         /// Property.
-        /// Session's ScatterView.
+        /// The current Instrument of the StaveBottom
         /// </summary>
-        //public ScatterView NotesSV { get; set; }
+        public Instrument BottomInstrument { get; set; }
+
+        /// <summary>
+        /// Property.
+        /// Session's ID instance.
+        /// </summary>
+        public int SessionID { get; set; }
+
+        /// <summary>
+        /// Property.
+        /// The tempo of the session
+        /// </summary>
+        public int bpm { get; set; }
 
         /// <summary>
         /// Property.
@@ -49,6 +59,10 @@ namespace PopnTouchi2.Model
         public int ThemeID { get; set; }
         #endregion
 
+        /// <summary>
+        /// Load the data from the sessionVM
+        /// </summary>
+        /// <param name="sessionVM">The loaded SessionViewModel</param>
         public SessionData(SessionViewModel sessionVM)
         {
             StaveTopNotes = new List<Note>();

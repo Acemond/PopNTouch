@@ -12,25 +12,31 @@ using Microsoft.Surface.Presentation.Controls;
 namespace PopnTouchi2.ViewModel
 {
     /// <summary>
-    /// TODO
+    /// Choose the Theme according to the ThemeButton
     /// </summary>
     public class ThemeChooser
     {
         /// <summary>
-        /// TODO
+        /// Parameter.
+        /// The sessionVM
         /// </summary>
         private SessionViewModel sessionVM;
 
         /// <summary>
-        /// TODO
+        /// Property.
+        /// The Grid
         /// </summary>
         public Grid Grid { get; set; }
 
         /// <summary>
-        /// TODO
+        /// The grid containing the themes to choose
         /// </summary>
         public Grid Themes { get; set; }
 
+        /// <summary>
+        /// Grids and borders for button
+        /// And for Bird, Cat and Dragon
+        /// </summary>
         private Border border1;
         private Grid GridTheme1;
         private Border border2;
@@ -44,7 +50,8 @@ namespace PopnTouchi2.ViewModel
         public Grid Cat { get; set; }
 
         /// <summary>
-        /// TODO
+        /// Constructor.
+        /// Create a ThemeChooser in the SessionViewModel s
         /// </summary>
         /// <param name="s"></param>
         public ThemeChooser(SessionViewModel s)
@@ -158,7 +165,7 @@ namespace PopnTouchi2.ViewModel
         }
 
         /// <summary>
-        /// TODO
+        /// Set Dimensions to have relative dimensions
         /// </summary>
         /// <param name="width"></param>
         public void SetDimensions(double width)
@@ -202,7 +209,7 @@ namespace PopnTouchi2.ViewModel
         }
 
         /// <summary>
-        /// TODO
+        /// Event Occured when the Theme Button is touched
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -217,7 +224,7 @@ namespace PopnTouchi2.ViewModel
         }
 
         /// <summary>
-        /// TODO
+        /// Event Occured when the first theme is choosen
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -301,9 +308,9 @@ namespace PopnTouchi2.ViewModel
             sessionVM.Session.PlayBackgroundSound();
             sessionVM.Session.ChangeBpm(sessionVM.Session.Bpm);
         }
-        
+
         /// <summary>
-        /// TODO
+        /// Event Occured when the second theme is choosen
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -377,6 +384,11 @@ namespace PopnTouchi2.ViewModel
             sessionVM.Session.ChangeBpm(sessionVM.Session.Bpm);
         }
 
+        /// <summary>
+        /// Event occured when the little bird is touched
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Bird_TouchDown(object sender, RoutedEventArgs e)
         {
             String effect = "whistle" + (new Random()).Next(1, 5).ToString();
@@ -384,7 +396,7 @@ namespace PopnTouchi2.ViewModel
         }
 
         /// <summary>
-        /// TODO
+        /// Event Occured when the third theme is choosen
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -460,6 +472,11 @@ namespace PopnTouchi2.ViewModel
             sessionVM.Session.ChangeBpm(sessionVM.Session.Bpm);
         }
 
+        /// <summary>
+        /// Event occured when the little dragon is touched
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Dragon_TouchDown(object sender, RoutedEventArgs e)
         {
             String effect = "dragon" + (new Random()).Next(1, 5).ToString();
@@ -467,7 +484,7 @@ namespace PopnTouchi2.ViewModel
         }
 
         /// <summary>
-        /// TODO
+        /// Event Occured when the forth theme is choosen
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -541,6 +558,11 @@ namespace PopnTouchi2.ViewModel
             sessionVM.Session.ChangeBpm(sessionVM.Session.Bpm);
         }
 
+        /// <summary>
+        /// Event Occured when the little cat is touched
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Cat_TouchDown(object sender, RoutedEventArgs e)
         {
             String effect = "chat" + (new Random()).Next(1, 7).ToString();

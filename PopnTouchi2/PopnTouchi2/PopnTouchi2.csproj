@@ -72,7 +72,6 @@
     <Compile Include="ViewModel\Animation\NoteAnimation.cs" />
     <Compile Include="ViewModel\Animation\NoteBubbleAnimation.cs" />
     <Compile Include="ViewModel\Animation\SessionAnimation.cs" />
-    <Compile Include="ViewModel\Animation\StaveAnimation.cs" />
     <Compile Include="ViewModel\ChangeSoundViewModel.cs" />
     <Compile Include="ViewModel\Converter.cs" />
     <Compile Include="ViewModel\Screenshot.cs" />
@@ -87,7 +86,6 @@
     <Compile Include="Model\Theme3.cs" />
     <Compile Include="Model\Theme4.cs" />
     <Compile Include="Model\Theme.cs" />
-    <Compile Include="ViewModel\StaveViewModel.cs" />
     <Compile Include="Infrastructure\ViewModelBase.cs" />
     <Compile Include="Model\AudioController.cs" />
     <Compile Include="Model\Enums\Gesture.cs" />
@@ -100,7 +98,6 @@
     <Compile Include="Model\Note.cs" />
     <Compile Include="Model\NoteBubble.cs" />
     <Compile Include="Model\NoteBubbleGenerator.cs" />
-    <Compile Include="Model\NoteFactory.cs" />
     <Compile Include="Model\Enums\NoteValue.cs" />
     <Compile Include="Model\Stave.cs" />
     <Compile Include="ViewModel\NoteViewModel.cs" />

@@ -48,7 +48,6 @@ namespace PopnTouchi2.ViewModel
 
          /// <summary>
         /// NoteBubbleViewModel Constructor.
-        /// TODO
         /// </summary>
         public MelodyBubbleViewModel(MelodyBubble mb, ScatterView sv, SessionViewModel s) : base(s)
         {

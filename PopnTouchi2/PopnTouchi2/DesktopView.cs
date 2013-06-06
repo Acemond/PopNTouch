@@ -42,24 +42,24 @@ namespace PopnTouchi2
         public ScatterView Sessions { get; set; }
 
         /// <summary>
-        /// TODO
+        /// True if the Left Session is active
         /// </summary>
         public bool LeftSessionActive { get; set; }
 
         /// <summary>
-        /// TODO
-        /// </summary>
+        /// True if the Right Session is active
+        /// </summary>>
         public bool RightSessionActive { get; set; }
 
         /// <summary>
-        /// TODO
+        /// List of Session IDs
         /// </summary>
         public List<int> IDs { get; set; }
 
         /// <summary>
-        /// TODO
+        /// Grid
         /// </summary>
-        Grid MiddleCacheGrid { get; set; }
+        private Grid MiddleCacheGrid { get; set; }
 
         private Grid topZonesPreview;
         private Grid sideZonesPreview;
@@ -68,15 +68,20 @@ namespace PopnTouchi2
         private bool doubleButtonDirection;
 
         /// <summary>
-        /// temporary
+        /// SurfaceButton
+        /// Used to launch a multiplayer instance
         /// </summary>
         public SurfaceButton CreateDoubleSession_Button { get; set; }
 
         /// <summary>
-        /// temporary
+        /// SurfaceButton
+        /// Used to launch a singleplayer instance
         /// </summary>
         public SurfaceButton CreateSession_Button { get; set; }
 
+        /// <summary>
+        /// The List of opened sessions
+        /// </summary>
         private List<SessionViewModel> openedSessions;
 
         /// <summary>
@@ -159,6 +164,12 @@ namespace PopnTouchi2
             Loaded += new RoutedEventHandler(DesktopView_Loaded);
         }
 
+        /// <summary>
+        /// Event Occured when the DesktopView is loaded
+        /// Create Directory for Sessions and the Snapshot
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         void DesktopView_Loaded(object sender, RoutedEventArgs e)
         {
             AnimateSimpleSessionButton();
@@ -207,6 +218,11 @@ namespace PopnTouchi2
             }
         }
 
+        /// <summary>
+        /// Event Occured when the desktopView is touched
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         void DesktopView_PreviewTouchUp(object sender, TouchEventArgs e)
         {
             DisplayPreviewZones(false, true);
@@ -220,6 +236,11 @@ namespace PopnTouchi2
             }
         }
 
+        /// <summary>
+        /// Event Occured when the desktopView is touched
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         void DesktopView_PreviewTouchDown(object sender, TouchEventArgs e)
         {
             foreach (SessionViewModel svm in openedSessions)
@@ -286,7 +307,7 @@ namespace PopnTouchi2
         }
 
         /// <summary>
-        /// TODO
+        /// Check the current situation of the desktop
         /// </summary>
         public void CheckDesktopToDisplay()
         {
@@ -307,7 +328,7 @@ namespace PopnTouchi2
         }
 
         /// <summary>
-        /// TODO
+        /// Hide the Desktop
         /// </summary>
         private void HideDesktop()
         {
@@ -318,7 +339,7 @@ namespace PopnTouchi2
         }
 
         /// <summary>
-        /// TODO
+        /// Display the full Desktop
         /// </summary>
         private void DisplayFullDesktop()
         {
@@ -331,7 +352,7 @@ namespace PopnTouchi2
         }
 
         /// <summary>
-        /// TODO
+        /// Display the Desktop of the right
         /// </summary>
         private void DisplayRightDesktop()
         {
@@ -342,9 +363,9 @@ namespace PopnTouchi2
 
             Photos.Margin = new Thickness(607.5, 0.0, 0.0, 0.0);
         }
-        
+
         /// <summary>
-        /// TODO
+        /// Display the Desktop of the left
         /// </summary>
         private void DisplayLeftDesktop()
         {
@@ -357,7 +378,7 @@ namespace PopnTouchi2
         }
 
         /// <summary>
-        /// TODO
+        /// Hide the photos of the sessions
         /// </summary>
         public void HidePhotos()
         {
@@ -378,7 +399,7 @@ namespace PopnTouchi2
         }
 
         /// <summary>
-        /// TODO
+        /// Unhide the photos of the sessions
         /// </summary>
         public void UnhidePhotos()
         {
@@ -399,7 +420,7 @@ namespace PopnTouchi2
         }
 
         /// <summary>
-        /// TODO
+        /// Hide the Cache
         /// </summary>
         public void HideCache()
         {
@@ -420,7 +441,7 @@ namespace PopnTouchi2
         }
 
         /// <summary>
-        /// TODO
+        /// Unhide the Cache
         /// </summary>
         public void UnhideCache()
         {
@@ -440,6 +461,11 @@ namespace PopnTouchi2
             OpacitySTB.Begin();
         }
 
+        /// <summary>
+        /// Display the shadows of the zones
+        /// </summary>
+        /// <param name="appear"></param>
+        /// <param name="fourZones"></param>
         public void DisplayPreviewZones(bool appear, bool fourZones)
         {
             Storyboard pGSTB = new Storyboard();
@@ -488,6 +514,9 @@ namespace PopnTouchi2
             }
         }
 
+        /// <summary>
+        /// The animation of the singleplayer button
+        /// </summary>
         private void AnimateSimpleSessionButton()
         {
             Random r = GlobalVariables.GlobalRandom;
@@ -517,11 +546,19 @@ namespace PopnTouchi2
             buttonsSTB.Begin();
         }
 
+        /// <summary>
+        /// Event occured when AnimateSimpleSessionButton is finished
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         void marginAnimation_Completed(object sender, EventArgs e)
         {
             AnimateSimpleSessionButton();
         }
 
+        /// <summary>
+        /// The animation of the multiplayer button
+        /// </summary>
         private void AnimateDoubleSessionButton()
         {
             Random r = GlobalVariables.GlobalRandom;
@@ -551,6 +588,11 @@ namespace PopnTouchi2
             buttonsSTB.Begin();
         }
 
+        /// <summary>
+        /// Event occured when AnimateDoubleSessionButton is finished
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         void doubleMarginAnimation_Completed(object sender, EventArgs e)
         {
             AnimateDoubleSessionButton();

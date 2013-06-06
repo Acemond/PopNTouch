@@ -49,6 +49,9 @@ namespace PopnTouchi2.ViewModel.Animation
         /// </summary>
         private NoteViewModel noteVM;
 
+        /// <summary>
+        /// Timer used to wait
+        /// </summary>
         private DispatcherTimer noteBubbleDT;
 
         /// <summary>
@@ -58,6 +61,10 @@ namespace PopnTouchi2.ViewModel.Animation
         /// </summary>
         private bool NothingAtThisPlace;
 
+        /// <summary>
+        /// Boolean
+        /// True if the bubble is dropped on the StaveTop
+        /// </summary>
         private bool bubbleDroppedTopStave;
 
         #endregion
@@ -89,6 +96,10 @@ namespace PopnTouchi2.ViewModel.Animation
         #endregion
 
         #region Methods
+        
+        /// <summary>
+        /// Begin the bubble animation
+        /// </summary>
         public void BeginBubbleAnimation()
         {
             Random r = GlobalVariables.GlobalRandom;
@@ -199,7 +210,7 @@ namespace PopnTouchi2.ViewModel.Animation
 
         #region Events
         /// <summary>
-        /// TODO
+        /// Used to wait and then animate the bubble
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -210,7 +221,7 @@ namespace PopnTouchi2.ViewModel.Animation
         }
 
         /// <summary>
-        /// TODO
+        /// Event occured when the animation is finished
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -223,6 +234,7 @@ namespace PopnTouchi2.ViewModel.Animation
             noteBubbleDT.Interval = TimeSpan.FromMilliseconds(r.Next(1000, 10000));
             noteBubbleDT.Start();
         }
+
         /// <summary>
         /// Event occured when a Bubble is released
         /// Magnetise the current bubble
@@ -310,6 +322,11 @@ namespace PopnTouchi2.ViewModel.Animation
             }
         }
 
+        /// <summary>
+        /// Event occured when the NoteBubble finished its move (to the right place)
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         void moveCenter_Completed(object sender, EventArgs e)
         {
             Converter converter = new Converter();
@@ -433,6 +450,10 @@ namespace PopnTouchi2.ViewModel.Animation
             AudioController.PlaySoundWithString(effect);
         }
 
+        /// <summary>
+        /// Display the preview grid
+        /// </summary>
+        /// <param name="appear"></param>
         private void DisplayPreviewGrid(bool appear)
         {
             Storyboard pGSTB = new Storyboard();

@@ -23,7 +23,7 @@ namespace PopnTouchi2.ViewModel
     {
         /// <summary>
         /// Property.
-        /// TODO
+        /// The Note in the NoteViewModel
         /// </summary>
         public Note Note { get; set; }
 
@@ -79,6 +79,10 @@ namespace PopnTouchi2.ViewModel
             Animation = new NoteAnimation(this, SessionVM);
         }
 
+        /// <summary>
+        /// Constructor by copie.
+        /// </summary>
+        /// <param name="noteVM"></param>
         public NoteViewModel(NoteViewModel noteVM)
         {
             Note = new Note(noteVM.Note);
@@ -88,7 +92,9 @@ namespace PopnTouchi2.ViewModel
             Picked = noteVM.Picked;
         }
 
-
+        /// <summary>
+        /// Set the Style of the bubbleImage
+        /// </summary>
         public void SetStyle()
         {
             FrameworkElementFactory bubbleImage = new FrameworkElementFactory(typeof(Image));
